@@ -385,4 +385,52 @@ escrever("BP/feature_rules/xu2_lirio_regra.json", {"format_version": "1.13.0", "
     "distribution": {"iterations": 1, "scatter_chance": chance(1 / 8), "x": {"distribution": "uniform", "extent": [0, 16]},
                      "y": "query.heightmap(variable.worldx, variable.worldz)", "z": {"distribution": "uniform", "extent": [0, 16]}}}})
 
+# 1.47.0 (Pam's HarvestCraft 2): as 6 hortas silvestres (cada uma no seu tipo de bioma: 1 em 20 chunks, 32 tentativas
+# espalhadas ±6 e ±2 na altura) e as árvores frutíferas (cada árvore 1 em 90 chunks na floresta do seu grupo; os frutos
+# ficam pendurados embaixo das folhas).
+HC2 = json.loads((RAIZ / "tools/dados/hc2.json").read_text(encoding="utf-8"))
+CHAO_HORTA = ["minecraft:grass_block", "minecraft:dirt", "minecraft:coarse_dirt", "minecraft:podzol", "minecraft:sand", "minecraft:red_sand", "minecraft:mud", "minecraft:moss_block"]
+tag = lambda v, op="==": {"test": "has_biome_tag", "operator": op, "value": v}
+for h in HC2["hortas"]:
+    escrever(f"BP/features/hc2_{h['id']}.json", {"format_version": "1.13.0", "minecraft:single_block_feature": {
+        "description": {"identifier": f"cl:hc2_{h['id']}"}, "places_block": f"cl:{h['id']}", "enforce_placement_rules": False,
+        "enforce_survivability_rules": False, "may_attach_to": {"bottom": CHAO_HORTA}, "may_replace": ["minecraft:air", "minecraft:short_grass"]}})
+    escrever(f"BP/features/hc2_{h['id']}_tufo.json", {"format_version": "1.13.0", "minecraft:scatter_feature": {
+        "description": {"identifier": f"cl:hc2_{h['id']}_tufo"}, "places_feature": f"cl:hc2_{h['id']}", "iterations": h["tentativas"],
+        "coordinate_eval_order": "xzy", "x": {"distribution": "gaussian", "extent": [-h["espalha"], h["espalha"]]},
+        "z": {"distribution": "gaussian", "extent": [-h["espalha"], h["espalha"]]}, "y": {"distribution": "uniform", "extent": [-h["altura"], h["altura"]]}}})
+    escrever(f"BP/feature_rules/hc2_{h['id']}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:hc2_{h['id']}_regra", "places_feature": f"cl:hc2_{h['id']}_tufo"},
+        "conditions": {"placement_pass": "surface_pass", "minecraft:biome_filter": [{"any_of": [tag(b) for b in h["biomas"]]}]},
+        "distribution": {"iterations": 1, "scatter_chance": {"numerator": 1, "denominator": h["raridade"]}, "x": {"distribution": "uniform", "extent": [0, 16]},
+                         "y": ALTURA, "z": {"distribution": "uniform", "extent": [0, 16]}}}})
+FOLHAS = sorted({a["folha"] for a in HC2["arvores"]})
+grupos = {}
+for a in HC2["arvores"]:
+    base, ra, rb = a["altura"]
+    escrever(f"BP/features/hc2_arvore_{a['id']}.json", {"format_version": "1.13.0", "minecraft:tree_feature": {
+        "description": {"identifier": f"cl:hc2_arvore_{a['id']}"},
+        "base_block": ["minecraft:dirt"],
+        "may_grow_on": ["minecraft:dirt", "minecraft:grass_block", "minecraft:podzol", "minecraft:coarse_dirt", "minecraft:rooted_dirt", "minecraft:moss_block"],
+        "may_replace": ["minecraft:air", "minecraft:short_grass", "minecraft:vine", *FOLHAS],
+        "may_grow_through": ["minecraft:dirt", "minecraft:grass_block", "minecraft:short_grass"],
+        "trunk": {"trunk_height": {"range_min": base, "range_max": base + ra + rb + 1}, "trunk_block": a["tronco"]},
+        "canopy": {"canopy_offset": {"min": -3, "max": 0}, "min_width": 0, "canopy_slope": {"rise": 1, "run": 2},
+                   "variation_chance": [{"numerator": 1, "denominator": 2}, {"numerator": 1, "denominator": 2}, {"numerator": 1, "denominator": 2}, {"numerator": 1, "denominator": 1}],
+                   "leaf_block": a["folha"],
+                   "canopy_decoration": {"decoration_chance": {"numerator": 1, "denominator": 4}, "decoration_block": f"cl:fruto_{a['id']}",
+                                         "num_steps": 1, "step_direction": "down"}}}})
+    grupos.setdefault(a["grupo"], []).append(a)
+FILTRO_ARV = {"temperada": [tag("forest"), tag("taiga", "!="), tag("cold", "!="), tag("jungle", "!="), tag("swamp", "!=")],
+              "quente": [{"any_of": [{"all_of": [tag("forest"), tag("taiga", "!="), tag("cold", "!=")]}, tag("jungle")]}],
+              "conifera": [tag("taiga")]}
+for g, lista in grupos.items():
+    escrever(f"BP/features/hc2_arvores_{g}.json", {"format_version": "1.13.0", "minecraft:weighted_random_feature": {
+        "description": {"identifier": f"cl:hc2_arvores_{g}"}, "features": [[f"cl:hc2_arvore_{a['id']}", 1] for a in lista]}})
+    escrever(f"BP/feature_rules/hc2_arvores_{g}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:hc2_arvores_{g}_regra", "places_feature": f"cl:hc2_arvores_{g}"},
+        "conditions": {"placement_pass": "surface_pass", "minecraft:biome_filter": FILTRO_ARV[g]},
+        "distribution": {"iterations": 1, "scatter_chance": {"numerator": len(lista), "denominator": lista[0]["raridade"]},
+                         "x": {"distribution": "uniform", "extent": [0, 16]}, "y": ALTURA, "z": {"distribution": "uniform", "extent": [0, 16]}}}})
+
 print(f"geração natural: {len(list((RAIZ / 'BP/features').iterdir()))} features, 3 tabelas de saque, templo e destroços com baú")

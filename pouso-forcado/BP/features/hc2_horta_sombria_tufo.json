@@ -1,0 +1,32 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:scatter_feature": {
+  "description": {
+   "identifier": "cl:hc2_horta_sombria_tufo"
+  },
+  "places_feature": "cl:hc2_horta_sombria",
+  "iterations": 32,
+  "coordinate_eval_order": "xzy",
+  "x": {
+   "distribution": "gaussian",
+   "extent": [
+    -6,
+    6
+   ]
+  },
+  "z": {
+   "distribution": "gaussian",
+   "extent": [
+    -6,
+    6
+   ]
+  },
+  "y": {
+   "distribution": "uniform",
+   "extent": [
+    -2,
+    2
+   ]
+  }
+ }
+}

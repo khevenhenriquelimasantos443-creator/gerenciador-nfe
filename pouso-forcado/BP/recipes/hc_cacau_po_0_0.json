@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_cacau_po_0_0"
+    },
+    "tags": [
+      "cl_pilao"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:cocoa_beans"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cacau_po"
+    }
+  }
+}

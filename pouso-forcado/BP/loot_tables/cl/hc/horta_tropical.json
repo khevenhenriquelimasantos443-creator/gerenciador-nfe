@@ -1,0 +1,94 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "cl:araruta",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:melao",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:cafe",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:berinjela",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:uva",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:kenaf",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:kiwi",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:abacaxi",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:gergelim",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:soja",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:inhame",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:gengibre",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:sorgo",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:babosa",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:cabaca",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:couve_chinesa",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:guarana",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

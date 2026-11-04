@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_hc2_chocolate_quente_0_0"
+    },
+    "tags": [
+      "cl_cacarola"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:leite_fresco"
+      },
+      {
+        "item": "cl:cacau_po"
+      },
+      {
+        "item": "cl:marshmallow"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:chocolate_quente"
+    }
+  }
+}

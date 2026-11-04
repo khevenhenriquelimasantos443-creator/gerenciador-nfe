@@ -1,0 +1,18 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:weighted_random_feature": {
+  "description": {
+   "identifier": "cl:hc2_arvores_conifera"
+  },
+  "features": [
+   [
+    "cl:hc2_arvore_xarope_bordo",
+    1
+   ],
+   [
+    "cl:hc2_arvore_pinoli",
+    1
+   ]
+  ]
+ }
+}

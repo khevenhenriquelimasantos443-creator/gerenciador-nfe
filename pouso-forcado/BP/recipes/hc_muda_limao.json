@@ -1,0 +1,46 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_muda_limao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "cl:limao"
+      },
+      {
+        "item": "minecraft:oak_sapling"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:muda_limao"
+    }
+  }
+}

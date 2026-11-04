@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_jantar_frango_0_2"
+    },
+    "tags": [
+      "cl_tabua_corte"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:frango_frito"
+      },
+      {
+        "item": "cl:pure_batata"
+      },
+      {
+        "item": "minecraft:potato"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jantar_frango"
+    }
+  }
+}

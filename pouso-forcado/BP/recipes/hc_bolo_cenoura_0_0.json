@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_bolo_cenoura_0_0"
+    },
+    "tags": [
+      "cl_assadeira"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:sugar"
+      },
+      {
+        "item": "minecraft:carrot"
+      },
+      {
+        "item": "cl:massa_liquida"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bolo_cenoura"
+    }
+  }
+}

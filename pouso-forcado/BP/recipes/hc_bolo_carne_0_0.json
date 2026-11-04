@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_bolo_carne_0_0"
+    },
+    "tags": [
+      "cl_assadeira"
+    ],
+    "ingredients": [
+      {
+        "tag": "cl:hc_moido"
+      },
+      {
+        "item": "minecraft:bread"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bolo_carne"
+    }
+  }
+}

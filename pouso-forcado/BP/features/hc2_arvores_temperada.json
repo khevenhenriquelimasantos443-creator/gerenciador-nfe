@@ -1,0 +1,82 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:weighted_random_feature": {
+  "description": {
+   "identifier": "cl:hc2_arvores_temperada"
+  },
+  "features": [
+   [
+    "cl:hc2_arvore_bolota",
+    1
+   ],
+   [
+    "cl:hc2_arvore_maca",
+    1
+   ],
+   [
+    "cl:hc2_arvore_abacate",
+    1
+   ],
+   [
+    "cl:hc2_arvore_noz_iguape",
+    1
+   ],
+   [
+    "cl:hc2_arvore_cereja",
+    1
+   ],
+   [
+    "cl:hc2_arvore_castanha",
+    1
+   ],
+   [
+    "cl:hc2_arvore_groselha",
+    1
+   ],
+   [
+    "cl:hc2_arvore_avela",
+    1
+   ],
+   [
+    "cl:hc2_arvore_limao_siciliano",
+    1
+   ],
+   [
+    "cl:hc2_arvore_noz_moscada",
+    1
+   ],
+   [
+    "cl:hc2_arvore_laranja",
+    1
+   ],
+   [
+    "cl:hc2_arvore_asimina",
+    1
+   ],
+   [
+    "cl:hc2_arvore_pessego",
+    1
+   ],
+   [
+    "cl:hc2_arvore_pera",
+    1
+   ],
+   [
+    "cl:hc2_arvore_ameixa",
+    1
+   ],
+   [
+    "cl:hc2_arvore_graviola",
+    1
+   ],
+   [
+    "cl:hc2_arvore_teia",
+    1
+   ],
+   [
+    "cl:hc2_arvore_noz",
+    1
+   ]
+  ]
+ }
+}

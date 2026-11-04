@@ -1,0 +1,78 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:tree_feature": {
+  "description": {
+   "identifier": "cl:hc2_arvore_abacate"
+  },
+  "base_block": [
+   "minecraft:dirt"
+  ],
+  "may_grow_on": [
+   "minecraft:dirt",
+   "minecraft:grass_block",
+   "minecraft:podzol",
+   "minecraft:coarse_dirt",
+   "minecraft:rooted_dirt",
+   "minecraft:moss_block"
+  ],
+  "may_replace": [
+   "minecraft:air",
+   "minecraft:short_grass",
+   "minecraft:vine",
+   "minecraft:jungle_leaves",
+   "minecraft:oak_leaves",
+   "minecraft:spruce_leaves"
+  ],
+  "may_grow_through": [
+   "minecraft:dirt",
+   "minecraft:grass_block",
+   "minecraft:short_grass"
+  ],
+  "trunk": {
+   "trunk_height": {
+    "range_min": 4,
+    "range_max": 8
+   },
+   "trunk_block": "minecraft:oak_log"
+  },
+  "canopy": {
+   "canopy_offset": {
+    "min": -3,
+    "max": 0
+   },
+   "min_width": 0,
+   "canopy_slope": {
+    "rise": 1,
+    "run": 2
+   },
+   "variation_chance": [
+    {
+     "numerator": 1,
+     "denominator": 2
+    },
+    {
+     "numerator": 1,
+     "denominator": 2
+    },
+    {
+     "numerator": 1,
+     "denominator": 2
+    },
+    {
+     "numerator": 1,
+     "denominator": 1
+    }
+   ],
+   "leaf_block": "minecraft:oak_leaves",
+   "canopy_decoration": {
+    "decoration_chance": {
+     "numerator": 1,
+     "denominator": 4
+    },
+    "decoration_block": "cl:fruto_abacate",
+    "num_steps": 1,
+    "step_direction": "down"
+   }
+  }
+ }
+}

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_sopa_macarrao_carneiro_0_1"
+    },
+    "tags": [
+      "cl_panela"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:macarrao"
+      },
+      {
+        "item": "cl:caldo"
+      },
+      {
+        "item": "minecraft:carrot"
+      },
+      {
+        "item": "minecraft:mutton"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:sopa_macarrao_carneiro"
+    }
+  }
+}

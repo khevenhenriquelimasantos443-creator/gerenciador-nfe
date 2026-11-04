@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_vinagre_0_0"
+    },
+    "tags": [
+      "cl_panela"
+    ],
+    "ingredients": [
+      {
+        "tag": "cl:hc_fruta"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vinagre"
+    }
+  }
+}

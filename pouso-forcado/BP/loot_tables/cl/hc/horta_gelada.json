@@ -1,0 +1,89 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "cl:brocolis",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:repolho",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:couve_flor",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:salsao",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:algodao",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:uva_do_monte",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:zimbro",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:couve_rabano",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:aveia",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:ervilha",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:quinoa",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:framboesa",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:nabo_sueco",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:centeio",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:espinafre",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:amora_artica",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

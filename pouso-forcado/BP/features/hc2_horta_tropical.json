@@ -1,0 +1,27 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:single_block_feature": {
+  "description": {
+   "identifier": "cl:hc2_horta_tropical"
+  },
+  "places_block": "cl:horta_tropical",
+  "enforce_placement_rules": false,
+  "enforce_survivability_rules": false,
+  "may_attach_to": {
+   "bottom": [
+    "minecraft:grass_block",
+    "minecraft:dirt",
+    "minecraft:coarse_dirt",
+    "minecraft:podzol",
+    "minecraft:sand",
+    "minecraft:red_sand",
+    "minecraft:mud",
+    "minecraft:moss_block"
+   ]
+  },
+  "may_replace": [
+   "minecraft:air",
+   "minecraft:short_grass"
+  ]
+ }
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_sorvete_0_1"
+    },
+    "tags": [
+      "cl_tigela_mistura"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:leite_fresco"
+      },
+      {
+        "item": "cl:sal"
+      },
+      {
+        "item": "minecraft:snowball"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:sorvete"
+    }
+  }
+}

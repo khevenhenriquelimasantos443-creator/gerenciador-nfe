@@ -1,0 +1,88 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:fruto_asimina",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "cl:estagio": {
+          "values": {
+            "min": 0,
+            "max": 2
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.planta",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clhc_fruto_asimina_0",
+          "render_method": "alpha_test",
+          "ambient_occlusion": 0,
+          "face_dimming": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          4,
+          -4
+        ],
+        "size": [
+          8,
+          12,
+          8
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.1
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#a0c050",
+      "minecraft:loot": "loot_tables/empty.json",
+      "minecraft:tick": {
+        "interval_range": [
+          600,
+          1200
+        ],
+        "looping": true
+      },
+      "cl:fruto_hc": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:estagio') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "clhc_fruto_asimina_1",
+              "render_method": "alpha_test",
+              "ambient_occlusion": 0,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:estagio') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "clhc_fruto_asimina_2",
+              "render_method": "alpha_test",
+              "ambient_occlusion": 0,
+              "face_dimming": false
+            }
+          }
+        }
+      }
+    ]
+  }
+}

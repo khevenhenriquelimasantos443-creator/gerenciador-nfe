@@ -18,6 +18,11 @@
         "use_on": [
           "minecraft:farmland"
         ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:hc_semente"
+        ]
       }
     }
   }

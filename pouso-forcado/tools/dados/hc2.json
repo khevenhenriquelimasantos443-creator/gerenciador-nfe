@@ -1,0 +1,6958 @@
+{
+ "_comentario": "1.47.0: Pam's HarvestCraft 2 (Crops, Trees e Food Core, 1.21.1), gerado por tools/importar-hc2.py. fome = Hunger Overhaul: max(arredondar(fome do HC2 / 4), 1). agua/temp como na Fase 14.",
+ "culturas": [
+  {
+   "id": "agave",
+   "pt": "Agave",
+   "en": "Agave",
+   "forma": "cacto",
+   "cor": "#6fa88a",
+   "fome": 0,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "amaranto",
+   "pt": "Amaranto",
+   "en": "Amaranth",
+   "forma": "graos",
+   "cor": "#b03a5a",
+   "fome": 0,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "araruta",
+   "pt": "Araruta",
+   "en": "Arrowroot",
+   "forma": "raiz",
+   "cor": "#d8c8a0",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "alcachofra",
+   "pt": "Alcachofra",
+   "en": "Artichoke",
+   "forma": "alcachofra",
+   "cor": "#6a9a4a",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "aspargo",
+   "pt": "Aspargo",
+   "en": "Asparagus",
+   "forma": "talo",
+   "cor": "#7aa84a",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "cevada",
+   "pt": "Cevada",
+   "en": "Barley",
+   "forma": "trigo",
+   "cor": "#d8b860",
+   "fome": 0,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "amora_preta",
+   "pt": "Amora-Preta",
+   "en": "Blackberry",
+   "forma": "baga",
+   "cor": "#3a2244",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "mirtilo",
+   "pt": "Mirtilo",
+   "en": "Blueberry",
+   "forma": "baga",
+   "cor": "#3a4aa8",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "brocolis",
+   "pt": "Brócolis",
+   "en": "Broccoli",
+   "forma": "brocolis",
+   "cor": "#3a8a3a",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "couve_bruxelas",
+   "pt": "Couve-de-Bruxelas",
+   "en": "Brusselsprout",
+   "forma": "baga",
+   "cor": "#6aa84a",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "baga_cera",
+   "pt": "Baga-de-Cera",
+   "en": "Candleberry",
+   "forma": "baga",
+   "cor": "#c8c8a0",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "melao",
+   "pt": "Melão",
+   "en": "Cantaloupe",
+   "forma": "redondo",
+   "cor": "#e8a050",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "mandioca",
+   "pt": "Mandioca",
+   "en": "Cassava",
+   "forma": "raiz",
+   "cor": "#8a5a3a",
+   "fome": 1,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "couve_flor",
+   "pt": "Couve-Flor",
+   "en": "Cauliflower",
+   "forma": "brocolis",
+   "cor": "#f0ecd8",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "salsao",
+   "pt": "Salsão",
+   "en": "Celery",
+   "forma": "talo",
+   "cor": "#8ac85a",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "grao_de_bico",
+   "pt": "Grão-de-Bico",
+   "en": "Chickpea",
+   "forma": "graos",
+   "cor": "#e0c080",
+   "fome": 0,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "cafe",
+   "pt": "Grão de Café",
+   "en": "Coffeebean",
+   "forma": "graos",
+   "cor": "#5a2a1a",
+   "fome": 0,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "algodao",
+   "pt": "Algodão",
+   "en": "Cotton",
+   "forma": "fibra",
+   "cor": "#f4f4f0",
+   "fome": 0,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "oxicoco",
+   "pt": "Oxicoco",
+   "en": "Cranberry",
+   "forma": "baga",
+   "cor": "#b8202c",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "pepino",
+   "pt": "Pepino",
+   "en": "Cucumber",
+   "forma": "alongado",
+   "cor": "#3a8a3a",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "berinjela",
+   "pt": "Berinjela",
+   "en": "Eggplant",
+   "forma": "alongado",
+   "cor": "#4a2a5a",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "sabugueiro",
+   "pt": "Baga de Sabugueiro",
+   "en": "Elderberry",
+   "forma": "baga",
+   "cor": "#2a2a4a",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "linho",
+   "pt": "Linho",
+   "en": "Flax",
+   "forma": "fibra",
+   "cor": "#8aa0d8",
+   "fome": 0,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "gengibre",
+   "pt": "Gengibre",
+   "en": "Ginger",
+   "forma": "raiz",
+   "cor": "#d8b070",
+   "fome": 0,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "uva",
+   "pt": "Uva",
+   "en": "Grape",
+   "forma": "cacho",
+   "cor": "#6a2a7a",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "uva_verde",
+   "pt": "Uva Verde",
+   "en": "Green Grape",
+   "forma": "cacho",
+   "cor": "#a0c85a",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "uva_do_monte",
+   "pt": "Uva-do-Monte",
+   "en": "Huckleberry",
+   "forma": "baga",
+   "cor": "#4a2a6a",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "jicama",
+   "pt": "Jicama",
+   "en": "Jicama",
+   "forma": "raiz",
+   "cor": "#c8a070",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "zimbro",
+   "pt": "Baga de Zimbro",
+   "en": "Juniperberry",
+   "forma": "baga",
+   "cor": "#4a5a8a",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "juta",
+   "pt": "Juta",
+   "en": "Jute",
+   "forma": "fibra",
+   "cor": "#b8a060",
+   "fome": 0,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "couve",
+   "pt": "Couve",
+   "en": "Kale",
+   "forma": "folha",
+   "cor": "#2a6a3a",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "kenaf",
+   "pt": "Kenaf",
+   "en": "Kenaf",
+   "forma": "fibra",
+   "cor": "#9ab060",
+   "fome": 0,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "kiwi",
+   "pt": "Kiwi",
+   "en": "Kiwi",
+   "forma": "redondo",
+   "cor": "#8a6a3a",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "couve_rabano",
+   "pt": "Couve-Rábano",
+   "en": "Kohlrabi",
+   "forma": "redondo",
+   "cor": "#a0c870",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "alho_poro",
+   "pt": "Alho-Poró",
+   "en": "Leek",
+   "forma": "talo",
+   "cor": "#7ab060",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "lentilha",
+   "pt": "Lentilha",
+   "en": "Lentil",
+   "forma": "graos",
+   "cor": "#b07a3a",
+   "fome": 0,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "alface",
+   "pt": "Alface",
+   "en": "Lettuce",
+   "forma": "folha",
+   "cor": "#8ac850",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "painco",
+   "pt": "Painço",
+   "en": "Millet",
+   "forma": "trigo",
+   "cor": "#e8d090",
+   "fome": 0,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "amora",
+   "pt": "Amora",
+   "en": "Mulberry",
+   "forma": "baga",
+   "cor": "#5a1a3a",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "mostarda",
+   "pt": "Mostarda",
+   "en": "Mustard Seeds",
+   "forma": "graos",
+   "cor": "#d8a830",
+   "fome": 0,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "aveia",
+   "pt": "Aveia",
+   "en": "Oats",
+   "forma": "trigo",
+   "cor": "#d8c890",
+   "fome": 0,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "quiabo",
+   "pt": "Quiabo",
+   "en": "Okra",
+   "forma": "vagem",
+   "cor": "#5a9a3a",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "pastinaca",
+   "pt": "Pastinaca",
+   "en": "Parsnip",
+   "forma": "raiz",
+   "cor": "#f0e0b0",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "ervilha",
+   "pt": "Ervilha",
+   "en": "Peas",
+   "forma": "vagem",
+   "cor": "#6ab04a",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "abacaxi",
+   "pt": "Abacaxi",
+   "en": "Pineapple",
+   "forma": "abacaxi",
+   "cor": "#e8c040",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "quinoa",
+   "pt": "Quinoa",
+   "en": "Quinoa",
+   "forma": "graos",
+   "cor": "#e8d8b0",
+   "fome": 0,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "rabanete",
+   "pt": "Rabanete",
+   "en": "Radish",
+   "forma": "raiz_redonda",
+   "cor": "#d83a4a",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "framboesa",
+   "pt": "Framboesa",
+   "en": "Raspberry",
+   "forma": "baga",
+   "cor": "#d83a5a",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "ruibarbo",
+   "pt": "Ruibarbo",
+   "en": "Rhubarb",
+   "forma": "talo",
+   "cor": "#c83a4a",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "nabo_sueco",
+   "pt": "Nabo-Sueco",
+   "en": "Rutabaga",
+   "forma": "raiz_redonda",
+   "cor": "#c8a0a0",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "centeio",
+   "pt": "Centeio",
+   "en": "Rye",
+   "forma": "trigo",
+   "cor": "#b89a5a",
+   "fome": 0,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "cebolinha",
+   "pt": "Cebolinha",
+   "en": "Scallion",
+   "forma": "talo",
+   "cor": "#5ab04a",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "gergelim",
+   "pt": "Gergelim",
+   "en": "Sesame Seeds",
+   "forma": "graos",
+   "cor": "#f0e0c0",
+   "fome": 0,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "sisal",
+   "pt": "Sisal",
+   "en": "Sisal",
+   "forma": "fibra",
+   "cor": "#c8d090",
+   "fome": 0,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "soja",
+   "pt": "Soja",
+   "en": "Soybean",
+   "forma": "vagem",
+   "cor": "#c8b060",
+   "fome": 0,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "folha_tempero",
+   "pt": "Folha de Tempero",
+   "en": "Spiceleaf",
+   "forma": "folha",
+   "cor": "#4a8a3a",
+   "fome": 0,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "espinafre",
+   "pt": "Espinafre",
+   "en": "Spinach",
+   "forma": "folha",
+   "cor": "#2a7a3a",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "morango",
+   "pt": "Morango",
+   "en": "Strawberry",
+   "forma": "morango",
+   "cor": "#e0302f",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "batata_doce",
+   "pt": "Batata-Doce",
+   "en": "Sweet Potato",
+   "forma": "raiz",
+   "cor": "#b05a4a",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "inhame",
+   "pt": "Inhame",
+   "en": "Taro",
+   "forma": "raiz_redonda",
+   "cor": "#8a6a7a",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "folha_cha",
+   "pt": "Folha de Chá",
+   "en": "Tealeaf",
+   "forma": "folha",
+   "cor": "#4a8a3a",
+   "fome": 0,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "tomatilho",
+   "pt": "Tomatilho",
+   "en": "Tomatillo",
+   "forma": "redondo",
+   "cor": "#9ac050",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "nabo",
+   "pt": "Nabo",
+   "en": "Turnip",
+   "forma": "raiz_redonda",
+   "cor": "#e8d8e0",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "castanha_dagua",
+   "pt": "Castanha-d'Água",
+   "en": "Waterchestnut",
+   "forma": "noz",
+   "cor": "#5a3a2a",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "cogumelo_branco",
+   "pt": "Cogumelo Branco",
+   "en": "White Mushroom",
+   "forma": "cogumelo",
+   "cor": "#f0ece0",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "abobora_inverno",
+   "pt": "Abóbora-de-Inverno",
+   "en": "Winter Squash",
+   "forma": "redondo",
+   "cor": "#e09a3a",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "abobrinha",
+   "pt": "Abobrinha",
+   "en": "Zucchini",
+   "forma": "alongado",
+   "cor": "#4a8a3a",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "alfafa",
+   "pt": "Alfafa",
+   "en": "Alfalfa",
+   "forma": "folha",
+   "cor": "#6ab04a",
+   "fome": 0,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "babosa",
+   "pt": "Babosa",
+   "en": "Aloe",
+   "forma": "cacto",
+   "cor": "#6aa86a",
+   "fome": 0,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "cacto_barril",
+   "pt": "Cacto-Barril",
+   "en": "Barrel Cactus",
+   "forma": "cacto",
+   "cor": "#4a8a4a",
+   "fome": 0,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "canola",
+   "pt": "Canola",
+   "en": "Canola",
+   "forma": "graos",
+   "cor": "#e8d040",
+   "fome": 0,
+   "horta": "horta_ventosa"
+  },
+  {
+   "id": "taboa",
+   "pt": "Taboa",
+   "en": "Cattail",
+   "forma": "taboa",
+   "cor": "#8a5a3a",
+   "fome": 0,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "chia",
+   "pt": "Chia",
+   "en": "Chia",
+   "forma": "graos",
+   "cor": "#6a6a6a",
+   "fome": 1,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "amora_artica",
+   "pt": "Amora-Ártica",
+   "en": "Cloudberry",
+   "forma": "baga",
+   "cor": "#f0a040",
+   "fome": 1,
+   "horta": "horta_gelada"
+  },
+  {
+   "id": "lotus",
+   "pt": "Lótus",
+   "en": "Lotus",
+   "forma": "flor",
+   "cor": "#f0a0c0",
+   "fome": 1,
+   "horta": "horta_umida"
+  },
+  {
+   "id": "urtiga",
+   "pt": "Urtiga",
+   "en": "Nettles",
+   "forma": "folha",
+   "cor": "#3a7a3a",
+   "fome": 0,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "palma",
+   "pt": "Palma",
+   "en": "Nopales",
+   "forma": "cacto",
+   "cor": "#5a9a4a",
+   "fome": 1,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "sorgo",
+   "pt": "Sorgo",
+   "en": "Sorghum",
+   "forma": "trigo",
+   "cor": "#a85a3a",
+   "fome": 0,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "trufa",
+   "pt": "Trufa",
+   "en": "Truffle",
+   "forma": "noz",
+   "cor": "#3a2a1a",
+   "fome": 1,
+   "horta": "horta_sombria"
+  },
+  {
+   "id": "goji",
+   "pt": "Goji",
+   "en": "Wolfberry",
+   "forma": "baga",
+   "cor": "#e04a2a",
+   "fome": 1,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "iuca",
+   "pt": "Iúca",
+   "en": "Yucca",
+   "forma": "raiz",
+   "cor": "#e8d8b0",
+   "fome": 0,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "couve_chinesa",
+   "pt": "Couve-Chinesa",
+   "en": "Bok Choy",
+   "forma": "folha",
+   "cor": "#8ac870",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "cabaca",
+   "pt": "Cabaça",
+   "en": "Calabash",
+   "forma": "alongado",
+   "cor": "#a0b060",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "guarana",
+   "pt": "Guaraná",
+   "en": "Guarana",
+   "forma": "baga",
+   "cor": "#c8302a",
+   "fome": 1,
+   "horta": "horta_tropical"
+  },
+  {
+   "id": "papiro",
+   "pt": "Papiro",
+   "en": "Papyrus",
+   "forma": "talo",
+   "cor": "#7a9a3a",
+   "fome": 0,
+   "horta": "horta_arida",
+   "deserto": true
+  },
+  {
+   "id": "tupinambo",
+   "pt": "Tupinambo",
+   "en": "Sunchoke",
+   "forma": "raiz",
+   "cor": "#c89a6a",
+   "fome": 1,
+   "horta": "horta_ventosa"
+  }
+ ],
+ "hortas": [
+  {
+   "id": "horta_arida",
+   "pt": "Horta Árida",
+   "en": "Arid Garden",
+   "itens": [
+    "cl:agave",
+    "cl:fruta_cacto",
+    "cl:mandioca",
+    "cl:grao_de_bico",
+    "cl:lentilha",
+    "cl:sisal",
+    "cl:goji",
+    "cl:cacto_barril",
+    "cl:chia",
+    "cl:palma",
+    "cl:iuca",
+    "cl:papiro"
+   ],
+   "biomas": [
+    "desert",
+    "mesa"
+   ],
+   "tentativas": 32,
+   "espalha": 6,
+   "altura": 2,
+   "raridade": 20
+  },
+  {
+   "id": "horta_gelada",
+   "pt": "Horta Gelada",
+   "en": "Frost Garden",
+   "itens": [
+    "cl:brocolis",
+    "cl:repolho",
+    "cl:couve_flor",
+    "cl:salsao",
+    "cl:algodao",
+    "cl:uva_do_monte",
+    "cl:zimbro",
+    "cl:couve_rabano",
+    "cl:aveia",
+    "cl:ervilha",
+    "cl:quinoa",
+    "cl:framboesa",
+    "cl:nabo_sueco",
+    "cl:centeio",
+    "cl:espinafre",
+    "cl:amora_artica"
+   ],
+   "biomas": [
+    "taiga"
+   ],
+   "tentativas": 32,
+   "espalha": 6,
+   "altura": 2,
+   "raridade": 20
+  },
+  {
+   "id": "horta_sombria",
+   "pt": "Horta Sombria",
+   "en": "Shaded Garden",
+   "itens": [
+    "cl:feijao",
+    "cl:amora_preta",
+    "cl:alho",
+    "cl:juta",
+    "cl:alho_poro",
+    "cl:rabanete",
+    "cl:ruibarbo",
+    "cl:cebolinha",
+    "cl:folha_tempero",
+    "cl:batata_doce",
+    "cl:folha_cha",
+    "cl:tomate",
+    "cl:nabo",
+    "cl:cogumelo_branco",
+    "cl:abobrinha",
+    "cl:trufa",
+    "cl:urtiga"
+   ],
+   "biomas": [
+    "forest"
+   ],
+   "tentativas": 32,
+   "espalha": 6,
+   "altura": 2,
+   "raridade": 20
+  },
+  {
+   "id": "horta_umida",
+   "pt": "Horta Úmida",
+   "en": "Soggy Garden",
+   "itens": [
+    "cl:aspargo",
+    "cl:mirtilo",
+    "cl:couve_bruxelas",
+    "cl:baga_cera",
+    "cl:algodao",
+    "cl:oxicoco",
+    "cl:uva_verde",
+    "cl:jicama",
+    "cl:couve",
+    "cl:painco",
+    "cl:amora",
+    "cl:quiabo",
+    "cl:arroz",
+    "cl:folha_tempero",
+    "cl:tomatilho",
+    "cl:castanha_dagua",
+    "cl:lotus",
+    "cl:taboa"
+   ],
+   "biomas": [
+    "swamp"
+   ],
+   "tentativas": 32,
+   "espalha": 6,
+   "altura": 2,
+   "raridade": 20
+  },
+  {
+   "id": "horta_tropical",
+   "pt": "Horta Tropical",
+   "en": "Tropical Garden",
+   "itens": [
+    "cl:araruta",
+    "cl:melao",
+    "cl:cafe",
+    "cl:berinjela",
+    "cl:uva",
+    "cl:kenaf",
+    "cl:kiwi",
+    "cl:abacaxi",
+    "cl:gergelim",
+    "cl:soja",
+    "cl:inhame",
+    "cl:gengibre",
+    "cl:sorgo",
+    "cl:babosa",
+    "cl:cabaca",
+    "cl:couve_chinesa",
+    "cl:guarana"
+   ],
+   "biomas": [
+    "jungle"
+   ],
+   "tentativas": 32,
+   "espalha": 6,
+   "altura": 2,
+   "raridade": 20
+  },
+  {
+   "id": "horta_ventosa",
+   "pt": "Horta Ventosa",
+   "en": "Windy Garden",
+   "itens": [
+    "cl:amaranto",
+    "cl:alcachofra",
+    "cl:cevada",
+    "cl:pimentao",
+    "cl:pimenta",
+    "cl:milho",
+    "cl:pepino",
+    "cl:sabugueiro",
+    "cl:linho",
+    "cl:alface",
+    "cl:mostarda",
+    "cl:cebola",
+    "cl:pastinaca",
+    "cl:amendoim",
+    "cl:morango",
+    "cl:abobora_inverno",
+    "cl:alfafa",
+    "cl:canola",
+    "cl:tupinambo"
+   ],
+   "biomas": [
+    "plains",
+    "savanna"
+   ],
+   "tentativas": 32,
+   "espalha": 6,
+   "altura": 2,
+   "raridade": 20
+  }
+ ],
+ "arvores": [
+  {
+   "id": "bolota",
+   "pt": "Bolota",
+   "en": "Acorn",
+   "forma": "noz",
+   "cor": "#8a5a2a",
+   "produto": "cl:bolota",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "amendoa",
+   "pt": "Amêndoa",
+   "en": "Almond",
+   "forma": "noz",
+   "cor": "#c89a6a",
+   "produto": "cl:amendoa",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "maca",
+   "pt": "Maçã",
+   "en": "Apple",
+   "forma": "redondo",
+   "cor": "#d8332a",
+   "produto": "minecraft:apple",
+   "fome": 0,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "damasco",
+   "pt": "Damasco",
+   "en": "Apricot",
+   "forma": "redondo",
+   "cor": "#f0a040",
+   "produto": "cl:damasco",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "abacate",
+   "pt": "Abacate",
+   "en": "Avocado",
+   "forma": "pera",
+   "cor": "#4a7a2a",
+   "produto": "cl:abacate",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "banana",
+   "pt": "Banana",
+   "en": "Banana",
+   "forma": "banana",
+   "cor": "#f0d040",
+   "produto": "cl:banana",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "fruta_pao",
+   "pt": "Fruta-Pão",
+   "en": "Breadfruit",
+   "forma": "redondo",
+   "cor": "#8ab040",
+   "produto": "cl:fruta_pao",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "noz_iguape",
+   "pt": "Noz-de-Iguape",
+   "en": "Candlenut",
+   "forma": "noz",
+   "cor": "#c8b090",
+   "produto": "cl:noz_iguape",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "castanha_caju",
+   "pt": "Castanha-de-Caju",
+   "en": "Cashew",
+   "forma": "noz",
+   "cor": "#e8c890",
+   "produto": "cl:castanha_caju",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "cereja",
+   "pt": "Cereja",
+   "en": "Cherry",
+   "forma": "cereja",
+   "cor": "#c8202a",
+   "produto": "cl:cereja",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "castanha",
+   "pt": "Castanha",
+   "en": "Chestnut",
+   "forma": "noz",
+   "cor": "#6a3a1a",
+   "produto": "cl:castanha",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "canela",
+   "pt": "Canela",
+   "en": "Cinnamon",
+   "forma": "canela",
+   "cor": "#a0602a",
+   "produto": "cl:canela",
+   "fome": 0,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    1
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": true
+  },
+  {
+   "id": "coco",
+   "pt": "Coco",
+   "en": "Coconut",
+   "forma": "coco",
+   "cor": "#6a4a2a",
+   "produto": "cl:coco",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "pitaya",
+   "pt": "Pitaya",
+   "en": "Dragonfruit",
+   "forma": "redondo",
+   "cor": "#e0407a",
+   "produto": "cl:pitaya",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "durian",
+   "pt": "Durião",
+   "en": "Durian",
+   "forma": "redondo",
+   "cor": "#b0a040",
+   "produto": "cl:durian",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "figo",
+   "pt": "Figo",
+   "en": "Fig",
+   "forma": "pera",
+   "cor": "#6a3a5a",
+   "produto": "cl:figo",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "groselha",
+   "pt": "Groselha",
+   "en": "Gooseberry",
+   "forma": "baga",
+   "cor": "#a0c050",
+   "produto": "cl:groselha",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "toranja",
+   "pt": "Toranja",
+   "en": "Grapefruit",
+   "forma": "redondo",
+   "cor": "#f08060",
+   "produto": "cl:toranja",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "goiaba",
+   "pt": "Goiaba",
+   "en": "Guava",
+   "forma": "redondo",
+   "cor": "#b0d060",
+   "produto": "cl:goiaba",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "avela",
+   "pt": "Avelã",
+   "en": "Hazelnut",
+   "forma": "noz",
+   "cor": "#a0703a",
+   "produto": "cl:avela",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "jaca",
+   "pt": "Jaca",
+   "en": "Jackfruit",
+   "forma": "alongado",
+   "cor": "#a0b030",
+   "produto": "cl:jaca",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "limao_siciliano",
+   "pt": "Limão-Siciliano",
+   "en": "Lemon",
+   "forma": "redondo",
+   "cor": "#f0e040",
+   "produto": "cl:limao_siciliano",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "limao",
+   "pt": "Limão",
+   "en": "Lime",
+   "forma": "redondo",
+   "cor": "#60b030",
+   "produto": "cl:limao",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "lichia",
+   "pt": "Lichia",
+   "en": "Lychee",
+   "forma": "baga",
+   "cor": "#d04050",
+   "produto": "cl:lichia",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "manga",
+   "pt": "Manga",
+   "en": "Mango",
+   "forma": "pera",
+   "cor": "#f0a020",
+   "produto": "cl:manga",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "xarope_bordo",
+   "pt": "Xarope de Bordo",
+   "en": "Maple Syrup",
+   "forma": "xarope",
+   "cor": "#b0601a",
+   "produto": "cl:xarope_bordo",
+   "fome": 1,
+   "tronco": "minecraft:spruce_log",
+   "folha": "minecraft:spruce_leaves",
+   "altura": [
+    4,
+    1,
+    1
+   ],
+   "grupo": "conifera",
+   "raridade": 90,
+   "no_tronco": true
+  },
+  {
+   "id": "noz_moscada",
+   "pt": "Noz-Moscada",
+   "en": "Nutmeg",
+   "forma": "noz",
+   "cor": "#8a5a3a",
+   "produto": "cl:noz_moscada",
+   "fome": 0,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "azeitona",
+   "pt": "Azeitona",
+   "en": "Olive",
+   "forma": "baga",
+   "cor": "#5a6a2a",
+   "produto": "cl:azeitona",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "laranja",
+   "pt": "Laranja",
+   "en": "Orange",
+   "forma": "redondo",
+   "cor": "#f08a1a",
+   "produto": "cl:laranja",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "mamao",
+   "pt": "Mamão",
+   "en": "Papaya",
+   "forma": "alongado",
+   "cor": "#f0a040",
+   "produto": "cl:mamao",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "casca_papel",
+   "pt": "Casca-de-Papel",
+   "en": "Paperbark",
+   "forma": "papel",
+   "cor": "#e8e0c8",
+   "produto": "minecraft:paper",
+   "fome": 0,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    1
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": true
+  },
+  {
+   "id": "maracuja",
+   "pt": "Maracujá",
+   "en": "Passionfruit",
+   "forma": "redondo",
+   "cor": "#e0c040",
+   "produto": "cl:maracuja",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "asimina",
+   "pt": "Asimina",
+   "en": "Pawpaw",
+   "forma": "pera",
+   "cor": "#a0c050",
+   "produto": "cl:asimina",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "pessego",
+   "pt": "Pêssego",
+   "en": "Peach",
+   "forma": "redondo",
+   "cor": "#f0a080",
+   "produto": "cl:pessego",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "pera",
+   "pt": "Pera",
+   "en": "Pear",
+   "forma": "pera",
+   "cor": "#c0d050",
+   "produto": "cl:pera",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "peca",
+   "pt": "Pecã",
+   "en": "Pecan",
+   "forma": "noz",
+   "cor": "#8a4a2a",
+   "produto": "cl:peca",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "pimenta_reino",
+   "pt": "Pimenta-do-Reino",
+   "en": "Peppercorn",
+   "forma": "graos",
+   "cor": "#3a2a2a",
+   "produto": "cl:pimenta_reino",
+   "fome": 0,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "caqui",
+   "pt": "Caqui",
+   "en": "Persimmon",
+   "forma": "redondo",
+   "cor": "#f07020",
+   "produto": "cl:caqui",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "pinoli",
+   "pt": "Pinoli",
+   "en": "Pinenuts",
+   "forma": "noz",
+   "cor": "#c89a5a",
+   "produto": "cl:pinoli",
+   "fome": 1,
+   "tronco": "minecraft:spruce_log",
+   "folha": "minecraft:spruce_leaves",
+   "altura": [
+    7,
+    2,
+    3
+   ],
+   "grupo": "conifera",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "pistache",
+   "pt": "Pistache",
+   "en": "Pistachio",
+   "forma": "noz",
+   "cor": "#a0c060",
+   "produto": "cl:pistache",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "ameixa",
+   "pt": "Ameixa",
+   "en": "Plum",
+   "forma": "redondo",
+   "cor": "#6a2a6a",
+   "produto": "cl:ameixa",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "roma",
+   "pt": "Romã",
+   "en": "Pomegranate",
+   "forma": "redondo",
+   "cor": "#b02030",
+   "produto": "cl:roma",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "rambutan",
+   "pt": "Rambutã",
+   "en": "Rambutan",
+   "forma": "baga",
+   "cor": "#d03040",
+   "produto": "cl:rambutan",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "graviola",
+   "pt": "Graviola",
+   "en": "Soursop",
+   "forma": "pera",
+   "cor": "#6a9a3a",
+   "produto": "cl:graviola",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "teia",
+   "pt": "Teia",
+   "en": "Spiderweb",
+   "forma": "teia",
+   "cor": "#f0f0f0",
+   "produto": "minecraft:string",
+   "fome": 0,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "carambola",
+   "pt": "Carambola",
+   "en": "Starfruit",
+   "forma": "carambola",
+   "cor": "#e0d040",
+   "produto": "cl:carambola",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "tamarindo",
+   "pt": "Tamarindo",
+   "en": "Tamarind",
+   "forma": "vagem",
+   "cor": "#8a5a2a",
+   "produto": "cl:tamarindo",
+   "fome": 1,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "baunilha",
+   "pt": "Fava de Baunilha",
+   "en": "Vanillabean",
+   "forma": "vagem",
+   "cor": "#3a2a1a",
+   "produto": "cl:baunilha",
+   "fome": 0,
+   "tronco": "minecraft:jungle_log",
+   "folha": "minecraft:jungle_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "quente",
+   "raridade": 90,
+   "no_tronco": false
+  },
+  {
+   "id": "noz",
+   "pt": "Noz",
+   "en": "Walnut",
+   "forma": "noz",
+   "cor": "#8a6a3a",
+   "produto": "cl:noz",
+   "fome": 1,
+   "tronco": "minecraft:oak_log",
+   "folha": "minecraft:oak_leaves",
+   "altura": [
+    4,
+    1,
+    2
+   ],
+   "grupo": "temperada",
+   "raridade": 90,
+   "no_tronco": false
+  }
+ ],
+ "comidas": [
+  {
+   "id": "rosquinha_maca",
+   "pt": "Rosquinha de Maçã",
+   "en": "Apple Donut",
+   "icone": "rosca:#d8332a",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:apple"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "geleia_maca",
+   "pt": "Geleia de Maçã",
+   "en": "Apple Jelly",
+   "icone": "pote:#d8332a",
+   "fome": 2,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:suco_maca",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torrada_geleia_maca",
+   "pt": "Torrada com Geleia de Maçã",
+   "en": "Apple Jelly Toast",
+   "icone": "pao:#d8332a",
+   "fome": 3,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:torrada",
+       "cl:geleia_maca"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "suco_maca",
+   "pt": "Suco de Maçã",
+   "en": "Apple Juice",
+   "icone": "copo:#d8332a",
+   "fome": 2,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "minecraft:apple",
+       "minecraft:apple"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_maca",
+   "pt": "Muffin de Maçã",
+   "en": "Apple Muffin",
+   "icone": "muffin:#d8332a",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:apple",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc_torta_maca",
+   "pt": "Torta de Maçã",
+   "en": "Apple Pie",
+   "icone": "torta:#d8332a",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:apple",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "picole_maca",
+   "pt": "Picolé de Maçã",
+   "en": "Apple Popsicle",
+   "icone": "picole:#d8332a",
+   "fome": 3,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_maca",
+       "minecraft:ice",
+       "minecraft:stick"
+      ],
+      [
+       "cl:suco_maca",
+       "minecraft:snowball",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pure_maca",
+   "pt": "Purê de Maçã",
+   "en": "Applesauce",
+   "icone": "tigela:#e8c070",
+   "fome": 3,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "minecraft:apple",
+       "minecraft:apple",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "vitamina_maca",
+   "pt": "Vitamina de Maçã",
+   "en": "Apple Smoothie",
+   "icone": "copo:#d8332a",
+   "fome": 3,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_maca",
+       "minecraft:ice"
+      ],
+      [
+       "cl:suco_maca",
+       "minecraft:snowball"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_maca",
+   "pt": "Iogurte de Maçã",
+   "en": "Apple Yogurt",
+   "icone": "pote:#d8332a",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "minecraft:apple"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "ovos_bacon",
+   "pt": "Ovos com Bacon",
+   "en": "Bacon and Eggs",
+   "icone": "prato:#c84a3a",
+   "fome": 2,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:egg",
+       "minecraft:porkchop"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "x_bacon",
+   "pt": "X-Bacon",
+   "en": "Bacon Cheeseburger",
+   "icone": "sanduiche:#c84a3a",
+   "fome": 6,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_carne",
+       "cl:maionese",
+       "minecraft:bread",
+       "minecraft:porkchop",
+       "cl:queijo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "legumes_assados",
+   "pt": "Legumes Assados",
+   "en": "Baked Vegetable Medly",
+   "icone": "prato:#5aa03a",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal"
+      ],
+      [
+       "minecraft:carrot",
+       "minecraft:carrot"
+      ],
+      [
+       "minecraft:potato",
+       "minecraft:potato"
+      ],
+      [
+       "minecraft:beetroot",
+       "minecraft:beetroot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "x_burguer",
+   "pt": "X-Búrguer",
+   "en": "Basic Cheeseburger",
+   "icone": "sanduiche:#f4c542",
+   "fome": 4,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_carne",
+       "cl:maionese",
+       "minecraft:bread",
+       "cl:queijo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sanduiche_peixe",
+   "pt": "Sanduíche de Peixe",
+   "en": "Basic Fish Sandwich",
+   "icone": "sanduiche:#d9b28c",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_peixe",
+       "cl:maionese",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hamburguer_simples",
+   "pt": "Hambúrguer Simples",
+   "en": "Basic Hamburger",
+   "icone": "sanduiche:#7a4a2a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_carne",
+       "cl:maionese",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sanduiche_carneiro",
+   "pt": "Sanduíche de Carneiro",
+   "en": "Basic Mutton Sandwich",
+   "icone": "sanduiche:#b5523a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_carneiro",
+       "cl:maionese",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sanduiche_porco",
+   "pt": "Sanduíche de Porco",
+   "en": "Basic Pork Sandwich",
+   "icone": "sanduiche:#e8a0a0",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_porco",
+       "cl:maionese",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sanduiche_coelho",
+   "pt": "Sanduíche de Coelho",
+   "en": "Basic Rabbit Sandwich",
+   "icone": "sanduiche:#c89a7a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_coelho",
+       "cl:maionese",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hamburguer_vegetariano",
+   "pt": "Hambúrguer Vegetariano",
+   "en": "Basic Veggie Burger",
+   "icone": "sanduiche:#5aa03a",
+   "fome": 4,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "cl:maionese",
+       "minecraft:bread"
+      ],
+      [
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "cl:maionese",
+       "minecraft:bread"
+      ],
+      [
+       "minecraft:potato",
+       "minecraft:potato",
+       "cl:maionese",
+       "minecraft:bread"
+      ],
+      [
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "cl:maionese",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_macarrao_carne",
+   "pt": "Sopa de Macarrão com Carne",
+   "en": "Beef Noodle Soup",
+   "icone": "tigela:#8b3a2a",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "minecraft:beef"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:beef"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:beef"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:beetroot",
+       "minecraft:beef"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "empadao_carne",
+   "pt": "Empadão de Carne",
+   "en": "Beef Pot Pie",
+   "icone": "torta:#8b3a2a",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:beef",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "batata_manteiga",
+   "pt": "Batata Assada com Manteiga",
+   "en": "Buttered Baked Potato",
+   "icone": "prato:#d8a85a",
+   "fome": 3,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "minecraft:baked_potato",
+       "cl:manteiga",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "maca_amor",
+   "pt": "Maçã do Amor",
+   "en": "Caramel Apple",
+   "icone": "bola:#b8302a",
+   "fome": 3,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:caramelo",
+       "minecraft:apple",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_caramelo",
+   "pt": "Rosquinha de Caramelo",
+   "en": "Caramel Donut",
+   "icone": "rosca:#c8842a",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "cl:caramelo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sorvete_caramelo",
+   "pt": "Sorvete de Caramelo",
+   "en": "Caramel Ice Cream",
+   "icone": "sorvete:#c8842a",
+   "fome": 2,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:sorvete",
+       "cl:caramelo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "caramelo",
+   "pt": "Caramelo",
+   "en": "Caramel",
+   "icone": "bloco:#c8842a",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "minecraft:sugar",
+       "cl:leite_fresco"
+      ],
+      [
+       "minecraft:sugar",
+       "minecraft:milk_bucket"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_caramelo",
+   "pt": "Muffin de Caramelo",
+   "en": "Caramel Muffin",
+   "icone": "muffin:#c8842a",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:caramelo",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torta_caramelo",
+   "pt": "Torta de Caramelo",
+   "en": "Caramel Pie",
+   "icone": "torta:#c8842a",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "cl:caramelo",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_caramelo",
+   "pt": "Iogurte de Caramelo",
+   "en": "Caramel Yogurt",
+   "icone": "pote:#c8842a",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "cl:caramelo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pao_cenoura",
+   "pt": "Pão de Cenoura",
+   "en": "Carrot Bread",
+   "icone": "pao:#f08a24",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "bolo_cenoura",
+   "pt": "Bolo de Cenoura",
+   "en": "Carrot Cake",
+   "icone": "bolo:#f08a24",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:carrot",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_cenoura",
+   "pt": "Rosquinha de Cenoura",
+   "en": "Carrot Donut",
+   "icone": "rosca:#f08a24",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:carrot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "suco_cenoura",
+   "pt": "Suco de Cenoura",
+   "en": "Carrot Juice",
+   "icone": "copo:#f08a24",
+   "fome": 1,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "minecraft:carrot",
+       "minecraft:carrot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_cenoura",
+   "pt": "Muffin de Cenoura",
+   "en": "Carrot Muffin",
+   "icone": "muffin:#f08a24",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:carrot",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torta_cenoura",
+   "pt": "Torta de Cenoura",
+   "en": "Carrot Pie",
+   "icone": "torta:#f08a24",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_cenoura",
+   "pt": "Sopa de Cenoura",
+   "en": "Carrot Soup",
+   "icone": "tigela:#f08a24",
+   "fome": 2,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:carrot",
+       "cl:caldo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc_cheesecake",
+   "pt": "Cheesecake",
+   "en": "Cheese Cake",
+   "icone": "bolo:#f4e0a0",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "cl:queijo",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "jantar_frango",
+   "pt": "Jantar de Frango",
+   "en": "Chicken Dinner",
+   "icone": "prato:#e8c27a",
+   "fome": 5,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:frango_frito",
+       "cl:pure_batata",
+       "#cl:hc_vegetal"
+      ],
+      [
+       "cl:frango_frito",
+       "cl:pure_batata",
+       "minecraft:carrot"
+      ],
+      [
+       "cl:frango_frito",
+       "cl:pure_batata",
+       "minecraft:potato"
+      ],
+      [
+       "cl:frango_frito",
+       "cl:pure_batata",
+       "minecraft:beetroot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "charque_frango",
+   "pt": "Charque de Frango",
+   "en": "Chicken Jerky",
+   "icone": "tira:#e8c27a",
+   "fome": 1,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "minecraft:chicken",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_macarrao_frango",
+   "pt": "Sopa de Macarrão com Frango",
+   "en": "Chicken Noodle Soup",
+   "icone": "tigela:#e8c27a",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "minecraft:chicken"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:chicken"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:chicken"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:beetroot",
+       "minecraft:chicken"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "nuggets_frango",
+   "pt": "Nuggets de Frango",
+   "en": "Chicken Nugget",
+   "icone": "prato:#d8a040",
+   "fome": 1,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:moido_frango",
+       "cl:farinha"
+      ]
+     ],
+     4
+    ]
+   ]
+  },
+  {
+   "id": "empadao_frango",
+   "pt": "Empadão de Frango",
+   "en": "Chicken Pot Pie",
+   "icone": "torta:#e8c27a",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:chicken",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "bacon_chocolate",
+   "pt": "Bacon com Chocolate",
+   "en": "Chocolate Bacon",
+   "icone": "tira:#5a3220",
+   "fome": 2,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:barra_chocolate",
+       "minecraft:porkchop"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "barra_chocolate",
+   "pt": "Barra de Chocolate",
+   "en": "Chocolate Bar",
+   "icone": "barra:#5a3220",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "minecraft:cocoa_beans"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "bolo_chocolate",
+   "pt": "Bolo de Chocolate",
+   "en": "Chocolate Cake",
+   "icone": "bolo:#5a3220",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "cl:barra_chocolate",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "fudge_chocolate",
+   "pt": "Fudge de Chocolate e Caramelo",
+   "en": "Chocolate Caramel Fudge",
+   "icone": "bloco:#6a3a20",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:barra_chocolate",
+       "cl:caramelo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_chocolate",
+   "pt": "Rosquinha de Chocolate",
+   "en": "Chocolate Donut",
+   "icone": "rosca:#5a3220",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "cl:cacau_po"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sorvete_chocolate",
+   "pt": "Sorvete de Chocolate",
+   "en": "Chocolate Ice Cream",
+   "icone": "sorvete:#5a3220",
+   "fome": 2,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:sorvete",
+       "cl:cacau_po"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "achocolatado",
+   "pt": "Achocolatado",
+   "en": "Chocolate Milk",
+   "icone": "copo:#8a5a3a",
+   "fome": 1,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:cacau_po",
+       "cl:leite_fresco"
+      ],
+      [
+       "cl:cacau_po",
+       "minecraft:milk_bucket"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_chocolate",
+   "pt": "Muffin de Chocolate",
+   "en": "Chocolate Muffin",
+   "icone": "muffin:#5a3220",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:cacau_po",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc_torta_chocolate",
+   "pt": "Torta de Chocolate",
+   "en": "Chocolate Pie",
+   "icone": "torta:#5a3220",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "cl:cacau_po",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rocambole_chocolate",
+   "pt": "Rocambole de Chocolate",
+   "en": "Chocolate Roll",
+   "icone": "pao:#5a3220",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:massa",
+       "cl:cacau_po",
+       "cl:creme_leite"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_chocolate",
+   "pt": "Iogurte de Chocolate",
+   "en": "Chocolate Yogurt",
+   "icone": "pote:#5a3220",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "cl:cacau_po"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_coro",
+   "pt": "Rosquinha de Fruta do Coro",
+   "en": "Chorus Donut",
+   "icone": "rosca:#a678c8",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:chorus_fruit"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "geleia_coro",
+   "pt": "Geleia de Fruta do Coro",
+   "en": "Chorus Jelly",
+   "icone": "pote:#a678c8",
+   "fome": 2,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:suco_coro",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torrada_geleia_coro",
+   "pt": "Torrada com Geleia de Fruta do Coro",
+   "en": "Chorus Jelly Toast",
+   "icone": "pao:#a678c8",
+   "fome": 3,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:torrada",
+       "cl:geleia_coro"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "suco_coro",
+   "pt": "Suco de Fruta do Coro",
+   "en": "Chorus Juice",
+   "icone": "copo:#a678c8",
+   "fome": 2,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "minecraft:chorus_fruit",
+       "minecraft:chorus_fruit"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_coro",
+   "pt": "Muffin de Fruta do Coro",
+   "en": "Chorus Muffin",
+   "icone": "muffin:#a678c8",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:chorus_fruit",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torta_coro",
+   "pt": "Torta de Fruta do Coro",
+   "en": "Chorus Pie",
+   "icone": "torta:#a678c8",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:chorus_fruit",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "picole_coro",
+   "pt": "Picolé de Fruta do Coro",
+   "en": "Chorus Popsicle",
+   "icone": "picole:#a678c8",
+   "fome": 3,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_coro",
+       "minecraft:ice",
+       "minecraft:stick"
+      ],
+      [
+       "cl:suco_coro",
+       "minecraft:snowball",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "vitamina_coro",
+   "pt": "Vitamina de Fruta do Coro",
+   "en": "Chorus Smoothie",
+   "icone": "copo:#a678c8",
+   "fome": 3,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_coro",
+       "minecraft:ice"
+      ],
+      [
+       "cl:suco_coro",
+       "minecraft:snowball"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_coro",
+   "pt": "Iogurte de Fruta do Coro",
+   "en": "Chorus Yogurt",
+   "icone": "pote:#a678c8",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "minecraft:chorus_fruit"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "cacau_po",
+   "pt": "Cacau em Pó",
+   "en": "Cocoa Powder",
+   "icone": "po:#6a3a20",
+   "fome": 0,
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "minecraft:cocoa_beans"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "moido_carne_cozido",
+   "pt": "Carne Moída Cozida",
+   "en": "Cooked Ground Beef",
+   "icone": "po:#8b3a2a",
+   "fome": 2,
+   "receitas": [],
+   "forno": [
+    "cl:moido_carne"
+   ]
+  },
+  {
+   "id": "moido_frango_cozido",
+   "pt": "Frango Moído Cozido",
+   "en": "Cooked Ground Chicken",
+   "icone": "po:#e8c27a",
+   "fome": 2,
+   "receitas": [],
+   "forno": [
+    "cl:moido_frango"
+   ]
+  },
+  {
+   "id": "moido_peixe_cozido",
+   "pt": "Peixe Moído Cozido",
+   "en": "Cooked Ground Fish",
+   "icone": "po:#d9b28c",
+   "fome": 1,
+   "receitas": [],
+   "forno": [
+    "cl:moido_peixe"
+   ]
+  },
+  {
+   "id": "moido_carneiro_cozido",
+   "pt": "Carneiro Moído Cozido",
+   "en": "Cooked Ground Mutton",
+   "icone": "po:#b5523a",
+   "fome": 2,
+   "receitas": [],
+   "forno": [
+    "cl:moido_carneiro"
+   ]
+  },
+  {
+   "id": "moido_porco_cozido",
+   "pt": "Porco Moído Cozido",
+   "en": "Cooked Ground Pork",
+   "icone": "po:#e8a0a0",
+   "fome": 2,
+   "receitas": [],
+   "forno": [
+    "cl:moido_porco"
+   ]
+  },
+  {
+   "id": "moido_coelho_cozido",
+   "pt": "Coelho Moído Cozido",
+   "en": "Cooked Ground Rabbit",
+   "icone": "po:#c89a7a",
+   "fome": 1,
+   "receitas": [],
+   "forno": [
+    "cl:moido_coelho"
+   ]
+  },
+  {
+   "id": "biscoitos_leite",
+   "pt": "Biscoitos com Leite",
+   "en": "Cookies and Milk",
+   "icone": "copo:#f4f1e8",
+   "fome": 1,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:leite_fresco",
+       "minecraft:cookie"
+      ],
+      [
+       "minecraft:milk_bucket",
+       "minecraft:cookie"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "oleo_cozinha",
+   "pt": "Óleo de Cozinha",
+   "en": "Cooking Oil",
+   "icone": "garrafa:#e8c040",
+   "fome": 0,
+   "receitas": [
+    [
+     "rolo",
+     [
+      [
+       "#cl:hc_noz"
+      ]
+     ],
+     2
+    ],
+    [
+     "rolo",
+     [
+      [
+       "#cl:hc_vegetal"
+      ],
+      [
+       "minecraft:carrot"
+      ],
+      [
+       "minecraft:potato"
+      ],
+      [
+       "minecraft:beetroot"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "algodao_doce",
+   "pt": "Algodão-Doce",
+   "en": "Cotton Candy",
+   "icone": "algodao:#f0a0c8",
+   "fome": 1,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "bolacha",
+   "pt": "Bolacha",
+   "en": "Cracker",
+   "icone": "disco:#e0b870",
+   "fome": 1,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:farinha",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "bolachas_queijo",
+   "pt": "Bolachas com Queijo",
+   "en": "Crackers and Cheese",
+   "icone": "disco:#f4c542",
+   "fome": 4,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:bolacha",
+       "cl:queijo",
+       "cl:bolacha"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "creme_leite",
+   "pt": "Creme de Leite",
+   "en": "Cream",
+   "icone": "pote:#fbf6e8",
+   "fome": 0,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:leite_fresco"
+      ],
+      [
+       "minecraft:milk_bucket"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "bacon_epico",
+   "pt": "Bacon Épico",
+   "en": "Epic Bacon",
+   "icone": "tira:#d83a8a",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:cooked_porkchop",
+       "minecraft:red_dye",
+       "minecraft:orange_dye",
+       "minecraft:yellow_dye",
+       "minecraft:green_dye",
+       "minecraft:blue_dye",
+       "minecraft:purple_dye",
+       "minecraft:pink_dye"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "peixe_fritas",
+   "pt": "Peixe com Fritas",
+   "en": "Fish and Chips",
+   "icone": "prato:#d9b28c",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:cod",
+       "cl:farinha",
+       "cl:batata_frita"
+      ],
+      [
+       "minecraft:salmon",
+       "cl:farinha",
+       "cl:batata_frita"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "charque_peixe",
+   "pt": "Charque de Peixe",
+   "en": "Fish Jerky",
+   "icone": "tira:#d9b28c",
+   "fome": 1,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "minecraft:cod",
+       "cl:sal"
+      ],
+      [
+       "minecraft:salmon",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_macarrao_peixe",
+   "pt": "Sopa de Macarrão com Peixe",
+   "en": "Fish Noodle Soup",
+   "icone": "tigela:#d9b28c",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "minecraft:cod"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "minecraft:salmon"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:cod"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:salmon"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:cod"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:salmon"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "empadao_peixe",
+   "pt": "Empadão de Peixe",
+   "en": "Fish Pot Pie",
+   "icone": "torta:#d9b28c",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:cod",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ],
+      [
+       "minecraft:salmon",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iscas_peixe",
+   "pt": "Iscas de Peixe",
+   "en": "Fish Sticks",
+   "icone": "prato:#d8a040",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:moido_peixe",
+       "cl:farinha"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "leite_fresco",
+   "pt": "Leite Fresco",
+   "en": "Fresh Milk",
+   "icone": "copo:#f8f8f4",
+   "fome": 0,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "",
+     [
+      [
+       "minecraft:milk_bucket"
+      ]
+     ],
+     8
+    ]
+   ]
+  },
+  {
+   "id": "frango_frito",
+   "pt": "Frango Frito",
+   "en": "Fried Chicken",
+   "icone": "prato:#c88a3a",
+   "fome": 2,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:farinha",
+       "minecraft:chicken",
+       "cl:oleo_cozinha"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "batata_frita",
+   "pt": "Batata Frita",
+   "en": "Fries",
+   "icone": "fritas:#f0c040",
+   "fome": 2,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:potato",
+       "cl:oleo_cozinha",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "ponche_frutas",
+   "pt": "Ponche de Frutas",
+   "en": "Fruit Punch",
+   "icone": "copo:#e04a5a",
+   "fome": 3,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "#cl:hc_fruta",
+       "#cl:hc_fruta",
+       "#cl:hc_fruta"
+      ],
+      [
+       "minecraft:apple",
+       "minecraft:apple",
+       "minecraft:apple"
+      ],
+      [
+       "minecraft:melon_slice",
+       "minecraft:melon_slice",
+       "minecraft:melon_slice"
+      ],
+      [
+       "minecraft:sweet_berries",
+       "minecraft:sweet_berries",
+       "minecraft:sweet_berries"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "picole_chocolate",
+   "pt": "Picolé de Chocolate",
+   "en": "Fudgesicle",
+   "icone": "picole:#5a3220",
+   "fome": 2,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:achocolatado",
+       "minecraft:ice",
+       "minecraft:stick"
+      ],
+      [
+       "cl:achocolatado",
+       "minecraft:snowball",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "cenouras_glaceadas",
+   "pt": "Cenouras Glaceadas",
+   "en": "Glazed Carrots",
+   "icone": "prato:#f08a24",
+   "fome": 2,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "minecraft:carrot",
+       "cl:manteiga",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_bagas_brilhantes",
+   "pt": "Rosquinha de Bagas Brilhantes",
+   "en": "Glow Berry Donut",
+   "icone": "rosca:#f2a93b",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:glow_berries"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "geleia_bagas_brilhantes",
+   "pt": "Geleia de Bagas Brilhantes",
+   "en": "Glow Berry Jelly",
+   "icone": "pote:#f2a93b",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:suco_bagas_brilhantes",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torrada_geleia_bagas_brilhantes",
+   "pt": "Torrada com Geleia de Bagas Brilhantes",
+   "en": "Glow Berry Jelly Toast",
+   "icone": "pao:#f2a93b",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:torrada",
+       "cl:geleia_bagas_brilhantes"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "suco_bagas_brilhantes",
+   "pt": "Suco de Bagas Brilhantes",
+   "en": "Glow Berry Juice",
+   "icone": "copo:#f2a93b",
+   "fome": 1,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "minecraft:glow_berries",
+       "minecraft:glow_berries"
+      ]
+     ],
+     1
+    ],
+    [
+     "espremedor",
+     [],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_bagas_brilhantes",
+   "pt": "Muffin de Bagas Brilhantes",
+   "en": "Glow Berry Muffin",
+   "icone": "muffin:#f2a93b",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:glow_berries",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torta_bagas_brilhantes",
+   "pt": "Torta de Bagas Brilhantes",
+   "en": "Glow Berry Pie",
+   "icone": "torta:#f2a93b",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:glow_berries",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "picole_bagas_brilhantes",
+   "pt": "Picolé de Bagas Brilhantes",
+   "en": "Glow Berry Popsicle",
+   "icone": "picole:#f2a93b",
+   "fome": 2,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_bagas_brilhantes",
+       "minecraft:ice",
+       "minecraft:stick"
+      ],
+      [
+       "cl:suco_bagas_brilhantes",
+       "minecraft:snowball",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "vitamina_bagas_brilhantes",
+   "pt": "Vitamina de Bagas Brilhantes",
+   "en": "Glow Berry Smoothie",
+   "icone": "copo:#f2a93b",
+   "fome": 1,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_bagas_brilhantes",
+       "minecraft:ice"
+      ],
+      [
+       "cl:suco_bagas_brilhantes",
+       "minecraft:snowball"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_bagas_brilhantes",
+   "pt": "Iogurte de Bagas Brilhantes",
+   "en": "Glow Berry Yogurt",
+   "icone": "pote:#f2a93b",
+   "fome": 1,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "minecraft:glow_berries"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "espetinho_carne",
+   "pt": "Espetinho de Carne",
+   "en": "Grilled Beef Skewer",
+   "icone": "espeto:#8b3a2a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:beef",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:beef",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:beef",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:beef",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "misto_quente",
+   "pt": "Misto-Quente",
+   "en": "Grilled Cheese and Ham",
+   "icone": "sanduiche:#e8a0a0",
+   "fome": 4,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:bread",
+       "cl:manteiga",
+       "cl:queijo",
+       "minecraft:porkchop"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "queijo_quente",
+   "pt": "Queijo Quente",
+   "en": "Grilled Cheese",
+   "icone": "sanduiche:#f4c542",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:bread",
+       "cl:manteiga",
+       "cl:queijo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "espetinho_frango",
+   "pt": "Espetinho de Frango",
+   "en": "Grilled Chicken Skewer",
+   "icone": "espeto:#e8c27a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:chicken",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:chicken",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:chicken",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:chicken",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "espetinho_peixe",
+   "pt": "Espetinho de Peixe",
+   "en": "Grilled Fish Skewer",
+   "icone": "espeto:#d9b28c",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:cod",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:cod",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:cod",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:cod",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:salmon",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:salmon",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "espetinho_carneiro",
+   "pt": "Espetinho de Carneiro",
+   "en": "Grilled Mutton Skewer",
+   "icone": "espeto:#b5523a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:mutton",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:mutton",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:mutton",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:mutton",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "espetinho_porco",
+   "pt": "Espetinho de Porco",
+   "en": "Grilled Pork Skewer",
+   "icone": "espeto:#e8a0a0",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:porkchop",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:porkchop",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:porkchop",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:porkchop",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "espetinho_coelho",
+   "pt": "Espetinho de Coelho",
+   "en": "Grilled Rabbit Skewer",
+   "icone": "espeto:#c89a7a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:rabbit",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:rabbit",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:rabbit",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:rabbit",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "espetinho_legumes",
+   "pt": "Espetinho de Legumes",
+   "en": "Grilled Veggie Skewer",
+   "icone": "espeto:#5aa03a",
+   "fome": 3,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:stick"
+      ],
+      [
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "moido_carne",
+   "pt": "Carne Moída",
+   "en": "Ground Beef",
+   "icone": "po:#8b3a2a",
+   "fome": 1,
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "minecraft:beef"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "moido_frango",
+   "pt": "Frango Moído",
+   "en": "Ground Chicken",
+   "icone": "po:#e8c27a",
+   "fome": 1,
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "minecraft:chicken"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "moido_peixe",
+   "pt": "Peixe Moído",
+   "en": "Ground Fish",
+   "icone": "po:#d9b28c",
+   "fome": 1,
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "minecraft:cod"
+      ],
+      [
+       "minecraft:salmon"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "moido_carneiro",
+   "pt": "Carneiro Moído",
+   "en": "Ground Mutton",
+   "icone": "po:#b5523a",
+   "fome": 1,
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "minecraft:mutton"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "moido_porco",
+   "pt": "Porco Moído",
+   "en": "Ground Pork",
+   "icone": "po:#e8a0a0",
+   "fome": 1,
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "minecraft:porkchop"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "moido_coelho",
+   "pt": "Coelho Moído",
+   "en": "Ground Rabbit",
+   "icone": "po:#c89a7a",
+   "fome": 1,
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "minecraft:rabbit"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "balas_creeper",
+   "pt": "Balas de Creeper",
+   "en": "Gummy Creepers",
+   "icone": "graos:#4ac040",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:red_dye",
+       "minecraft:green_dye"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_mel",
+   "pt": "Rosquinha com Mel",
+   "en": "Honey Glazed Donut",
+   "icone": "rosca:#f2b632",
+   "fome": 4,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:honey_bottle"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_mel",
+   "pt": "Muffin de Mel",
+   "en": "Honey Muffin",
+   "icone": "muffin:#f2b632",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:honey_bottle",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torta_mel",
+   "pt": "Torta de Mel",
+   "en": "Honey Pie",
+   "icone": "torta:#f2b632",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:honey_bottle",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "cachorro_quente",
+   "pt": "Cachorro-Quente",
+   "en": "Hot Dog",
+   "icone": "sanduiche:#c8503a",
+   "fome": 3,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:moido_porco",
+       "minecraft:bread",
+       "cl:maionese"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sorvete",
+   "pt": "Sorvete",
+   "en": "Ice Cream",
+   "icone": "sorvete:#f8f4e8",
+   "fome": 2,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:leite_fresco",
+       "cl:sal",
+       "minecraft:ice"
+      ],
+      [
+       "cl:leite_fresco",
+       "cl:sal",
+       "minecraft:snowball"
+      ],
+      [
+       "minecraft:milk_bucket",
+       "cl:sal",
+       "minecraft:ice"
+      ],
+      [
+       "minecraft:milk_bucket",
+       "cl:sal",
+       "minecraft:snowball"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "jujubas",
+   "pt": "Jujubas",
+   "en": "Jelly Beans",
+   "icone": "graos:#e04a8a",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:blue_dye",
+       "minecraft:orange_dye"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "macarrao_queijo",
+   "pt": "Macarrão com Queijo",
+   "en": "Mac n Cheese",
+   "icone": "tigela:#f4c542",
+   "fome": 2,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:queijo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "marshmallow",
+   "pt": "Marshmallows",
+   "en": "Marshmellows",
+   "icone": "bola:#f8f4f0",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pure_batata",
+   "pt": "Purê de Batata",
+   "en": "Mashed Potatoes",
+   "icone": "tigela:#f0e0a0",
+   "fome": 3,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "minecraft:baked_potato",
+       "cl:manteiga",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "bolo_carne",
+   "pt": "Bolo de Carne",
+   "en": "Meatloaf",
+   "icone": "pao:#8b3a2a",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "#cl:hc_moido",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_melancia",
+   "pt": "Rosquinha de Melancia",
+   "en": "Melon Donut",
+   "icone": "rosca:#e4553f",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:melon_slice"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "geleia_melancia",
+   "pt": "Geleia de Melancia",
+   "en": "Melon Jelly",
+   "icone": "pote:#e4553f",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:suco_melancia",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torrada_geleia_melancia",
+   "pt": "Torrada com Geleia de Melancia",
+   "en": "Melon Jelly Toast",
+   "icone": "pao:#e4553f",
+   "fome": 3,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:torrada",
+       "cl:geleia_melancia"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_melancia",
+   "pt": "Muffin de Melancia",
+   "en": "Melon Muffin",
+   "icone": "muffin:#e4553f",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:melon_slice",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torta_melancia",
+   "pt": "Torta de Melancia",
+   "en": "Melon Pie",
+   "icone": "torta:#e4553f",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:melon_slice",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "vitamina_melancia",
+   "pt": "Vitamina de Melancia",
+   "en": "Melon Smoothie",
+   "icone": "copo:#e4553f",
+   "fome": 2,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_melancia",
+       "minecraft:ice"
+      ],
+      [
+       "cl:suco_melancia",
+       "minecraft:snowball"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_melancia",
+   "pt": "Iogurte de Melancia",
+   "en": "Melon Yogurt",
+   "icone": "pote:#e4553f",
+   "fome": 1,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "minecraft:melon_slice"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "charque_carneiro",
+   "pt": "Charque de Carneiro",
+   "en": "Mutton Jerky",
+   "icone": "tira:#b5523a",
+   "fome": 1,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "minecraft:mutton",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_macarrao_carneiro",
+   "pt": "Sopa de Macarrão com Carneiro",
+   "en": "Mutton Noodle Soup",
+   "icone": "tigela:#b5523a",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "minecraft:mutton"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:mutton"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:mutton"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:beetroot",
+       "minecraft:mutton"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "empadao_carneiro",
+   "pt": "Empadão de Carneiro",
+   "en": "Mutton Pot Pie",
+   "icone": "torta:#b5523a",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:mutton",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "suco_p8",
+   "pt": "Suco de Legumes P8",
+   "en": "P8 Juice",
+   "icone": "copo:#c83a2a",
+   "fome": 2,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal"
+      ],
+      [
+       "minecraft:potato",
+       "minecraft:potato"
+      ],
+      [
+       "minecraft:beetroot",
+       "minecraft:beetroot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "macarrao",
+   "pt": "Macarrão",
+   "en": "Pasta",
+   "icone": "massa:#f0d890",
+   "fome": 0,
+   "receitas": [
+    [
+     "rolo",
+     [
+      [
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "beterraba_conserva",
+   "pt": "Beterraba em Conserva",
+   "en": "Pickled Beets",
+   "icone": "pote:#9a1a3a",
+   "fome": 2,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:vinagre",
+       "minecraft:beetroot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha",
+   "pt": "Rosquinha Simples",
+   "en": "Plain Donut",
+   "icone": "rosca:#d8a050",
+   "fome": 2,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "charque_porco",
+   "pt": "Charque de Porco",
+   "en": "Pork Jerky",
+   "icone": "tira:#e8a0a0",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "minecraft:porkchop",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_macarrao_porco",
+   "pt": "Sopa de Macarrão com Porco",
+   "en": "Pork Noodle Soup",
+   "icone": "tigela:#e8a0a0",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "minecraft:porkchop"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:porkchop"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:porkchop"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:beetroot",
+       "minecraft:porkchop"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "empadao_porco",
+   "pt": "Empadão de Porco",
+   "en": "Pork Pot Pie",
+   "icone": "torta:#e8a0a0",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:porkchop",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "batata_chips",
+   "pt": "Batata Chips",
+   "en": "Potato Chips",
+   "icone": "fritas:#f0d060",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:potato",
+       "cl:oleo_cozinha",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_batata",
+   "pt": "Sopa de Batata",
+   "en": "Potato Soup",
+   "icone": "tigela:#e8d8a0",
+   "fome": 2,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:potato",
+       "cl:caldo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "carne_panela",
+   "pt": "Carne de Panela",
+   "en": "Pot Roast",
+   "icone": "tigela:#8b3a2a",
+   "fome": 2,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:beef",
+       "minecraft:potato",
+       "minecraft:carrot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_acucarada",
+   "pt": "Rosquinha Açucarada",
+   "en": "Powdered Donut",
+   "icone": "rosca:#f8f4f0",
+   "fome": 2,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pao_abobora",
+   "pt": "Pão de Abóbora",
+   "en": "Pumpkin Bread",
+   "icone": "pao:#e38a1e",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:pumpkin",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "cheesecake_abobora",
+   "pt": "Cheesecake de Abóbora",
+   "en": "Pumpkin Cheese Cake",
+   "icone": "bolo:#e38a1e",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "cl:queijo",
+       "minecraft:pumpkin",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_abobora",
+   "pt": "Rosquinha de Abóbora",
+   "en": "Pumpkin Donut",
+   "icone": "rosca:#e38a1e",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:pumpkin"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_abobora",
+   "pt": "Muffin de Abóbora",
+   "en": "Pumpkin Muffin",
+   "icone": "muffin:#e38a1e",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:pumpkin",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_abobora",
+   "pt": "Iogurte de Abóbora",
+   "en": "Pumpkin Yogurt",
+   "icone": "pote:#e38a1e",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "minecraft:pumpkin"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "charque_coelho",
+   "pt": "Charque de Coelho",
+   "en": "Rabbit Jerky",
+   "icone": "tira:#c89a7a",
+   "fome": 1,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "minecraft:rabbit",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_macarrao_coelho",
+   "pt": "Sopa de Macarrão com Coelho",
+   "en": "Rabbit Noodle Soup",
+   "icone": "tigela:#c89a7a",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "minecraft:rabbit"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:rabbit"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:rabbit"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:beetroot",
+       "minecraft:rabbit"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "empadao_coelho",
+   "pt": "Empadão de Coelho",
+   "en": "Rabbit Pot Pie",
+   "icone": "torta:#c89a7a",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:rabbit",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "girassol_torrado",
+   "pt": "Sementes de Girassol Torradas",
+   "en": "Roasted Sunflower Seeds",
+   "icone": "graos:#6a5a3a",
+   "fome": 1,
+   "receitas": [],
+   "forno": [
+    "cl:semente_girassol"
+   ]
+  },
+  {
+   "id": "ovos_mexidos",
+   "pt": "Ovos Mexidos",
+   "en": "Scrambled Egg",
+   "icone": "prato:#f7d55c",
+   "fome": 2,
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "minecraft:egg",
+       "cl:leite_fresco",
+       "cl:sal"
+      ],
+      [
+       "minecraft:egg",
+       "minecraft:milk_bucket",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "smores",
+   "pt": "S'mores",
+   "en": "Smores",
+   "icone": "sanduiche:#d8b080",
+   "fome": 3,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:bolacha",
+       "cl:marshmallow",
+       "cl:barra_chocolate"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pretzel",
+   "pt": "Pretzel",
+   "en": "Soft Pretzel",
+   "icone": "rosca:#b0702a",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:massa",
+       "cl:sal"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_granulado",
+   "pt": "Rosquinha com Granulado",
+   "en": "Sprinkles Donut",
+   "icone": "rosca:#f0a0c8",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:sugar",
+       "minecraft:red_dye",
+       "minecraft:green_dye",
+       "minecraft:yellow_dye",
+       "minecraft:blue_dye"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "ensopado",
+   "pt": "Ensopado",
+   "en": "Stew",
+   "icone": "tigela:#9a5a2a",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:beef",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "cl:farinha"
+      ],
+      [
+       "minecraft:beef",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "cl:farinha"
+      ],
+      [
+       "minecraft:beef",
+       "minecraft:potato",
+       "minecraft:potato",
+       "cl:farinha"
+      ],
+      [
+       "minecraft:beef",
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "cl:farinha"
+      ],
+      [
+       "minecraft:porkchop",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "cl:farinha"
+      ],
+      [
+       "minecraft:porkchop",
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "cl:farinha"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "semente_girassol",
+   "pt": "Sementes de Girassol",
+   "en": "Sunflower Seeds",
+   "icone": "graos:#3a3a3a",
+   "fome": 1,
+   "receitas": [
+    [
+     "",
+     [
+      [
+       "minecraft:sunflower",
+       "minecraft:sunflower"
+      ]
+     ],
+     2
+    ]
+   ]
+  },
+  {
+   "id": "rosquinha_bagas_doces",
+   "pt": "Rosquinha de Bagas Doces",
+   "en": "Sweet Berry Donut",
+   "icone": "rosca:#b8202c",
+   "fome": 3,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:oleo_cozinha",
+       "cl:massa_liquida",
+       "minecraft:sweet_berries"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "geleia_bagas_doces",
+   "pt": "Geleia de Bagas Doces",
+   "en": "Sweet Berry Jelly",
+   "icone": "pote:#b8202c",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:suco_bagas_doces",
+       "minecraft:sugar"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torrada_geleia_bagas_doces",
+   "pt": "Torrada com Geleia de Bagas Doces",
+   "en": "Sweet Berry Jelly Toast",
+   "icone": "pao:#b8202c",
+   "fome": 2,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:torrada",
+       "cl:geleia_bagas_doces"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "suco_bagas_doces",
+   "pt": "Suco de Bagas Doces",
+   "en": "Sweet Berry Juice",
+   "icone": "copo:#b8202c",
+   "fome": 1,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "minecraft:sweet_berries",
+       "minecraft:sweet_berries"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "muffin_bagas_doces",
+   "pt": "Muffin de Bagas Doces",
+   "en": "Sweet Berry Muffin",
+   "icone": "muffin:#b8202c",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sweet_berries",
+       "cl:massa_liquida"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "torta_bagas_doces",
+   "pt": "Torta de Bagas Doces",
+   "en": "Sweet Berry Pie",
+   "icone": "torta:#b8202c",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "minecraft:sugar",
+       "minecraft:sweet_berries",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "picole_bagas_doces",
+   "pt": "Picolé de Bagas Doces",
+   "en": "Sweet Berry Popsicle",
+   "icone": "picole:#b8202c",
+   "fome": 2,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_bagas_doces",
+       "minecraft:ice",
+       "minecraft:stick"
+      ],
+      [
+       "cl:suco_bagas_doces",
+       "minecraft:snowball",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "vitamina_bagas_doces",
+   "pt": "Vitamina de Bagas Doces",
+   "en": "Sweet Berry Smoothie",
+   "icone": "copo:#b8202c",
+   "fome": 1,
+   "bebida": true,
+   "agua": 10,
+   "temp": -0.05,
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_bagas_doces",
+       "minecraft:ice"
+      ],
+      [
+       "cl:suco_bagas_doces",
+       "minecraft:snowball"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte_bagas_doces",
+   "pt": "Iogurte de Bagas Doces",
+   "en": "Sweet Berry Yogurt",
+   "icone": "pote:#b8202c",
+   "fome": 1,
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "cl:iogurte",
+       "minecraft:sweet_berries"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "mix_castanhas",
+   "pt": "Mix de Castanhas",
+   "en": "Trail Mix",
+   "icone": "graos:#a0703a",
+   "fome": 2,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "cl:barra_chocolate",
+       "cl:sal",
+       "minecraft:wheat_seeds",
+       "#cl:hc_fruta"
+      ],
+      [
+       "cl:barra_chocolate",
+       "cl:sal",
+       "minecraft:wheat_seeds",
+       "minecraft:apple"
+      ],
+      [
+       "cl:barra_chocolate",
+       "cl:sal",
+       "minecraft:wheat_seeds",
+       "minecraft:melon_slice"
+      ],
+      [
+       "cl:barra_chocolate",
+       "cl:sal",
+       "minecraft:wheat_seeds",
+       "minecraft:sweet_berries"
+      ],
+      [
+       "cl:barra_chocolate",
+       "cl:sal",
+       "#cl:hc_semente",
+       "#cl:hc_fruta"
+      ],
+      [
+       "cl:barra_chocolate",
+       "cl:sal",
+       "#cl:hc_semente",
+       "minecraft:apple"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "sopa_macarrao_legumes",
+   "pt": "Sopa de Macarrão com Legumes",
+   "en": "Vegetable Noodle Soup",
+   "icone": "tigela:#5aa03a",
+   "fome": 4,
+   "agua": 5,
+   "temp": 0.05,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:carrot",
+       "minecraft:carrot"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:potato",
+       "minecraft:potato"
+      ],
+      [
+       "cl:macarrao",
+       "cl:caldo",
+       "minecraft:beetroot",
+       "minecraft:beetroot"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "empadao_legumes",
+   "pt": "Empadão de Legumes",
+   "en": "Veggie Pot Pie",
+   "icone": "torta:#5aa03a",
+   "fome": 4,
+   "receitas": [
+    [
+     "assadeira",
+     [
+      [
+       "#cl:hc_vegetal",
+       "#cl:hc_vegetal",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ],
+      [
+       "minecraft:carrot",
+       "minecraft:carrot",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ],
+      [
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ],
+      [
+       "minecraft:beetroot",
+       "minecraft:beetroot",
+       "minecraft:potato",
+       "minecraft:carrot",
+       "cl:massa"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "vinagre",
+   "pt": "Vinagre",
+   "en": "Vinegar",
+   "icone": "garrafa:#c8b890",
+   "fome": 0,
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "#cl:hc_fruta"
+      ],
+      [
+       "minecraft:apple"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "iogurte",
+   "pt": "Iogurte",
+   "en": "Yogurt",
+   "icone": "pote:#f8f4ec",
+   "fome": 1,
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:leite_fresco"
+      ],
+      [
+       "minecraft:milk_bucket"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc2_sanduiche_frango",
+   "resultado": "cl:sanduiche_frango",
+   "receitas": [
+    [
+     "frigideira",
+     [
+      [
+       "cl:moido_frango",
+       "cl:maionese",
+       "minecraft:bread"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "mesmo": "farinha",
+   "id": "farinha_hc2",
+   "receitas": [
+    [
+     "pilao",
+     [
+      [
+       "#cl:hc_farinha"
+      ],
+      [
+       "minecraft:potato"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc2_salada_frutas",
+   "resultado": "cl:salada_frutas",
+   "receitas": [
+    [
+     "tabua_corte",
+     [
+      [
+       "#cl:hc_fruta",
+       "#cl:hc_fruta"
+      ],
+      [
+       "minecraft:apple",
+       "minecraft:apple"
+      ],
+      [
+       "minecraft:melon_slice",
+       "minecraft:melon_slice"
+      ],
+      [
+       "minecraft:sweet_berries",
+       "minecraft:sweet_berries"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc2_chocolate_quente",
+   "resultado": "cl:chocolate_quente",
+   "receitas": [
+    [
+     "cacarola",
+     [
+      [
+       "cl:leite_fresco",
+       "cl:cacau_po",
+       "cl:marshmallow"
+      ],
+      [
+       "minecraft:milk_bucket",
+       "cl:cacau_po",
+       "cl:marshmallow"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc2_suco_melancia",
+   "resultado": "cl:suco_melancia",
+   "receitas": [
+    [
+     "espremedor",
+     [
+      [
+       "minecraft:melon_slice",
+       "minecraft:melon_slice"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc2_picole_melancia",
+   "resultado": "cl:picole_melancia",
+   "receitas": [
+    [
+     "tigela_mistura",
+     [
+      [
+       "cl:suco_melancia",
+       "minecraft:ice",
+       "minecraft:stick"
+      ],
+      [
+       "cl:suco_melancia",
+       "minecraft:snowball",
+       "minecraft:stick"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc2_sopa_macarrao",
+   "resultado": "cl:sopa_macarrao",
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "cl:macarrao",
+       "cl:caldo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "hc2_sopa_abobora",
+   "resultado": "cl:sopa_abobora",
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:pumpkin",
+       "cl:caldo"
+      ]
+     ],
+     1
+    ]
+   ]
+  },
+  {
+   "id": "acucar_mel",
+   "resultado": "minecraft:sugar",
+   "receitas": [
+    [
+     "panela",
+     [
+      [
+       "minecraft:honey_bottle"
+      ]
+     ],
+     8
+    ]
+   ]
+  }
+ ],
+ "fornos": [
+  {
+   "id": "araruta_assada",
+   "pt": "Araruta Assada",
+   "en": "Baked Arrowroot",
+   "icone": "raiz:#9b9073",
+   "fome": 1,
+   "forno": [
+    "cl:araruta"
+   ]
+  },
+  {
+   "id": "mandioca_assada",
+   "pt": "Mandioca Assada",
+   "en": "Baked Cassava",
+   "icone": "raiz:#634029",
+   "fome": 1,
+   "forno": [
+    "cl:mandioca"
+   ]
+  },
+  {
+   "id": "jicama_assada",
+   "pt": "Jicama Assada",
+   "en": "Baked Jicama",
+   "icone": "raiz:#907350",
+   "fome": 1,
+   "forno": [
+    "cl:jicama"
+   ]
+  },
+  {
+   "id": "pastinaca_assada",
+   "pt": "Pastinaca Assada",
+   "en": "Baked Parsnip",
+   "icone": "raiz:#aca17e",
+   "fome": 1,
+   "forno": [
+    "cl:pastinaca"
+   ]
+  },
+  {
+   "id": "nabo_sueco_assado",
+   "pt": "Nabo-Sueco Assado",
+   "en": "Baked Rutabaga",
+   "icone": "raiz_redonda:#907373",
+   "fome": 1,
+   "forno": [
+    "cl:nabo_sueco"
+   ]
+  },
+  {
+   "id": "tupinambo_assado",
+   "pt": "Tupinambo Assado",
+   "en": "Baked Sunchoke",
+   "icone": "raiz:#906e4c",
+   "fome": 1,
+   "forno": [
+    "cl:tupinambo"
+   ]
+  },
+  {
+   "id": "batata_doce_assada",
+   "pt": "Batata-Doce Assada",
+   "en": "Baked Sweet Potato",
+   "icone": "raiz:#7e4035",
+   "fome": 1,
+   "forno": [
+    "cl:batata_doce"
+   ]
+  },
+  {
+   "id": "inhame_assado",
+   "pt": "Inhame Assado",
+   "en": "Baked Taro",
+   "icone": "raiz_redonda:#634c57",
+   "fome": 1,
+   "forno": [
+    "cl:inhame"
+   ]
+  },
+  {
+   "id": "nabo_assado",
+   "pt": "Nabo Assado",
+   "en": "Baked Turnip",
+   "icone": "raiz_redonda:#a79ba1",
+   "fome": 1,
+   "forno": [
+    "cl:nabo"
+   ]
+  },
+  {
+   "id": "castanha_dagua_assada",
+   "pt": "Castanha-d'Água Assada",
+   "en": "Baked Water Chestnut",
+   "icone": "noz:#40291e",
+   "fome": 1,
+   "forno": [
+    "cl:castanha_dagua"
+   ]
+  },
+  {
+   "id": "cafe_quente",
+   "pt": "Café Quente",
+   "en": "Hot Coffee",
+   "icone": "copo:#6a3a20",
+   "fome": 1,
+   "bebida": true,
+   "agua": 5,
+   "temp": 0.05,
+   "forno": [
+    "cl:cafe"
+   ]
+  },
+  {
+   "id": "cha_urtiga",
+   "pt": "Chá de Urtiga",
+   "en": "Hot Nettle Tea",
+   "icone": "copo:#7a9a3a",
+   "fome": 1,
+   "bebida": true,
+   "agua": 5,
+   "temp": 0.05,
+   "forno": [
+    "cl:urtiga"
+   ]
+  },
+  {
+   "id": "cha_quente",
+   "pt": "Chá Quente",
+   "en": "Hot Tea",
+   "icone": "copo:#7a9a3a",
+   "fome": 1,
+   "bebida": true,
+   "agua": 5,
+   "temp": 0.05,
+   "forno": [
+    "cl:folha_cha"
+   ]
+  },
+  {
+   "id": "alho_assado",
+   "pt": "Alho Assado",
+   "en": "Roasted Garlic",
+   "icone": "cogumelo:#6e5740",
+   "fome": 1,
+   "forno": [
+    "cl:alho"
+   ]
+  },
+  {
+   "id": "couve_rabano_assada",
+   "pt": "Couve-Rábano Assada",
+   "en": "Roasted Kohlrabi",
+   "icone": "redondo:#739050",
+   "fome": 1,
+   "forno": [
+    "cl:couve_rabano"
+   ]
+  },
+  {
+   "id": "alho_poro_assado",
+   "pt": "Alho-Poró Assado",
+   "en": "Roasted Leek",
+   "icone": "talo:#577e45",
+   "fome": 1,
+   "forno": [
+    "cl:alho_poro"
+   ]
+  },
+  {
+   "id": "cogumelo_assado",
+   "pt": "Cogumelo Assado",
+   "en": "Roasted Mushroom",
+   "icone": "cogumelo:#6e5740",
+   "fome": 1,
+   "forno": [
+    "minecraft:brown_mushroom",
+    "minecraft:red_mushroom",
+    "cl:cogumelo_branco",
+    "cl:trufa"
+   ]
+  },
+  {
+   "id": "cebola_assada",
+   "pt": "Cebola Assada",
+   "en": "Roasted Onion",
+   "icone": "cogumelo:#6e5740",
+   "fome": 1,
+   "forno": [
+    "cl:cebola"
+   ]
+  },
+  {
+   "id": "amendoim_torrado",
+   "pt": "Amendoim Torrado",
+   "en": "Roasted Peanut",
+   "icone": "cogumelo:#6e5740",
+   "fome": 1,
+   "forno": [
+    "cl:amendoim"
+   ]
+  },
+  {
+   "id": "rabanete_assado",
+   "pt": "Rabanete Assado",
+   "en": "Roasted Radish",
+   "icone": "raiz_redonda:#9b2935",
+   "fome": 1,
+   "forno": [
+    "cl:rabanete"
+   ]
+  },
+  {
+   "id": "ruibarbo_assado",
+   "pt": "Ruibarbo Assado",
+   "en": "Roasted Rhubarb",
+   "icone": "talo:#902935",
+   "fome": 1,
+   "forno": [
+    "cl:ruibarbo"
+   ]
+  },
+  {
+   "id": "cebolinha_assada",
+   "pt": "Cebolinha Assada",
+   "en": "Roasted Scallion",
+   "icone": "talo:#407e35",
+   "fome": 1,
+   "forno": [
+    "cl:cebolinha"
+   ]
+  },
+  {
+   "id": "bolota_assada",
+   "pt": "Bolota Assada",
+   "en": "Roasted Acorn",
+   "icone": "noz:#63401e",
+   "fome": 1,
+   "forno": [
+    "cl:bolota"
+   ]
+  },
+  {
+   "id": "amendoa_torrada",
+   "pt": "Amêndoa Torrada",
+   "en": "Roasted Almond",
+   "icone": "noz:#906e4c",
+   "fome": 1,
+   "forno": [
+    "cl:amendoa"
+   ]
+  },
+  {
+   "id": "caju_torrado",
+   "pt": "Castanha-de-Caju Torrada",
+   "en": "Roasted Cashew",
+   "icone": "noz:#a79067",
+   "fome": 1,
+   "forno": [
+    "cl:castanha_caju"
+   ]
+  },
+  {
+   "id": "castanha_assada",
+   "pt": "Castanha Assada",
+   "en": "Roasted Chestnut",
+   "icone": "noz:#4c2912",
+   "fome": 1,
+   "forno": [
+    "cl:castanha"
+   ]
+  },
+  {
+   "id": "avela_torrada",
+   "pt": "Avelã Torrada",
+   "en": "Roasted Hazelnut",
+   "icone": "noz:#735029",
+   "fome": 1,
+   "forno": [
+    "cl:avela"
+   ]
+  },
+  {
+   "id": "peca_torrada",
+   "pt": "Pecã Torrada",
+   "en": "Roasted Pecan",
+   "icone": "noz:#63351e",
+   "fome": 1,
+   "forno": [
+    "cl:peca"
+   ]
+  },
+  {
+   "id": "pinoli_torrado",
+   "pt": "Pinoli Torrado",
+   "en": "Roasted Pinenuts",
+   "icone": "noz:#906e40",
+   "fome": 1,
+   "forno": [
+    "cl:pinoli"
+   ]
+  },
+  {
+   "id": "pistache_torrado",
+   "pt": "Pistache Torrado",
+   "en": "Roasted Pistachio",
+   "icone": "noz:#738a45",
+   "fome": 1,
+   "forno": [
+    "cl:pistache"
+   ]
+  },
+  {
+   "id": "noz_torrada",
+   "pt": "Noz Torrada",
+   "en": "Roasted Walnut",
+   "icone": "noz:#634c29",
+   "fome": 1,
+   "forno": [
+    "cl:noz"
+   ]
+  }
+ ],
+ "extras": [
+  {
+   "id": "bottle_x2_calabash_x2",
+   "resultado": "minecraft:glass_bottle",
+   "qtd": 2,
+   "em": "",
+   "variantes": [
+    [
+     "cl:cabaca",
+     "cl:cabaca"
+    ]
+   ]
+  },
+  {
+   "id": "bread_grain",
+   "resultado": "minecraft:bread",
+   "qtd": 1,
+   "em": "",
+   "variantes": [
+    [
+     "#cl:hc_grao",
+     "#cl:hc_grao",
+     "#cl:hc_grao"
+    ]
+   ]
+  },
+  {
+   "id": "cactus_x2_cactus_plants",
+   "resultado": "minecraft:cactus",
+   "qtd": 2,
+   "em": "",
+   "variantes": [
+    [
+     "#cl:hc_cacto",
+     "#cl:hc_cacto"
+    ]
+   ]
+  },
+  {
+   "id": "cookingoil_x4_canola_x2",
+   "resultado": "cl:oleo_cozinha",
+   "qtd": 4,
+   "em": "rolo",
+   "variantes": [
+    [
+     "cl:canola",
+     "cl:canola"
+    ]
+   ]
+  },
+  {
+   "id": "paper_x2_paper_plants",
+   "resultado": "minecraft:paper",
+   "qtd": 2,
+   "em": "",
+   "variantes": [
+    [
+     "#cl:hc_papel",
+     "#cl:hc_papel"
+    ]
+   ]
+  },
+  {
+   "id": "slimeball_aloe",
+   "resultado": "minecraft:slime_ball",
+   "qtd": 1,
+   "em": "",
+   "variantes": [
+    [
+     "cl:babosa",
+     "cl:babosa",
+     "cl:babosa"
+    ]
+   ]
+  },
+  {
+   "id": "stick_x4_cattail_x2",
+   "resultado": "minecraft:stick",
+   "qtd": 4,
+   "em": "",
+   "variantes": [
+    [
+     "cl:taboa",
+     "cl:taboa"
+    ]
+   ]
+  },
+  {
+   "id": "string_fiber",
+   "resultado": "minecraft:string",
+   "qtd": 1,
+   "em": "",
+   "variantes": [
+    [
+     "#cl:hc_fibra",
+     "#cl:hc_fibra"
+    ]
+   ]
+  },
+  {
+   "id": "sugar_x2_agave",
+   "resultado": "minecraft:sugar",
+   "qtd": 2,
+   "em": "",
+   "variantes": [
+    [
+     "cl:agave",
+     "cl:agave"
+    ]
+   ]
+  },
+  {
+   "id": "torch_cattail",
+   "resultado": "minecraft:torch",
+   "qtd": 1,
+   "em": "",
+   "variantes": [
+    [
+     "cl:oleo_cozinha",
+     "cl:taboa"
+    ]
+   ]
+  },
+  {
+   "id": "water_barrelcactus",
+   "resultado": "minecraft:water_bucket",
+   "qtd": 1,
+   "em": "",
+   "variantes": [
+    [
+     "cl:cacto_barril",
+     "minecraft:bucket"
+    ]
+   ]
+  }
+ ],
+ "etiquetas": {
+  "cl:araruta": [
+   "cl:hc_vegetal",
+   "cl:hc_farinha"
+  ],
+  "cl:alcachofra": [
+   "cl:hc_vegetal"
+  ],
+  "cl:aspargo": [
+   "cl:hc_vegetal"
+  ],
+  "cl:pimentao": [
+   "cl:hc_vegetal"
+  ],
+  "cl:couve_chinesa": [
+   "cl:hc_vegetal"
+  ],
+  "cl:brocolis": [
+   "cl:hc_vegetal"
+  ],
+  "cl:couve_bruxelas": [
+   "cl:hc_vegetal"
+  ],
+  "cl:repolho": [
+   "cl:hc_vegetal"
+  ],
+  "cl:cabaca": [
+   "cl:hc_vegetal"
+  ],
+  "cl:mandioca": [
+   "cl:hc_vegetal",
+   "cl:hc_farinha"
+  ],
+  "cl:couve_flor": [
+   "cl:hc_vegetal"
+  ],
+  "cl:salsao": [
+   "cl:hc_vegetal"
+  ],
+  "cl:pimenta": [
+   "cl:hc_vegetal"
+  ],
+  "cl:pepino": [
+   "cl:hc_vegetal"
+  ],
+  "cl:berinjela": [
+   "cl:hc_vegetal"
+  ],
+  "cl:alho": [
+   "cl:hc_vegetal"
+  ],
+  "cl:jicama": [
+   "cl:hc_vegetal",
+   "cl:hc_farinha"
+  ],
+  "cl:couve": [
+   "cl:hc_vegetal"
+  ],
+  "cl:couve_rabano": [
+   "cl:hc_vegetal"
+  ],
+  "cl:alho_poro": [
+   "cl:hc_vegetal"
+  ],
+  "cl:alface": [
+   "cl:hc_vegetal"
+  ],
+  "cl:lotus": [
+   "cl:hc_vegetal"
+  ],
+  "cl:urtiga": [
+   "cl:hc_vegetal"
+  ],
+  "cl:palma": [
+   "cl:hc_vegetal",
+   "cl:hc_cacto"
+  ],
+  "cl:quiabo": [
+   "cl:hc_vegetal",
+   "cl:hc_papel"
+  ],
+  "cl:cebola": [
+   "cl:hc_vegetal"
+  ],
+  "cl:pastinaca": [
+   "cl:hc_vegetal"
+  ],
+  "cl:amendoim": [
+   "cl:hc_vegetal",
+   "cl:hc_noz"
+  ],
+  "cl:ervilha": [
+   "cl:hc_vegetal",
+   "cl:hc_farinha"
+  ],
+  "cl:rabanete": [
+   "cl:hc_vegetal"
+  ],
+  "cl:ruibarbo": [
+   "cl:hc_vegetal"
+  ],
+  "cl:nabo_sueco": [
+   "cl:hc_vegetal",
+   "cl:hc_farinha"
+  ],
+  "cl:cebolinha": [
+   "cl:hc_vegetal"
+  ],
+  "cl:espinafre": [
+   "cl:hc_vegetal"
+  ],
+  "cl:batata_doce": [
+   "cl:hc_vegetal"
+  ],
+  "cl:inhame": [
+   "cl:hc_vegetal",
+   "cl:hc_farinha"
+  ],
+  "cl:tomatilho": [
+   "cl:hc_vegetal"
+  ],
+  "cl:tomate": [
+   "cl:hc_vegetal"
+  ],
+  "cl:nabo": [
+   "cl:hc_vegetal"
+  ],
+  "cl:castanha_dagua": [
+   "cl:hc_vegetal"
+  ],
+  "cl:cogumelo_branco": [
+   "cl:hc_vegetal"
+  ],
+  "cl:abobora_inverno": [
+   "cl:hc_vegetal"
+  ],
+  "cl:abobrinha": [
+   "cl:hc_vegetal"
+  ],
+  "cl:abacate": [
+   "cl:hc_vegetal"
+  ],
+  "cl:azeitona": [
+   "cl:hc_vegetal"
+  ],
+  "cl:amora_preta": [
+   "cl:hc_fruta",
+   "cl:hc_papel"
+  ],
+  "cl:mirtilo": [
+   "cl:hc_fruta"
+  ],
+  "cl:fruta_cacto": [
+   "cl:hc_fruta"
+  ],
+  "cl:baga_cera": [
+   "cl:hc_fruta"
+  ],
+  "cl:melao": [
+   "cl:hc_fruta"
+  ],
+  "cl:amora_artica": [
+   "cl:hc_fruta"
+  ],
+  "cl:oxicoco": [
+   "cl:hc_fruta"
+  ],
+  "cl:sabugueiro": [
+   "cl:hc_fruta"
+  ],
+  "cl:uva": [
+   "cl:hc_fruta"
+  ],
+  "cl:uva_verde": [
+   "cl:hc_fruta"
+  ],
+  "cl:guarana": [
+   "cl:hc_fruta"
+  ],
+  "cl:uva_do_monte": [
+   "cl:hc_fruta"
+  ],
+  "cl:zimbro": [
+   "cl:hc_fruta",
+   "cl:hc_papel"
+  ],
+  "cl:kiwi": [
+   "cl:hc_fruta"
+  ],
+  "cl:amora": [
+   "cl:hc_fruta",
+   "cl:hc_papel"
+  ],
+  "cl:abacaxi": [
+   "cl:hc_fruta",
+   "cl:hc_papel"
+  ],
+  "cl:framboesa": [
+   "cl:hc_fruta",
+   "cl:hc_papel"
+  ],
+  "cl:morango": [
+   "cl:hc_fruta"
+  ],
+  "cl:goji": [
+   "cl:hc_fruta"
+  ],
+  "cl:damasco": [
+   "cl:hc_fruta"
+  ],
+  "cl:banana": [
+   "cl:hc_fruta",
+   "cl:hc_farinha"
+  ],
+  "cl:fruta_pao": [
+   "cl:hc_fruta",
+   "cl:hc_farinha"
+  ],
+  "cl:cereja": [
+   "cl:hc_fruta"
+  ],
+  "cl:tamara": [
+   "cl:hc_fruta"
+  ],
+  "cl:pitaya": [
+   "cl:hc_fruta"
+  ],
+  "cl:durian": [
+   "cl:hc_fruta"
+  ],
+  "cl:figo": [
+   "cl:hc_fruta"
+  ],
+  "cl:groselha": [
+   "cl:hc_fruta"
+  ],
+  "cl:toranja": [
+   "cl:hc_fruta"
+  ],
+  "cl:goiaba": [
+   "cl:hc_fruta"
+  ],
+  "cl:jaca": [
+   "cl:hc_fruta"
+  ],
+  "cl:limao_siciliano": [
+   "cl:hc_fruta"
+  ],
+  "cl:limao": [
+   "cl:hc_fruta"
+  ],
+  "cl:lichia": [
+   "cl:hc_fruta"
+  ],
+  "cl:manga": [
+   "cl:hc_fruta"
+  ],
+  "cl:laranja": [
+   "cl:hc_fruta"
+  ],
+  "cl:mamao": [
+   "cl:hc_fruta"
+  ],
+  "cl:maracuja": [
+   "cl:hc_fruta"
+  ],
+  "cl:asimina": [
+   "cl:hc_fruta"
+  ],
+  "cl:pessego": [
+   "cl:hc_fruta"
+  ],
+  "cl:pera": [
+   "cl:hc_fruta"
+  ],
+  "cl:caqui": [
+   "cl:hc_fruta"
+  ],
+  "cl:ameixa": [
+   "cl:hc_fruta"
+  ],
+  "cl:roma": [
+   "cl:hc_fruta"
+  ],
+  "cl:rambutan": [
+   "cl:hc_fruta"
+  ],
+  "cl:graviola": [
+   "cl:hc_fruta"
+  ],
+  "cl:carambola": [
+   "cl:hc_fruta"
+  ],
+  "cl:tamarindo": [
+   "cl:hc_fruta"
+  ],
+  "cl:bolota": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:amendoa": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:castanha_caju": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:castanha": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:avela": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:peca": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:pinoli": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:pistache": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:noz": [
+   "cl:hc_noz",
+   "cl:hc_farinha"
+  ],
+  "cl:amaranto": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:cevada": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:taboa": [
+   "cl:hc_farinha"
+  ],
+  "cl:grao_de_bico": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:lentilha": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:painco": [
+   "cl:hc_farinha"
+  ],
+  "cl:aveia": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:quinoa": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:centeio": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:soja": [
+   "cl:hc_farinha",
+   "cl:hc_grao"
+  ],
+  "cl:tupinambo": [
+   "cl:hc_farinha"
+  ],
+  "cl:coco": [
+   "cl:hc_farinha"
+  ],
+  "cl:feijao": [
+   "cl:hc_grao"
+  ],
+  "cl:milho": [
+   "cl:hc_grao"
+  ],
+  "cl:arroz": [
+   "cl:hc_grao",
+   "cl:hc_papel"
+  ],
+  "cl:sorgo": [
+   "cl:hc_grao"
+  ],
+  "cl:algodao": [
+   "cl:hc_fibra"
+  ],
+  "cl:linho": [
+   "cl:hc_fibra"
+  ],
+  "cl:juta": [
+   "cl:hc_fibra"
+  ],
+  "cl:kenaf": [
+   "cl:hc_fibra"
+  ],
+  "cl:sisal": [
+   "cl:hc_fibra"
+  ],
+  "cl:iuca": [
+   "cl:hc_fibra"
+  ],
+  "cl:papiro": [
+   "cl:hc_papel"
+  ],
+  "cl:folha_tempero": [
+   "cl:hc_papel"
+  ],
+  "cl:semente_girassol": [
+   "cl:hc_noz"
+  ],
+  "cl:cacto_barril": [
+   "cl:hc_cacto"
+  ],
+  "cl:moido_carne": [
+   "cl:hc_moido"
+  ],
+  "cl:moido_frango": [
+   "cl:hc_moido"
+  ],
+  "cl:moido_peixe": [
+   "cl:hc_moido"
+  ],
+  "cl:moido_carneiro": [
+   "cl:hc_moido"
+  ],
+  "cl:moido_porco": [
+   "cl:hc_moido"
+  ],
+  "cl:moido_coelho": [
+   "cl:hc_moido"
+  ]
+ },
+ "rolo": {
+  "id": "rolo",
+  "pt": "Rolo de Massa",
+  "en": "Roller",
+  "padrao": [
+   "SLS"
+  ],
+  "chave": {
+   "S": "minecraft:stick",
+   "L": "#minecraft:logs"
+  }
+ }
+}

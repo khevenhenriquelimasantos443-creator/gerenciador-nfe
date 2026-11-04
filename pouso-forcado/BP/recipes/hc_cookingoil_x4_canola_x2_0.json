@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_cookingoil_x4_canola_x2_0"
+    },
+    "tags": [
+      "cl_rolo"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:canola"
+      },
+      {
+        "item": "cl:canola"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:oleo_cozinha",
+      "count": 4
+    }
+  }
+}

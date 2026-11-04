@@ -129,6 +129,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
 - **The Spice of Life** (squeek502): comida repetida rende menos (usado no Crash Landing). Código próprio.
 - **Pam's HarvestCraft** (MatrexsVigil / pamharvestcraft): plantações, utensílios de cozinha e receitas
   (nomes traduzidos, ingredientes do mod). Texturas, ícones e modelos próprios (as do mod não podem ser usadas).
+  Na 1.47.0, **Pam's HarvestCraft 2** (Crops, Trees e Food Core, 1.21.1; todos os direitos reservados): as listas de
+  plantações, hortas silvestres, árvores e comidas, as receitas, as raridades e os valores de fome (lidos dos jars por
+  `tools/importar-hc2.py`). Só os dados de jogo; nomes traduzidos e toda a arte própria.
 - **Hardcore Questing Mode** (Vswe, lorddusk): o Diário de Bordo em capítulos, dependências,
   recompensas "escolha 1" e as sacolas de recompensa com os pesos do HQM. Ícones próprios.
 - **Just Enough Items** (mezz) / NEI (ChickenBones): o Catálogo de receitas e usos.

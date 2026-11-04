@@ -1,0 +1,94 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "cl:feijao",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:amora_preta",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:alho",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:juta",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:alho_poro",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:rabanete",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:ruibarbo",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:cebolinha",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:folha_tempero",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:batata_doce",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:folha_cha",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:tomate",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:nabo",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:cogumelo_branco",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:abobrinha",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:trufa",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:urtiga",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

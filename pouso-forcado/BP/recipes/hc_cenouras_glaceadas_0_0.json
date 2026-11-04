@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_cenouras_glaceadas_0_0"
+    },
+    "tags": [
+      "cl_cacarola"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:carrot"
+      },
+      {
+        "item": "cl:manteiga"
+      },
+      {
+        "item": "minecraft:sugar"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cenouras_glaceadas"
+    }
+  }
+}

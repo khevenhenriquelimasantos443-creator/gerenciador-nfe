@@ -47,6 +47,7 @@ import { registrarSemNether } from "./mundo/nether.js";
 import { registrarEnergiaExtra, tesseract, torreDefesa } from "./maquinas/energia_extra.js";
 import { montadorMolecular, registrarAutocraft } from "./armazenamento/autocraft.js";
 import { cachoTamaras, mudaTamareira, registrarTamareira } from "./harvest/tamareira.js";
+import { frutoHc, hortaHc, mudaHc, registrarHc2 } from "./harvest/hc2.js";
 import { caixaEntrega, registrarEntrega } from "./missoes/entrega.js";
 import { registrarVariedade } from "./jogador/variedade.js";
 import { registrarCaldeirao } from "./jogador/caldeirao.js";
@@ -210,6 +211,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:montador_molecular", montadorMolecular);
   blockComponentRegistry.registerCustomComponent("cl:muda_tamareira", mudaTamareira);
   blockComponentRegistry.registerCustomComponent("cl:cacho_tamaras", cachoTamaras);
+  blockComponentRegistry.registerCustomComponent("cl:horta", hortaHc);
+  blockComponentRegistry.registerCustomComponent("cl:muda_hc", mudaHc);
+  blockComponentRegistry.registerCustomComponent("cl:fruto_hc", frutoHc);
   blockComponentRegistry.registerCustomComponent("cl:caixa_entrega", caixaEntrega);
   for (const [id, comp] of Object.entries({
     "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador, "cl:infusor_quimico": infusorQuimico,
@@ -337,6 +341,7 @@ registrarSemNether();
 registrarEnergiaExtra();
 registrarAutocraft();
 registrarTamareira();
+registrarHc2();
 registrarEntrega();
 registrarVariedade();
 registrarCaldeirao();

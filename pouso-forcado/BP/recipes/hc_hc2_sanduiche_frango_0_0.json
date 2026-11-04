@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_hc2_sanduiche_frango_0_0"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:moido_frango"
+      },
+      {
+        "item": "cl:maionese"
+      },
+      {
+        "item": "minecraft:bread"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:sanduiche_frango"
+    }
+  }
+}

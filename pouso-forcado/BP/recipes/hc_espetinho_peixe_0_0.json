@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_espetinho_peixe_0_0"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:cod"
+      },
+      {
+        "tag": "cl:hc_vegetal"
+      },
+      {
+        "tag": "cl:hc_vegetal"
+      },
+      {
+        "item": "minecraft:stick"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:espetinho_peixe"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_acucar_mel_0_0"
+    },
+    "tags": [
+      "cl_panela"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:honey_bottle"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "minecraft:sugar",
+      "count": 8
+    }
+  }
+}

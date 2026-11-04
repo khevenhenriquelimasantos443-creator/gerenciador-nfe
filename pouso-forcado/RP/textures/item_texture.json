@@ -5773,6 +5773,1272 @@
     },
     "clc_malha_netherita": {
       "textures": "textures/items/cl/arte/malha_netherita"
+    },
+    "clhc_semente_agave": {
+      "textures": "textures/items/cl/hc/semente_agave"
+    },
+    "clhc_agave": {
+      "textures": "textures/items/cl/hc/agave"
+    },
+    "clhc_semente_amaranto": {
+      "textures": "textures/items/cl/hc/semente_amaranto"
+    },
+    "clhc_amaranto": {
+      "textures": "textures/items/cl/hc/amaranto"
+    },
+    "clhc_semente_araruta": {
+      "textures": "textures/items/cl/hc/semente_araruta"
+    },
+    "clhc_araruta": {
+      "textures": "textures/items/cl/hc/araruta"
+    },
+    "clhc_semente_alcachofra": {
+      "textures": "textures/items/cl/hc/semente_alcachofra"
+    },
+    "clhc_alcachofra": {
+      "textures": "textures/items/cl/hc/alcachofra"
+    },
+    "clhc_semente_aspargo": {
+      "textures": "textures/items/cl/hc/semente_aspargo"
+    },
+    "clhc_aspargo": {
+      "textures": "textures/items/cl/hc/aspargo"
+    },
+    "clhc_semente_cevada": {
+      "textures": "textures/items/cl/hc/semente_cevada"
+    },
+    "clhc_cevada": {
+      "textures": "textures/items/cl/hc/cevada"
+    },
+    "clhc_semente_amora_preta": {
+      "textures": "textures/items/cl/hc/semente_amora_preta"
+    },
+    "clhc_amora_preta": {
+      "textures": "textures/items/cl/hc/amora_preta"
+    },
+    "clhc_semente_mirtilo": {
+      "textures": "textures/items/cl/hc/semente_mirtilo"
+    },
+    "clhc_mirtilo": {
+      "textures": "textures/items/cl/hc/mirtilo"
+    },
+    "clhc_semente_brocolis": {
+      "textures": "textures/items/cl/hc/semente_brocolis"
+    },
+    "clhc_brocolis": {
+      "textures": "textures/items/cl/hc/brocolis"
+    },
+    "clhc_semente_couve_bruxelas": {
+      "textures": "textures/items/cl/hc/semente_couve_bruxelas"
+    },
+    "clhc_couve_bruxelas": {
+      "textures": "textures/items/cl/hc/couve_bruxelas"
+    },
+    "clhc_semente_baga_cera": {
+      "textures": "textures/items/cl/hc/semente_baga_cera"
+    },
+    "clhc_baga_cera": {
+      "textures": "textures/items/cl/hc/baga_cera"
+    },
+    "clhc_semente_melao": {
+      "textures": "textures/items/cl/hc/semente_melao"
+    },
+    "clhc_melao": {
+      "textures": "textures/items/cl/hc/melao"
+    },
+    "clhc_semente_mandioca": {
+      "textures": "textures/items/cl/hc/semente_mandioca"
+    },
+    "clhc_mandioca": {
+      "textures": "textures/items/cl/hc/mandioca"
+    },
+    "clhc_semente_couve_flor": {
+      "textures": "textures/items/cl/hc/semente_couve_flor"
+    },
+    "clhc_couve_flor": {
+      "textures": "textures/items/cl/hc/couve_flor"
+    },
+    "clhc_semente_salsao": {
+      "textures": "textures/items/cl/hc/semente_salsao"
+    },
+    "clhc_salsao": {
+      "textures": "textures/items/cl/hc/salsao"
+    },
+    "clhc_semente_grao_de_bico": {
+      "textures": "textures/items/cl/hc/semente_grao_de_bico"
+    },
+    "clhc_grao_de_bico": {
+      "textures": "textures/items/cl/hc/grao_de_bico"
+    },
+    "clhc_semente_cafe": {
+      "textures": "textures/items/cl/hc/semente_cafe"
+    },
+    "clhc_cafe": {
+      "textures": "textures/items/cl/hc/cafe"
+    },
+    "clhc_semente_algodao": {
+      "textures": "textures/items/cl/hc/semente_algodao"
+    },
+    "clhc_algodao": {
+      "textures": "textures/items/cl/hc/algodao"
+    },
+    "clhc_semente_oxicoco": {
+      "textures": "textures/items/cl/hc/semente_oxicoco"
+    },
+    "clhc_oxicoco": {
+      "textures": "textures/items/cl/hc/oxicoco"
+    },
+    "clhc_semente_pepino": {
+      "textures": "textures/items/cl/hc/semente_pepino"
+    },
+    "clhc_pepino": {
+      "textures": "textures/items/cl/hc/pepino"
+    },
+    "clhc_semente_berinjela": {
+      "textures": "textures/items/cl/hc/semente_berinjela"
+    },
+    "clhc_berinjela": {
+      "textures": "textures/items/cl/hc/berinjela"
+    },
+    "clhc_semente_sabugueiro": {
+      "textures": "textures/items/cl/hc/semente_sabugueiro"
+    },
+    "clhc_sabugueiro": {
+      "textures": "textures/items/cl/hc/sabugueiro"
+    },
+    "clhc_semente_linho": {
+      "textures": "textures/items/cl/hc/semente_linho"
+    },
+    "clhc_linho": {
+      "textures": "textures/items/cl/hc/linho"
+    },
+    "clhc_semente_gengibre": {
+      "textures": "textures/items/cl/hc/semente_gengibre"
+    },
+    "clhc_gengibre": {
+      "textures": "textures/items/cl/hc/gengibre"
+    },
+    "clhc_semente_uva": {
+      "textures": "textures/items/cl/hc/semente_uva"
+    },
+    "clhc_uva": {
+      "textures": "textures/items/cl/hc/uva"
+    },
+    "clhc_semente_uva_verde": {
+      "textures": "textures/items/cl/hc/semente_uva_verde"
+    },
+    "clhc_uva_verde": {
+      "textures": "textures/items/cl/hc/uva_verde"
+    },
+    "clhc_semente_uva_do_monte": {
+      "textures": "textures/items/cl/hc/semente_uva_do_monte"
+    },
+    "clhc_uva_do_monte": {
+      "textures": "textures/items/cl/hc/uva_do_monte"
+    },
+    "clhc_semente_jicama": {
+      "textures": "textures/items/cl/hc/semente_jicama"
+    },
+    "clhc_jicama": {
+      "textures": "textures/items/cl/hc/jicama"
+    },
+    "clhc_semente_zimbro": {
+      "textures": "textures/items/cl/hc/semente_zimbro"
+    },
+    "clhc_zimbro": {
+      "textures": "textures/items/cl/hc/zimbro"
+    },
+    "clhc_semente_juta": {
+      "textures": "textures/items/cl/hc/semente_juta"
+    },
+    "clhc_juta": {
+      "textures": "textures/items/cl/hc/juta"
+    },
+    "clhc_semente_couve": {
+      "textures": "textures/items/cl/hc/semente_couve"
+    },
+    "clhc_couve": {
+      "textures": "textures/items/cl/hc/couve"
+    },
+    "clhc_semente_kenaf": {
+      "textures": "textures/items/cl/hc/semente_kenaf"
+    },
+    "clhc_kenaf": {
+      "textures": "textures/items/cl/hc/kenaf"
+    },
+    "clhc_semente_kiwi": {
+      "textures": "textures/items/cl/hc/semente_kiwi"
+    },
+    "clhc_kiwi": {
+      "textures": "textures/items/cl/hc/kiwi"
+    },
+    "clhc_semente_couve_rabano": {
+      "textures": "textures/items/cl/hc/semente_couve_rabano"
+    },
+    "clhc_couve_rabano": {
+      "textures": "textures/items/cl/hc/couve_rabano"
+    },
+    "clhc_semente_alho_poro": {
+      "textures": "textures/items/cl/hc/semente_alho_poro"
+    },
+    "clhc_alho_poro": {
+      "textures": "textures/items/cl/hc/alho_poro"
+    },
+    "clhc_semente_lentilha": {
+      "textures": "textures/items/cl/hc/semente_lentilha"
+    },
+    "clhc_lentilha": {
+      "textures": "textures/items/cl/hc/lentilha"
+    },
+    "clhc_semente_alface": {
+      "textures": "textures/items/cl/hc/semente_alface"
+    },
+    "clhc_alface": {
+      "textures": "textures/items/cl/hc/alface"
+    },
+    "clhc_semente_painco": {
+      "textures": "textures/items/cl/hc/semente_painco"
+    },
+    "clhc_painco": {
+      "textures": "textures/items/cl/hc/painco"
+    },
+    "clhc_semente_amora": {
+      "textures": "textures/items/cl/hc/semente_amora"
+    },
+    "clhc_amora": {
+      "textures": "textures/items/cl/hc/amora"
+    },
+    "clhc_semente_mostarda": {
+      "textures": "textures/items/cl/hc/semente_mostarda"
+    },
+    "clhc_mostarda": {
+      "textures": "textures/items/cl/hc/mostarda"
+    },
+    "clhc_semente_aveia": {
+      "textures": "textures/items/cl/hc/semente_aveia"
+    },
+    "clhc_aveia": {
+      "textures": "textures/items/cl/hc/aveia"
+    },
+    "clhc_semente_quiabo": {
+      "textures": "textures/items/cl/hc/semente_quiabo"
+    },
+    "clhc_quiabo": {
+      "textures": "textures/items/cl/hc/quiabo"
+    },
+    "clhc_semente_pastinaca": {
+      "textures": "textures/items/cl/hc/semente_pastinaca"
+    },
+    "clhc_pastinaca": {
+      "textures": "textures/items/cl/hc/pastinaca"
+    },
+    "clhc_semente_ervilha": {
+      "textures": "textures/items/cl/hc/semente_ervilha"
+    },
+    "clhc_ervilha": {
+      "textures": "textures/items/cl/hc/ervilha"
+    },
+    "clhc_semente_abacaxi": {
+      "textures": "textures/items/cl/hc/semente_abacaxi"
+    },
+    "clhc_abacaxi": {
+      "textures": "textures/items/cl/hc/abacaxi"
+    },
+    "clhc_semente_quinoa": {
+      "textures": "textures/items/cl/hc/semente_quinoa"
+    },
+    "clhc_quinoa": {
+      "textures": "textures/items/cl/hc/quinoa"
+    },
+    "clhc_semente_rabanete": {
+      "textures": "textures/items/cl/hc/semente_rabanete"
+    },
+    "clhc_rabanete": {
+      "textures": "textures/items/cl/hc/rabanete"
+    },
+    "clhc_semente_framboesa": {
+      "textures": "textures/items/cl/hc/semente_framboesa"
+    },
+    "clhc_framboesa": {
+      "textures": "textures/items/cl/hc/framboesa"
+    },
+    "clhc_semente_ruibarbo": {
+      "textures": "textures/items/cl/hc/semente_ruibarbo"
+    },
+    "clhc_ruibarbo": {
+      "textures": "textures/items/cl/hc/ruibarbo"
+    },
+    "clhc_semente_nabo_sueco": {
+      "textures": "textures/items/cl/hc/semente_nabo_sueco"
+    },
+    "clhc_nabo_sueco": {
+      "textures": "textures/items/cl/hc/nabo_sueco"
+    },
+    "clhc_semente_centeio": {
+      "textures": "textures/items/cl/hc/semente_centeio"
+    },
+    "clhc_centeio": {
+      "textures": "textures/items/cl/hc/centeio"
+    },
+    "clhc_semente_cebolinha": {
+      "textures": "textures/items/cl/hc/semente_cebolinha"
+    },
+    "clhc_cebolinha": {
+      "textures": "textures/items/cl/hc/cebolinha"
+    },
+    "clhc_semente_gergelim": {
+      "textures": "textures/items/cl/hc/semente_gergelim"
+    },
+    "clhc_gergelim": {
+      "textures": "textures/items/cl/hc/gergelim"
+    },
+    "clhc_semente_sisal": {
+      "textures": "textures/items/cl/hc/semente_sisal"
+    },
+    "clhc_sisal": {
+      "textures": "textures/items/cl/hc/sisal"
+    },
+    "clhc_semente_soja": {
+      "textures": "textures/items/cl/hc/semente_soja"
+    },
+    "clhc_soja": {
+      "textures": "textures/items/cl/hc/soja"
+    },
+    "clhc_semente_folha_tempero": {
+      "textures": "textures/items/cl/hc/semente_folha_tempero"
+    },
+    "clhc_folha_tempero": {
+      "textures": "textures/items/cl/hc/folha_tempero"
+    },
+    "clhc_semente_espinafre": {
+      "textures": "textures/items/cl/hc/semente_espinafre"
+    },
+    "clhc_espinafre": {
+      "textures": "textures/items/cl/hc/espinafre"
+    },
+    "clhc_semente_morango": {
+      "textures": "textures/items/cl/hc/semente_morango"
+    },
+    "clhc_morango": {
+      "textures": "textures/items/cl/hc/morango"
+    },
+    "clhc_semente_batata_doce": {
+      "textures": "textures/items/cl/hc/semente_batata_doce"
+    },
+    "clhc_batata_doce": {
+      "textures": "textures/items/cl/hc/batata_doce"
+    },
+    "clhc_semente_inhame": {
+      "textures": "textures/items/cl/hc/semente_inhame"
+    },
+    "clhc_inhame": {
+      "textures": "textures/items/cl/hc/inhame"
+    },
+    "clhc_semente_folha_cha": {
+      "textures": "textures/items/cl/hc/semente_folha_cha"
+    },
+    "clhc_folha_cha": {
+      "textures": "textures/items/cl/hc/folha_cha"
+    },
+    "clhc_semente_tomatilho": {
+      "textures": "textures/items/cl/hc/semente_tomatilho"
+    },
+    "clhc_tomatilho": {
+      "textures": "textures/items/cl/hc/tomatilho"
+    },
+    "clhc_semente_nabo": {
+      "textures": "textures/items/cl/hc/semente_nabo"
+    },
+    "clhc_nabo": {
+      "textures": "textures/items/cl/hc/nabo"
+    },
+    "clhc_semente_castanha_dagua": {
+      "textures": "textures/items/cl/hc/semente_castanha_dagua"
+    },
+    "clhc_castanha_dagua": {
+      "textures": "textures/items/cl/hc/castanha_dagua"
+    },
+    "clhc_semente_cogumelo_branco": {
+      "textures": "textures/items/cl/hc/semente_cogumelo_branco"
+    },
+    "clhc_cogumelo_branco": {
+      "textures": "textures/items/cl/hc/cogumelo_branco"
+    },
+    "clhc_semente_abobora_inverno": {
+      "textures": "textures/items/cl/hc/semente_abobora_inverno"
+    },
+    "clhc_abobora_inverno": {
+      "textures": "textures/items/cl/hc/abobora_inverno"
+    },
+    "clhc_semente_abobrinha": {
+      "textures": "textures/items/cl/hc/semente_abobrinha"
+    },
+    "clhc_abobrinha": {
+      "textures": "textures/items/cl/hc/abobrinha"
+    },
+    "clhc_semente_alfafa": {
+      "textures": "textures/items/cl/hc/semente_alfafa"
+    },
+    "clhc_alfafa": {
+      "textures": "textures/items/cl/hc/alfafa"
+    },
+    "clhc_semente_babosa": {
+      "textures": "textures/items/cl/hc/semente_babosa"
+    },
+    "clhc_babosa": {
+      "textures": "textures/items/cl/hc/babosa"
+    },
+    "clhc_semente_cacto_barril": {
+      "textures": "textures/items/cl/hc/semente_cacto_barril"
+    },
+    "clhc_cacto_barril": {
+      "textures": "textures/items/cl/hc/cacto_barril"
+    },
+    "clhc_semente_canola": {
+      "textures": "textures/items/cl/hc/semente_canola"
+    },
+    "clhc_canola": {
+      "textures": "textures/items/cl/hc/canola"
+    },
+    "clhc_semente_taboa": {
+      "textures": "textures/items/cl/hc/semente_taboa"
+    },
+    "clhc_taboa": {
+      "textures": "textures/items/cl/hc/taboa"
+    },
+    "clhc_semente_chia": {
+      "textures": "textures/items/cl/hc/semente_chia"
+    },
+    "clhc_chia": {
+      "textures": "textures/items/cl/hc/chia"
+    },
+    "clhc_semente_amora_artica": {
+      "textures": "textures/items/cl/hc/semente_amora_artica"
+    },
+    "clhc_amora_artica": {
+      "textures": "textures/items/cl/hc/amora_artica"
+    },
+    "clhc_semente_lotus": {
+      "textures": "textures/items/cl/hc/semente_lotus"
+    },
+    "clhc_lotus": {
+      "textures": "textures/items/cl/hc/lotus"
+    },
+    "clhc_semente_urtiga": {
+      "textures": "textures/items/cl/hc/semente_urtiga"
+    },
+    "clhc_urtiga": {
+      "textures": "textures/items/cl/hc/urtiga"
+    },
+    "clhc_semente_palma": {
+      "textures": "textures/items/cl/hc/semente_palma"
+    },
+    "clhc_palma": {
+      "textures": "textures/items/cl/hc/palma"
+    },
+    "clhc_semente_sorgo": {
+      "textures": "textures/items/cl/hc/semente_sorgo"
+    },
+    "clhc_sorgo": {
+      "textures": "textures/items/cl/hc/sorgo"
+    },
+    "clhc_semente_trufa": {
+      "textures": "textures/items/cl/hc/semente_trufa"
+    },
+    "clhc_trufa": {
+      "textures": "textures/items/cl/hc/trufa"
+    },
+    "clhc_semente_goji": {
+      "textures": "textures/items/cl/hc/semente_goji"
+    },
+    "clhc_goji": {
+      "textures": "textures/items/cl/hc/goji"
+    },
+    "clhc_semente_iuca": {
+      "textures": "textures/items/cl/hc/semente_iuca"
+    },
+    "clhc_iuca": {
+      "textures": "textures/items/cl/hc/iuca"
+    },
+    "clhc_semente_couve_chinesa": {
+      "textures": "textures/items/cl/hc/semente_couve_chinesa"
+    },
+    "clhc_couve_chinesa": {
+      "textures": "textures/items/cl/hc/couve_chinesa"
+    },
+    "clhc_semente_cabaca": {
+      "textures": "textures/items/cl/hc/semente_cabaca"
+    },
+    "clhc_cabaca": {
+      "textures": "textures/items/cl/hc/cabaca"
+    },
+    "clhc_semente_guarana": {
+      "textures": "textures/items/cl/hc/semente_guarana"
+    },
+    "clhc_guarana": {
+      "textures": "textures/items/cl/hc/guarana"
+    },
+    "clhc_semente_papiro": {
+      "textures": "textures/items/cl/hc/semente_papiro"
+    },
+    "clhc_papiro": {
+      "textures": "textures/items/cl/hc/papiro"
+    },
+    "clhc_semente_tupinambo": {
+      "textures": "textures/items/cl/hc/semente_tupinambo"
+    },
+    "clhc_tupinambo": {
+      "textures": "textures/items/cl/hc/tupinambo"
+    },
+    "clhc_bolota": {
+      "textures": "textures/items/cl/hc/bolota"
+    },
+    "clhc_amendoa": {
+      "textures": "textures/items/cl/hc/amendoa"
+    },
+    "clhc_damasco": {
+      "textures": "textures/items/cl/hc/damasco"
+    },
+    "clhc_abacate": {
+      "textures": "textures/items/cl/hc/abacate"
+    },
+    "clhc_banana": {
+      "textures": "textures/items/cl/hc/banana"
+    },
+    "clhc_fruta_pao": {
+      "textures": "textures/items/cl/hc/fruta_pao"
+    },
+    "clhc_noz_iguape": {
+      "textures": "textures/items/cl/hc/noz_iguape"
+    },
+    "clhc_castanha_caju": {
+      "textures": "textures/items/cl/hc/castanha_caju"
+    },
+    "clhc_cereja": {
+      "textures": "textures/items/cl/hc/cereja"
+    },
+    "clhc_castanha": {
+      "textures": "textures/items/cl/hc/castanha"
+    },
+    "clhc_canela": {
+      "textures": "textures/items/cl/hc/canela"
+    },
+    "clhc_coco": {
+      "textures": "textures/items/cl/hc/coco"
+    },
+    "clhc_pitaya": {
+      "textures": "textures/items/cl/hc/pitaya"
+    },
+    "clhc_durian": {
+      "textures": "textures/items/cl/hc/durian"
+    },
+    "clhc_figo": {
+      "textures": "textures/items/cl/hc/figo"
+    },
+    "clhc_groselha": {
+      "textures": "textures/items/cl/hc/groselha"
+    },
+    "clhc_toranja": {
+      "textures": "textures/items/cl/hc/toranja"
+    },
+    "clhc_goiaba": {
+      "textures": "textures/items/cl/hc/goiaba"
+    },
+    "clhc_avela": {
+      "textures": "textures/items/cl/hc/avela"
+    },
+    "clhc_jaca": {
+      "textures": "textures/items/cl/hc/jaca"
+    },
+    "clhc_limao_siciliano": {
+      "textures": "textures/items/cl/hc/limao_siciliano"
+    },
+    "clhc_limao": {
+      "textures": "textures/items/cl/hc/limao"
+    },
+    "clhc_lichia": {
+      "textures": "textures/items/cl/hc/lichia"
+    },
+    "clhc_manga": {
+      "textures": "textures/items/cl/hc/manga"
+    },
+    "clhc_xarope_bordo": {
+      "textures": "textures/items/cl/hc/xarope_bordo"
+    },
+    "clhc_noz_moscada": {
+      "textures": "textures/items/cl/hc/noz_moscada"
+    },
+    "clhc_azeitona": {
+      "textures": "textures/items/cl/hc/azeitona"
+    },
+    "clhc_laranja": {
+      "textures": "textures/items/cl/hc/laranja"
+    },
+    "clhc_mamao": {
+      "textures": "textures/items/cl/hc/mamao"
+    },
+    "clhc_maracuja": {
+      "textures": "textures/items/cl/hc/maracuja"
+    },
+    "clhc_asimina": {
+      "textures": "textures/items/cl/hc/asimina"
+    },
+    "clhc_pessego": {
+      "textures": "textures/items/cl/hc/pessego"
+    },
+    "clhc_pera": {
+      "textures": "textures/items/cl/hc/pera"
+    },
+    "clhc_peca": {
+      "textures": "textures/items/cl/hc/peca"
+    },
+    "clhc_pimenta_reino": {
+      "textures": "textures/items/cl/hc/pimenta_reino"
+    },
+    "clhc_caqui": {
+      "textures": "textures/items/cl/hc/caqui"
+    },
+    "clhc_pinoli": {
+      "textures": "textures/items/cl/hc/pinoli"
+    },
+    "clhc_pistache": {
+      "textures": "textures/items/cl/hc/pistache"
+    },
+    "clhc_ameixa": {
+      "textures": "textures/items/cl/hc/ameixa"
+    },
+    "clhc_roma": {
+      "textures": "textures/items/cl/hc/roma"
+    },
+    "clhc_rambutan": {
+      "textures": "textures/items/cl/hc/rambutan"
+    },
+    "clhc_graviola": {
+      "textures": "textures/items/cl/hc/graviola"
+    },
+    "clhc_carambola": {
+      "textures": "textures/items/cl/hc/carambola"
+    },
+    "clhc_tamarindo": {
+      "textures": "textures/items/cl/hc/tamarindo"
+    },
+    "clhc_baunilha": {
+      "textures": "textures/items/cl/hc/baunilha"
+    },
+    "clhc_noz": {
+      "textures": "textures/items/cl/hc/noz"
+    },
+    "clhc_rosquinha_maca": {
+      "textures": "textures/items/cl/hc/rosquinha_maca"
+    },
+    "clhc_geleia_maca": {
+      "textures": "textures/items/cl/hc/geleia_maca"
+    },
+    "clhc_torrada_geleia_maca": {
+      "textures": "textures/items/cl/hc/torrada_geleia_maca"
+    },
+    "clhc_suco_maca": {
+      "textures": "textures/items/cl/hc/suco_maca"
+    },
+    "clhc_muffin_maca": {
+      "textures": "textures/items/cl/hc/muffin_maca"
+    },
+    "clhc_hc_torta_maca": {
+      "textures": "textures/items/cl/hc/hc_torta_maca"
+    },
+    "clhc_picole_maca": {
+      "textures": "textures/items/cl/hc/picole_maca"
+    },
+    "clhc_pure_maca": {
+      "textures": "textures/items/cl/hc/pure_maca"
+    },
+    "clhc_vitamina_maca": {
+      "textures": "textures/items/cl/hc/vitamina_maca"
+    },
+    "clhc_iogurte_maca": {
+      "textures": "textures/items/cl/hc/iogurte_maca"
+    },
+    "clhc_ovos_bacon": {
+      "textures": "textures/items/cl/hc/ovos_bacon"
+    },
+    "clhc_x_bacon": {
+      "textures": "textures/items/cl/hc/x_bacon"
+    },
+    "clhc_legumes_assados": {
+      "textures": "textures/items/cl/hc/legumes_assados"
+    },
+    "clhc_x_burguer": {
+      "textures": "textures/items/cl/hc/x_burguer"
+    },
+    "clhc_sanduiche_peixe": {
+      "textures": "textures/items/cl/hc/sanduiche_peixe"
+    },
+    "clhc_hamburguer_simples": {
+      "textures": "textures/items/cl/hc/hamburguer_simples"
+    },
+    "clhc_sanduiche_carneiro": {
+      "textures": "textures/items/cl/hc/sanduiche_carneiro"
+    },
+    "clhc_sanduiche_porco": {
+      "textures": "textures/items/cl/hc/sanduiche_porco"
+    },
+    "clhc_sanduiche_coelho": {
+      "textures": "textures/items/cl/hc/sanduiche_coelho"
+    },
+    "clhc_hamburguer_vegetariano": {
+      "textures": "textures/items/cl/hc/hamburguer_vegetariano"
+    },
+    "clhc_sopa_macarrao_carne": {
+      "textures": "textures/items/cl/hc/sopa_macarrao_carne"
+    },
+    "clhc_empadao_carne": {
+      "textures": "textures/items/cl/hc/empadao_carne"
+    },
+    "clhc_batata_manteiga": {
+      "textures": "textures/items/cl/hc/batata_manteiga"
+    },
+    "clhc_maca_amor": {
+      "textures": "textures/items/cl/hc/maca_amor"
+    },
+    "clhc_rosquinha_caramelo": {
+      "textures": "textures/items/cl/hc/rosquinha_caramelo"
+    },
+    "clhc_sorvete_caramelo": {
+      "textures": "textures/items/cl/hc/sorvete_caramelo"
+    },
+    "clhc_caramelo": {
+      "textures": "textures/items/cl/hc/caramelo"
+    },
+    "clhc_muffin_caramelo": {
+      "textures": "textures/items/cl/hc/muffin_caramelo"
+    },
+    "clhc_torta_caramelo": {
+      "textures": "textures/items/cl/hc/torta_caramelo"
+    },
+    "clhc_iogurte_caramelo": {
+      "textures": "textures/items/cl/hc/iogurte_caramelo"
+    },
+    "clhc_pao_cenoura": {
+      "textures": "textures/items/cl/hc/pao_cenoura"
+    },
+    "clhc_bolo_cenoura": {
+      "textures": "textures/items/cl/hc/bolo_cenoura"
+    },
+    "clhc_rosquinha_cenoura": {
+      "textures": "textures/items/cl/hc/rosquinha_cenoura"
+    },
+    "clhc_suco_cenoura": {
+      "textures": "textures/items/cl/hc/suco_cenoura"
+    },
+    "clhc_muffin_cenoura": {
+      "textures": "textures/items/cl/hc/muffin_cenoura"
+    },
+    "clhc_torta_cenoura": {
+      "textures": "textures/items/cl/hc/torta_cenoura"
+    },
+    "clhc_sopa_cenoura": {
+      "textures": "textures/items/cl/hc/sopa_cenoura"
+    },
+    "clhc_hc_cheesecake": {
+      "textures": "textures/items/cl/hc/hc_cheesecake"
+    },
+    "clhc_jantar_frango": {
+      "textures": "textures/items/cl/hc/jantar_frango"
+    },
+    "clhc_charque_frango": {
+      "textures": "textures/items/cl/hc/charque_frango"
+    },
+    "clhc_sopa_macarrao_frango": {
+      "textures": "textures/items/cl/hc/sopa_macarrao_frango"
+    },
+    "clhc_nuggets_frango": {
+      "textures": "textures/items/cl/hc/nuggets_frango"
+    },
+    "clhc_empadao_frango": {
+      "textures": "textures/items/cl/hc/empadao_frango"
+    },
+    "clhc_bacon_chocolate": {
+      "textures": "textures/items/cl/hc/bacon_chocolate"
+    },
+    "clhc_barra_chocolate": {
+      "textures": "textures/items/cl/hc/barra_chocolate"
+    },
+    "clhc_bolo_chocolate": {
+      "textures": "textures/items/cl/hc/bolo_chocolate"
+    },
+    "clhc_fudge_chocolate": {
+      "textures": "textures/items/cl/hc/fudge_chocolate"
+    },
+    "clhc_rosquinha_chocolate": {
+      "textures": "textures/items/cl/hc/rosquinha_chocolate"
+    },
+    "clhc_sorvete_chocolate": {
+      "textures": "textures/items/cl/hc/sorvete_chocolate"
+    },
+    "clhc_achocolatado": {
+      "textures": "textures/items/cl/hc/achocolatado"
+    },
+    "clhc_muffin_chocolate": {
+      "textures": "textures/items/cl/hc/muffin_chocolate"
+    },
+    "clhc_hc_torta_chocolate": {
+      "textures": "textures/items/cl/hc/hc_torta_chocolate"
+    },
+    "clhc_rocambole_chocolate": {
+      "textures": "textures/items/cl/hc/rocambole_chocolate"
+    },
+    "clhc_iogurte_chocolate": {
+      "textures": "textures/items/cl/hc/iogurte_chocolate"
+    },
+    "clhc_rosquinha_coro": {
+      "textures": "textures/items/cl/hc/rosquinha_coro"
+    },
+    "clhc_geleia_coro": {
+      "textures": "textures/items/cl/hc/geleia_coro"
+    },
+    "clhc_torrada_geleia_coro": {
+      "textures": "textures/items/cl/hc/torrada_geleia_coro"
+    },
+    "clhc_suco_coro": {
+      "textures": "textures/items/cl/hc/suco_coro"
+    },
+    "clhc_muffin_coro": {
+      "textures": "textures/items/cl/hc/muffin_coro"
+    },
+    "clhc_torta_coro": {
+      "textures": "textures/items/cl/hc/torta_coro"
+    },
+    "clhc_picole_coro": {
+      "textures": "textures/items/cl/hc/picole_coro"
+    },
+    "clhc_vitamina_coro": {
+      "textures": "textures/items/cl/hc/vitamina_coro"
+    },
+    "clhc_iogurte_coro": {
+      "textures": "textures/items/cl/hc/iogurte_coro"
+    },
+    "clhc_cacau_po": {
+      "textures": "textures/items/cl/hc/cacau_po"
+    },
+    "clhc_moido_carne_cozido": {
+      "textures": "textures/items/cl/hc/moido_carne_cozido"
+    },
+    "clhc_moido_frango_cozido": {
+      "textures": "textures/items/cl/hc/moido_frango_cozido"
+    },
+    "clhc_moido_peixe_cozido": {
+      "textures": "textures/items/cl/hc/moido_peixe_cozido"
+    },
+    "clhc_moido_carneiro_cozido": {
+      "textures": "textures/items/cl/hc/moido_carneiro_cozido"
+    },
+    "clhc_moido_porco_cozido": {
+      "textures": "textures/items/cl/hc/moido_porco_cozido"
+    },
+    "clhc_moido_coelho_cozido": {
+      "textures": "textures/items/cl/hc/moido_coelho_cozido"
+    },
+    "clhc_biscoitos_leite": {
+      "textures": "textures/items/cl/hc/biscoitos_leite"
+    },
+    "clhc_oleo_cozinha": {
+      "textures": "textures/items/cl/hc/oleo_cozinha"
+    },
+    "clhc_algodao_doce": {
+      "textures": "textures/items/cl/hc/algodao_doce"
+    },
+    "clhc_bolacha": {
+      "textures": "textures/items/cl/hc/bolacha"
+    },
+    "clhc_bolachas_queijo": {
+      "textures": "textures/items/cl/hc/bolachas_queijo"
+    },
+    "clhc_creme_leite": {
+      "textures": "textures/items/cl/hc/creme_leite"
+    },
+    "clhc_bacon_epico": {
+      "textures": "textures/items/cl/hc/bacon_epico"
+    },
+    "clhc_peixe_fritas": {
+      "textures": "textures/items/cl/hc/peixe_fritas"
+    },
+    "clhc_charque_peixe": {
+      "textures": "textures/items/cl/hc/charque_peixe"
+    },
+    "clhc_sopa_macarrao_peixe": {
+      "textures": "textures/items/cl/hc/sopa_macarrao_peixe"
+    },
+    "clhc_empadao_peixe": {
+      "textures": "textures/items/cl/hc/empadao_peixe"
+    },
+    "clhc_iscas_peixe": {
+      "textures": "textures/items/cl/hc/iscas_peixe"
+    },
+    "clhc_leite_fresco": {
+      "textures": "textures/items/cl/hc/leite_fresco"
+    },
+    "clhc_frango_frito": {
+      "textures": "textures/items/cl/hc/frango_frito"
+    },
+    "clhc_batata_frita": {
+      "textures": "textures/items/cl/hc/batata_frita"
+    },
+    "clhc_ponche_frutas": {
+      "textures": "textures/items/cl/hc/ponche_frutas"
+    },
+    "clhc_picole_chocolate": {
+      "textures": "textures/items/cl/hc/picole_chocolate"
+    },
+    "clhc_cenouras_glaceadas": {
+      "textures": "textures/items/cl/hc/cenouras_glaceadas"
+    },
+    "clhc_rosquinha_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/rosquinha_bagas_brilhantes"
+    },
+    "clhc_geleia_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/geleia_bagas_brilhantes"
+    },
+    "clhc_torrada_geleia_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/torrada_geleia_bagas_brilhantes"
+    },
+    "clhc_suco_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/suco_bagas_brilhantes"
+    },
+    "clhc_muffin_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/muffin_bagas_brilhantes"
+    },
+    "clhc_torta_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/torta_bagas_brilhantes"
+    },
+    "clhc_picole_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/picole_bagas_brilhantes"
+    },
+    "clhc_vitamina_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/vitamina_bagas_brilhantes"
+    },
+    "clhc_iogurte_bagas_brilhantes": {
+      "textures": "textures/items/cl/hc/iogurte_bagas_brilhantes"
+    },
+    "clhc_espetinho_carne": {
+      "textures": "textures/items/cl/hc/espetinho_carne"
+    },
+    "clhc_misto_quente": {
+      "textures": "textures/items/cl/hc/misto_quente"
+    },
+    "clhc_queijo_quente": {
+      "textures": "textures/items/cl/hc/queijo_quente"
+    },
+    "clhc_espetinho_frango": {
+      "textures": "textures/items/cl/hc/espetinho_frango"
+    },
+    "clhc_espetinho_peixe": {
+      "textures": "textures/items/cl/hc/espetinho_peixe"
+    },
+    "clhc_espetinho_carneiro": {
+      "textures": "textures/items/cl/hc/espetinho_carneiro"
+    },
+    "clhc_espetinho_porco": {
+      "textures": "textures/items/cl/hc/espetinho_porco"
+    },
+    "clhc_espetinho_coelho": {
+      "textures": "textures/items/cl/hc/espetinho_coelho"
+    },
+    "clhc_espetinho_legumes": {
+      "textures": "textures/items/cl/hc/espetinho_legumes"
+    },
+    "clhc_moido_carne": {
+      "textures": "textures/items/cl/hc/moido_carne"
+    },
+    "clhc_moido_frango": {
+      "textures": "textures/items/cl/hc/moido_frango"
+    },
+    "clhc_moido_peixe": {
+      "textures": "textures/items/cl/hc/moido_peixe"
+    },
+    "clhc_moido_carneiro": {
+      "textures": "textures/items/cl/hc/moido_carneiro"
+    },
+    "clhc_moido_porco": {
+      "textures": "textures/items/cl/hc/moido_porco"
+    },
+    "clhc_moido_coelho": {
+      "textures": "textures/items/cl/hc/moido_coelho"
+    },
+    "clhc_balas_creeper": {
+      "textures": "textures/items/cl/hc/balas_creeper"
+    },
+    "clhc_rosquinha_mel": {
+      "textures": "textures/items/cl/hc/rosquinha_mel"
+    },
+    "clhc_muffin_mel": {
+      "textures": "textures/items/cl/hc/muffin_mel"
+    },
+    "clhc_torta_mel": {
+      "textures": "textures/items/cl/hc/torta_mel"
+    },
+    "clhc_cachorro_quente": {
+      "textures": "textures/items/cl/hc/cachorro_quente"
+    },
+    "clhc_sorvete": {
+      "textures": "textures/items/cl/hc/sorvete"
+    },
+    "clhc_jujubas": {
+      "textures": "textures/items/cl/hc/jujubas"
+    },
+    "clhc_macarrao_queijo": {
+      "textures": "textures/items/cl/hc/macarrao_queijo"
+    },
+    "clhc_marshmallow": {
+      "textures": "textures/items/cl/hc/marshmallow"
+    },
+    "clhc_pure_batata": {
+      "textures": "textures/items/cl/hc/pure_batata"
+    },
+    "clhc_bolo_carne": {
+      "textures": "textures/items/cl/hc/bolo_carne"
+    },
+    "clhc_rosquinha_melancia": {
+      "textures": "textures/items/cl/hc/rosquinha_melancia"
+    },
+    "clhc_geleia_melancia": {
+      "textures": "textures/items/cl/hc/geleia_melancia"
+    },
+    "clhc_torrada_geleia_melancia": {
+      "textures": "textures/items/cl/hc/torrada_geleia_melancia"
+    },
+    "clhc_muffin_melancia": {
+      "textures": "textures/items/cl/hc/muffin_melancia"
+    },
+    "clhc_torta_melancia": {
+      "textures": "textures/items/cl/hc/torta_melancia"
+    },
+    "clhc_vitamina_melancia": {
+      "textures": "textures/items/cl/hc/vitamina_melancia"
+    },
+    "clhc_iogurte_melancia": {
+      "textures": "textures/items/cl/hc/iogurte_melancia"
+    },
+    "clhc_charque_carneiro": {
+      "textures": "textures/items/cl/hc/charque_carneiro"
+    },
+    "clhc_sopa_macarrao_carneiro": {
+      "textures": "textures/items/cl/hc/sopa_macarrao_carneiro"
+    },
+    "clhc_empadao_carneiro": {
+      "textures": "textures/items/cl/hc/empadao_carneiro"
+    },
+    "clhc_suco_p8": {
+      "textures": "textures/items/cl/hc/suco_p8"
+    },
+    "clhc_macarrao": {
+      "textures": "textures/items/cl/hc/macarrao"
+    },
+    "clhc_beterraba_conserva": {
+      "textures": "textures/items/cl/hc/beterraba_conserva"
+    },
+    "clhc_rosquinha": {
+      "textures": "textures/items/cl/hc/rosquinha"
+    },
+    "clhc_charque_porco": {
+      "textures": "textures/items/cl/hc/charque_porco"
+    },
+    "clhc_sopa_macarrao_porco": {
+      "textures": "textures/items/cl/hc/sopa_macarrao_porco"
+    },
+    "clhc_empadao_porco": {
+      "textures": "textures/items/cl/hc/empadao_porco"
+    },
+    "clhc_batata_chips": {
+      "textures": "textures/items/cl/hc/batata_chips"
+    },
+    "clhc_sopa_batata": {
+      "textures": "textures/items/cl/hc/sopa_batata"
+    },
+    "clhc_carne_panela": {
+      "textures": "textures/items/cl/hc/carne_panela"
+    },
+    "clhc_rosquinha_acucarada": {
+      "textures": "textures/items/cl/hc/rosquinha_acucarada"
+    },
+    "clhc_pao_abobora": {
+      "textures": "textures/items/cl/hc/pao_abobora"
+    },
+    "clhc_cheesecake_abobora": {
+      "textures": "textures/items/cl/hc/cheesecake_abobora"
+    },
+    "clhc_rosquinha_abobora": {
+      "textures": "textures/items/cl/hc/rosquinha_abobora"
+    },
+    "clhc_muffin_abobora": {
+      "textures": "textures/items/cl/hc/muffin_abobora"
+    },
+    "clhc_iogurte_abobora": {
+      "textures": "textures/items/cl/hc/iogurte_abobora"
+    },
+    "clhc_charque_coelho": {
+      "textures": "textures/items/cl/hc/charque_coelho"
+    },
+    "clhc_sopa_macarrao_coelho": {
+      "textures": "textures/items/cl/hc/sopa_macarrao_coelho"
+    },
+    "clhc_empadao_coelho": {
+      "textures": "textures/items/cl/hc/empadao_coelho"
+    },
+    "clhc_girassol_torrado": {
+      "textures": "textures/items/cl/hc/girassol_torrado"
+    },
+    "clhc_ovos_mexidos": {
+      "textures": "textures/items/cl/hc/ovos_mexidos"
+    },
+    "clhc_smores": {
+      "textures": "textures/items/cl/hc/smores"
+    },
+    "clhc_pretzel": {
+      "textures": "textures/items/cl/hc/pretzel"
+    },
+    "clhc_rosquinha_granulado": {
+      "textures": "textures/items/cl/hc/rosquinha_granulado"
+    },
+    "clhc_ensopado": {
+      "textures": "textures/items/cl/hc/ensopado"
+    },
+    "clhc_semente_girassol": {
+      "textures": "textures/items/cl/hc/semente_girassol"
+    },
+    "clhc_rosquinha_bagas_doces": {
+      "textures": "textures/items/cl/hc/rosquinha_bagas_doces"
+    },
+    "clhc_geleia_bagas_doces": {
+      "textures": "textures/items/cl/hc/geleia_bagas_doces"
+    },
+    "clhc_torrada_geleia_bagas_doces": {
+      "textures": "textures/items/cl/hc/torrada_geleia_bagas_doces"
+    },
+    "clhc_suco_bagas_doces": {
+      "textures": "textures/items/cl/hc/suco_bagas_doces"
+    },
+    "clhc_muffin_bagas_doces": {
+      "textures": "textures/items/cl/hc/muffin_bagas_doces"
+    },
+    "clhc_torta_bagas_doces": {
+      "textures": "textures/items/cl/hc/torta_bagas_doces"
+    },
+    "clhc_picole_bagas_doces": {
+      "textures": "textures/items/cl/hc/picole_bagas_doces"
+    },
+    "clhc_vitamina_bagas_doces": {
+      "textures": "textures/items/cl/hc/vitamina_bagas_doces"
+    },
+    "clhc_iogurte_bagas_doces": {
+      "textures": "textures/items/cl/hc/iogurte_bagas_doces"
+    },
+    "clhc_mix_castanhas": {
+      "textures": "textures/items/cl/hc/mix_castanhas"
+    },
+    "clhc_sopa_macarrao_legumes": {
+      "textures": "textures/items/cl/hc/sopa_macarrao_legumes"
+    },
+    "clhc_empadao_legumes": {
+      "textures": "textures/items/cl/hc/empadao_legumes"
+    },
+    "clhc_vinagre": {
+      "textures": "textures/items/cl/hc/vinagre"
+    },
+    "clhc_iogurte": {
+      "textures": "textures/items/cl/hc/iogurte"
+    },
+    "clhc_araruta_assada": {
+      "textures": "textures/items/cl/hc/araruta_assada"
+    },
+    "clhc_mandioca_assada": {
+      "textures": "textures/items/cl/hc/mandioca_assada"
+    },
+    "clhc_jicama_assada": {
+      "textures": "textures/items/cl/hc/jicama_assada"
+    },
+    "clhc_pastinaca_assada": {
+      "textures": "textures/items/cl/hc/pastinaca_assada"
+    },
+    "clhc_nabo_sueco_assado": {
+      "textures": "textures/items/cl/hc/nabo_sueco_assado"
+    },
+    "clhc_tupinambo_assado": {
+      "textures": "textures/items/cl/hc/tupinambo_assado"
+    },
+    "clhc_batata_doce_assada": {
+      "textures": "textures/items/cl/hc/batata_doce_assada"
+    },
+    "clhc_inhame_assado": {
+      "textures": "textures/items/cl/hc/inhame_assado"
+    },
+    "clhc_nabo_assado": {
+      "textures": "textures/items/cl/hc/nabo_assado"
+    },
+    "clhc_castanha_dagua_assada": {
+      "textures": "textures/items/cl/hc/castanha_dagua_assada"
+    },
+    "clhc_cafe_quente": {
+      "textures": "textures/items/cl/hc/cafe_quente"
+    },
+    "clhc_cha_urtiga": {
+      "textures": "textures/items/cl/hc/cha_urtiga"
+    },
+    "clhc_cha_quente": {
+      "textures": "textures/items/cl/hc/cha_quente"
+    },
+    "clhc_alho_assado": {
+      "textures": "textures/items/cl/hc/alho_assado"
+    },
+    "clhc_couve_rabano_assada": {
+      "textures": "textures/items/cl/hc/couve_rabano_assada"
+    },
+    "clhc_alho_poro_assado": {
+      "textures": "textures/items/cl/hc/alho_poro_assado"
+    },
+    "clhc_cogumelo_assado": {
+      "textures": "textures/items/cl/hc/cogumelo_assado"
+    },
+    "clhc_cebola_assada": {
+      "textures": "textures/items/cl/hc/cebola_assada"
+    },
+    "clhc_amendoim_torrado": {
+      "textures": "textures/items/cl/hc/amendoim_torrado"
+    },
+    "clhc_rabanete_assado": {
+      "textures": "textures/items/cl/hc/rabanete_assado"
+    },
+    "clhc_ruibarbo_assado": {
+      "textures": "textures/items/cl/hc/ruibarbo_assado"
+    },
+    "clhc_cebolinha_assada": {
+      "textures": "textures/items/cl/hc/cebolinha_assada"
+    },
+    "clhc_bolota_assada": {
+      "textures": "textures/items/cl/hc/bolota_assada"
+    },
+    "clhc_amendoa_torrada": {
+      "textures": "textures/items/cl/hc/amendoa_torrada"
+    },
+    "clhc_caju_torrado": {
+      "textures": "textures/items/cl/hc/caju_torrado"
+    },
+    "clhc_castanha_assada": {
+      "textures": "textures/items/cl/hc/castanha_assada"
+    },
+    "clhc_avela_torrada": {
+      "textures": "textures/items/cl/hc/avela_torrada"
+    },
+    "clhc_peca_torrada": {
+      "textures": "textures/items/cl/hc/peca_torrada"
+    },
+    "clhc_pinoli_torrado": {
+      "textures": "textures/items/cl/hc/pinoli_torrado"
+    },
+    "clhc_pistache_torrado": {
+      "textures": "textures/items/cl/hc/pistache_torrado"
+    },
+    "clhc_noz_torrada": {
+      "textures": "textures/items/cl/hc/noz_torrada"
     }
   }
 }

@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_sorvete_caramelo_0_0"
+    },
+    "tags": [
+      "cl_tigela_mistura"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:sorvete"
+      },
+      {
+        "item": "cl:caramelo"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:sorvete_caramelo"
+    }
+  }
+}

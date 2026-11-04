@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_macarrao_0_0"
+    },
+    "tags": [
+      "cl_rolo"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:massa"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:macarrao"
+    }
+  }
+}

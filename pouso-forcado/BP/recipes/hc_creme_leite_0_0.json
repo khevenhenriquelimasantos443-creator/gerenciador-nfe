@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_creme_leite_0_0"
+    },
+    "tags": [
+      "cl_tigela_mistura"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:leite_fresco"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:creme_leite"
+    }
+  }
+}

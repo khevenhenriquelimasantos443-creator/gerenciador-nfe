@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_marshmallow_0_0"
+    },
+    "tags": [
+      "cl_cacarola"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:sugar"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:marshmallow"
+    }
+  }
+}

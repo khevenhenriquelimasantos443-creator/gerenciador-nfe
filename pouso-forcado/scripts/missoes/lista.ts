@@ -122,6 +122,9 @@ export type Acao =
   | "ch18_auto"
   | "ens_malha"
   | "ens_diamante"
+  | "hc2_horta"
+  | "hc2_arvore"
+  | "hc2_fruta"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -964,6 +967,12 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "hc_pilao", requer: ["hc_colher"], objetivo: { tipo: "ter", item: "cl:fuba", qtd: 2 }, recompensa: [{ item: "cl:semente_milho", quantidade: 2 }] },
       { id: "hc_tortilha", requer: ["hc_pilao"], objetivo: { tipo: "ter", item: "cl:tortilha", qtd: 2 }, recompensa: [{ item: "cl:semente_feijao", quantidade: 2 }] },
       { id: "hc_suco", objetivo: { tipo: "consumir", item: "cl:suco_cacto", qtd: 1 }, recompensa: [{ item: "cl:semente_fruta_cacto", quantidade: 2 }] },
+      // 1.47.0: HarvestCraft 2 (hortas silvestres, árvores frutíferas, Rolo de Massa)
+      { id: "hc2_horta", objetivo: { tipo: "acao", acao: "hc2_horta", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
+      { id: "hc2_rolo", requer: ["hc_panela"], objetivo: { tipo: "colocar", bloco: "cl:rolo", qtd: 1 }, recompensa: [{ item: "cl:semente_canola", quantidade: 2 }] },
+      { id: "hc2_macarrao", requer: ["hc2_rolo"], objetivo: { tipo: "ter", item: "cl:macarrao", qtd: 2 }, recompensa: [{ item: "minecraft:wheat", quantidade: 8 }] },
+      { id: "hc2_arvore", objetivo: { tipo: "acao", acao: "hc2_arvore", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
+      { id: "hc2_fruta", requer: ["hc2_arvore"], objetivo: { tipo: "acao", acao: "hc2_fruta", qtd: 10 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
       { id: "hc_sopa", requer: ["hc_caldo"], objetivo: { tipo: "consumir", item: "cl:sopa_tomate", qtd: 1 }, recompensa: [{ item: IDS.sacolaComum, quantidade: 1 }] },
       {
         id: "hc_burrito",

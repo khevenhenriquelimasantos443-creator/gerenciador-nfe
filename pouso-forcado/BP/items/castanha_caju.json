@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:castanha_caju",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_castanha_caju",
+      "minecraft:display_name": {
+        "value": "item.cl:castanha_caju.name"
+      },
+      "minecraft:max_stack_size": 16,
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 0.8,
+        "movement_modifier": 0.35
+      },
+      "minecraft:food": {
+        "nutrition": 1,
+        "saturation_modifier": 0.1
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:hc_noz",
+          "cl:hc_farinha"
+        ]
+      }
+    }
+  }
+}

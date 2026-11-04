@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_sanduiche_carneiro_0_0"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:moido_carneiro"
+      },
+      {
+        "item": "cl:maionese"
+      },
+      {
+        "item": "minecraft:bread"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:sanduiche_carneiro"
+    }
+  }
+}

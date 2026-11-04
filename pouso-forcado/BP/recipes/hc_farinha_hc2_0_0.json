@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_farinha_hc2_0_0"
+    },
+    "tags": [
+      "cl_pilao"
+    ],
+    "ingredients": [
+      {
+        "tag": "cl:hc_farinha"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:farinha"
+    }
+  }
+}

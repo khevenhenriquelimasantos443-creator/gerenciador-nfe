@@ -336,6 +336,11 @@
   "en": "Chiseled Sandstone",
   "icone": "textures/blocks/sandstone_carved"
  },
+ "minecraft:chorus_fruit": {
+  "pt": "Fruta do Coro",
+  "en": "Chorus Fruit",
+  "icone": "textures/items/chorus_fruit"
+ },
  "minecraft:clay": {
   "pt": "Argila",
   "en": "Clay",
@@ -1502,6 +1507,11 @@
   "en": "Red Dye",
   "icone": "textures/items/dye_powder_red"
  },
+ "minecraft:red_mushroom": {
+  "pt": "Cogumelo Vermelho",
+  "en": "Red Mushroom",
+  "icone": "textures/blocks/mushroom_red"
+ },
  "minecraft:red_nether_brick": {
   "pt": "Tijolos Vermelhos do Nether",
   "en": "Red Nether Bricks",
@@ -1796,6 +1806,11 @@
   "pt": "Cana-de-açúcar",
   "en": "Sugar Cane",
   "icone": "textures/items/reeds"
+ },
+ "minecraft:sunflower": {
+  "pt": "sunflower",
+  "en": "sunflower",
+  "icone": "textures/blocks/double_plant_sunflower_front"
  },
  "minecraft:sweet_berries": {
   "pt": "Bagas Doces",

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_mix_castanhas_0_4"
+    },
+    "tags": [
+      "cl_assadeira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:barra_chocolate"
+      },
+      {
+        "item": "cl:sal"
+      },
+      {
+        "tag": "cl:hc_semente"
+      },
+      {
+        "tag": "cl:hc_fruta"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:mix_castanhas"
+    }
+  }
+}

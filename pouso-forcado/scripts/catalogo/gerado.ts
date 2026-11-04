@@ -11,20 +11,45 @@ export type ReceitaJson = {
 };
 export type InfoItem = { pt: string; en: string; icone?: string };
 export const ITENS: Readonly<Record<string, InfoItem>> = {
+ "cl:abacate": {
+  "pt": "Abacate",
+  "en": "Avocado",
+  "icone": "textures/items/cl/hc/abacate"
+ },
+ "cl:abacaxi": {
+  "pt": "Abacaxi",
+  "en": "Pineapple",
+  "icone": "textures/items/cl/hc/abacaxi"
+ },
  "cl:abaco": {
   "pt": "Ábaco",
   "en": "Abacus",
   "icone": "textures/items/cl/arte/abaco"
+ },
+ "cl:abobora_inverno": {
+  "pt": "Abóbora-de-Inverno",
+  "en": "Winter Squash",
+  "icone": "textures/items/cl/hc/abobora_inverno"
  },
  "cl:abobora_recheada": {
   "pt": "Abóbora Recheada",
   "en": "Stuffed Pumpkin",
   "icone": "textures/items/cl/blocos/abobora_recheada"
  },
+ "cl:abobrinha": {
+  "pt": "Abobrinha",
+  "en": "Zucchini",
+  "icone": "textures/items/cl/hc/abobrinha"
+ },
  "cl:acabamento_gaveta": {
   "pt": "Acabamento de Gaveta",
   "en": "Drawer Trim",
   "icone": "textures/items/cl/blocos/acabamento_gaveta"
+ },
+ "cl:achocolatado": {
+  "pt": "Achocolatado",
+  "en": "Chocolate Milk",
+  "icone": "textures/items/cl/hc/achocolatado"
  },
  "cl:aco_eletrico": {
   "pt": "Lingote de Aço Elétrico",
@@ -196,6 +221,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Dagger",
   "icone": "textures/items/cl/arte/adaga_slime_rainha"
  },
+ "cl:agave": {
+  "pt": "Agave",
+  "en": "Agave",
+  "icone": "textures/items/cl/hc/agave"
+ },
  "cl:aglomerado_corindo_amarelo": {
   "pt": "Aglomerado de Corindo Amarelo",
   "en": "Yellow Corundum Cluster",
@@ -276,15 +306,55 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Strap",
   "icone": "textures/items/cl/arte/alca_jetpack"
  },
+ "cl:alcachofra": {
+  "pt": "Alcachofra",
+  "en": "Artichoke",
+  "icone": "textures/items/cl/hc/alcachofra"
+ },
  "cl:aleta_foguete": {
   "pt": "Aleta do Foguete",
   "en": "Rocket Fins",
   "icone": "textures/items/cl/arte/aleta_foguete"
  },
+ "cl:alface": {
+  "pt": "Alface",
+  "en": "Lettuce",
+  "icone": "textures/items/cl/hc/alface"
+ },
+ "cl:alfafa": {
+  "pt": "Alfafa",
+  "en": "Alfalfa",
+  "icone": "textures/items/cl/hc/alfafa"
+ },
+ "cl:algodao": {
+  "pt": "Algodão",
+  "en": "Cotton",
+  "icone": "textures/items/cl/hc/algodao"
+ },
+ "cl:algodao_doce": {
+  "pt": "Algodão-Doce",
+  "en": "Cotton Candy",
+  "icone": "textures/items/cl/hc/algodao_doce"
+ },
  "cl:alho": {
   "pt": "Alho",
   "en": "Garlic",
   "icone": "textures/items/cl/arte/alho"
+ },
+ "cl:alho_assado": {
+  "pt": "Alho Assado",
+  "en": "Roasted Garlic",
+  "icone": "textures/items/cl/hc/alho_assado"
+ },
+ "cl:alho_poro": {
+  "pt": "Alho-Poró",
+  "en": "Leek",
+  "icone": "textures/items/cl/hc/alho_poro"
+ },
+ "cl:alho_poro_assado": {
+  "pt": "Alho-Poró Assado",
+  "en": "Roasted Leek",
+  "icone": "textures/items/cl/hc/alho_poro_assado"
  },
  "cl:almario": {
   "pt": "Lingote de Almário",
@@ -321,10 +391,50 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Aluminum Ore",
   "icone": "textures/items/cl/c/aluminio_triturado"
  },
+ "cl:amaranto": {
+  "pt": "Amaranto",
+  "en": "Amaranth",
+  "icone": "textures/items/cl/hc/amaranto"
+ },
+ "cl:ameixa": {
+  "pt": "Ameixa",
+  "en": "Plum",
+  "icone": "textures/items/cl/hc/ameixa"
+ },
+ "cl:amendoa": {
+  "pt": "Amêndoa",
+  "en": "Almond",
+  "icone": "textures/items/cl/hc/amendoa"
+ },
+ "cl:amendoa_torrada": {
+  "pt": "Amêndoa Torrada",
+  "en": "Roasted Almond",
+  "icone": "textures/items/cl/hc/amendoa_torrada"
+ },
  "cl:amendoim": {
   "pt": "Amendoim",
   "en": "Peanut",
   "icone": "textures/items/cl/arte/amendoim"
+ },
+ "cl:amendoim_torrado": {
+  "pt": "Amendoim Torrado",
+  "en": "Roasted Peanut",
+  "icone": "textures/items/cl/hc/amendoim_torrado"
+ },
+ "cl:amora": {
+  "pt": "Amora",
+  "en": "Mulberry",
+  "icone": "textures/items/cl/hc/amora"
+ },
+ "cl:amora_artica": {
+  "pt": "Amora-Ártica",
+  "en": "Cloudberry",
+  "icone": "textures/items/cl/hc/amora_artica"
+ },
+ "cl:amora_preta": {
+  "pt": "Amora-Preta",
+  "en": "Blackberry",
+  "icone": "textures/items/cl/hc/amora_preta"
  },
  "cl:amuleto_afundar": {
   "pt": "Amuleto de Afundar",
@@ -360,6 +470,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Aquecedor de Picareta",
   "en": "Pickaxe Heater",
   "icone": "textures/items/cl/arte/aquecedor_picareta"
+ },
+ "cl:araruta": {
+  "pt": "Araruta",
+  "en": "Arrowroot",
+  "icone": "textures/items/cl/hc/araruta"
+ },
+ "cl:araruta_assada": {
+  "pt": "Araruta Assada",
+  "en": "Baked Arrowroot",
+  "icone": "textures/items/cl/hc/araruta_assada"
  },
  "cl:arbusto_arenoso": {
   "pt": "Arbusto Arenoso",
@@ -746,6 +866,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Glider Wing",
   "icone": "textures/items/cl/arte/asa_planador"
  },
+ "cl:asimina": {
+  "pt": "Asimina",
+  "en": "Pawpaw",
+  "icone": "textures/items/cl/hc/asimina"
+ },
+ "cl:aspargo": {
+  "pt": "Aspargo",
+  "en": "Asparagus",
+  "icone": "textures/items/cl/hc/aspargo"
+ },
  "cl:assadeira": {
   "pt": "Assadeira",
   "en": "Bakeware",
@@ -755,6 +885,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Atrator Universal",
   "en": "Universal Attractor",
   "icone": "textures/items/cl/arte/atrator_universal"
+ },
+ "cl:aveia": {
+  "pt": "Aveia",
+  "en": "Oats",
+  "icone": "textures/items/cl/hc/aveia"
+ },
+ "cl:avela": {
+  "pt": "Avelã",
+  "en": "Hazelnut",
+  "icone": "textures/items/cl/hc/avela"
+ },
+ "cl:avela_torrada": {
+  "pt": "Avelã Torrada",
+  "en": "Roasted Hazelnut",
+  "icone": "textures/items/cl/hc/avela_torrada"
+ },
+ "cl:azeitona": {
+  "pt": "Azeitona",
+  "en": "Olive",
+  "icone": "textures/items/cl/hc/azeitona"
+ },
+ "cl:babosa": {
+  "pt": "Babosa",
+  "en": "Aloe",
+  "icone": "textures/items/cl/hc/babosa"
  },
  "cl:bacia_fundicao": {
   "pt": "Bacia de Fundição",
@@ -771,15 +926,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bacon",
   "icone": "textures/items/cl/arte/bacon"
  },
+ "cl:bacon_chocolate": {
+  "pt": "Bacon com Chocolate",
+  "en": "Chocolate Bacon",
+  "icone": "textures/items/cl/hc/bacon_chocolate"
+ },
  "cl:bacon_cozido": {
   "pt": "Bacon Cozido",
   "en": "Cooked Bacon",
   "icone": "textures/items/cl/arte/bacon_cozido"
  },
+ "cl:bacon_epico": {
+  "pt": "Bacon Épico",
+  "en": "Epic Bacon",
+  "icone": "textures/items/cl/hc/bacon_epico"
+ },
  "cl:bacon_ovos": {
   "pt": "Bacon com Ovos",
   "en": "Bacon and Eggs",
   "icone": "textures/items/cl/arte/bacon_ovos"
+ },
+ "cl:baga_cera": {
+  "pt": "Baga-de-Cera",
+  "en": "Candleberry",
+  "icone": "textures/items/cl/hc/baga_cera"
  },
  "cl:balao_amarelo": {
   "pt": "Balão Amarelo",
@@ -860,6 +1030,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Balão Vermelho",
   "en": "Red Balloon",
   "icone": "textures/items/cl/arte/balao_vermelho"
+ },
+ "cl:balas_creeper": {
+  "pt": "Balas de Creeper",
+  "en": "Gummy Creepers",
+  "icone": "textures/items/cl/hc/balas_creeper"
  },
  "cl:balde_agua_fogo": {
   "pt": "Balde de Água de Fogo",
@@ -950,6 +1125,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Balde de Vapor de Levitação",
   "en": "Vapor of Levity Bucket",
   "icone": "textures/items/cl/arte/balde_vapor_levitacao"
+ },
+ "cl:banana": {
+  "pt": "Banana",
+  "en": "Banana",
+  "icone": "textures/items/cl/hc/banana"
  },
  "cl:bancada_nasa": {
   "pt": "Bancada da NASA",
@@ -1056,6 +1236,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Rubber Bar",
   "icone": "textures/items/cl/arte/barra_borracha"
  },
+ "cl:barra_chocolate": {
+  "pt": "Barra de Chocolate",
+  "en": "Chocolate Bar",
+  "icone": "textures/items/cl/hc/barra_chocolate"
+ },
  "cl:barra_combustivel": {
   "pt": "Barra de Combustível",
   "en": "Yellorium Fuel Rod",
@@ -1110,6 +1295,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Basalto Lunar",
   "en": "Moon Basalt",
   "icone": "textures/items/cl/blocos/basalto_lunar"
+ },
+ "cl:batata_chips": {
+  "pt": "Batata Chips",
+  "en": "Potato Chips",
+  "icone": "textures/items/cl/hc/batata_chips"
+ },
+ "cl:batata_doce": {
+  "pt": "Batata-Doce",
+  "en": "Sweet Potato",
+  "icone": "textures/items/cl/hc/batata_doce"
+ },
+ "cl:batata_doce_assada": {
+  "pt": "Batata-Doce Assada",
+  "en": "Baked Sweet Potato",
+  "icone": "textures/items/cl/hc/batata_doce_assada"
+ },
+ "cl:batata_frita": {
+  "pt": "Batata Frita",
+  "en": "Fries",
+  "icone": "textures/items/cl/hc/batata_frita"
+ },
+ "cl:batata_manteiga": {
+  "pt": "Batata Assada com Manteiga",
+  "en": "Buttered Baked Potato",
+  "icone": "textures/items/cl/hc/batata_manteiga"
  },
  "cl:batata_recheada": {
   "pt": "Batata Recheada",
@@ -1235,6 +1445,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Baú de Vácuo",
   "en": "Vacuum Chest",
   "icone": "textures/items/cl/blocos/bau_vacuo"
+ },
+ "cl:baunilha": {
+  "pt": "Fava de Baunilha",
+  "en": "Vanillabean",
+  "icone": "textures/items/cl/hc/baunilha"
+ },
+ "cl:berinjela": {
+  "pt": "Berinjela",
+  "en": "Eggplant",
+  "icone": "textures/items/cl/hc/berinjela"
  },
  "cl:besta_aco": {
   "pt": "Besta de Aço",
@@ -1366,6 +1586,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Crossbow",
   "icone": "textures/items/cl/arte/besta_slime_rainha"
  },
+ "cl:beterraba_conserva": {
+  "pt": "Beterraba em Conserva",
+  "en": "Pickled Beets",
+  "icone": "textures/items/cl/hc/beterraba_conserva"
+ },
  "cl:beterraba_marinha": {
   "pt": "Beterraba Marinha",
   "en": "Sea Beet",
@@ -1425,6 +1650,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Biscoito de Mel",
   "en": "Honey Cookie",
   "icone": "textures/items/cl/arte/biscoito_mel"
+ },
+ "cl:biscoitos_leite": {
+  "pt": "Biscoitos com Leite",
+  "en": "Cookies and Milk",
+  "icone": "textures/items/cl/hc/biscoitos_leite"
  },
  "cl:bloco_aco": {
   "pt": "Bloco de Aço",
@@ -1756,6 +1986,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Blood Ball",
   "icone": "textures/items/cl/arte/bola_slime_sangue"
  },
+ "cl:bolacha": {
+  "pt": "Bolacha",
+  "en": "Cracker",
+  "icone": "textures/items/cl/hc/bolacha"
+ },
+ "cl:bolachas_queijo": {
+  "pt": "Bolachas com Queijo",
+  "en": "Crackers and Cheese",
+  "icone": "textures/items/cl/hc/bolachas_queijo"
+ },
  "cl:bolinho_arroz": {
   "pt": "Bolinho de Arroz",
   "en": "Rice Cake",
@@ -1765,6 +2005,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bolinhos",
   "en": "Dumplings",
   "icone": "textures/items/cl/arte/bolinhos"
+ },
+ "cl:bolo_carne": {
+  "pt": "Bolo de Carne",
+  "en": "Meatloaf",
+  "icone": "textures/items/cl/hc/bolo_carne"
+ },
+ "cl:bolo_cenoura": {
+  "pt": "Bolo de Cenoura",
+  "en": "Carrot Cake",
+  "icone": "textures/items/cl/hc/bolo_cenoura"
+ },
+ "cl:bolo_chocolate": {
+  "pt": "Bolo de Chocolate",
+  "en": "Chocolate Cake",
+  "icone": "textures/items/cl/hc/bolo_chocolate"
+ },
+ "cl:bolota": {
+  "pt": "Bolota",
+  "en": "Acorn",
+  "icone": "textures/items/cl/hc/bolota"
+ },
+ "cl:bolota_assada": {
+  "pt": "Bolota Assada",
+  "en": "Roasted Acorn",
+  "icone": "textures/items/cl/hc/bolota_assada"
  },
  "cl:bolsa_sementes": {
   "pt": "Bolsa de Sementes",
@@ -1896,6 +2161,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cornbread",
   "icone": "textures/items/cl/arte/broa_milho"
  },
+ "cl:brocolis": {
+  "pt": "Brócolis",
+  "en": "Broccoli",
+  "icone": "textures/items/cl/hc/brocolis"
+ },
  "cl:burrito": {
   "pt": "Burrito de Feijão",
   "en": "Bean Burrito",
@@ -1905,6 +2175,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bússola do Avião",
   "en": "Plane Compass",
   "icone": "textures/items/cl/arte/bussola_aviao"
+ },
+ "cl:cabaca": {
+  "pt": "Cabaça",
+  "en": "Calabash",
+  "icone": "textures/items/cl/hc/cabaca"
  },
  "cl:cabeca_enderman": {
   "pt": "Cabeça de Enderman",
@@ -1966,6 +2241,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Saucepan",
   "icone": "textures/items/cl/arte/blocos/cacarola"
  },
+ "cl:cacau_po": {
+  "pt": "Cacau em Pó",
+  "en": "Cocoa Powder",
+  "icone": "textures/items/cl/hc/cacau_po"
+ },
  "cl:cachecol_invisibilidade": {
   "pt": "Cachecol da Invisibilidade",
   "en": "Scarf of Invisibility",
@@ -2001,10 +2281,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Date Bunch",
   "icone": "textures/items/cl/blocos/cacho_tamaras"
  },
+ "cl:cachorro_quente": {
+  "pt": "Cachorro-Quente",
+  "en": "Hot Dog",
+  "icone": "textures/items/cl/hc/cachorro_quente"
+ },
  "cl:caco_vidro": {
   "pt": "Caco de Vidro",
   "en": "Glass Shard",
   "icone": "textures/items/cl/arte/caco_vidro"
+ },
+ "cl:cacto_barril": {
+  "pt": "Cacto-Barril",
+  "en": "Barrel Cactus",
+  "icone": "textures/items/cl/hc/cacto_barril"
  },
  "cl:cadinho": {
   "pt": "Cadinho",
@@ -2015,6 +2305,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cadinho Cru",
   "en": "Unfired Crucible",
   "icone": "textures/items/cl/arte/cadinho_cru"
+ },
+ "cl:cafe": {
+  "pt": "Grão de Café",
+  "en": "Coffeebean",
+  "icone": "textures/items/cl/hc/cafe"
+ },
+ "cl:cafe_quente": {
+  "pt": "Café Quente",
+  "en": "Hot Coffee",
+  "icone": "textures/items/cl/hc/cafe_quente"
  },
  "cl:caixa_engrenagens": {
   "pt": "Caixa de Engrenagens",
@@ -2110,6 +2410,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cajado de Viagem",
   "en": "Staff of Travelling",
   "icone": "textures/items/cl/arte/cajado_viagem"
+ },
+ "cl:caju_torrado": {
+  "pt": "Castanha-de-Caju Torrada",
+  "en": "Roasted Cashew",
+  "icone": "textures/items/cl/hc/caju_torrado"
  },
  "cl:calcario": {
   "pt": "Calcário",
@@ -2331,10 +2636,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Chandelier",
   "icone": "textures/items/cl/blocos/candelabro"
  },
+ "cl:canela": {
+  "pt": "Canela",
+  "en": "Cinnamon",
+  "icone": "textures/items/cl/hc/canela"
+ },
  "cl:cano_oxigenio": {
   "pt": "Cano de Oxigênio",
   "en": "Oxygen Pipe",
   "icone": "textures/items/cl/arte/cano_oxigenio"
+ },
+ "cl:canola": {
+  "pt": "Canola",
+  "en": "Canola",
+  "icone": "textures/items/cl/hc/canola"
  },
  "cl:capacete_placa_aco": {
   "pt": "Capacete de Placa de Aço",
@@ -2576,6 +2891,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Earthslime Tall Grass",
   "icone": "textures/items/cl/blocos/capim_slime_terra"
  },
+ "cl:caqui": {
+  "pt": "Caqui",
+  "en": "Persimmon",
+  "icone": "textures/items/cl/hc/caqui"
+ },
+ "cl:carambola": {
+  "pt": "Carambola",
+  "en": "Starfruit",
+  "icone": "textures/items/cl/hc/carambola"
+ },
+ "cl:caramelo": {
+  "pt": "Caramelo",
+  "en": "Caramel",
+  "icone": "textures/items/cl/hc/caramelo"
+ },
  "cl:carbono_enriquecido": {
   "pt": "Carbono Enriquecido",
   "en": "Enriched Carbon",
@@ -2600,6 +2930,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Carne Moída",
   "en": "Minced Beef",
   "icone": "textures/items/cl/arte/carne_moida"
+ },
+ "cl:carne_panela": {
+  "pt": "Carne de Panela",
+  "en": "Pot Roast",
+  "icone": "textures/items/cl/hc/carne_panela"
  },
  "cl:carregador_ae": {
   "pt": "Carregador",
@@ -2711,6 +3046,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Small Bricks Hull",
   "icone": "textures/items/cl/blocos/casco_nave_tijolos_pequenos"
  },
+ "cl:castanha": {
+  "pt": "Castanha",
+  "en": "Chestnut",
+  "icone": "textures/items/cl/hc/castanha"
+ },
+ "cl:castanha_assada": {
+  "pt": "Castanha Assada",
+  "en": "Roasted Chestnut",
+  "icone": "textures/items/cl/hc/castanha_assada"
+ },
+ "cl:castanha_caju": {
+  "pt": "Castanha-de-Caju",
+  "en": "Cashew",
+  "icone": "textures/items/cl/hc/castanha_caju"
+ },
+ "cl:castanha_dagua": {
+  "pt": "Castanha-d'Água",
+  "en": "Waterchestnut",
+  "icone": "textures/items/cl/hc/castanha_dagua"
+ },
+ "cl:castanha_dagua_assada": {
+  "pt": "Castanha-d'Água Assada",
+  "en": "Baked Water Chestnut",
+  "icone": "textures/items/cl/hc/castanha_dagua_assada"
+ },
  "cl:catalogo": {
   "pt": "Catálogo",
   "en": "Catalog",
@@ -2726,10 +3086,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Onion",
   "icone": "textures/items/cl/arte/cebola"
  },
+ "cl:cebola_assada": {
+  "pt": "Cebola Assada",
+  "en": "Roasted Onion",
+  "icone": "textures/items/cl/hc/cebola_assada"
+ },
  "cl:cebola_selvagem": {
   "pt": "Cebola Selvagem",
   "en": "Wild Onion",
   "icone": "textures/items/cl/blocos/cebola_selvagem"
+ },
+ "cl:cebolinha": {
+  "pt": "Cebolinha",
+  "en": "Scallion",
+  "icone": "textures/items/cl/hc/cebolinha"
+ },
+ "cl:cebolinha_assada": {
+  "pt": "Cebolinha Assada",
+  "en": "Roasted Scallion",
+  "icone": "textures/items/cl/hc/cebolinha_assada"
  },
  "cl:celula_aco": {
   "pt": "Célula de Aço",
@@ -2916,6 +3291,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Wild Carrot",
   "icone": "textures/items/cl/blocos/cenoura_selvagem"
  },
+ "cl:cenouras_glaceadas": {
+  "pt": "Cenouras Glaceadas",
+  "en": "Glazed Carrots",
+  "icone": "textures/items/cl/hc/cenouras_glaceadas"
+ },
+ "cl:centeio": {
+  "pt": "Centeio",
+  "en": "Rye",
+  "icone": "textures/items/cl/hc/centeio"
+ },
+ "cl:cereja": {
+  "pt": "Cereja",
+  "en": "Cherry",
+  "icone": "textures/items/cl/hc/cereja"
+ },
  "cl:cesto": {
   "pt": "Cesto",
   "en": "Basket",
@@ -2925,6 +3315,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cesto de Bambu",
   "en": "Bamboo Basket",
   "icone": "textures/items/cl/blocos/cesto_bambu"
+ },
+ "cl:cevada": {
+  "pt": "Cevada",
+  "en": "Barley",
+  "icone": "textures/items/cl/hc/cevada"
+ },
+ "cl:cha_quente": {
+  "pt": "Chá Quente",
+  "en": "Hot Tea",
+  "icone": "textures/items/cl/hc/cha_quente"
+ },
+ "cl:cha_urtiga": {
+  "pt": "Chá de Urtiga",
+  "en": "Hot Nettle Tea",
+  "icone": "textures/items/cl/hc/cha_urtiga"
  },
  "cl:chapa_cobre": {
   "pt": "Chapa de Cobre",
@@ -2981,6 +3386,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Beef Jerky",
   "icone": "textures/items/cl/arte/charque"
  },
+ "cl:charque_carneiro": {
+  "pt": "Charque de Carneiro",
+  "en": "Mutton Jerky",
+  "icone": "textures/items/cl/hc/charque_carneiro"
+ },
+ "cl:charque_coelho": {
+  "pt": "Charque de Coelho",
+  "en": "Rabbit Jerky",
+  "icone": "textures/items/cl/hc/charque_coelho"
+ },
+ "cl:charque_frango": {
+  "pt": "Charque de Frango",
+  "en": "Chicken Jerky",
+  "icone": "textures/items/cl/hc/charque_frango"
+ },
+ "cl:charque_peixe": {
+  "pt": "Charque de Peixe",
+  "en": "Fish Jerky",
+  "icone": "textures/items/cl/hc/charque_peixe"
+ },
+ "cl:charque_porco": {
+  "pt": "Charque de Porco",
+  "en": "Pork Jerky",
+  "icone": "textures/items/cl/hc/charque_porco"
+ },
  "cl:chassi_almas": {
   "pt": "Chassis de Almas",
   "en": "Ensouled Chassis",
@@ -3020,6 +3450,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cheesecake de Frutas Vermelhas",
   "en": "Sweet Berry Cheesecake",
   "icone": "textures/items/cl/blocos/cheesecake"
+ },
+ "cl:cheesecake_abobora": {
+  "pt": "Cheesecake de Abóbora",
+  "en": "Pumpkin Cheese Cake",
+  "icone": "textures/items/cl/hc/cheesecake_abobora"
+ },
+ "cl:chia": {
+  "pt": "Chia",
+  "en": "Chia",
+  "icone": "textures/items/cl/hc/chia"
  },
  "cl:chibanca_aco": {
   "pt": "Chibanca de Aço",
@@ -3295,6 +3735,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cocho",
   "en": "Feeding Trough",
   "icone": "textures/items/cl/blocos/cocho"
+ },
+ "cl:coco": {
+  "pt": "Coco",
+  "en": "Coconut",
+  "icone": "textures/items/cl/hc/coco"
+ },
+ "cl:cogumelo_assado": {
+  "pt": "Cogumelo Assado",
+  "en": "Roasted Mushroom",
+  "icone": "textures/items/cl/hc/cogumelo_assado"
+ },
+ "cl:cogumelo_branco": {
+  "pt": "Cogumelo Branco",
+  "en": "White Mushroom",
+  "icone": "textures/items/cl/hc/cogumelo_branco"
  },
  "cl:colar_cruz": {
   "pt": "Colar de Cruz",
@@ -3621,6 +4076,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Roasted Mutton Chops",
   "icone": "textures/items/cl/arte/costeletas_assadas"
  },
+ "cl:couve": {
+  "pt": "Couve",
+  "en": "Kale",
+  "icone": "textures/items/cl/hc/couve"
+ },
+ "cl:couve_bruxelas": {
+  "pt": "Couve-de-Bruxelas",
+  "en": "Brusselsprout",
+  "icone": "textures/items/cl/hc/couve_bruxelas"
+ },
+ "cl:couve_chinesa": {
+  "pt": "Couve-Chinesa",
+  "en": "Bok Choy",
+  "icone": "textures/items/cl/hc/couve_chinesa"
+ },
+ "cl:couve_flor": {
+  "pt": "Couve-Flor",
+  "en": "Cauliflower",
+  "icone": "textures/items/cl/hc/couve_flor"
+ },
+ "cl:couve_rabano": {
+  "pt": "Couve-Rábano",
+  "en": "Kohlrabi",
+  "icone": "textures/items/cl/hc/couve_rabano"
+ },
+ "cl:couve_rabano_assada": {
+  "pt": "Couve-Rábano Assada",
+  "en": "Roasted Kohlrabi",
+  "icone": "textures/items/cl/hc/couve_rabano_assada"
+ },
  "cl:cravos_firmes": {
   "pt": "Cravos Firmes",
   "en": "Steadfast Spikes",
@@ -3630,6 +4115,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Creme de Baga Brilhante",
   "en": "Glow Berry Custard",
   "icone": "textures/items/cl/arte/creme_baga_brilhante"
+ },
+ "cl:creme_leite": {
+  "pt": "Creme de Leite",
+  "en": "Cream",
+  "icone": "textures/items/cl/hc/creme_leite"
  },
  "cl:crisol_fermentacao": {
   "pt": "Crisol de Fermentação (VAT)",
@@ -3760,6 +4250,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cubo de Energia Elite",
   "en": "Elite Energy Cube",
   "icone": "textures/items/cl/arte/blocos/cubo_energia_elite"
+ },
+ "cl:damasco": {
+  "pt": "Damasco",
+  "en": "Apricot",
+  "icone": "textures/items/cl/hc/damasco"
  },
  "cl:dardo_cobalto": {
   "pt": "Dardo de Cobalto",
@@ -3896,6 +4391,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "ME Drive",
   "icone": "textures/items/cl/blocos/drive_me"
  },
+ "cl:durian": {
+  "pt": "Durião",
+  "en": "Durian",
+  "icone": "textures/items/cl/hc/durian"
+ },
  "cl:efln": {
   "pt": "EFLN",
   "en": "EFLN",
@@ -3966,6 +4466,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "AutoPackager",
   "icone": "textures/items/cl/arte/blocos/empacotador"
  },
+ "cl:empadao_carne": {
+  "pt": "Empadão de Carne",
+  "en": "Beef Pot Pie",
+  "icone": "textures/items/cl/hc/empadao_carne"
+ },
+ "cl:empadao_carneiro": {
+  "pt": "Empadão de Carneiro",
+  "en": "Mutton Pot Pie",
+  "icone": "textures/items/cl/hc/empadao_carneiro"
+ },
+ "cl:empadao_coelho": {
+  "pt": "Empadão de Coelho",
+  "en": "Rabbit Pot Pie",
+  "icone": "textures/items/cl/hc/empadao_coelho"
+ },
+ "cl:empadao_frango": {
+  "pt": "Empadão de Frango",
+  "en": "Chicken Pot Pie",
+  "icone": "textures/items/cl/hc/empadao_frango"
+ },
+ "cl:empadao_legumes": {
+  "pt": "Empadão de Legumes",
+  "en": "Veggie Pot Pie",
+  "icone": "textures/items/cl/hc/empadao_legumes"
+ },
+ "cl:empadao_peixe": {
+  "pt": "Empadão de Peixe",
+  "en": "Fish Pot Pie",
+  "icone": "textures/items/cl/hc/empadao_peixe"
+ },
+ "cl:empadao_porco": {
+  "pt": "Empadão de Porco",
+  "en": "Pork Pot Pie",
+  "icone": "textures/items/cl/hc/empadao_porco"
+ },
  "cl:enchedor": {
   "pt": "Enchedor",
   "en": "Filler",
@@ -4031,6 +4566,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Vibrant Bimetal Gear",
   "icone": "textures/items/cl/arte/engrenagem_vibrante"
  },
+ "cl:ensopado": {
+  "pt": "Ensopado",
+  "en": "Stew",
+  "icone": "textures/items/cl/hc/ensopado"
+ },
  "cl:ensopado_bacalhau": {
   "pt": "Ensopado de Bacalhau Assado",
   "en": "Baked Cod Stew",
@@ -4050,6 +4590,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Equipamento de Oxigênio",
   "en": "Oxygen Gear",
   "icone": "textures/items/cl/arte/equipamento_oxigenio"
+ },
+ "cl:ervilha": {
+  "pt": "Ervilha",
+  "en": "Peas",
+  "icone": "textures/items/cl/hc/ervilha"
  },
  "cl:escavadeira_aco": {
   "pt": "Escavadeira de Aço",
@@ -4681,6 +5226,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Barbecue on a Stick",
   "icone": "textures/items/cl/arte/espetinho"
  },
+ "cl:espetinho_carne": {
+  "pt": "Espetinho de Carne",
+  "en": "Grilled Beef Skewer",
+  "icone": "textures/items/cl/hc/espetinho_carne"
+ },
+ "cl:espetinho_carneiro": {
+  "pt": "Espetinho de Carneiro",
+  "en": "Grilled Mutton Skewer",
+  "icone": "textures/items/cl/hc/espetinho_carneiro"
+ },
+ "cl:espetinho_coelho": {
+  "pt": "Espetinho de Coelho",
+  "en": "Grilled Rabbit Skewer",
+  "icone": "textures/items/cl/hc/espetinho_coelho"
+ },
+ "cl:espetinho_frango": {
+  "pt": "Espetinho de Frango",
+  "en": "Grilled Chicken Skewer",
+  "icone": "textures/items/cl/hc/espetinho_frango"
+ },
+ "cl:espetinho_legumes": {
+  "pt": "Espetinho de Legumes",
+  "en": "Grilled Veggie Skewer",
+  "icone": "textures/items/cl/hc/espetinho_legumes"
+ },
+ "cl:espetinho_peixe": {
+  "pt": "Espetinho de Peixe",
+  "en": "Grilled Fish Skewer",
+  "icone": "textures/items/cl/hc/espetinho_peixe"
+ },
+ "cl:espetinho_porco": {
+  "pt": "Espetinho de Porco",
+  "en": "Grilled Pork Skewer",
+  "icone": "textures/items/cl/hc/espetinho_porco"
+ },
+ "cl:espinafre": {
+  "pt": "Espinafre",
+  "en": "Spinach",
+  "icone": "textures/items/cl/hc/espinafre"
+ },
  "cl:espinho_diamante": {
   "pt": "Espinhos de Diamante",
   "en": "Diamond Spikes",
@@ -5116,6 +5701,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Quartz Fiber",
   "icone": "textures/items/cl/arte/fibra_quartzo"
  },
+ "cl:figo": {
+  "pt": "Figo",
+  "en": "Fig",
+  "icone": "textures/items/cl/hc/figo"
+ },
  "cl:filtro": {
   "pt": "Filtro de Ar",
   "en": "Air Filter",
@@ -5286,6 +5876,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Scythe",
   "icone": "textures/items/cl/arte/foice_slime_rainha"
  },
+ "cl:folha_cha": {
+  "pt": "Folha de Chá",
+  "en": "Tealeaf",
+  "icone": "textures/items/cl/hc/folha_cha"
+ },
  "cl:folha_infestada": {
   "pt": "Folha Infestada",
   "en": "Infested Leaves",
@@ -5300,6 +5895,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Folha de Repolho",
   "en": "Cabbage Leaf",
   "icone": "textures/items/cl/arte/folha_repolho"
+ },
+ "cl:folha_tempero": {
+  "pt": "Folha de Tempero",
+  "en": "Spiceleaf",
+  "icone": "textures/items/cl/hc/folha_tempero"
  },
  "cl:folhas_slime_ceu": {
   "pt": "Folhas de Slime-do-Céu",
@@ -5376,10 +5976,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Attuned Shard",
   "icone": "textures/items/cl/c/fragmento_sintonizado"
  },
+ "cl:framboesa": {
+  "pt": "Framboesa",
+  "en": "Raspberry",
+  "icone": "textures/items/cl/hc/framboesa"
+ },
  "cl:frango_assado": {
   "pt": "Frango Assado",
   "en": "Roast Chicken",
   "icone": "textures/items/cl/blocos/frango_assado"
+ },
+ "cl:frango_frito": {
+  "pt": "Frango Frito",
+  "en": "Fried Chicken",
+  "icone": "textures/items/cl/hc/frango_frito"
  },
  "cl:frank_n_zumbi": {
   "pt": "Frank'N'Zumbi",
@@ -5416,10 +6026,265 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Fruit",
   "icone": "textures/items/cl/arte/fruta_cacto"
  },
+ "cl:fruta_pao": {
+  "pt": "Fruta-Pão",
+  "en": "Breadfruit",
+  "icone": "textures/items/cl/hc/fruta_pao"
+ },
+ "cl:fruto_abacate": {
+  "pt": "Abacate (no pé)",
+  "en": "Avocado Fruit",
+  "icone": "textures/items/cl/blocos/fruto_abacate"
+ },
+ "cl:fruto_ameixa": {
+  "pt": "Ameixa (no pé)",
+  "en": "Plum Fruit",
+  "icone": "textures/items/cl/blocos/fruto_ameixa"
+ },
+ "cl:fruto_amendoa": {
+  "pt": "Amêndoa (no pé)",
+  "en": "Almond Fruit",
+  "icone": "textures/items/cl/blocos/fruto_amendoa"
+ },
+ "cl:fruto_asimina": {
+  "pt": "Asimina (no pé)",
+  "en": "Pawpaw Fruit",
+  "icone": "textures/items/cl/blocos/fruto_asimina"
+ },
+ "cl:fruto_avela": {
+  "pt": "Avelã (no pé)",
+  "en": "Hazelnut Fruit",
+  "icone": "textures/items/cl/blocos/fruto_avela"
+ },
+ "cl:fruto_azeitona": {
+  "pt": "Azeitona (no pé)",
+  "en": "Olive Fruit",
+  "icone": "textures/items/cl/blocos/fruto_azeitona"
+ },
+ "cl:fruto_banana": {
+  "pt": "Banana (no pé)",
+  "en": "Banana Fruit",
+  "icone": "textures/items/cl/blocos/fruto_banana"
+ },
+ "cl:fruto_baunilha": {
+  "pt": "Fava de Baunilha (no pé)",
+  "en": "Vanillabean Fruit",
+  "icone": "textures/items/cl/blocos/fruto_baunilha"
+ },
+ "cl:fruto_bolota": {
+  "pt": "Bolota (no pé)",
+  "en": "Acorn Fruit",
+  "icone": "textures/items/cl/blocos/fruto_bolota"
+ },
+ "cl:fruto_canela": {
+  "pt": "Canela (no pé)",
+  "en": "Cinnamon Fruit",
+  "icone": "textures/items/cl/blocos/fruto_canela"
+ },
+ "cl:fruto_caqui": {
+  "pt": "Caqui (no pé)",
+  "en": "Persimmon Fruit",
+  "icone": "textures/items/cl/blocos/fruto_caqui"
+ },
+ "cl:fruto_carambola": {
+  "pt": "Carambola (no pé)",
+  "en": "Starfruit Fruit",
+  "icone": "textures/items/cl/blocos/fruto_carambola"
+ },
+ "cl:fruto_casca_papel": {
+  "pt": "Casca-de-Papel (no pé)",
+  "en": "Paperbark Fruit",
+  "icone": "textures/items/cl/blocos/fruto_casca_papel"
+ },
+ "cl:fruto_castanha": {
+  "pt": "Castanha (no pé)",
+  "en": "Chestnut Fruit",
+  "icone": "textures/items/cl/blocos/fruto_castanha"
+ },
+ "cl:fruto_castanha_caju": {
+  "pt": "Castanha-de-Caju (no pé)",
+  "en": "Cashew Fruit",
+  "icone": "textures/items/cl/blocos/fruto_castanha_caju"
+ },
+ "cl:fruto_cereja": {
+  "pt": "Cereja (no pé)",
+  "en": "Cherry Fruit",
+  "icone": "textures/items/cl/blocos/fruto_cereja"
+ },
+ "cl:fruto_coco": {
+  "pt": "Coco (no pé)",
+  "en": "Coconut Fruit",
+  "icone": "textures/items/cl/blocos/fruto_coco"
+ },
+ "cl:fruto_damasco": {
+  "pt": "Damasco (no pé)",
+  "en": "Apricot Fruit",
+  "icone": "textures/items/cl/blocos/fruto_damasco"
+ },
+ "cl:fruto_durian": {
+  "pt": "Durião (no pé)",
+  "en": "Durian Fruit",
+  "icone": "textures/items/cl/blocos/fruto_durian"
+ },
+ "cl:fruto_figo": {
+  "pt": "Figo (no pé)",
+  "en": "Fig Fruit",
+  "icone": "textures/items/cl/blocos/fruto_figo"
+ },
+ "cl:fruto_fruta_pao": {
+  "pt": "Fruta-Pão (no pé)",
+  "en": "Breadfruit Fruit",
+  "icone": "textures/items/cl/blocos/fruto_fruta_pao"
+ },
+ "cl:fruto_goiaba": {
+  "pt": "Goiaba (no pé)",
+  "en": "Guava Fruit",
+  "icone": "textures/items/cl/blocos/fruto_goiaba"
+ },
+ "cl:fruto_graviola": {
+  "pt": "Graviola (no pé)",
+  "en": "Soursop Fruit",
+  "icone": "textures/items/cl/blocos/fruto_graviola"
+ },
+ "cl:fruto_groselha": {
+  "pt": "Groselha (no pé)",
+  "en": "Gooseberry Fruit",
+  "icone": "textures/items/cl/blocos/fruto_groselha"
+ },
+ "cl:fruto_jaca": {
+  "pt": "Jaca (no pé)",
+  "en": "Jackfruit Fruit",
+  "icone": "textures/items/cl/blocos/fruto_jaca"
+ },
+ "cl:fruto_laranja": {
+  "pt": "Laranja (no pé)",
+  "en": "Orange Fruit",
+  "icone": "textures/items/cl/blocos/fruto_laranja"
+ },
+ "cl:fruto_lichia": {
+  "pt": "Lichia (no pé)",
+  "en": "Lychee Fruit",
+  "icone": "textures/items/cl/blocos/fruto_lichia"
+ },
+ "cl:fruto_limao": {
+  "pt": "Limão (no pé)",
+  "en": "Lime Fruit",
+  "icone": "textures/items/cl/blocos/fruto_limao"
+ },
+ "cl:fruto_limao_siciliano": {
+  "pt": "Limão-Siciliano (no pé)",
+  "en": "Lemon Fruit",
+  "icone": "textures/items/cl/blocos/fruto_limao_siciliano"
+ },
+ "cl:fruto_maca": {
+  "pt": "Maçã (no pé)",
+  "en": "Apple Fruit",
+  "icone": "textures/items/cl/blocos/fruto_maca"
+ },
+ "cl:fruto_mamao": {
+  "pt": "Mamão (no pé)",
+  "en": "Papaya Fruit",
+  "icone": "textures/items/cl/blocos/fruto_mamao"
+ },
+ "cl:fruto_manga": {
+  "pt": "Manga (no pé)",
+  "en": "Mango Fruit",
+  "icone": "textures/items/cl/blocos/fruto_manga"
+ },
+ "cl:fruto_maracuja": {
+  "pt": "Maracujá (no pé)",
+  "en": "Passionfruit Fruit",
+  "icone": "textures/items/cl/blocos/fruto_maracuja"
+ },
+ "cl:fruto_noz": {
+  "pt": "Noz (no pé)",
+  "en": "Walnut Fruit",
+  "icone": "textures/items/cl/blocos/fruto_noz"
+ },
+ "cl:fruto_noz_iguape": {
+  "pt": "Noz-de-Iguape (no pé)",
+  "en": "Candlenut Fruit",
+  "icone": "textures/items/cl/blocos/fruto_noz_iguape"
+ },
+ "cl:fruto_noz_moscada": {
+  "pt": "Noz-Moscada (no pé)",
+  "en": "Nutmeg Fruit",
+  "icone": "textures/items/cl/blocos/fruto_noz_moscada"
+ },
+ "cl:fruto_peca": {
+  "pt": "Pecã (no pé)",
+  "en": "Pecan Fruit",
+  "icone": "textures/items/cl/blocos/fruto_peca"
+ },
+ "cl:fruto_pera": {
+  "pt": "Pera (no pé)",
+  "en": "Pear Fruit",
+  "icone": "textures/items/cl/blocos/fruto_pera"
+ },
+ "cl:fruto_pessego": {
+  "pt": "Pêssego (no pé)",
+  "en": "Peach Fruit",
+  "icone": "textures/items/cl/blocos/fruto_pessego"
+ },
+ "cl:fruto_pimenta_reino": {
+  "pt": "Pimenta-do-Reino (no pé)",
+  "en": "Peppercorn Fruit",
+  "icone": "textures/items/cl/blocos/fruto_pimenta_reino"
+ },
+ "cl:fruto_pinoli": {
+  "pt": "Pinoli (no pé)",
+  "en": "Pinenuts Fruit",
+  "icone": "textures/items/cl/blocos/fruto_pinoli"
+ },
+ "cl:fruto_pistache": {
+  "pt": "Pistache (no pé)",
+  "en": "Pistachio Fruit",
+  "icone": "textures/items/cl/blocos/fruto_pistache"
+ },
+ "cl:fruto_pitaya": {
+  "pt": "Pitaya (no pé)",
+  "en": "Dragonfruit Fruit",
+  "icone": "textures/items/cl/blocos/fruto_pitaya"
+ },
+ "cl:fruto_rambutan": {
+  "pt": "Rambutã (no pé)",
+  "en": "Rambutan Fruit",
+  "icone": "textures/items/cl/blocos/fruto_rambutan"
+ },
+ "cl:fruto_roma": {
+  "pt": "Romã (no pé)",
+  "en": "Pomegranate Fruit",
+  "icone": "textures/items/cl/blocos/fruto_roma"
+ },
+ "cl:fruto_tamarindo": {
+  "pt": "Tamarindo (no pé)",
+  "en": "Tamarind Fruit",
+  "icone": "textures/items/cl/blocos/fruto_tamarindo"
+ },
+ "cl:fruto_teia": {
+  "pt": "Teia (no pé)",
+  "en": "Spiderweb Fruit",
+  "icone": "textures/items/cl/blocos/fruto_teia"
+ },
+ "cl:fruto_toranja": {
+  "pt": "Toranja (no pé)",
+  "en": "Grapefruit Fruit",
+  "icone": "textures/items/cl/blocos/fruto_toranja"
+ },
+ "cl:fruto_xarope_bordo": {
+  "pt": "Xarope de Bordo (no pé)",
+  "en": "Maple Syrup Fruit",
+  "icone": "textures/items/cl/blocos/fruto_xarope_bordo"
+ },
  "cl:fuba": {
   "pt": "Fubá",
   "en": "Cornmeal",
   "icone": "textures/items/cl/arte/fuba"
+ },
+ "cl:fudge_chocolate": {
+  "pt": "Fudge de Chocolate e Caramelo",
+  "en": "Chocolate Caramel Fudge",
+  "icone": "textures/items/cl/hc/fudge_chocolate"
  },
  "cl:fundidor_energizado": {
   "pt": "Fundição Energizada",
@@ -5556,10 +6421,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Compacting Drawers",
   "icone": "textures/items/cl/blocos/gaveta_compactadora"
  },
+ "cl:geleia_bagas_brilhantes": {
+  "pt": "Geleia de Bagas Brilhantes",
+  "en": "Glow Berry Jelly",
+  "icone": "textures/items/cl/hc/geleia_bagas_brilhantes"
+ },
+ "cl:geleia_bagas_doces": {
+  "pt": "Geleia de Bagas Doces",
+  "en": "Sweet Berry Jelly",
+  "icone": "textures/items/cl/hc/geleia_bagas_doces"
+ },
+ "cl:geleia_coro": {
+  "pt": "Geleia de Fruta do Coro",
+  "en": "Chorus Jelly",
+  "icone": "textures/items/cl/hc/geleia_coro"
+ },
+ "cl:geleia_maca": {
+  "pt": "Geleia de Maçã",
+  "en": "Apple Jelly",
+  "icone": "textures/items/cl/hc/geleia_maca"
+ },
+ "cl:geleia_melancia": {
+  "pt": "Geleia de Melancia",
+  "en": "Melon Jelly",
+  "icone": "textures/items/cl/hc/geleia_melancia"
+ },
  "cl:gelo_seco": {
   "pt": "Gelo Seco",
   "en": "Dry Ice",
   "icone": "textures/items/cl/blocos/gelo_seco"
+ },
+ "cl:gengibre": {
+  "pt": "Gengibre",
+  "en": "Ginger",
+  "icone": "textures/items/cl/hc/gengibre"
  },
  "cl:gerador": {
   "pt": "Gerador a Carvão",
@@ -5631,10 +6526,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Thermoelectric Generator",
   "icone": "textures/items/cl/blocos/gerador_termeletrico"
  },
+ "cl:gergelim": {
+  "pt": "Gergelim",
+  "en": "Sesame Seeds",
+  "icone": "textures/items/cl/hc/gergelim"
+ },
+ "cl:girassol_torrado": {
+  "pt": "Sementes de Girassol Torradas",
+  "en": "Roasted Sunflower Seeds",
+  "icone": "textures/items/cl/hc/girassol_torrado"
+ },
  "cl:girocoptero": {
   "pt": "Girocóptero",
   "en": "Gyrodyne",
   "icone": "textures/items/cl/arte/girocoptero"
+ },
+ "cl:goiaba": {
+  "pt": "Goiaba",
+  "en": "Guava",
+  "icone": "textures/items/cl/hc/goiaba"
+ },
+ "cl:goji": {
+  "pt": "Goji",
+  "en": "Wolfberry",
+  "icone": "textures/items/cl/hc/goji"
  },
  "cl:grade": {
   "pt": "Grade",
@@ -5665,6 +6580,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Grama de Slime-da-Terra",
   "en": "Earthslime Grass",
   "icone": "textures/items/cl/blocos/grama_slime_terra"
+ },
+ "cl:grao_de_bico": {
+  "pt": "Grão-de-Bico",
+  "en": "Chickpea",
+  "icone": "textures/items/cl/hc/grao_de_bico"
  },
  "cl:graos_end": {
   "pt": "Grãos do End",
@@ -5701,6 +6621,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Treated Stick",
   "icone": "textures/items/cl/c/graveto_tratado"
  },
+ "cl:graviola": {
+  "pt": "Graviola",
+  "en": "Soursop",
+  "icone": "textures/items/cl/hc/graviola"
+ },
+ "cl:groselha": {
+  "pt": "Groselha",
+  "en": "Gooseberry",
+  "icone": "textures/items/cl/hc/groselha"
+ },
+ "cl:guarana": {
+  "pt": "Guaraná",
+  "en": "Guarana",
+  "icone": "textures/items/cl/hc/guarana"
+ },
  "cl:guarda_chuva": {
   "pt": "Guarda-Chuva",
   "en": "Umbrella",
@@ -5715,6 +6650,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Hambúrguer de Carne",
   "en": "Beef Patty",
   "icone": "textures/items/cl/arte/hamburguer_carne"
+ },
+ "cl:hamburguer_simples": {
+  "pt": "Hambúrguer Simples",
+  "en": "Basic Hamburger",
+  "icone": "textures/items/cl/hc/hamburguer_simples"
+ },
+ "cl:hamburguer_vegetariano": {
+  "pt": "Hambúrguer Vegetariano",
+  "en": "Basic Veggie Burger",
+  "icone": "textures/items/cl/hc/hamburguer_vegetariano"
  },
  "cl:haste_dieletrica": {
   "pt": "Haste Dielétrica",
@@ -5756,6 +6701,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Energizing Rod",
   "icone": "textures/items/cl/blocos/haste_energizadora_nitro"
  },
+ "cl:hc_cheesecake": {
+  "pt": "Cheesecake",
+  "en": "Cheese Cake",
+  "icone": "textures/items/cl/hc/hc_cheesecake"
+ },
+ "cl:hc_torta_chocolate": {
+  "pt": "Torta de Chocolate",
+  "en": "Chocolate Pie",
+  "icone": "textures/items/cl/hc/hc_torta_chocolate"
+ },
+ "cl:hc_torta_maca": {
+  "pt": "Torta de Maçã",
+  "en": "Apple Pie",
+  "icone": "textures/items/cl/hc/hc_torta_maca"
+ },
  "cl:helice": {
   "pt": "Hélice",
   "en": "Propeller",
@@ -5765,6 +6725,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Hélice de Avião",
   "en": "Propeller",
   "icone": "textures/items/cl/arte/helice_aviao"
+ },
+ "cl:horta_arida": {
+  "pt": "Horta Árida",
+  "en": "Arid Garden",
+  "icone": "textures/items/cl/blocos/horta_arida"
+ },
+ "cl:horta_gelada": {
+  "pt": "Horta Gelada",
+  "en": "Frost Garden",
+  "icone": "textures/items/cl/blocos/horta_gelada"
+ },
+ "cl:horta_sombria": {
+  "pt": "Horta Sombria",
+  "en": "Shaded Garden",
+  "icone": "textures/items/cl/blocos/horta_sombria"
+ },
+ "cl:horta_tropical": {
+  "pt": "Horta Tropical",
+  "en": "Tropical Garden",
+  "icone": "textures/items/cl/blocos/horta_tropical"
+ },
+ "cl:horta_umida": {
+  "pt": "Horta Úmida",
+  "en": "Soggy Garden",
+  "icone": "textures/items/cl/blocos/horta_umida"
+ },
+ "cl:horta_ventosa": {
+  "pt": "Horta Ventosa",
+  "en": "Windy Garden",
+  "icone": "textures/items/cl/blocos/horta_ventosa"
  },
  "cl:idolo_amaldicoado": {
   "pt": "Ídolo Amaldiçoado",
@@ -5785,6 +6775,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Infusor Químico",
   "en": "Chemical Infuser",
   "icone": "textures/items/cl/arte/blocos/infusor_quimico"
+ },
+ "cl:inhame": {
+  "pt": "Inhame",
+  "en": "Taro",
+  "icone": "textures/items/cl/hc/inhame"
+ },
+ "cl:inhame_assado": {
+  "pt": "Inhame Assado",
+  "en": "Baked Taro",
+  "icone": "textures/items/cl/hc/inhame_assado"
  },
  "cl:inscritor": {
   "pt": "Inscritor",
@@ -5811,10 +6811,75 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dielectric Casing",
   "icone": "textures/items/cl/arte/involucro_dieletrico"
  },
+ "cl:iogurte": {
+  "pt": "Iogurte",
+  "en": "Yogurt",
+  "icone": "textures/items/cl/hc/iogurte"
+ },
+ "cl:iogurte_abobora": {
+  "pt": "Iogurte de Abóbora",
+  "en": "Pumpkin Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_abobora"
+ },
+ "cl:iogurte_bagas_brilhantes": {
+  "pt": "Iogurte de Bagas Brilhantes",
+  "en": "Glow Berry Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_bagas_brilhantes"
+ },
+ "cl:iogurte_bagas_doces": {
+  "pt": "Iogurte de Bagas Doces",
+  "en": "Sweet Berry Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_bagas_doces"
+ },
+ "cl:iogurte_caramelo": {
+  "pt": "Iogurte de Caramelo",
+  "en": "Caramel Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_caramelo"
+ },
+ "cl:iogurte_chocolate": {
+  "pt": "Iogurte de Chocolate",
+  "en": "Chocolate Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_chocolate"
+ },
+ "cl:iogurte_coro": {
+  "pt": "Iogurte de Fruta do Coro",
+  "en": "Chorus Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_coro"
+ },
+ "cl:iogurte_maca": {
+  "pt": "Iogurte de Maçã",
+  "en": "Apple Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_maca"
+ },
+ "cl:iogurte_melancia": {
+  "pt": "Iogurte de Melancia",
+  "en": "Melon Yogurt",
+  "icone": "textures/items/cl/hc/iogurte_melancia"
+ },
+ "cl:iscas_peixe": {
+  "pt": "Iscas de Peixe",
+  "en": "Fish Sticks",
+  "icone": "textures/items/cl/hc/iscas_peixe"
+ },
  "cl:isolamento_industrial": {
   "pt": "Isolamento Industrial",
   "en": "Industrial Insulation",
   "icone": "textures/items/cl/blocos/isolamento_industrial"
+ },
+ "cl:iuca": {
+  "pt": "Iúca",
+  "en": "Yucca",
+  "icone": "textures/items/cl/hc/iuca"
+ },
+ "cl:jaca": {
+  "pt": "Jaca",
+  "en": "Jackfruit",
+  "icone": "textures/items/cl/hc/jaca"
+ },
+ "cl:jantar_frango": {
+  "pt": "Jantar de Frango",
+  "en": "Chicken Dinner",
+  "icone": "textures/items/cl/hc/jantar_frango"
  },
  "cl:jaspe": {
   "pt": "Jaspe",
@@ -5895,6 +6960,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Jetpack de Pedra",
   "en": "Stone Jetpack",
   "icone": "textures/items/cl/arte/jetpack_pedra"
+ },
+ "cl:jicama": {
+  "pt": "Jicama",
+  "en": "Jicama",
+  "icone": "textures/items/cl/hc/jicama"
+ },
+ "cl:jicama_assada": {
+  "pt": "Jicama Assada",
+  "en": "Baked Jicama",
+  "icone": "textures/items/cl/hc/jicama_assada"
+ },
+ "cl:jujubas": {
+  "pt": "Jujubas",
+  "en": "Jelly Beans",
+  "icone": "textures/items/cl/hc/jujubas"
+ },
+ "cl:juta": {
+  "pt": "Juta",
+  "en": "Jute",
+  "icone": "textures/items/cl/hc/juta"
  },
  "cl:kama_aco": {
   "pt": "Kama de Aço",
@@ -6045,6 +7130,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Kama de Slime da Rainha",
   "en": "Queen's Slime Kama",
   "icone": "textures/items/cl/arte/kama_slime_rainha"
+ },
+ "cl:kenaf": {
+  "pt": "Kenaf",
+  "en": "Kenaf",
+  "icone": "textures/items/cl/hc/kenaf"
+ },
+ "cl:kiwi": {
+  "pt": "Kiwi",
+  "en": "Kiwi",
+  "icone": "textures/items/cl/hc/kiwi"
  },
  "cl:laboratorio_ladrilho_grande": {
   "pt": "Ladrilho Grande de Laboratório",
@@ -6221,6 +7316,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Lantern",
   "icone": "textures/items/cl/blocos/lanterna_refrataria"
  },
+ "cl:laranja": {
+  "pt": "Laranja",
+  "en": "Orange",
+  "icone": "textures/items/cl/hc/laranja"
+ },
  "cl:lata_cobre": {
   "pt": "Lata de Cobre",
   "en": "Copper Canister",
@@ -6236,10 +7336,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Swasher",
   "icone": "textures/items/cl/arte/lavador"
  },
+ "cl:legumes_assados": {
+  "pt": "Legumes Assados",
+  "en": "Baked Vegetable Medly",
+  "icone": "textures/items/cl/hc/legumes_assados"
+ },
+ "cl:leite_fresco": {
+  "pt": "Leite Fresco",
+  "en": "Fresh Milk",
+  "icone": "textures/items/cl/hc/leite_fresco"
+ },
  "cl:lente_ender": {
   "pt": "Lente do Ender",
   "en": "Lens of Ender",
   "icone": "textures/items/cl/arte/lente_ender"
+ },
+ "cl:lentilha": {
+  "pt": "Lentilha",
+  "en": "Lentil",
+  "icone": "textures/items/cl/hc/lentilha"
+ },
+ "cl:lichia": {
+  "pt": "Lichia",
+  "en": "Lychee",
+  "icone": "textures/items/cl/hc/lichia"
  },
  "cl:liga_andesita": {
   "pt": "Liga de Andesita",
@@ -6280,6 +7400,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Ligador Chamuscado",
   "en": "Scorched Alloyer",
   "icone": "textures/items/cl/blocos/ligador"
+ },
+ "cl:limao": {
+  "pt": "Limão",
+  "en": "Lime",
+  "icone": "textures/items/cl/hc/limao"
+ },
+ "cl:limao_siciliano": {
+  "pt": "Limão-Siciliano",
+  "en": "Lemon",
+  "icone": "textures/items/cl/hc/limao_siciliano"
  },
  "cl:lingote_aco": {
   "pt": "Lingote de Aço",
@@ -6411,6 +7541,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Zinc Ingot",
   "icone": "textures/items/cl/c/lingote_zinco"
  },
+ "cl:linho": {
+  "pt": "Linho",
+  "en": "Flax",
+  "icone": "textures/items/cl/hc/linho"
+ },
  "cl:lirio_ender_planta": {
   "pt": "Lírio Ender",
   "en": "Ender Lily",
@@ -6466,6 +7601,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Canvas",
   "icone": "textures/items/cl/arte/lona"
  },
+ "cl:lotus": {
+  "pt": "Lótus",
+  "en": "Lotus",
+  "icone": "textures/items/cl/hc/lotus"
+ },
  "cl:luva_forca": {
   "pt": "Luva de Força",
   "en": "Power Glove",
@@ -6475,6 +7615,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Luva Vampírica",
   "en": "Vampiric Glove",
   "icone": "textures/items/cl/arte/luva_vampirica"
+ },
+ "cl:maca_amor": {
+  "pt": "Maçã do Amor",
+  "en": "Caramel Apple",
+  "icone": "textures/items/cl/hc/maca_amor"
+ },
+ "cl:macarrao": {
+  "pt": "Macarrão",
+  "en": "Pasta",
+  "icone": "textures/items/cl/hc/macarrao"
  },
  "cl:macarrao_almondegas": {
   "pt": "Macarrão com Almôndegas",
@@ -6495,6 +7645,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Macarrão de Legumes",
   "en": "Vegetable Noodles",
   "icone": "textures/items/cl/arte/macarrao_legumes"
+ },
+ "cl:macarrao_queijo": {
+  "pt": "Macarrão com Queijo",
+  "en": "Mac n Cheese",
+  "icone": "textures/items/cl/hc/macarrao_queijo"
  },
  "cl:macarrao_tinta_lula": {
   "pt": "Macarrão com Tinta de Lula",
@@ -6921,10 +8076,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Mesh",
   "icone": "textures/items/cl/arte/malha_silex"
  },
+ "cl:mamao": {
+  "pt": "Mamão",
+  "en": "Papaya",
+  "icone": "textures/items/cl/hc/mamao"
+ },
  "cl:mancal_rotor": {
   "pt": "Mancal do Rotor",
   "en": "Rotor Bearing",
   "icone": "textures/items/cl/blocos/mancal_rotor"
+ },
+ "cl:mandioca": {
+  "pt": "Mandioca",
+  "en": "Cassava",
+  "icone": "textures/items/cl/hc/mandioca"
+ },
+ "cl:mandioca_assada": {
+  "pt": "Mandioca Assada",
+  "en": "Baked Cassava",
+  "icone": "textures/items/cl/hc/mandioca_assada"
+ },
+ "cl:manga": {
+  "pt": "Manga",
+  "en": "Mango",
+  "icone": "textures/items/cl/hc/manga"
  },
  "cl:manivela": {
   "pt": "Manivela",
@@ -6945,6 +8120,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Manteiga",
   "en": "Butter",
   "icone": "textures/items/cl/arte/manteiga"
+ },
+ "cl:maracuja": {
+  "pt": "Maracujá",
+  "en": "Passionfruit",
+  "icone": "textures/items/cl/hc/maracuja"
  },
  "cl:marco": {
   "pt": "Marco",
@@ -7171,6 +8351,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_slime_rainha"
  },
+ "cl:marshmallow": {
+  "pt": "Marshmallows",
+  "en": "Marshmellows",
+  "icone": "textures/items/cl/hc/marshmallow"
+ },
  "cl:martelo_cobre": {
   "pt": "Martelo de Cobre",
   "en": "Copper Hammer",
@@ -7396,6 +8581,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Conversion Matrix",
   "icone": "textures/items/cl/arte/matriz_conversao"
  },
+ "cl:melao": {
+  "pt": "Melão",
+  "en": "Cantaloupe",
+  "icone": "textures/items/cl/hc/melao"
+ },
  "cl:melhoria_alimentacao": {
   "pt": "Melhoria: Alimentação",
   "en": "Feeding Upgrade",
@@ -7601,10 +8791,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Lunar Sapphire Ore",
   "icone": "textures/items/cl/blocos/minerio_safira_lunar"
  },
+ "cl:mirtilo": {
+  "pt": "Mirtilo",
+  "en": "Blueberry",
+  "icone": "textures/items/cl/hc/mirtilo"
+ },
+ "cl:misto_quente": {
+  "pt": "Misto-Quente",
+  "en": "Grilled Cheese and Ham",
+  "icone": "textures/items/cl/hc/misto_quente"
+ },
  "cl:misturador_mecanico": {
   "pt": "Misturador Mecânico",
   "en": "Mechanical Mixer",
   "icone": "textures/items/cl/blocos/misturador_mecanico"
+ },
+ "cl:mix_castanhas": {
+  "pt": "Mix de Castanhas",
+  "en": "Trail Mix",
+  "icone": "textures/items/cl/hc/mix_castanhas"
  },
  "cl:mk_botas_aco": {
   "pt": "Botas de Aço",
@@ -7971,6 +9176,66 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Piggybackpack",
   "icone": "textures/items/cl/arte/mochila_porco"
  },
+ "cl:moido_carne": {
+  "pt": "Carne Moída",
+  "en": "Ground Beef",
+  "icone": "textures/items/cl/hc/moido_carne"
+ },
+ "cl:moido_carne_cozido": {
+  "pt": "Carne Moída Cozida",
+  "en": "Cooked Ground Beef",
+  "icone": "textures/items/cl/hc/moido_carne_cozido"
+ },
+ "cl:moido_carneiro": {
+  "pt": "Carneiro Moído",
+  "en": "Ground Mutton",
+  "icone": "textures/items/cl/hc/moido_carneiro"
+ },
+ "cl:moido_carneiro_cozido": {
+  "pt": "Carneiro Moído Cozido",
+  "en": "Cooked Ground Mutton",
+  "icone": "textures/items/cl/hc/moido_carneiro_cozido"
+ },
+ "cl:moido_coelho": {
+  "pt": "Coelho Moído",
+  "en": "Ground Rabbit",
+  "icone": "textures/items/cl/hc/moido_coelho"
+ },
+ "cl:moido_coelho_cozido": {
+  "pt": "Coelho Moído Cozido",
+  "en": "Cooked Ground Rabbit",
+  "icone": "textures/items/cl/hc/moido_coelho_cozido"
+ },
+ "cl:moido_frango": {
+  "pt": "Frango Moído",
+  "en": "Ground Chicken",
+  "icone": "textures/items/cl/hc/moido_frango"
+ },
+ "cl:moido_frango_cozido": {
+  "pt": "Frango Moído Cozido",
+  "en": "Cooked Ground Chicken",
+  "icone": "textures/items/cl/hc/moido_frango_cozido"
+ },
+ "cl:moido_peixe": {
+  "pt": "Peixe Moído",
+  "en": "Ground Fish",
+  "icone": "textures/items/cl/hc/moido_peixe"
+ },
+ "cl:moido_peixe_cozido": {
+  "pt": "Peixe Moído Cozido",
+  "en": "Cooked Ground Fish",
+  "icone": "textures/items/cl/hc/moido_peixe_cozido"
+ },
+ "cl:moido_porco": {
+  "pt": "Porco Moído",
+  "en": "Ground Pork",
+  "icone": "textures/items/cl/hc/moido_porco"
+ },
+ "cl:moido_porco_cozido": {
+  "pt": "Porco Moído Cozido",
+  "en": "Cooked Ground Pork",
+  "icone": "textures/items/cl/hc/moido_porco_cozido"
+ },
  "cl:moinho": {
   "pt": "Moinho de Vento",
   "en": "Windmill",
@@ -8191,6 +9456,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Assembler",
   "icone": "textures/items/cl/arte/blocos/montadora"
  },
+ "cl:morango": {
+  "pt": "Morango",
+  "en": "Strawberry",
+  "icone": "textures/items/cl/hc/morango"
+ },
+ "cl:mostarda": {
+  "pt": "Mostarda",
+  "en": "Mustard Seeds",
+  "icone": "textures/items/cl/hc/mostarda"
+ },
  "cl:motor_aeronave": {
   "pt": "Motor",
   "en": "Engine",
@@ -8231,6 +9506,231 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stirling Engine",
   "icone": "textures/items/cl/blocos/motor_stirling"
  },
+ "cl:muda_abacate": {
+  "pt": "Muda de Abacate",
+  "en": "Avocado Sapling",
+  "icone": "textures/items/cl/blocos/muda_abacate"
+ },
+ "cl:muda_ameixa": {
+  "pt": "Muda de Ameixa",
+  "en": "Plum Sapling",
+  "icone": "textures/items/cl/blocos/muda_ameixa"
+ },
+ "cl:muda_amendoa": {
+  "pt": "Muda de Amêndoa",
+  "en": "Almond Sapling",
+  "icone": "textures/items/cl/blocos/muda_amendoa"
+ },
+ "cl:muda_asimina": {
+  "pt": "Muda de Asimina",
+  "en": "Pawpaw Sapling",
+  "icone": "textures/items/cl/blocos/muda_asimina"
+ },
+ "cl:muda_avela": {
+  "pt": "Muda de Avelã",
+  "en": "Hazelnut Sapling",
+  "icone": "textures/items/cl/blocos/muda_avela"
+ },
+ "cl:muda_azeitona": {
+  "pt": "Muda de Azeitona",
+  "en": "Olive Sapling",
+  "icone": "textures/items/cl/blocos/muda_azeitona"
+ },
+ "cl:muda_banana": {
+  "pt": "Muda de Banana",
+  "en": "Banana Sapling",
+  "icone": "textures/items/cl/blocos/muda_banana"
+ },
+ "cl:muda_baunilha": {
+  "pt": "Muda de Fava de Baunilha",
+  "en": "Vanillabean Sapling",
+  "icone": "textures/items/cl/blocos/muda_baunilha"
+ },
+ "cl:muda_bolota": {
+  "pt": "Muda de Bolota",
+  "en": "Acorn Sapling",
+  "icone": "textures/items/cl/blocos/muda_bolota"
+ },
+ "cl:muda_canela": {
+  "pt": "Muda de Canela",
+  "en": "Cinnamon Sapling",
+  "icone": "textures/items/cl/blocos/muda_canela"
+ },
+ "cl:muda_caqui": {
+  "pt": "Muda de Caqui",
+  "en": "Persimmon Sapling",
+  "icone": "textures/items/cl/blocos/muda_caqui"
+ },
+ "cl:muda_carambola": {
+  "pt": "Muda de Carambola",
+  "en": "Starfruit Sapling",
+  "icone": "textures/items/cl/blocos/muda_carambola"
+ },
+ "cl:muda_casca_papel": {
+  "pt": "Muda de Casca-de-Papel",
+  "en": "Paperbark Sapling",
+  "icone": "textures/items/cl/blocos/muda_casca_papel"
+ },
+ "cl:muda_castanha": {
+  "pt": "Muda de Castanha",
+  "en": "Chestnut Sapling",
+  "icone": "textures/items/cl/blocos/muda_castanha"
+ },
+ "cl:muda_castanha_caju": {
+  "pt": "Muda de Castanha-de-Caju",
+  "en": "Cashew Sapling",
+  "icone": "textures/items/cl/blocos/muda_castanha_caju"
+ },
+ "cl:muda_cereja": {
+  "pt": "Muda de Cereja",
+  "en": "Cherry Sapling",
+  "icone": "textures/items/cl/blocos/muda_cereja"
+ },
+ "cl:muda_coco": {
+  "pt": "Muda de Coco",
+  "en": "Coconut Sapling",
+  "icone": "textures/items/cl/blocos/muda_coco"
+ },
+ "cl:muda_damasco": {
+  "pt": "Muda de Damasco",
+  "en": "Apricot Sapling",
+  "icone": "textures/items/cl/blocos/muda_damasco"
+ },
+ "cl:muda_durian": {
+  "pt": "Muda de Durião",
+  "en": "Durian Sapling",
+  "icone": "textures/items/cl/blocos/muda_durian"
+ },
+ "cl:muda_figo": {
+  "pt": "Muda de Figo",
+  "en": "Fig Sapling",
+  "icone": "textures/items/cl/blocos/muda_figo"
+ },
+ "cl:muda_fruta_pao": {
+  "pt": "Muda de Fruta-Pão",
+  "en": "Breadfruit Sapling",
+  "icone": "textures/items/cl/blocos/muda_fruta_pao"
+ },
+ "cl:muda_goiaba": {
+  "pt": "Muda de Goiaba",
+  "en": "Guava Sapling",
+  "icone": "textures/items/cl/blocos/muda_goiaba"
+ },
+ "cl:muda_graviola": {
+  "pt": "Muda de Graviola",
+  "en": "Soursop Sapling",
+  "icone": "textures/items/cl/blocos/muda_graviola"
+ },
+ "cl:muda_groselha": {
+  "pt": "Muda de Groselha",
+  "en": "Gooseberry Sapling",
+  "icone": "textures/items/cl/blocos/muda_groselha"
+ },
+ "cl:muda_jaca": {
+  "pt": "Muda de Jaca",
+  "en": "Jackfruit Sapling",
+  "icone": "textures/items/cl/blocos/muda_jaca"
+ },
+ "cl:muda_laranja": {
+  "pt": "Muda de Laranja",
+  "en": "Orange Sapling",
+  "icone": "textures/items/cl/blocos/muda_laranja"
+ },
+ "cl:muda_lichia": {
+  "pt": "Muda de Lichia",
+  "en": "Lychee Sapling",
+  "icone": "textures/items/cl/blocos/muda_lichia"
+ },
+ "cl:muda_limao": {
+  "pt": "Muda de Limão",
+  "en": "Lime Sapling",
+  "icone": "textures/items/cl/blocos/muda_limao"
+ },
+ "cl:muda_limao_siciliano": {
+  "pt": "Muda de Limão-Siciliano",
+  "en": "Lemon Sapling",
+  "icone": "textures/items/cl/blocos/muda_limao_siciliano"
+ },
+ "cl:muda_maca": {
+  "pt": "Muda de Maçã",
+  "en": "Apple Sapling",
+  "icone": "textures/items/cl/blocos/muda_maca"
+ },
+ "cl:muda_mamao": {
+  "pt": "Muda de Mamão",
+  "en": "Papaya Sapling",
+  "icone": "textures/items/cl/blocos/muda_mamao"
+ },
+ "cl:muda_manga": {
+  "pt": "Muda de Manga",
+  "en": "Mango Sapling",
+  "icone": "textures/items/cl/blocos/muda_manga"
+ },
+ "cl:muda_maracuja": {
+  "pt": "Muda de Maracujá",
+  "en": "Passionfruit Sapling",
+  "icone": "textures/items/cl/blocos/muda_maracuja"
+ },
+ "cl:muda_noz": {
+  "pt": "Muda de Noz",
+  "en": "Walnut Sapling",
+  "icone": "textures/items/cl/blocos/muda_noz"
+ },
+ "cl:muda_noz_iguape": {
+  "pt": "Muda de Noz-de-Iguape",
+  "en": "Candlenut Sapling",
+  "icone": "textures/items/cl/blocos/muda_noz_iguape"
+ },
+ "cl:muda_noz_moscada": {
+  "pt": "Muda de Noz-Moscada",
+  "en": "Nutmeg Sapling",
+  "icone": "textures/items/cl/blocos/muda_noz_moscada"
+ },
+ "cl:muda_peca": {
+  "pt": "Muda de Pecã",
+  "en": "Pecan Sapling",
+  "icone": "textures/items/cl/blocos/muda_peca"
+ },
+ "cl:muda_pera": {
+  "pt": "Muda de Pera",
+  "en": "Pear Sapling",
+  "icone": "textures/items/cl/blocos/muda_pera"
+ },
+ "cl:muda_pessego": {
+  "pt": "Muda de Pêssego",
+  "en": "Peach Sapling",
+  "icone": "textures/items/cl/blocos/muda_pessego"
+ },
+ "cl:muda_pimenta_reino": {
+  "pt": "Muda de Pimenta-do-Reino",
+  "en": "Peppercorn Sapling",
+  "icone": "textures/items/cl/blocos/muda_pimenta_reino"
+ },
+ "cl:muda_pinoli": {
+  "pt": "Muda de Pinoli",
+  "en": "Pinenut Sapling",
+  "icone": "textures/items/cl/blocos/muda_pinoli"
+ },
+ "cl:muda_pistache": {
+  "pt": "Muda de Pistache",
+  "en": "Pistachio Sapling",
+  "icone": "textures/items/cl/blocos/muda_pistache"
+ },
+ "cl:muda_pitaya": {
+  "pt": "Muda de Pitaya",
+  "en": "Dragonfruit Sapling",
+  "icone": "textures/items/cl/blocos/muda_pitaya"
+ },
+ "cl:muda_rambutan": {
+  "pt": "Muda de Rambutã",
+  "en": "Rambutan Sapling",
+  "icone": "textures/items/cl/blocos/muda_rambutan"
+ },
+ "cl:muda_roma": {
+  "pt": "Muda de Romã",
+  "en": "Pomegranate Sapling",
+  "icone": "textures/items/cl/blocos/muda_roma"
+ },
  "cl:muda_slime_ceu": {
   "pt": "Muda de Slime-do-Céu",
   "en": "Skyslime Sapling",
@@ -8261,6 +9761,96 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Date Palm Sapling",
   "icone": "textures/items/cl/blocos/muda_tamareira"
  },
+ "cl:muda_tamarindo": {
+  "pt": "Muda de Tamarindo",
+  "en": "Tamarind Sapling",
+  "icone": "textures/items/cl/blocos/muda_tamarindo"
+ },
+ "cl:muda_teia": {
+  "pt": "Muda de Teia",
+  "en": "Spiderweb Sapling",
+  "icone": "textures/items/cl/blocos/muda_teia"
+ },
+ "cl:muda_toranja": {
+  "pt": "Muda de Toranja",
+  "en": "Grapefruit Sapling",
+  "icone": "textures/items/cl/blocos/muda_toranja"
+ },
+ "cl:muda_xarope_bordo": {
+  "pt": "Muda de Xarope de Bordo",
+  "en": "Maple Syrup Sapling",
+  "icone": "textures/items/cl/blocos/muda_xarope_bordo"
+ },
+ "cl:muffin_abobora": {
+  "pt": "Muffin de Abóbora",
+  "en": "Pumpkin Muffin",
+  "icone": "textures/items/cl/hc/muffin_abobora"
+ },
+ "cl:muffin_bagas_brilhantes": {
+  "pt": "Muffin de Bagas Brilhantes",
+  "en": "Glow Berry Muffin",
+  "icone": "textures/items/cl/hc/muffin_bagas_brilhantes"
+ },
+ "cl:muffin_bagas_doces": {
+  "pt": "Muffin de Bagas Doces",
+  "en": "Sweet Berry Muffin",
+  "icone": "textures/items/cl/hc/muffin_bagas_doces"
+ },
+ "cl:muffin_caramelo": {
+  "pt": "Muffin de Caramelo",
+  "en": "Caramel Muffin",
+  "icone": "textures/items/cl/hc/muffin_caramelo"
+ },
+ "cl:muffin_cenoura": {
+  "pt": "Muffin de Cenoura",
+  "en": "Carrot Muffin",
+  "icone": "textures/items/cl/hc/muffin_cenoura"
+ },
+ "cl:muffin_chocolate": {
+  "pt": "Muffin de Chocolate",
+  "en": "Chocolate Muffin",
+  "icone": "textures/items/cl/hc/muffin_chocolate"
+ },
+ "cl:muffin_coro": {
+  "pt": "Muffin de Fruta do Coro",
+  "en": "Chorus Muffin",
+  "icone": "textures/items/cl/hc/muffin_coro"
+ },
+ "cl:muffin_maca": {
+  "pt": "Muffin de Maçã",
+  "en": "Apple Muffin",
+  "icone": "textures/items/cl/hc/muffin_maca"
+ },
+ "cl:muffin_mel": {
+  "pt": "Muffin de Mel",
+  "en": "Honey Muffin",
+  "icone": "textures/items/cl/hc/muffin_mel"
+ },
+ "cl:muffin_melancia": {
+  "pt": "Muffin de Melancia",
+  "en": "Melon Muffin",
+  "icone": "textures/items/cl/hc/muffin_melancia"
+ },
+ "cl:nabo": {
+  "pt": "Nabo",
+  "en": "Turnip",
+  "icone": "textures/items/cl/hc/nabo"
+ },
+ "cl:nabo_assado": {
+  "pt": "Nabo Assado",
+  "en": "Baked Turnip",
+  "icone": "textures/items/cl/hc/nabo_assado"
+ },
+ "cl:nabo_sueco": {
+  "pt": "Nabo-Sueco",
+  "en": "Rutabaga",
+  "icone": "textures/items/cl/hc/nabo_sueco"
+ },
+ "cl:nabo_sueco_assado": {
+  "pt": "Nabo-Sueco Assado",
+  "en": "Baked Rutabaga",
+  "icone": "textures/items/cl/hc/nabo_sueco_assado"
+ },
  "cl:nadadeiras": {
   "pt": "Nadadeiras",
   "en": "Flippers",
@@ -8270,6 +9860,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Nahuatl",
   "en": "Nahuatl",
   "icone": "textures/items/cl/blocos/nahuatl"
+ },
+ "cl:noz": {
+  "pt": "Noz",
+  "en": "Walnut",
+  "icone": "textures/items/cl/hc/noz"
+ },
+ "cl:noz_iguape": {
+  "pt": "Noz-de-Iguape",
+  "en": "Candlenut",
+  "icone": "textures/items/cl/hc/noz_iguape"
+ },
+ "cl:noz_moscada": {
+  "pt": "Noz-Moscada",
+  "en": "Nutmeg",
+  "icone": "textures/items/cl/hc/noz_moscada"
+ },
+ "cl:noz_torrada": {
+  "pt": "Noz Torrada",
+  "en": "Roasted Walnut",
+  "icone": "textures/items/cl/hc/noz_torrada"
  },
  "cl:nucleo_aniquilacao": {
   "pt": "Núcleo de Aniquilação",
@@ -8305,6 +9915,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Núcleo Sync",
   "en": "Sync Core",
   "icone": "textures/items/cl/arte/nucleo_sync"
+ },
+ "cl:nuggets_frango": {
+  "pt": "Nuggets de Frango",
+  "en": "Chicken Nugget",
+  "icone": "textures/items/cl/hc/nuggets_frango"
  },
  "cl:nuvem": {
   "pt": "Nuvem",
@@ -8365,6 +9980,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Óculos de Visão Noturna",
   "en": "Night Vision Goggles",
   "icone": "textures/items/cl/arte/oculos_visao_noturna"
+ },
+ "cl:oleo_cozinha": {
+  "pt": "Óleo de Cozinha",
+  "en": "Cooking Oil",
+  "icone": "textures/items/cl/hc/oleo_cozinha"
  },
  "cl:omelete": {
   "pt": "Omelete",
@@ -8450,6 +10070,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Ovo Frito",
   "en": "Fried Egg",
   "icone": "textures/items/cl/arte/ovo_frito"
+ },
+ "cl:ovos_bacon": {
+  "pt": "Ovos com Bacon",
+  "en": "Bacon and Eggs",
+  "icone": "textures/items/cl/hc/ovos_bacon"
+ },
+ "cl:ovos_mexidos": {
+  "pt": "Ovos Mexidos",
+  "en": "Scrambled Egg",
+  "icone": "textures/items/cl/hc/ovos_mexidos"
+ },
+ "cl:oxicoco": {
+  "pt": "Oxicoco",
+  "en": "Cranberry",
+  "icone": "textures/items/cl/hc/oxicoco"
  },
  "cl:pa_aco": {
   "pt": "Pá de Aço",
@@ -8616,6 +10251,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Printed Page",
   "icone": "textures/items/cl/arte/pagina_impressa"
  },
+ "cl:painco": {
+  "pt": "Painço",
+  "en": "Millet",
+  "icone": "textures/items/cl/hc/painco"
+ },
  "cl:painel_brilhante_amarelo": {
   "pt": "Painel Brilhante Amarelo",
   "en": "Yellow Glow Panel",
@@ -8776,6 +10416,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Thatch",
   "icone": "textures/items/cl/blocos/palha_trancada"
  },
+ "cl:palma": {
+  "pt": "Palma",
+  "en": "Nopales",
+  "icone": "textures/items/cl/hc/palma"
+ },
  "cl:panela": {
   "pt": "Panela",
   "en": "Pot",
@@ -8811,6 +10456,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Kitty Slippers",
   "icone": "textures/items/cl/arte/pantufas_gatinho"
  },
+ "cl:pao_abobora": {
+  "pt": "Pão de Abóbora",
+  "en": "Pumpkin Bread",
+  "icone": "textures/items/cl/hc/pao_abobora"
+ },
+ "cl:pao_cenoura": {
+  "pt": "Pão de Cenoura",
+  "en": "Carrot Bread",
+  "icone": "textures/items/cl/hc/pao_cenoura"
+ },
+ "cl:papiro": {
+  "pt": "Papiro",
+  "en": "Papyrus",
+  "icone": "textures/items/cl/hc/papiro"
+ },
  "cl:parede_camara": {
   "pt": "Parede da Câmara de Pressão",
   "en": "Pressure Chamber Wall",
@@ -8821,10 +10481,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dielectric Paste",
   "icone": "textures/items/cl/arte/pasta_dieletrica"
  },
+ "cl:pastinaca": {
+  "pt": "Pastinaca",
+  "en": "Parsnip",
+  "icone": "textures/items/cl/hc/pastinaca"
+ },
+ "cl:pastinaca_assada": {
+  "pt": "Pastinaca Assada",
+  "en": "Baked Parsnip",
+  "icone": "textures/items/cl/hc/pastinaca_assada"
+ },
  "cl:pavimento_refratario": {
   "pt": "Pavimento Refratário",
   "en": "Seared Paver",
   "icone": "textures/items/cl/blocos/pavimento_refratario"
+ },
+ "cl:peca": {
+  "pt": "Pecã",
+  "en": "Pecan",
+  "icone": "textures/items/cl/hc/peca"
  },
  "cl:peca_cabeca_enxo_aco": {
   "pt": "Cabeça de Enxó de Aço",
@@ -10926,6 +12601,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_slime_rainha"
  },
+ "cl:peca_torrada": {
+  "pt": "Pecã Torrada",
+  "en": "Roasted Pecan",
+  "icone": "textures/items/cl/hc/peca_torrada"
+ },
  "cl:peca_travessa_aco": {
   "pt": "Travessa de Aço",
   "en": "Steel Crossbar",
@@ -11416,6 +13096,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Traveler's Vest",
   "icone": "textures/items/cl/arte/peitoral_viajante"
  },
+ "cl:peixe_fritas": {
+  "pt": "Peixe com Fritas",
+  "en": "Fish and Chips",
+  "icone": "textures/items/cl/hc/peixe_fritas"
+ },
  "cl:pemmican": {
   "pt": "Pemmican",
   "en": "Pemmican",
@@ -11430,6 +13115,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Peneira Automática",
   "en": "Automatic Sieve",
   "icone": "textures/items/cl/arte/blocos/peneira_automatica"
+ },
+ "cl:pepino": {
+  "pt": "Pepino",
+  "en": "Cucumber",
+  "icone": "textures/items/cl/hc/pepino"
  },
  "cl:pepita_aco_end": {
   "pt": "Pepita de Aço do End",
@@ -11481,6 +13171,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Vibrant Alloy Nugget",
   "icone": "textures/items/cl/arte/pepita_liga_vibrante"
  },
+ "cl:pera": {
+  "pt": "Pera",
+  "en": "Pear",
+  "icone": "textures/items/cl/hc/pera"
+ },
  "cl:pergaminho_retorno": {
   "pt": "Pergaminho de Retorno",
   "en": "Return Scroll",
@@ -11515,6 +13210,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pérola de Fluix",
   "en": "Fluix Pearl",
   "icone": "textures/items/cl/arte/perola_fluix"
+ },
+ "cl:pessego": {
+  "pt": "Pêssego",
+  "en": "Peach",
+  "icone": "textures/items/cl/hc/pessego"
  },
  "cl:petroleo": {
   "pt": "Petróleo",
@@ -11841,6 +13541,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Pickaxe",
   "icone": "textures/items/cl/arte/picareta_slime_rainha"
  },
+ "cl:picole_bagas_brilhantes": {
+  "pt": "Picolé de Bagas Brilhantes",
+  "en": "Glow Berry Popsicle",
+  "icone": "textures/items/cl/hc/picole_bagas_brilhantes"
+ },
+ "cl:picole_bagas_doces": {
+  "pt": "Picolé de Bagas Doces",
+  "en": "Sweet Berry Popsicle",
+  "icone": "textures/items/cl/hc/picole_bagas_doces"
+ },
+ "cl:picole_chocolate": {
+  "pt": "Picolé de Chocolate",
+  "en": "Fudgesicle",
+  "icone": "textures/items/cl/hc/picole_chocolate"
+ },
+ "cl:picole_coro": {
+  "pt": "Picolé de Fruta do Coro",
+  "en": "Chorus Popsicle",
+  "icone": "textures/items/cl/hc/picole_coro"
+ },
+ "cl:picole_maca": {
+  "pt": "Picolé de Maçã",
+  "en": "Apple Popsicle",
+  "icone": "textures/items/cl/hc/picole_maca"
+ },
  "cl:picole_melancia": {
   "pt": "Picolé de Melancia",
   "en": "Melon Popsicle",
@@ -11860,6 +13585,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pimenta",
   "en": "Chili Pepper",
   "icone": "textures/items/cl/arte/pimenta"
+ },
+ "cl:pimenta_reino": {
+  "pt": "Pimenta-do-Reino",
+  "en": "Peppercorn",
+  "icone": "textures/items/cl/hc/pimenta_reino"
  },
  "cl:pimentao": {
   "pt": "Pimentão",
@@ -11886,6 +13616,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Thorn Pendant",
   "icone": "textures/items/cl/arte/pingente_espinhos"
  },
+ "cl:pinoli": {
+  "pt": "Pinoli",
+  "en": "Pinenuts",
+  "icone": "textures/items/cl/hc/pinoli"
+ },
+ "cl:pinoli_torrado": {
+  "pt": "Pinoli Torrado",
+  "en": "Roasted Pinenuts",
+  "icone": "textures/items/cl/hc/pinoli_torrado"
+ },
  "cl:pipoca": {
   "pt": "Pipoca",
   "en": "Popcorn",
@@ -11896,10 +13636,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pyrolyzer",
   "icone": "textures/items/cl/blocos/pirolisador"
  },
+ "cl:pistache": {
+  "pt": "Pistache",
+  "en": "Pistachio",
+  "icone": "textures/items/cl/hc/pistache"
+ },
+ "cl:pistache_torrado": {
+  "pt": "Pistache Torrado",
+  "en": "Roasted Pistachio",
+  "icone": "textures/items/cl/hc/pistache_torrado"
+ },
  "cl:pistao_bolso": {
   "pt": "Pistão de Bolso",
   "en": "Pocket Piston",
   "icone": "textures/items/cl/arte/pistao_bolso"
+ },
+ "cl:pitaya": {
+  "pt": "Pitaya",
+  "en": "Dragonfruit",
+  "icone": "textures/items/cl/hc/pitaya"
  },
  "cl:placa_aco": {
   "pt": "Placa Comprimida de Aço",
@@ -11971,45 +13726,385 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Glider",
   "icone": "textures/items/cl/arte/planador"
  },
+ "cl:planta_abacaxi": {
+  "pt": "Plantação de Abacaxi",
+  "en": "Pineapple Crop",
+  "icone": "textures/blocks/cl/hc/abacaxi_0"
+ },
+ "cl:planta_abobora_inverno": {
+  "pt": "Plantação de Abóbora-de-Inverno",
+  "en": "Winter Squash Crop",
+  "icone": "textures/blocks/cl/hc/abobora_inverno_0"
+ },
+ "cl:planta_abobrinha": {
+  "pt": "Plantação de Abobrinha",
+  "en": "Zucchini Crop",
+  "icone": "textures/blocks/cl/hc/abobrinha_0"
+ },
+ "cl:planta_agave": {
+  "pt": "Plantação de Agave",
+  "en": "Agave Crop",
+  "icone": "textures/blocks/cl/hc/agave_0"
+ },
+ "cl:planta_alcachofra": {
+  "pt": "Plantação de Alcachofra",
+  "en": "Artichoke Crop",
+  "icone": "textures/blocks/cl/hc/alcachofra_0"
+ },
+ "cl:planta_alface": {
+  "pt": "Plantação de Alface",
+  "en": "Lettuce Crop",
+  "icone": "textures/blocks/cl/hc/alface_0"
+ },
+ "cl:planta_alfafa": {
+  "pt": "Plantação de Alfafa",
+  "en": "Alfalfa Crop",
+  "icone": "textures/blocks/cl/hc/alfafa_0"
+ },
+ "cl:planta_algodao": {
+  "pt": "Plantação de Algodão",
+  "en": "Cotton Crop",
+  "icone": "textures/blocks/cl/hc/algodao_0"
+ },
  "cl:planta_alho": {
   "pt": "Plantação de Alho",
   "en": "Garlic Crop",
   "icone": "textures/blocks/cl/arte/planta_alho_0"
+ },
+ "cl:planta_alho_poro": {
+  "pt": "Plantação de Alho-Poró",
+  "en": "Leek Crop",
+  "icone": "textures/blocks/cl/hc/alho_poro_0"
+ },
+ "cl:planta_amaranto": {
+  "pt": "Plantação de Amaranto",
+  "en": "Amaranth Crop",
+  "icone": "textures/blocks/cl/hc/amaranto_0"
  },
  "cl:planta_amendoim": {
   "pt": "Plantação de Amendoim",
   "en": "Peanut Crop",
   "icone": "textures/blocks/cl/arte/planta_amendoim_0"
  },
+ "cl:planta_amora": {
+  "pt": "Plantação de Amora",
+  "en": "Mulberry Crop",
+  "icone": "textures/blocks/cl/hc/amora_0"
+ },
+ "cl:planta_amora_artica": {
+  "pt": "Plantação de Amora-Ártica",
+  "en": "Cloudberry Crop",
+  "icone": "textures/blocks/cl/hc/amora_artica_0"
+ },
+ "cl:planta_amora_preta": {
+  "pt": "Plantação de Amora-Preta",
+  "en": "Blackberry Crop",
+  "icone": "textures/blocks/cl/hc/amora_preta_0"
+ },
+ "cl:planta_araruta": {
+  "pt": "Plantação de Araruta",
+  "en": "Arrowroot Crop",
+  "icone": "textures/blocks/cl/hc/araruta_0"
+ },
  "cl:planta_arroz": {
   "pt": "Plantação de Arroz",
   "en": "Rice Crop",
   "icone": "textures/blocks/cl/arte/planta_arroz_0"
+ },
+ "cl:planta_aspargo": {
+  "pt": "Plantação de Aspargo",
+  "en": "Asparagus Crop",
+  "icone": "textures/blocks/cl/hc/aspargo_0"
+ },
+ "cl:planta_aveia": {
+  "pt": "Plantação de Aveia",
+  "en": "Oats Crop",
+  "icone": "textures/blocks/cl/hc/aveia_0"
+ },
+ "cl:planta_babosa": {
+  "pt": "Plantação de Babosa",
+  "en": "Aloe Crop",
+  "icone": "textures/blocks/cl/hc/babosa_0"
+ },
+ "cl:planta_baga_cera": {
+  "pt": "Plantação de Baga-de-Cera",
+  "en": "Candleberry Crop",
+  "icone": "textures/blocks/cl/hc/baga_cera_0"
+ },
+ "cl:planta_batata_doce": {
+  "pt": "Plantação de Batata-Doce",
+  "en": "Sweet Potato Crop",
+  "icone": "textures/blocks/cl/hc/batata_doce_0"
+ },
+ "cl:planta_berinjela": {
+  "pt": "Plantação de Berinjela",
+  "en": "Eggplant Crop",
+  "icone": "textures/blocks/cl/hc/berinjela_0"
+ },
+ "cl:planta_brocolis": {
+  "pt": "Plantação de Brócolis",
+  "en": "Broccoli Crop",
+  "icone": "textures/blocks/cl/hc/brocolis_0"
+ },
+ "cl:planta_cabaca": {
+  "pt": "Plantação de Cabaça",
+  "en": "Calabash Crop",
+  "icone": "textures/blocks/cl/hc/cabaca_0"
+ },
+ "cl:planta_cacto_barril": {
+  "pt": "Plantação de Cacto-Barril",
+  "en": "Barrel Cactus Crop",
+  "icone": "textures/blocks/cl/hc/cacto_barril_0"
+ },
+ "cl:planta_cafe": {
+  "pt": "Plantação de Grão de Café",
+  "en": "Coffeebean Crop",
+  "icone": "textures/blocks/cl/hc/cafe_0"
  },
  "cl:planta_canhamo": {
   "pt": "Plantação de Cânhamo Industrial",
   "en": "Industrial Hemp Crop",
   "icone": "textures/blocks/cl/hc/canhamo_0"
  },
+ "cl:planta_canola": {
+  "pt": "Plantação de Canola",
+  "en": "Canola Crop",
+  "icone": "textures/blocks/cl/hc/canola_0"
+ },
+ "cl:planta_castanha_dagua": {
+  "pt": "Plantação de Castanha-d'Água",
+  "en": "Waterchestnut Crop",
+  "icone": "textures/blocks/cl/hc/castanha_dagua_0"
+ },
  "cl:planta_cebola": {
   "pt": "Plantação de Cebola",
   "en": "Onion Crop",
   "icone": "textures/blocks/cl/arte/planta_cebola_0"
+ },
+ "cl:planta_cebolinha": {
+  "pt": "Plantação de Cebolinha",
+  "en": "Scallion Crop",
+  "icone": "textures/blocks/cl/hc/cebolinha_0"
+ },
+ "cl:planta_centeio": {
+  "pt": "Plantação de Centeio",
+  "en": "Rye Crop",
+  "icone": "textures/blocks/cl/hc/centeio_0"
+ },
+ "cl:planta_cevada": {
+  "pt": "Plantação de Cevada",
+  "en": "Barley Crop",
+  "icone": "textures/blocks/cl/hc/cevada_0"
+ },
+ "cl:planta_chia": {
+  "pt": "Plantação de Chia",
+  "en": "Chia Crop",
+  "icone": "textures/blocks/cl/hc/chia_0"
+ },
+ "cl:planta_cogumelo_branco": {
+  "pt": "Plantação de Cogumelo Branco",
+  "en": "White Mushroom Crop",
+  "icone": "textures/blocks/cl/hc/cogumelo_branco_0"
+ },
+ "cl:planta_couve": {
+  "pt": "Plantação de Couve",
+  "en": "Kale Crop",
+  "icone": "textures/blocks/cl/hc/couve_0"
+ },
+ "cl:planta_couve_bruxelas": {
+  "pt": "Plantação de Couve-de-Bruxelas",
+  "en": "Brusselsprout Crop",
+  "icone": "textures/blocks/cl/hc/couve_bruxelas_0"
+ },
+ "cl:planta_couve_chinesa": {
+  "pt": "Plantação de Couve-Chinesa",
+  "en": "Bok Choy Crop",
+  "icone": "textures/blocks/cl/hc/couve_chinesa_0"
+ },
+ "cl:planta_couve_flor": {
+  "pt": "Plantação de Couve-Flor",
+  "en": "Cauliflower Crop",
+  "icone": "textures/blocks/cl/hc/couve_flor_0"
+ },
+ "cl:planta_couve_rabano": {
+  "pt": "Plantação de Couve-Rábano",
+  "en": "Kohlrabi Crop",
+  "icone": "textures/blocks/cl/hc/couve_rabano_0"
+ },
+ "cl:planta_ervilha": {
+  "pt": "Plantação de Ervilha",
+  "en": "Peas Crop",
+  "icone": "textures/blocks/cl/hc/ervilha_0"
+ },
+ "cl:planta_espinafre": {
+  "pt": "Plantação de Espinafre",
+  "en": "Spinach Crop",
+  "icone": "textures/blocks/cl/hc/espinafre_0"
  },
  "cl:planta_feijao": {
   "pt": "Plantação de Feijão",
   "en": "Beans Crop",
   "icone": "textures/blocks/cl/arte/planta_feijao_0"
  },
+ "cl:planta_folha_cha": {
+  "pt": "Plantação de Folha de Chá",
+  "en": "Tealeaf Crop",
+  "icone": "textures/blocks/cl/hc/folha_cha_0"
+ },
+ "cl:planta_folha_tempero": {
+  "pt": "Plantação de Folha de Tempero",
+  "en": "Spiceleaf Crop",
+  "icone": "textures/blocks/cl/hc/folha_tempero_0"
+ },
+ "cl:planta_framboesa": {
+  "pt": "Plantação de Framboesa",
+  "en": "Raspberry Crop",
+  "icone": "textures/blocks/cl/hc/framboesa_0"
+ },
  "cl:planta_fruta_cacto": {
   "pt": "Plantação de Fruta do Cacto",
   "en": "Cactus Fruit Crop",
   "icone": "textures/blocks/cl/arte/planta_fruta_cacto_0"
  },
+ "cl:planta_gengibre": {
+  "pt": "Plantação de Gengibre",
+  "en": "Ginger Crop",
+  "icone": "textures/blocks/cl/hc/gengibre_0"
+ },
+ "cl:planta_gergelim": {
+  "pt": "Plantação de Gergelim",
+  "en": "Sesame Seeds Crop",
+  "icone": "textures/blocks/cl/hc/gergelim_0"
+ },
+ "cl:planta_goji": {
+  "pt": "Plantação de Goji",
+  "en": "Wolfberry Crop",
+  "icone": "textures/blocks/cl/hc/goji_0"
+ },
+ "cl:planta_grao_de_bico": {
+  "pt": "Plantação de Grão-de-Bico",
+  "en": "Chickpea Crop",
+  "icone": "textures/blocks/cl/hc/grao_de_bico_0"
+ },
+ "cl:planta_guarana": {
+  "pt": "Plantação de Guaraná",
+  "en": "Guarana Crop",
+  "icone": "textures/blocks/cl/hc/guarana_0"
+ },
+ "cl:planta_inhame": {
+  "pt": "Plantação de Inhame",
+  "en": "Taro Crop",
+  "icone": "textures/blocks/cl/hc/inhame_0"
+ },
+ "cl:planta_iuca": {
+  "pt": "Plantação de Iúca",
+  "en": "Yucca Crop",
+  "icone": "textures/blocks/cl/hc/iuca_0"
+ },
+ "cl:planta_jicama": {
+  "pt": "Plantação de Jicama",
+  "en": "Jicama Crop",
+  "icone": "textures/blocks/cl/hc/jicama_0"
+ },
+ "cl:planta_juta": {
+  "pt": "Plantação de Juta",
+  "en": "Jute Crop",
+  "icone": "textures/blocks/cl/hc/juta_0"
+ },
+ "cl:planta_kenaf": {
+  "pt": "Plantação de Kenaf",
+  "en": "Kenaf Crop",
+  "icone": "textures/blocks/cl/hc/kenaf_0"
+ },
+ "cl:planta_kiwi": {
+  "pt": "Plantação de Kiwi",
+  "en": "Kiwi Crop",
+  "icone": "textures/blocks/cl/hc/kiwi_0"
+ },
+ "cl:planta_lentilha": {
+  "pt": "Plantação de Lentilha",
+  "en": "Lentil Crop",
+  "icone": "textures/blocks/cl/hc/lentilha_0"
+ },
+ "cl:planta_linho": {
+  "pt": "Plantação de Linho",
+  "en": "Flax Crop",
+  "icone": "textures/blocks/cl/hc/linho_0"
+ },
+ "cl:planta_lotus": {
+  "pt": "Plantação de Lótus",
+  "en": "Lotus Crop",
+  "icone": "textures/blocks/cl/hc/lotus_0"
+ },
+ "cl:planta_mandioca": {
+  "pt": "Plantação de Mandioca",
+  "en": "Cassava Crop",
+  "icone": "textures/blocks/cl/hc/mandioca_0"
+ },
+ "cl:planta_melao": {
+  "pt": "Plantação de Melão",
+  "en": "Cantaloupe Crop",
+  "icone": "textures/blocks/cl/hc/melao_0"
+ },
  "cl:planta_milho": {
   "pt": "Plantação de Milho",
   "en": "Corn Crop",
   "icone": "textures/blocks/cl/arte/planta_milho_0"
+ },
+ "cl:planta_mirtilo": {
+  "pt": "Plantação de Mirtilo",
+  "en": "Blueberry Crop",
+  "icone": "textures/blocks/cl/hc/mirtilo_0"
+ },
+ "cl:planta_morango": {
+  "pt": "Plantação de Morango",
+  "en": "Strawberry Crop",
+  "icone": "textures/blocks/cl/hc/morango_0"
+ },
+ "cl:planta_mostarda": {
+  "pt": "Plantação de Mostarda",
+  "en": "Mustard Seeds Crop",
+  "icone": "textures/blocks/cl/hc/mostarda_0"
+ },
+ "cl:planta_nabo": {
+  "pt": "Plantação de Nabo",
+  "en": "Turnip Crop",
+  "icone": "textures/blocks/cl/hc/nabo_0"
+ },
+ "cl:planta_nabo_sueco": {
+  "pt": "Plantação de Nabo-Sueco",
+  "en": "Rutabaga Crop",
+  "icone": "textures/blocks/cl/hc/nabo_sueco_0"
+ },
+ "cl:planta_oxicoco": {
+  "pt": "Plantação de Oxicoco",
+  "en": "Cranberry Crop",
+  "icone": "textures/blocks/cl/hc/oxicoco_0"
+ },
+ "cl:planta_painco": {
+  "pt": "Plantação de Painço",
+  "en": "Millet Crop",
+  "icone": "textures/blocks/cl/hc/painco_0"
+ },
+ "cl:planta_palma": {
+  "pt": "Plantação de Palma",
+  "en": "Nopales Crop",
+  "icone": "textures/blocks/cl/hc/palma_0"
+ },
+ "cl:planta_papiro": {
+  "pt": "Plantação de Papiro",
+  "en": "Papyrus Crop",
+  "icone": "textures/blocks/cl/hc/papiro_0"
+ },
+ "cl:planta_pastinaca": {
+  "pt": "Plantação de Pastinaca",
+  "en": "Parsnip Crop",
+  "icone": "textures/blocks/cl/hc/pastinaca_0"
+ },
+ "cl:planta_pepino": {
+  "pt": "Plantação de Pepino",
+  "en": "Cucumber Crop",
+  "icone": "textures/blocks/cl/hc/pepino_0"
  },
  "cl:planta_pimenta": {
   "pt": "Plantação de Pimenta",
@@ -12021,15 +14116,105 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bell Pepper Crop",
   "icone": "textures/blocks/cl/arte/planta_pimentao_0"
  },
+ "cl:planta_quiabo": {
+  "pt": "Plantação de Quiabo",
+  "en": "Okra Crop",
+  "icone": "textures/blocks/cl/hc/quiabo_0"
+ },
+ "cl:planta_quinoa": {
+  "pt": "Plantação de Quinoa",
+  "en": "Quinoa Crop",
+  "icone": "textures/blocks/cl/hc/quinoa_0"
+ },
+ "cl:planta_rabanete": {
+  "pt": "Plantação de Rabanete",
+  "en": "Radish Crop",
+  "icone": "textures/blocks/cl/hc/rabanete_0"
+ },
  "cl:planta_repolho": {
   "pt": "Plantação de Repolho",
   "en": "Cabbage Crop",
   "icone": "textures/blocks/cl/arte/planta_repolho_0"
  },
+ "cl:planta_ruibarbo": {
+  "pt": "Plantação de Ruibarbo",
+  "en": "Rhubarb Crop",
+  "icone": "textures/blocks/cl/hc/ruibarbo_0"
+ },
+ "cl:planta_sabugueiro": {
+  "pt": "Plantação de Baga de Sabugueiro",
+  "en": "Elderberry Crop",
+  "icone": "textures/blocks/cl/hc/sabugueiro_0"
+ },
+ "cl:planta_salsao": {
+  "pt": "Plantação de Salsão",
+  "en": "Celery Crop",
+  "icone": "textures/blocks/cl/hc/salsao_0"
+ },
+ "cl:planta_sisal": {
+  "pt": "Plantação de Sisal",
+  "en": "Sisal Crop",
+  "icone": "textures/blocks/cl/hc/sisal_0"
+ },
+ "cl:planta_soja": {
+  "pt": "Plantação de Soja",
+  "en": "Soybean Crop",
+  "icone": "textures/blocks/cl/hc/soja_0"
+ },
+ "cl:planta_sorgo": {
+  "pt": "Plantação de Sorgo",
+  "en": "Sorghum Crop",
+  "icone": "textures/blocks/cl/hc/sorgo_0"
+ },
+ "cl:planta_taboa": {
+  "pt": "Plantação de Taboa",
+  "en": "Cattail Crop",
+  "icone": "textures/blocks/cl/hc/taboa_0"
+ },
  "cl:planta_tomate": {
   "pt": "Plantação de Tomate",
   "en": "Tomato Crop",
   "icone": "textures/blocks/cl/arte/planta_tomate_0"
+ },
+ "cl:planta_tomatilho": {
+  "pt": "Plantação de Tomatilho",
+  "en": "Tomatillo Crop",
+  "icone": "textures/blocks/cl/hc/tomatilho_0"
+ },
+ "cl:planta_trufa": {
+  "pt": "Plantação de Trufa",
+  "en": "Truffle Crop",
+  "icone": "textures/blocks/cl/hc/trufa_0"
+ },
+ "cl:planta_tupinambo": {
+  "pt": "Plantação de Tupinambo",
+  "en": "Sunchoke Crop",
+  "icone": "textures/blocks/cl/hc/tupinambo_0"
+ },
+ "cl:planta_urtiga": {
+  "pt": "Plantação de Urtiga",
+  "en": "Nettles Crop",
+  "icone": "textures/blocks/cl/hc/urtiga_0"
+ },
+ "cl:planta_uva": {
+  "pt": "Plantação de Uva",
+  "en": "Grape Crop",
+  "icone": "textures/blocks/cl/hc/uva_0"
+ },
+ "cl:planta_uva_do_monte": {
+  "pt": "Plantação de Uva-do-Monte",
+  "en": "Huckleberry Crop",
+  "icone": "textures/blocks/cl/hc/uva_do_monte_0"
+ },
+ "cl:planta_uva_verde": {
+  "pt": "Plantação de Uva Verde",
+  "en": "Green Grape Crop",
+  "icone": "textures/blocks/cl/hc/uva_verde_0"
+ },
+ "cl:planta_zimbro": {
+  "pt": "Plantação de Baga de Zimbro",
+  "en": "Juniperberry Crop",
+  "icone": "textures/blocks/cl/hc/zimbro_0"
  },
  "cl:plantadeira": {
   "pt": "Plantadeira",
@@ -12496,6 +14681,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dust",
   "icone": "textures/items/cl/arte/blocos/poeira"
  },
+ "cl:ponche_frutas": {
+  "pt": "Ponche de Frutas",
+  "en": "Fruit Punch",
+  "icone": "textures/items/cl/hc/ponche_frutas"
+ },
  "cl:ponto_acesso": {
   "pt": "Ponto de Acesso Sem Fio",
   "en": "ME Wireless Access Point",
@@ -12656,6 +14846,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Honey Glazed Ham",
   "icone": "textures/items/cl/blocos/presunto_mel"
  },
+ "cl:pretzel": {
+  "pt": "Pretzel",
+  "en": "Soft Pretzel",
+  "icone": "textures/items/cl/hc/pretzel"
+ },
  "cl:processador_avancado": {
   "pt": "Processador de Engenharia",
   "en": "Engineering Processor",
@@ -12726,6 +14921,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pulverizer",
   "icone": "textures/items/cl/arte/blocos/pulverizador"
  },
+ "cl:pure_batata": {
+  "pt": "Purê de Batata",
+  "en": "Mashed Potatoes",
+  "icone": "textures/items/cl/hc/pure_batata"
+ },
+ "cl:pure_maca": {
+  "pt": "Purê de Maçã",
+  "en": "Applesauce",
+  "icone": "textures/items/cl/hc/pure_maca"
+ },
  "cl:quadricoptero": {
   "pt": "Quadricóptero",
   "en": "Quadrocopter",
@@ -12756,6 +14961,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cheese",
   "icone": "textures/items/cl/arte/queijo"
  },
+ "cl:queijo_quente": {
+  "pt": "Queijo Quente",
+  "en": "Grilled Cheese",
+  "icone": "textures/items/cl/hc/queijo_quente"
+ },
+ "cl:quiabo": {
+  "pt": "Quiabo",
+  "en": "Okra",
+  "icone": "textures/items/cl/hc/quiabo"
+ },
+ "cl:quinoa": {
+  "pt": "Quinoa",
+  "en": "Quinoa",
+  "icone": "textures/items/cl/hc/quinoa"
+ },
+ "cl:rabanete": {
+  "pt": "Rabanete",
+  "en": "Radish",
+  "icone": "textures/items/cl/hc/rabanete"
+ },
+ "cl:rabanete_assado": {
+  "pt": "Rabanete Assado",
+  "en": "Roasted Radish",
+  "icone": "textures/items/cl/hc/rabanete_assado"
+ },
  "cl:racao_cachorro": {
   "pt": "Ração de Cachorro",
   "en": "Dog Food",
@@ -12765,6 +14995,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Ração de Cavalo",
   "en": "Horse Feed",
   "icone": "textures/items/cl/arte/racao_cavalo"
+ },
+ "cl:rambutan": {
+  "pt": "Rambutã",
+  "en": "Rambutan",
+  "icone": "textures/items/cl/hc/rambutan"
  },
  "cl:rancheiro": {
   "pt": "Rancheiro",
@@ -12896,6 +15131,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Mining Turtle",
   "icone": "textures/items/cl/arte/robo_minerador"
  },
+ "cl:rocambole_chocolate": {
+  "pt": "Rocambole de Chocolate",
+  "en": "Chocolate Roll",
+  "icone": "textures/items/cl/hc/rocambole_chocolate"
+ },
  "cl:rocha_lunar": {
   "pt": "Rocha Lunar",
   "en": "Moon Rock",
@@ -12941,10 +15181,100 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cabbage Rolls",
   "icone": "textures/items/cl/arte/rolinhos_repolho"
  },
+ "cl:rolo": {
+  "pt": "Rolo de Massa",
+  "en": "Roller",
+  "icone": "textures/items/cl/blocos/rolo"
+ },
  "cl:rolo_alga": {
   "pt": "Rolo de Alga",
   "en": "Kelp Roll",
   "icone": "textures/items/cl/arte/rolo_alga"
+ },
+ "cl:roma": {
+  "pt": "Romã",
+  "en": "Pomegranate",
+  "icone": "textures/items/cl/hc/roma"
+ },
+ "cl:rosquinha": {
+  "pt": "Rosquinha Simples",
+  "en": "Plain Donut",
+  "icone": "textures/items/cl/hc/rosquinha"
+ },
+ "cl:rosquinha_abobora": {
+  "pt": "Rosquinha de Abóbora",
+  "en": "Pumpkin Donut",
+  "icone": "textures/items/cl/hc/rosquinha_abobora"
+ },
+ "cl:rosquinha_acucarada": {
+  "pt": "Rosquinha Açucarada",
+  "en": "Powdered Donut",
+  "icone": "textures/items/cl/hc/rosquinha_acucarada"
+ },
+ "cl:rosquinha_bagas_brilhantes": {
+  "pt": "Rosquinha de Bagas Brilhantes",
+  "en": "Glow Berry Donut",
+  "icone": "textures/items/cl/hc/rosquinha_bagas_brilhantes"
+ },
+ "cl:rosquinha_bagas_doces": {
+  "pt": "Rosquinha de Bagas Doces",
+  "en": "Sweet Berry Donut",
+  "icone": "textures/items/cl/hc/rosquinha_bagas_doces"
+ },
+ "cl:rosquinha_caramelo": {
+  "pt": "Rosquinha de Caramelo",
+  "en": "Caramel Donut",
+  "icone": "textures/items/cl/hc/rosquinha_caramelo"
+ },
+ "cl:rosquinha_cenoura": {
+  "pt": "Rosquinha de Cenoura",
+  "en": "Carrot Donut",
+  "icone": "textures/items/cl/hc/rosquinha_cenoura"
+ },
+ "cl:rosquinha_chocolate": {
+  "pt": "Rosquinha de Chocolate",
+  "en": "Chocolate Donut",
+  "icone": "textures/items/cl/hc/rosquinha_chocolate"
+ },
+ "cl:rosquinha_coro": {
+  "pt": "Rosquinha de Fruta do Coro",
+  "en": "Chorus Donut",
+  "icone": "textures/items/cl/hc/rosquinha_coro"
+ },
+ "cl:rosquinha_granulado": {
+  "pt": "Rosquinha com Granulado",
+  "en": "Sprinkles Donut",
+  "icone": "textures/items/cl/hc/rosquinha_granulado"
+ },
+ "cl:rosquinha_maca": {
+  "pt": "Rosquinha de Maçã",
+  "en": "Apple Donut",
+  "icone": "textures/items/cl/hc/rosquinha_maca"
+ },
+ "cl:rosquinha_mel": {
+  "pt": "Rosquinha com Mel",
+  "en": "Honey Glazed Donut",
+  "icone": "textures/items/cl/hc/rosquinha_mel"
+ },
+ "cl:rosquinha_melancia": {
+  "pt": "Rosquinha de Melancia",
+  "en": "Melon Donut",
+  "icone": "textures/items/cl/hc/rosquinha_melancia"
+ },
+ "cl:ruibarbo": {
+  "pt": "Ruibarbo",
+  "en": "Rhubarb",
+  "icone": "textures/items/cl/hc/ruibarbo"
+ },
+ "cl:ruibarbo_assado": {
+  "pt": "Ruibarbo Assado",
+  "en": "Roasted Rhubarb",
+  "icone": "textures/items/cl/hc/ruibarbo_assado"
+ },
+ "cl:sabugueiro": {
+  "pt": "Baga de Sabugueiro",
+  "en": "Elderberry",
+  "icone": "textures/items/cl/hc/sabugueiro"
  },
  "cl:saco_arroz": {
   "pt": "Saco de Arroz",
@@ -13031,10 +15361,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Grilled Salmon",
   "icone": "textures/items/cl/arte/salmao_grelhado"
  },
+ "cl:salsao": {
+  "pt": "Salsão",
+  "en": "Celery",
+  "icone": "textures/items/cl/hc/salsao"
+ },
  "cl:sanduiche_bacon": {
   "pt": "Sanduíche de Bacon",
   "en": "Bacon Sandwich",
   "icone": "textures/items/cl/arte/sanduiche_bacon"
+ },
+ "cl:sanduiche_carneiro": {
+  "pt": "Sanduíche de Carneiro",
+  "en": "Basic Mutton Sandwich",
+  "icone": "textures/items/cl/hc/sanduiche_carneiro"
+ },
+ "cl:sanduiche_coelho": {
+  "pt": "Sanduíche de Coelho",
+  "en": "Basic Rabbit Sandwich",
+  "icone": "textures/items/cl/hc/sanduiche_coelho"
  },
  "cl:sanduiche_frango": {
   "pt": "Sanduíche de Frango",
@@ -13046,6 +15391,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Egg Sandwich",
   "icone": "textures/items/cl/arte/sanduiche_ovo"
  },
+ "cl:sanduiche_peixe": {
+  "pt": "Sanduíche de Peixe",
+  "en": "Basic Fish Sandwich",
+  "icone": "textures/items/cl/hc/sanduiche_peixe"
+ },
+ "cl:sanduiche_porco": {
+  "pt": "Sanduíche de Porco",
+  "en": "Basic Pork Sandwich",
+  "icone": "textures/items/cl/hc/sanduiche_porco"
+ },
  "cl:sapatos_lavagante": {
   "pt": "Sapatos de Lavagante",
   "en": "Strider Shoes",
@@ -13056,50 +15411,395 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Waterwheel Segment",
   "icone": "textures/items/cl/c/segmento_roda"
  },
+ "cl:semente_abacaxi": {
+  "pt": "Sementes de Abacaxi",
+  "en": "Pineapple Seeds",
+  "icone": "textures/items/cl/hc/semente_abacaxi"
+ },
+ "cl:semente_abobora_inverno": {
+  "pt": "Sementes de Abóbora-de-Inverno",
+  "en": "Winter Squash Seeds",
+  "icone": "textures/items/cl/hc/semente_abobora_inverno"
+ },
+ "cl:semente_abobrinha": {
+  "pt": "Sementes de Abobrinha",
+  "en": "Zucchini Seeds",
+  "icone": "textures/items/cl/hc/semente_abobrinha"
+ },
+ "cl:semente_agave": {
+  "pt": "Sementes de Agave",
+  "en": "Agave Seeds",
+  "icone": "textures/items/cl/hc/semente_agave"
+ },
+ "cl:semente_alcachofra": {
+  "pt": "Sementes de Alcachofra",
+  "en": "Artichoke Seeds",
+  "icone": "textures/items/cl/hc/semente_alcachofra"
+ },
+ "cl:semente_alface": {
+  "pt": "Sementes de Alface",
+  "en": "Lettuce Seeds",
+  "icone": "textures/items/cl/hc/semente_alface"
+ },
+ "cl:semente_alfafa": {
+  "pt": "Sementes de Alfafa",
+  "en": "Alfalfa Seeds",
+  "icone": "textures/items/cl/hc/semente_alfafa"
+ },
+ "cl:semente_algodao": {
+  "pt": "Sementes de Algodão",
+  "en": "Cotton Seeds",
+  "icone": "textures/items/cl/hc/semente_algodao"
+ },
  "cl:semente_alho": {
   "pt": "Sementes de Alho",
   "en": "Garlic Seeds",
   "icone": "textures/items/cl/arte/semente_alho"
+ },
+ "cl:semente_alho_poro": {
+  "pt": "Sementes de Alho-Poró",
+  "en": "Leek Seeds",
+  "icone": "textures/items/cl/hc/semente_alho_poro"
+ },
+ "cl:semente_amaranto": {
+  "pt": "Sementes de Amaranto",
+  "en": "Amaranth Seeds",
+  "icone": "textures/items/cl/hc/semente_amaranto"
  },
  "cl:semente_amendoim": {
   "pt": "Sementes de Amendoim",
   "en": "Peanut Seeds",
   "icone": "textures/items/cl/arte/semente_amendoim"
  },
+ "cl:semente_amora": {
+  "pt": "Sementes de Amora",
+  "en": "Mulberry Seeds",
+  "icone": "textures/items/cl/hc/semente_amora"
+ },
+ "cl:semente_amora_artica": {
+  "pt": "Sementes de Amora-Ártica",
+  "en": "Cloudberry Seeds",
+  "icone": "textures/items/cl/hc/semente_amora_artica"
+ },
+ "cl:semente_amora_preta": {
+  "pt": "Sementes de Amora-Preta",
+  "en": "Blackberry Seeds",
+  "icone": "textures/items/cl/hc/semente_amora_preta"
+ },
+ "cl:semente_araruta": {
+  "pt": "Sementes de Araruta",
+  "en": "Arrowroot Seeds",
+  "icone": "textures/items/cl/hc/semente_araruta"
+ },
  "cl:semente_arroz": {
   "pt": "Sementes de Arroz",
   "en": "Rice Seeds",
   "icone": "textures/items/cl/arte/semente_arroz"
+ },
+ "cl:semente_aspargo": {
+  "pt": "Sementes de Aspargo",
+  "en": "Asparagus Seeds",
+  "icone": "textures/items/cl/hc/semente_aspargo"
+ },
+ "cl:semente_aveia": {
+  "pt": "Sementes de Aveia",
+  "en": "Oats Seeds",
+  "icone": "textures/items/cl/hc/semente_aveia"
+ },
+ "cl:semente_babosa": {
+  "pt": "Sementes de Babosa",
+  "en": "Aloe Seeds",
+  "icone": "textures/items/cl/hc/semente_babosa"
+ },
+ "cl:semente_baga_cera": {
+  "pt": "Sementes de Baga-de-Cera",
+  "en": "Candleberry Seeds",
+  "icone": "textures/items/cl/hc/semente_baga_cera"
+ },
+ "cl:semente_batata_doce": {
+  "pt": "Sementes de Batata-Doce",
+  "en": "Sweet Potato Seeds",
+  "icone": "textures/items/cl/hc/semente_batata_doce"
+ },
+ "cl:semente_berinjela": {
+  "pt": "Sementes de Berinjela",
+  "en": "Eggplant Seeds",
+  "icone": "textures/items/cl/hc/semente_berinjela"
+ },
+ "cl:semente_brocolis": {
+  "pt": "Sementes de Brócolis",
+  "en": "Broccoli Seeds",
+  "icone": "textures/items/cl/hc/semente_brocolis"
+ },
+ "cl:semente_cabaca": {
+  "pt": "Sementes de Cabaça",
+  "en": "Calabash Seeds",
+  "icone": "textures/items/cl/hc/semente_cabaca"
+ },
+ "cl:semente_cacto_barril": {
+  "pt": "Sementes de Cacto-Barril",
+  "en": "Barrel Cactus Seeds",
+  "icone": "textures/items/cl/hc/semente_cacto_barril"
+ },
+ "cl:semente_cafe": {
+  "pt": "Sementes de Grão de Café",
+  "en": "Coffeebean Seeds",
+  "icone": "textures/items/cl/hc/semente_cafe"
  },
  "cl:semente_canhamo": {
   "pt": "Sementes de Cânhamo Industrial",
   "en": "Industrial Hemp Seeds",
   "icone": "textures/items/cl/hc/semente_canhamo"
  },
+ "cl:semente_canola": {
+  "pt": "Sementes de Canola",
+  "en": "Canola Seeds",
+  "icone": "textures/items/cl/hc/semente_canola"
+ },
+ "cl:semente_castanha_dagua": {
+  "pt": "Sementes de Castanha-d'Água",
+  "en": "Waterchestnut Seeds",
+  "icone": "textures/items/cl/hc/semente_castanha_dagua"
+ },
  "cl:semente_cebola": {
   "pt": "Sementes de Cebola",
   "en": "Onion Seeds",
   "icone": "textures/items/cl/arte/semente_cebola"
+ },
+ "cl:semente_cebolinha": {
+  "pt": "Sementes de Cebolinha",
+  "en": "Scallion Seeds",
+  "icone": "textures/items/cl/hc/semente_cebolinha"
+ },
+ "cl:semente_centeio": {
+  "pt": "Sementes de Centeio",
+  "en": "Rye Seeds",
+  "icone": "textures/items/cl/hc/semente_centeio"
+ },
+ "cl:semente_cevada": {
+  "pt": "Sementes de Cevada",
+  "en": "Barley Seeds",
+  "icone": "textures/items/cl/hc/semente_cevada"
+ },
+ "cl:semente_chia": {
+  "pt": "Sementes de Chia",
+  "en": "Chia Seeds",
+  "icone": "textures/items/cl/hc/semente_chia"
+ },
+ "cl:semente_cogumelo_branco": {
+  "pt": "Sementes de Cogumelo Branco",
+  "en": "White Mushroom Seeds",
+  "icone": "textures/items/cl/hc/semente_cogumelo_branco"
+ },
+ "cl:semente_couve": {
+  "pt": "Sementes de Couve",
+  "en": "Kale Seeds",
+  "icone": "textures/items/cl/hc/semente_couve"
+ },
+ "cl:semente_couve_bruxelas": {
+  "pt": "Sementes de Couve-de-Bruxelas",
+  "en": "Brusselsprout Seeds",
+  "icone": "textures/items/cl/hc/semente_couve_bruxelas"
+ },
+ "cl:semente_couve_chinesa": {
+  "pt": "Sementes de Couve-Chinesa",
+  "en": "Bok Choy Seeds",
+  "icone": "textures/items/cl/hc/semente_couve_chinesa"
+ },
+ "cl:semente_couve_flor": {
+  "pt": "Sementes de Couve-Flor",
+  "en": "Cauliflower Seeds",
+  "icone": "textures/items/cl/hc/semente_couve_flor"
+ },
+ "cl:semente_couve_rabano": {
+  "pt": "Sementes de Couve-Rábano",
+  "en": "Kohlrabi Seeds",
+  "icone": "textures/items/cl/hc/semente_couve_rabano"
+ },
+ "cl:semente_ervilha": {
+  "pt": "Sementes de Ervilha",
+  "en": "Peas Seeds",
+  "icone": "textures/items/cl/hc/semente_ervilha"
+ },
+ "cl:semente_espinafre": {
+  "pt": "Sementes de Espinafre",
+  "en": "Spinach Seeds",
+  "icone": "textures/items/cl/hc/semente_espinafre"
  },
  "cl:semente_feijao": {
   "pt": "Sementes de Feijão",
   "en": "Beans Seeds",
   "icone": "textures/items/cl/arte/semente_feijao"
  },
+ "cl:semente_folha_cha": {
+  "pt": "Sementes de Folha de Chá",
+  "en": "Tealeaf Seeds",
+  "icone": "textures/items/cl/hc/semente_folha_cha"
+ },
+ "cl:semente_folha_tempero": {
+  "pt": "Sementes de Folha de Tempero",
+  "en": "Spiceleaf Seeds",
+  "icone": "textures/items/cl/hc/semente_folha_tempero"
+ },
+ "cl:semente_framboesa": {
+  "pt": "Sementes de Framboesa",
+  "en": "Raspberry Seeds",
+  "icone": "textures/items/cl/hc/semente_framboesa"
+ },
  "cl:semente_fruta_cacto": {
   "pt": "Sementes de Fruta do Cacto",
   "en": "Cactus Fruit Seeds",
   "icone": "textures/items/cl/arte/semente_fruta_cacto"
+ },
+ "cl:semente_gengibre": {
+  "pt": "Sementes de Gengibre",
+  "en": "Ginger Seeds",
+  "icone": "textures/items/cl/hc/semente_gengibre"
+ },
+ "cl:semente_gergelim": {
+  "pt": "Sementes de Gergelim",
+  "en": "Sesame Seeds Seeds",
+  "icone": "textures/items/cl/hc/semente_gergelim"
+ },
+ "cl:semente_girassol": {
+  "pt": "Sementes de Girassol",
+  "en": "Sunflower Seeds",
+  "icone": "textures/items/cl/hc/semente_girassol"
+ },
+ "cl:semente_goji": {
+  "pt": "Sementes de Goji",
+  "en": "Wolfberry Seeds",
+  "icone": "textures/items/cl/hc/semente_goji"
+ },
+ "cl:semente_grao_de_bico": {
+  "pt": "Sementes de Grão-de-Bico",
+  "en": "Chickpea Seeds",
+  "icone": "textures/items/cl/hc/semente_grao_de_bico"
+ },
+ "cl:semente_guarana": {
+  "pt": "Sementes de Guaraná",
+  "en": "Guarana Seeds",
+  "icone": "textures/items/cl/hc/semente_guarana"
+ },
+ "cl:semente_inhame": {
+  "pt": "Sementes de Inhame",
+  "en": "Taro Seeds",
+  "icone": "textures/items/cl/hc/semente_inhame"
+ },
+ "cl:semente_iuca": {
+  "pt": "Sementes de Iúca",
+  "en": "Yucca Seeds",
+  "icone": "textures/items/cl/hc/semente_iuca"
+ },
+ "cl:semente_jicama": {
+  "pt": "Sementes de Jicama",
+  "en": "Jicama Seeds",
+  "icone": "textures/items/cl/hc/semente_jicama"
+ },
+ "cl:semente_juta": {
+  "pt": "Sementes de Juta",
+  "en": "Jute Seeds",
+  "icone": "textures/items/cl/hc/semente_juta"
+ },
+ "cl:semente_kenaf": {
+  "pt": "Sementes de Kenaf",
+  "en": "Kenaf Seeds",
+  "icone": "textures/items/cl/hc/semente_kenaf"
+ },
+ "cl:semente_kiwi": {
+  "pt": "Sementes de Kiwi",
+  "en": "Kiwi Seeds",
+  "icone": "textures/items/cl/hc/semente_kiwi"
+ },
+ "cl:semente_lentilha": {
+  "pt": "Sementes de Lentilha",
+  "en": "Lentil Seeds",
+  "icone": "textures/items/cl/hc/semente_lentilha"
+ },
+ "cl:semente_linho": {
+  "pt": "Sementes de Linho",
+  "en": "Flax Seeds",
+  "icone": "textures/items/cl/hc/semente_linho"
  },
  "cl:semente_lirio_ender": {
   "pt": "Sementes de Lírio Ender",
   "en": "Ender-Lily Seeds",
   "icone": "textures/items/cl/arte/semente_lirio_ender"
  },
+ "cl:semente_lotus": {
+  "pt": "Sementes de Lótus",
+  "en": "Lotus Seeds",
+  "icone": "textures/items/cl/hc/semente_lotus"
+ },
+ "cl:semente_mandioca": {
+  "pt": "Sementes de Mandioca",
+  "en": "Cassava Seeds",
+  "icone": "textures/items/cl/hc/semente_mandioca"
+ },
+ "cl:semente_melao": {
+  "pt": "Sementes de Melão",
+  "en": "Cantaloupe Seeds",
+  "icone": "textures/items/cl/hc/semente_melao"
+ },
  "cl:semente_milho": {
   "pt": "Sementes de Milho",
   "en": "Corn Seeds",
   "icone": "textures/items/cl/arte/semente_milho"
+ },
+ "cl:semente_mirtilo": {
+  "pt": "Sementes de Mirtilo",
+  "en": "Blueberry Seeds",
+  "icone": "textures/items/cl/hc/semente_mirtilo"
+ },
+ "cl:semente_morango": {
+  "pt": "Sementes de Morango",
+  "en": "Strawberry Seeds",
+  "icone": "textures/items/cl/hc/semente_morango"
+ },
+ "cl:semente_mostarda": {
+  "pt": "Sementes de Mostarda",
+  "en": "Mustard Seeds Seeds",
+  "icone": "textures/items/cl/hc/semente_mostarda"
+ },
+ "cl:semente_nabo": {
+  "pt": "Sementes de Nabo",
+  "en": "Turnip Seeds",
+  "icone": "textures/items/cl/hc/semente_nabo"
+ },
+ "cl:semente_nabo_sueco": {
+  "pt": "Sementes de Nabo-Sueco",
+  "en": "Rutabaga Seeds",
+  "icone": "textures/items/cl/hc/semente_nabo_sueco"
+ },
+ "cl:semente_oxicoco": {
+  "pt": "Sementes de Oxicoco",
+  "en": "Cranberry Seeds",
+  "icone": "textures/items/cl/hc/semente_oxicoco"
+ },
+ "cl:semente_painco": {
+  "pt": "Sementes de Painço",
+  "en": "Millet Seeds",
+  "icone": "textures/items/cl/hc/semente_painco"
+ },
+ "cl:semente_palma": {
+  "pt": "Sementes de Palma",
+  "en": "Nopales Seeds",
+  "icone": "textures/items/cl/hc/semente_palma"
+ },
+ "cl:semente_papiro": {
+  "pt": "Sementes de Papiro",
+  "en": "Papyrus Seeds",
+  "icone": "textures/items/cl/hc/semente_papiro"
+ },
+ "cl:semente_pastinaca": {
+  "pt": "Sementes de Pastinaca",
+  "en": "Parsnip Seeds",
+  "icone": "textures/items/cl/hc/semente_pastinaca"
+ },
+ "cl:semente_pepino": {
+  "pt": "Sementes de Pepino",
+  "en": "Cucumber Seeds",
+  "icone": "textures/items/cl/hc/semente_pepino"
  },
  "cl:semente_pimenta": {
   "pt": "Sementes de Pimenta",
@@ -13111,20 +15811,110 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bell Pepper Seeds",
   "icone": "textures/items/cl/arte/semente_pimentao"
  },
+ "cl:semente_quiabo": {
+  "pt": "Sementes de Quiabo",
+  "en": "Okra Seeds",
+  "icone": "textures/items/cl/hc/semente_quiabo"
+ },
+ "cl:semente_quinoa": {
+  "pt": "Sementes de Quinoa",
+  "en": "Quinoa Seeds",
+  "icone": "textures/items/cl/hc/semente_quinoa"
+ },
+ "cl:semente_rabanete": {
+  "pt": "Sementes de Rabanete",
+  "en": "Radish Seeds",
+  "icone": "textures/items/cl/hc/semente_rabanete"
+ },
  "cl:semente_repolho": {
   "pt": "Sementes de Repolho",
   "en": "Cabbage Seeds",
   "icone": "textures/items/cl/arte/semente_repolho"
+ },
+ "cl:semente_ruibarbo": {
+  "pt": "Sementes de Ruibarbo",
+  "en": "Rhubarb Seeds",
+  "icone": "textures/items/cl/hc/semente_ruibarbo"
+ },
+ "cl:semente_sabugueiro": {
+  "pt": "Sementes de Baga de Sabugueiro",
+  "en": "Elderberry Seeds",
+  "icone": "textures/items/cl/hc/semente_sabugueiro"
+ },
+ "cl:semente_salsao": {
+  "pt": "Sementes de Salsão",
+  "en": "Celery Seeds",
+  "icone": "textures/items/cl/hc/semente_salsao"
+ },
+ "cl:semente_sisal": {
+  "pt": "Sementes de Sisal",
+  "en": "Sisal Seeds",
+  "icone": "textures/items/cl/hc/semente_sisal"
+ },
+ "cl:semente_soja": {
+  "pt": "Sementes de Soja",
+  "en": "Soybean Seeds",
+  "icone": "textures/items/cl/hc/semente_soja"
+ },
+ "cl:semente_sorgo": {
+  "pt": "Sementes de Sorgo",
+  "en": "Sorghum Seeds",
+  "icone": "textures/items/cl/hc/semente_sorgo"
  },
  "cl:semente_suspeita": {
   "pt": "Semente Suspeita",
   "en": "Suspicious Seed",
   "icone": "textures/items/cl/arte/semente_suspeita"
  },
+ "cl:semente_taboa": {
+  "pt": "Sementes de Taboa",
+  "en": "Cattail Seeds",
+  "icone": "textures/items/cl/hc/semente_taboa"
+ },
  "cl:semente_tomate": {
   "pt": "Sementes de Tomate",
   "en": "Tomato Seeds",
   "icone": "textures/items/cl/arte/semente_tomate"
+ },
+ "cl:semente_tomatilho": {
+  "pt": "Sementes de Tomatilho",
+  "en": "Tomatillo Seeds",
+  "icone": "textures/items/cl/hc/semente_tomatilho"
+ },
+ "cl:semente_trufa": {
+  "pt": "Sementes de Trufa",
+  "en": "Truffle Seeds",
+  "icone": "textures/items/cl/hc/semente_trufa"
+ },
+ "cl:semente_tupinambo": {
+  "pt": "Sementes de Tupinambo",
+  "en": "Sunchoke Seeds",
+  "icone": "textures/items/cl/hc/semente_tupinambo"
+ },
+ "cl:semente_urtiga": {
+  "pt": "Sementes de Urtiga",
+  "en": "Nettles Seeds",
+  "icone": "textures/items/cl/hc/semente_urtiga"
+ },
+ "cl:semente_uva": {
+  "pt": "Sementes de Uva",
+  "en": "Grape Seeds",
+  "icone": "textures/items/cl/hc/semente_uva"
+ },
+ "cl:semente_uva_do_monte": {
+  "pt": "Sementes de Uva-do-Monte",
+  "en": "Huckleberry Seeds",
+  "icone": "textures/items/cl/hc/semente_uva_do_monte"
+ },
+ "cl:semente_uva_verde": {
+  "pt": "Sementes de Uva Verde",
+  "en": "Green Grape Seeds",
+  "icone": "textures/items/cl/hc/semente_uva_verde"
+ },
+ "cl:semente_zimbro": {
+  "pt": "Sementes de Baga de Zimbro",
+  "en": "Juniperberry Seeds",
+  "icone": "textures/items/cl/hc/semente_zimbro"
  },
  "cl:separador_eletrolitico": {
   "pt": "Separador Eletrolítico",
@@ -13201,6 +15991,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Monster Token",
   "icone": "textures/items/cl/arte/simbolo_monstro"
  },
+ "cl:sisal": {
+  "pt": "Sisal",
+  "en": "Sisal",
+  "icone": "textures/items/cl/hc/sisal"
+ },
  "cl:slime_balde": {
   "pt": "Slime no Balde",
   "en": "Slime in a Bucket",
@@ -13236,10 +16031,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Slimelytra",
   "icone": "textures/items/cl/arte/slimelitros"
  },
+ "cl:smores": {
+  "pt": "S'mores",
+  "en": "Smores",
+  "icone": "textures/items/cl/hc/smores"
+ },
  "cl:snorkel": {
   "pt": "Snorkel",
   "en": "Snorkel",
   "icone": "textures/items/cl/arte/snorkel"
+ },
+ "cl:soja": {
+  "pt": "Soja",
+  "en": "Soybean",
+  "icone": "textures/items/cl/hc/soja"
  },
  "cl:solo_lunar": {
   "pt": "Solo Lunar",
@@ -13261,6 +16066,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Rice Soup",
   "icone": "textures/items/cl/arte/sopa_arroz"
  },
+ "cl:sopa_batata": {
+  "pt": "Sopa de Batata",
+  "en": "Potato Soup",
+  "icone": "textures/items/cl/hc/sopa_batata"
+ },
  "cl:sopa_cacto": {
   "pt": "Sopa de Cacto",
   "en": "Cactus Soup",
@@ -13270,6 +16080,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Sopa de Cebola",
   "en": "Onion Soup",
   "icone": "textures/items/cl/arte/sopa_cebola"
+ },
+ "cl:sopa_cenoura": {
+  "pt": "Sopa de Cenoura",
+  "en": "Carrot Soup",
+  "icone": "textures/items/cl/hc/sopa_cenoura"
  },
  "cl:sopa_frango": {
   "pt": "Sopa de Frango",
@@ -13286,20 +16101,105 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Noodle Soup",
   "icone": "textures/items/cl/arte/sopa_macarrao"
  },
+ "cl:sopa_macarrao_carne": {
+  "pt": "Sopa de Macarrão com Carne",
+  "en": "Beef Noodle Soup",
+  "icone": "textures/items/cl/hc/sopa_macarrao_carne"
+ },
+ "cl:sopa_macarrao_carneiro": {
+  "pt": "Sopa de Macarrão com Carneiro",
+  "en": "Mutton Noodle Soup",
+  "icone": "textures/items/cl/hc/sopa_macarrao_carneiro"
+ },
+ "cl:sopa_macarrao_coelho": {
+  "pt": "Sopa de Macarrão com Coelho",
+  "en": "Rabbit Noodle Soup",
+  "icone": "textures/items/cl/hc/sopa_macarrao_coelho"
+ },
+ "cl:sopa_macarrao_frango": {
+  "pt": "Sopa de Macarrão com Frango",
+  "en": "Chicken Noodle Soup",
+  "icone": "textures/items/cl/hc/sopa_macarrao_frango"
+ },
+ "cl:sopa_macarrao_legumes": {
+  "pt": "Sopa de Macarrão com Legumes",
+  "en": "Vegetable Noodle Soup",
+  "icone": "textures/items/cl/hc/sopa_macarrao_legumes"
+ },
+ "cl:sopa_macarrao_peixe": {
+  "pt": "Sopa de Macarrão com Peixe",
+  "en": "Fish Noodle Soup",
+  "icone": "textures/items/cl/hc/sopa_macarrao_peixe"
+ },
+ "cl:sopa_macarrao_porco": {
+  "pt": "Sopa de Macarrão com Porco",
+  "en": "Pork Noodle Soup",
+  "icone": "textures/items/cl/hc/sopa_macarrao_porco"
+ },
  "cl:sopa_tomate": {
   "pt": "Sopa de Tomate",
   "en": "Tomato Soup",
   "icone": "textures/items/cl/arte/sopa_tomate"
+ },
+ "cl:sorgo": {
+  "pt": "Sorgo",
+  "en": "Sorghum",
+  "icone": "textures/items/cl/hc/sorgo"
+ },
+ "cl:sorvete": {
+  "pt": "Sorvete",
+  "en": "Ice Cream",
+  "icone": "textures/items/cl/hc/sorvete"
+ },
+ "cl:sorvete_caramelo": {
+  "pt": "Sorvete de Caramelo",
+  "en": "Caramel Ice Cream",
+  "icone": "textures/items/cl/hc/sorvete_caramelo"
+ },
+ "cl:sorvete_chocolate": {
+  "pt": "Sorvete de Chocolate",
+  "en": "Chocolate Ice Cream",
+  "icone": "textures/items/cl/hc/sorvete_chocolate"
+ },
+ "cl:suco_bagas_brilhantes": {
+  "pt": "Suco de Bagas Brilhantes",
+  "en": "Glow Berry Juice",
+  "icone": "textures/items/cl/hc/suco_bagas_brilhantes"
+ },
+ "cl:suco_bagas_doces": {
+  "pt": "Suco de Bagas Doces",
+  "en": "Sweet Berry Juice",
+  "icone": "textures/items/cl/hc/suco_bagas_doces"
  },
  "cl:suco_cacto": {
   "pt": "Suco de Fruta do Cacto",
   "en": "Cactus Fruit Juice",
   "icone": "textures/items/cl/arte/suco_cacto"
  },
+ "cl:suco_cenoura": {
+  "pt": "Suco de Cenoura",
+  "en": "Carrot Juice",
+  "icone": "textures/items/cl/hc/suco_cenoura"
+ },
+ "cl:suco_coro": {
+  "pt": "Suco de Fruta do Coro",
+  "en": "Chorus Juice",
+  "icone": "textures/items/cl/hc/suco_coro"
+ },
+ "cl:suco_maca": {
+  "pt": "Suco de Maçã",
+  "en": "Apple Juice",
+  "icone": "textures/items/cl/hc/suco_maca"
+ },
  "cl:suco_melancia": {
   "pt": "Suco de Melancia",
   "en": "Melon Juice",
   "icone": "textures/items/cl/arte/suco_melancia"
+ },
+ "cl:suco_p8": {
+  "pt": "Suco de Legumes P8",
+  "en": "P8 Juice",
+  "icone": "textures/items/cl/hc/suco_p8"
  },
  "cl:super_varinha_construtor": {
   "pt": "Super Varinha do Construtor",
@@ -13315,6 +16215,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tablete de Energia",
   "en": "Energy Tablet",
   "icone": "textures/items/cl/arte/tablet_energia"
+ },
+ "cl:taboa": {
+  "pt": "Taboa",
+  "en": "Cattail",
+  "icone": "textures/items/cl/hc/taboa"
  },
  "cl:tabua_cortar": {
   "pt": "Tábua de Cortar",
@@ -13360,6 +16265,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tâmara",
   "en": "Date",
   "icone": "textures/items/cl/arte/tamara"
+ },
+ "cl:tamarindo": {
+  "pt": "Tamarindo",
+  "en": "Tamarind",
+  "icone": "textures/items/cl/hc/tamarindo"
  },
  "cl:tanque_chamuscado": {
   "pt": "Tanque Chamuscado",
@@ -13701,6 +16611,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tomato Shrub",
   "icone": "textures/items/cl/blocos/tomateiro_selvagem"
  },
+ "cl:tomatilho": {
+  "pt": "Tomatilho",
+  "en": "Tomatillo",
+  "icone": "textures/items/cl/hc/tomatilho"
+ },
  "cl:tora_oca_acacia": {
   "pt": "Tora Oca de Acácia",
   "en": "Hollow Acacia Log",
@@ -13731,6 +16646,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Hollow Jungle Log",
   "icone": "textures/items/cl/blocos/tora_oca_selva"
  },
+ "cl:toranja": {
+  "pt": "Toranja",
+  "en": "Grapefruit",
+  "icone": "textures/items/cl/hc/toranja"
+ },
  "cl:torneira": {
   "pt": "Torneira",
   "en": "Faucet",
@@ -13740,6 +16660,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Torrada",
   "en": "Toast",
   "icone": "textures/items/cl/arte/torrada"
+ },
+ "cl:torrada_geleia_bagas_brilhantes": {
+  "pt": "Torrada com Geleia de Bagas Brilhantes",
+  "en": "Glow Berry Jelly Toast",
+  "icone": "textures/items/cl/hc/torrada_geleia_bagas_brilhantes"
+ },
+ "cl:torrada_geleia_bagas_doces": {
+  "pt": "Torrada com Geleia de Bagas Doces",
+  "en": "Sweet Berry Jelly Toast",
+  "icone": "textures/items/cl/hc/torrada_geleia_bagas_doces"
+ },
+ "cl:torrada_geleia_coro": {
+  "pt": "Torrada com Geleia de Fruta do Coro",
+  "en": "Chorus Jelly Toast",
+  "icone": "textures/items/cl/hc/torrada_geleia_coro"
+ },
+ "cl:torrada_geleia_maca": {
+  "pt": "Torrada com Geleia de Maçã",
+  "en": "Apple Jelly Toast",
+  "icone": "textures/items/cl/hc/torrada_geleia_maca"
+ },
+ "cl:torrada_geleia_melancia": {
+  "pt": "Torrada com Geleia de Melancia",
+  "en": "Melon Jelly Toast",
+  "icone": "textures/items/cl/hc/torrada_geleia_melancia"
  },
  "cl:torrao_cobre": {
   "pt": "Aglomerado de Cobre",
@@ -13771,15 +16716,50 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Defense Turret",
   "icone": "textures/items/cl/arte/blocos/torre_defesa"
  },
+ "cl:torta_bagas_brilhantes": {
+  "pt": "Torta de Bagas Brilhantes",
+  "en": "Glow Berry Pie",
+  "icone": "textures/items/cl/hc/torta_bagas_brilhantes"
+ },
+ "cl:torta_bagas_doces": {
+  "pt": "Torta de Bagas Doces",
+  "en": "Sweet Berry Pie",
+  "icone": "textures/items/cl/hc/torta_bagas_doces"
+ },
+ "cl:torta_caramelo": {
+  "pt": "Torta de Caramelo",
+  "en": "Caramel Pie",
+  "icone": "textures/items/cl/hc/torta_caramelo"
+ },
+ "cl:torta_cenoura": {
+  "pt": "Torta de Cenoura",
+  "en": "Carrot Pie",
+  "icone": "textures/items/cl/hc/torta_cenoura"
+ },
  "cl:torta_chocolate": {
   "pt": "Torta de Chocolate",
   "en": "Chocolate Pie",
   "icone": "textures/items/cl/blocos/torta_chocolate"
  },
+ "cl:torta_coro": {
+  "pt": "Torta de Fruta do Coro",
+  "en": "Chorus Pie",
+  "icone": "textures/items/cl/hc/torta_coro"
+ },
  "cl:torta_maca": {
   "pt": "Torta de Maçã",
   "en": "Apple Pie",
   "icone": "textures/items/cl/blocos/torta_maca"
+ },
+ "cl:torta_mel": {
+  "pt": "Torta de Mel",
+  "en": "Honey Pie",
+  "icone": "textures/items/cl/hc/torta_mel"
+ },
+ "cl:torta_melancia": {
+  "pt": "Torta de Melancia",
+  "en": "Melon Pie",
+  "icone": "textures/items/cl/hc/torta_melancia"
  },
  "cl:torta_pastor": {
   "pt": "Torta do Pastor",
@@ -13906,6 +16886,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Greenheart Log",
   "icone": "textures/items/cl/blocos/tronco_verdecoracao"
  },
+ "cl:trufa": {
+  "pt": "Trufa",
+  "en": "Truffle",
+  "icone": "textures/items/cl/hc/trufa"
+ },
  "cl:tubo_pressao": {
   "pt": "Tubo de Pressão",
   "en": "Pressure Tube",
@@ -13920,6 +16905,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Túmulo",
   "en": "Grave",
   "icone": "textures/items/cl/blocos/tumulo"
+ },
+ "cl:tupinambo": {
+  "pt": "Tupinambo",
+  "en": "Sunchoke",
+  "icone": "textures/items/cl/hc/tupinambo"
+ },
+ "cl:tupinambo_assado": {
+  "pt": "Tupinambo Assado",
+  "en": "Baked Sunchoke",
+  "icone": "textures/items/cl/hc/tupinambo_assado"
  },
  "cl:upgrade_alcance_1": {
   "pt": "Upgrade de Alcance +1",
@@ -14005,6 +17000,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Uraninita Bruta Pobre",
   "en": "Poor Raw Uraninite",
   "icone": "textures/items/cl/arte/uraninita_bruta_pobre"
+ },
+ "cl:urtiga": {
+  "pt": "Urtiga",
+  "en": "Nettles",
+  "icone": "textures/items/cl/hc/urtiga"
+ },
+ "cl:uva": {
+  "pt": "Uva",
+  "en": "Grape",
+  "icone": "textures/items/cl/hc/uva"
+ },
+ "cl:uva_do_monte": {
+  "pt": "Uva-do-Monte",
+  "en": "Huckleberry",
+  "icone": "textures/items/cl/hc/uva_do_monte"
+ },
+ "cl:uva_verde": {
+  "pt": "Uva Verde",
+  "en": "Green Grape",
+  "icone": "textures/items/cl/hc/uva_verde"
  },
  "cl:vacuo_xp": {
   "pt": "Vácuo de XP",
@@ -14166,10 +17181,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Turbine Glass",
   "icone": "textures/items/cl/blocos/vidro_turbina"
  },
+ "cl:vinagre": {
+  "pt": "Vinagre",
+  "en": "Vinegar",
+  "icone": "textures/items/cl/hc/vinagre"
+ },
  "cl:vinculador_almas": {
   "pt": "Vinculador de Almas",
   "en": "Soul Binder",
   "icone": "textures/items/cl/blocos/vinculador_almas"
+ },
+ "cl:vitamina_bagas_brilhantes": {
+  "pt": "Vitamina de Bagas Brilhantes",
+  "en": "Glow Berry Smoothie",
+  "icone": "textures/items/cl/hc/vitamina_bagas_brilhantes"
+ },
+ "cl:vitamina_bagas_doces": {
+  "pt": "Vitamina de Bagas Doces",
+  "en": "Sweet Berry Smoothie",
+  "icone": "textures/items/cl/hc/vitamina_bagas_doces"
+ },
+ "cl:vitamina_coro": {
+  "pt": "Vitamina de Fruta do Coro",
+  "en": "Chorus Smoothie",
+  "icone": "textures/items/cl/hc/vitamina_coro"
+ },
+ "cl:vitamina_maca": {
+  "pt": "Vitamina de Maçã",
+  "en": "Apple Smoothie",
+  "icone": "textures/items/cl/hc/vitamina_maca"
+ },
+ "cl:vitamina_melancia": {
+  "pt": "Vitamina de Melancia",
+  "en": "Melon Smoothie",
+  "icone": "textures/items/cl/hc/vitamina_melancia"
  },
  "cl:wafer_avancado": {
   "pt": "Wafer Avançado",
@@ -14185,6 +17230,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Wrap de Carneiro",
   "en": "Mutton Wrap",
   "icone": "textures/items/cl/arte/wrap_carneiro"
+ },
+ "cl:x_bacon": {
+  "pt": "X-Bacon",
+  "en": "Bacon Cheeseburger",
+  "icone": "textures/items/cl/hc/x_bacon"
+ },
+ "cl:x_burguer": {
+  "pt": "X-Búrguer",
+  "en": "Basic Cheeseburger",
+  "icone": "textures/items/cl/hc/x_burguer"
+ },
+ "cl:xarope_bordo": {
+  "pt": "Xarope de Bordo",
+  "en": "Maple Syrup",
+  "icone": "textures/items/cl/hc/xarope_bordo"
  },
  "cl:xisto": {
   "pt": "Xisto",
@@ -14210,6 +17270,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Xisto (Tijolos)",
   "en": "Shale Bricks",
   "icone": "textures/items/cl/blocos/xisto_tijolos"
+ },
+ "cl:zimbro": {
+  "pt": "Baga de Zimbro",
+  "en": "Juniperberry",
+  "icone": "textures/items/cl/hc/zimbro"
  },
  "cl:zinco_po": {
   "pt": "Pó de Minério de Zinco",
@@ -14558,6 +17623,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Arenito Cinzelado",
   "en": "Chiseled Sandstone",
   "icone": "textures/blocks/sandstone_carved"
+ },
+ "minecraft:chorus_fruit": {
+  "pt": "Fruta do Coro",
+  "en": "Chorus Fruit",
+  "icone": "textures/items/chorus_fruit"
  },
  "minecraft:clay": {
   "pt": "Argila",
@@ -15706,6 +18776,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Red Dye",
   "icone": "textures/items/dye_powder_red"
  },
+ "minecraft:red_mushroom": {
+  "pt": "Cogumelo Vermelho",
+  "en": "Red Mushroom",
+  "icone": "textures/blocks/mushroom_red"
+ },
  "minecraft:red_nether_brick": {
   "pt": "Tijolos Vermelhos do Nether",
   "en": "Red Nether Bricks",
@@ -16000,6 +19075,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cana-de-açúcar",
   "en": "Sugar Cane",
   "icone": "textures/items/reeds"
+ },
+ "minecraft:sunflower": {
+  "pt": "sunflower",
+  "en": "sunflower",
+  "icone": "textures/blocks/double_plant_sunflower_front"
  },
  "minecraft:sweet_berries": {
   "pt": "Bagas Doces",
@@ -43080,6 +46160,168 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_achocolatado_0_0",
+  "resultado": "cl:achocolatado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   },
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_achocolatado_0_1",
+  "resultado": "cl:achocolatado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_acucar_mel_0_0",
+  "resultado": "minecraft:sugar",
+  "qtd": 8,
+  "ingredientes": [
+   {
+    "item": "minecraft:honey_bottle",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_algodao_doce_0_0",
+  "resultado": "cl:algodao_doce",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_alho_assado_forno",
+  "resultado": "cl:alho_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:alho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_alho_poro_assado_forno",
+  "resultado": "cl:alho_poro_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:alho_poro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_amendoa_torrada_forno",
+  "resultado": "cl:amendoa_torrada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:amendoa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_amendoim_torrado_forno",
+  "resultado": "cl:amendoim_torrado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:amendoim",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_araruta_assada_forno",
+  "resultado": "cl:araruta_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:araruta",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_arroz_frito",
   "resultado": "cl:arroz_frito",
   "qtd": 1,
@@ -43123,6 +46365,306 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "fornalha",
+  "id": "cl:hc_avela_torrada_forno",
+  "resultado": "cl:avela_torrada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:avela",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bacon_chocolate_0_0",
+  "resultado": "cl:bacon_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bacon_epico_0_0",
+  "resultado": "cl:bacon_epico",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cooked_porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:red_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:orange_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:yellow_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:green_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:blue_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:purple_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:pink_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_balas_creeper_0_0",
+  "resultado": "cl:balas_creeper",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:red_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:green_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_barra_chocolate_0_0",
+  "resultado": "cl:barra_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cocoa_beans",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_batata_chips_0_0",
+  "resultado": "cl:batata_chips",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_batata_doce_assada_forno",
+  "resultado": "cl:batata_doce_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:batata_doce",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_batata_frita_0_0",
+  "resultado": "cl:batata_frita",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_batata_manteiga_0_0",
+  "resultado": "cl:batata_manteiga",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:baked_potato",
+    "qtd": 1
+   },
+   {
+    "item": "cl:manteiga",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_beterraba_conserva_0_0",
+  "resultado": "cl:beterraba_conserva",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:vinagre",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_biscoitos_leite_0_0",
+  "resultado": "cl:biscoitos_leite",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cookie",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_biscoitos_leite_0_1",
+  "resultado": "cl:biscoitos_leite",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cookie",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bolacha_0_0",
+  "resultado": "cl:bolacha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bolachas_queijo_0_0",
+  "resultado": "cl:bolachas_queijo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bolacha",
+    "qtd": 2
+   },
+   {
+    "item": "cl:queijo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:hc_bolinho_arroz",
   "resultado": "cl:bolinho_arroz",
@@ -43135,6 +46677,119 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bolo_carne_0_0",
+  "resultado": "cl:bolo_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_moido",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bolo_cenoura_0_0",
+  "resultado": "cl:bolo_cenoura",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bolo_chocolate_0_0",
+  "resultado": "cl:bolo_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_bolota_assada_forno",
+  "resultado": "cl:bolota_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bolota",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bottle_x2_calabash_x2_0",
+  "resultado": "minecraft:glass_bottle",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:cabaca",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_bread_grain_0",
+  "resultado": "minecraft:bread",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_grao",
+    "qtd": 3
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -43206,6 +46861,95 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_cacau_po_0_0",
+  "resultado": "cl:cacau_po",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cocoa_beans",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_cachorro_quente_0_0",
+  "resultado": "cl:cachorro_quente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_porco",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_cactus_x2_cactus_plants_0",
+  "resultado": "minecraft:cactus",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_cacto",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cafe_quente_forno",
+  "resultado": "cl:cafe_quente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cafe",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_caju_torrado_forno",
+  "resultado": "cl:caju_torrado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:castanha_caju",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_caldo",
   "resultado": "cl:caldo",
   "qtd": 2,
@@ -43221,6 +46965,198 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_caramelo_0_0",
+  "resultado": "cl:caramelo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_caramelo_0_1",
+  "resultado": "cl:caramelo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_carne_panela_0_0",
+  "resultado": "cl:carne_panela",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_castanha_assada_forno",
+  "resultado": "cl:castanha_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:castanha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_castanha_dagua_assada_forno",
+  "resultado": "cl:castanha_dagua_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:castanha_dagua",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cebola_assada_forno",
+  "resultado": "cl:cebola_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cebola",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cebolinha_assada_forno",
+  "resultado": "cl:cebolinha_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cebolinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_cenouras_glaceadas_0_0",
+  "resultado": "cl:cenouras_glaceadas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:manteiga",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cha_quente_forno",
+  "resultado": "cl:cha_quente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:folha_cha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cha_urtiga_forno",
+  "resultado": "cl:cha_urtiga",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:urtiga",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
   ]
  },
  {
@@ -43244,6 +47180,147 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_charque_carneiro_0_0",
+  "resultado": "cl:charque_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_charque_coelho_0_0",
+  "resultado": "cl:charque_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_charque_frango_0_0",
+  "resultado": "cl:charque_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_charque_peixe_0_0",
+  "resultado": "cl:charque_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_charque_peixe_0_1",
+  "resultado": "cl:charque_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_charque_porco_0_0",
+  "resultado": "cl:charque_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_cheesecake_abobora_0_0",
+  "resultado": "cl:cheesecake_abobora",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "cl:queijo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:pumpkin",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_chili_poppers",
   "resultado": "cl:chili_poppers",
   "qtd": 1,
@@ -43263,6 +47340,1242 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cogumelo_assado_forno",
+  "resultado": "cl:cogumelo_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:brown_mushroom",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cogumelo_assado_forno1",
+  "resultado": "cl:cogumelo_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:red_mushroom",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cogumelo_assado_forno2",
+  "resultado": "cl:cogumelo_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cogumelo_branco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_cogumelo_assado_forno3",
+  "resultado": "cl:cogumelo_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:trufa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_cookingoil_x4_canola_x2_0",
+  "resultado": "cl:oleo_cozinha",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "cl:canola",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_rolo"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_couve_rabano_assada_forno",
+  "resultado": "cl:couve_rabano_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:couve_rabano",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_creme_leite_0_0",
+  "resultado": "cl:creme_leite",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_creme_leite_0_1",
+  "resultado": "cl:creme_leite",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_carne_0_0",
+  "resultado": "cl:empadao_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_carneiro_0_0",
+  "resultado": "cl:empadao_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_coelho_0_0",
+  "resultado": "cl:empadao_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_frango_0_0",
+  "resultado": "cl:empadao_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_legumes_0_0",
+  "resultado": "cl:empadao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_legumes_0_1",
+  "resultado": "cl:empadao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_legumes_0_2",
+  "resultado": "cl:empadao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_legumes_0_3",
+  "resultado": "cl:empadao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_peixe_0_0",
+  "resultado": "cl:empadao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_peixe_0_1",
+  "resultado": "cl:empadao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_empadao_porco_0_0",
+  "resultado": "cl:empadao_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ensopado_0_0",
+  "resultado": "cl:ensopado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ensopado_0_1",
+  "resultado": "cl:ensopado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ensopado_0_2",
+  "resultado": "cl:ensopado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ensopado_0_3",
+  "resultado": "cl:ensopado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ensopado_0_4",
+  "resultado": "cl:ensopado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ensopado_0_5",
+  "resultado": "cl:ensopado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carne_0_0",
+  "resultado": "cl:espetinho_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carne_0_1",
+  "resultado": "cl:espetinho_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carne_0_2",
+  "resultado": "cl:espetinho_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carne_0_3",
+  "resultado": "cl:espetinho_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carneiro_0_0",
+  "resultado": "cl:espetinho_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carneiro_0_1",
+  "resultado": "cl:espetinho_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carneiro_0_2",
+  "resultado": "cl:espetinho_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_carneiro_0_3",
+  "resultado": "cl:espetinho_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_coelho_0_0",
+  "resultado": "cl:espetinho_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_coelho_0_1",
+  "resultado": "cl:espetinho_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_coelho_0_2",
+  "resultado": "cl:espetinho_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_coelho_0_3",
+  "resultado": "cl:espetinho_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_frango_0_0",
+  "resultado": "cl:espetinho_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_frango_0_1",
+  "resultado": "cl:espetinho_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_frango_0_2",
+  "resultado": "cl:espetinho_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_frango_0_3",
+  "resultado": "cl:espetinho_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_legumes_0_0",
+  "resultado": "cl:espetinho_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_legumes_0_1",
+  "resultado": "cl:espetinho_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_legumes_0_2",
+  "resultado": "cl:espetinho_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_legumes_0_3",
+  "resultado": "cl:espetinho_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_peixe_0_0",
+  "resultado": "cl:espetinho_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_peixe_0_1",
+  "resultado": "cl:espetinho_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_peixe_0_2",
+  "resultado": "cl:espetinho_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_peixe_0_3",
+  "resultado": "cl:espetinho_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_peixe_0_4",
+  "resultado": "cl:espetinho_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_peixe_0_5",
+  "resultado": "cl:espetinho_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_porco_0_0",
+  "resultado": "cl:espetinho_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_porco_0_1",
+  "resultado": "cl:espetinho_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_porco_0_2",
+  "resultado": "cl:espetinho_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_espetinho_porco_0_3",
+  "resultado": "cl:espetinho_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
   ]
  },
  {
@@ -43314,6 +48627,36 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_farinha_hc2_0_0",
+  "resultado": "cl:farinha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_farinha_hc2_0_1",
+  "resultado": "cl:farinha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_feijao_assado",
   "resultado": "cl:feijao_assado",
   "qtd": 1,
@@ -43328,6 +48671,29 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    },
    {
     "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_frango_frito_0_0",
+  "resultado": "cl:frango_frito",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   },
+   {
+    "item": "cl:oleo_cozinha",
     "qtd": 1
    }
   ],
@@ -43370,6 +48736,138 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_fudge_chocolate_0_0",
+  "resultado": "cl:fudge_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caramelo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_geleia_bagas_brilhantes_0_0",
+  "resultado": "cl:geleia_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_brilhantes",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_geleia_bagas_doces_0_0",
+  "resultado": "cl:geleia_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_doces",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_geleia_coro_0_0",
+  "resultado": "cl:geleia_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_coro",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_geleia_maca_0_0",
+  "resultado": "cl:geleia_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_maca",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_geleia_melancia_0_0",
+  "resultado": "cl:geleia_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_melancia",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_girassol_torrado_forno",
+  "resultado": "cl:girassol_torrado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:semente_girassol",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_hamburguer",
   "resultado": "cl:hamburguer",
   "qtd": 1,
@@ -43389,6 +48887,902 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_hamburguer_simples_0_0",
+  "resultado": "cl:hamburguer_simples",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_carne",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hamburguer_vegetariano_0_0",
+  "resultado": "cl:hamburguer_vegetariano",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hamburguer_vegetariano_0_1",
+  "resultado": "cl:hamburguer_vegetariano",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hamburguer_vegetariano_0_2",
+  "resultado": "cl:hamburguer_vegetariano",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hamburguer_vegetariano_0_3",
+  "resultado": "cl:hamburguer_vegetariano",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_chocolate_quente_0_0",
+  "resultado": "cl:chocolate_quente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   },
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   },
+   {
+    "item": "cl:marshmallow",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_chocolate_quente_0_1",
+  "resultado": "cl:chocolate_quente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   },
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   },
+   {
+    "item": "cl:marshmallow",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_picole_melancia_0_0",
+  "resultado": "cl:picole_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_melancia",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_picole_melancia_0_1",
+  "resultado": "cl:picole_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_melancia",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_salada_frutas_0_0",
+  "resultado": "cl:salada_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_fruta",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_salada_frutas_0_1",
+  "resultado": "cl:salada_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:apple",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_salada_frutas_0_2",
+  "resultado": "cl:salada_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_salada_frutas_0_3",
+  "resultado": "cl:salada_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_sanduiche_frango_0_0",
+  "resultado": "cl:sanduiche_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_frango",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_sopa_abobora_0_0",
+  "resultado": "cl:sopa_abobora",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:pumpkin",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_sopa_macarrao_0_0",
+  "resultado": "cl:sopa_macarrao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc2_suco_melancia_0_0",
+  "resultado": "cl:suco_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc_cheesecake_0_0",
+  "resultado": "cl:hc_cheesecake",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "cl:queijo",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc_torta_chocolate_0_0",
+  "resultado": "cl:hc_torta_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_hc_torta_maca_0_0",
+  "resultado": "cl:hc_torta_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_inhame_assado_forno",
+  "resultado": "cl:inhame_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:inhame",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_0_0",
+  "resultado": "cl:iogurte",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_0_1",
+  "resultado": "cl:iogurte",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_abobora_0_0",
+  "resultado": "cl:iogurte_abobora",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:pumpkin",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_bagas_brilhantes_0_0",
+  "resultado": "cl:iogurte_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:glow_berries",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_bagas_doces_0_0",
+  "resultado": "cl:iogurte_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_caramelo_0_0",
+  "resultado": "cl:iogurte_caramelo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caramelo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_chocolate_0_0",
+  "resultado": "cl:iogurte_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_coro_0_0",
+  "resultado": "cl:iogurte_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chorus_fruit",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_maca_0_0",
+  "resultado": "cl:iogurte_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iogurte_melancia_0_0",
+  "resultado": "cl:iogurte_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iogurte",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_iscas_peixe_0_0",
+  "resultado": "cl:iscas_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_peixe",
+    "qtd": 1
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_jantar_frango_0_0",
+  "resultado": "cl:jantar_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:frango_frito",
+    "qtd": 1
+   },
+   {
+    "item": "cl:pure_batata",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_jantar_frango_0_1",
+  "resultado": "cl:jantar_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:frango_frito",
+    "qtd": 1
+   },
+   {
+    "item": "cl:pure_batata",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_jantar_frango_0_2",
+  "resultado": "cl:jantar_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:frango_frito",
+    "qtd": 1
+   },
+   {
+    "item": "cl:pure_batata",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_jantar_frango_0_3",
+  "resultado": "cl:jantar_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:frango_frito",
+    "qtd": 1
+   },
+   {
+    "item": "cl:pure_batata",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_jicama_assada_forno",
+  "resultado": "cl:jicama_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:jicama",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_jujubas_0_0",
+  "resultado": "cl:jujubas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:blue_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:orange_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_legumes_assados_0_0",
+  "resultado": "cl:legumes_assados",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_legumes_assados_0_1",
+  "resultado": "cl:legumes_assados",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_legumes_assados_0_2",
+  "resultado": "cl:legumes_assados",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_legumes_assados_0_3",
+  "resultado": "cl:legumes_assados",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_leite_fresco_0_0",
+  "resultado": "cl:leite_fresco",
+  "qtd": 8,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_maca_amor_0_0",
+  "resultado": "cl:maca_amor",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:caramelo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_macarrao_0_0",
+  "resultado": "cl:macarrao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_rolo"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_macarrao_queijo_0_0",
+  "resultado": "cl:macarrao_queijo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:queijo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_maionese",
   "resultado": "cl:maionese",
   "qtd": 1,
@@ -43403,6 +49797,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "fornalha",
+  "id": "cl:hc_mandioca_assada_forno",
+  "resultado": "cl:mandioca_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:mandioca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:hc_manteiga",
   "resultado": "cl:manteiga",
@@ -43414,6 +49826,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    },
    {
     "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_cacarola"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_marshmallow_0_0",
+  "resultado": "cl:marshmallow",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
     "qtd": 1
    }
   ],
@@ -43484,6 +49911,1677 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_misto_quente_0_0",
+  "resultado": "cl:misto_quente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   },
+   {
+    "item": "cl:manteiga",
+    "qtd": 1
+   },
+   {
+    "item": "cl:queijo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_mix_castanhas_0_0",
+  "resultado": "cl:mix_castanhas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:wheat_seeds",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_fruta",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_mix_castanhas_0_1",
+  "resultado": "cl:mix_castanhas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:wheat_seeds",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_mix_castanhas_0_2",
+  "resultado": "cl:mix_castanhas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:wheat_seeds",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_mix_castanhas_0_3",
+  "resultado": "cl:mix_castanhas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:wheat_seeds",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_mix_castanhas_0_4",
+  "resultado": "cl:mix_castanhas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_semente",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_fruta",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_mix_castanhas_0_5",
+  "resultado": "cl:mix_castanhas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_semente",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_moido_carne_0_0",
+  "resultado": "cl:moido_carne",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_moido_carne_cozido_forno",
+  "resultado": "cl:moido_carne_cozido",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_carne",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_moido_carneiro_0_0",
+  "resultado": "cl:moido_carneiro",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_moido_carneiro_cozido_forno",
+  "resultado": "cl:moido_carneiro_cozido",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_carneiro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_moido_coelho_0_0",
+  "resultado": "cl:moido_coelho",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_moido_coelho_cozido_forno",
+  "resultado": "cl:moido_coelho_cozido",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_coelho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_moido_frango_0_0",
+  "resultado": "cl:moido_frango",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_moido_frango_cozido_forno",
+  "resultado": "cl:moido_frango_cozido",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_frango",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_moido_peixe_0_0",
+  "resultado": "cl:moido_peixe",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_moido_peixe_0_1",
+  "resultado": "cl:moido_peixe",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_moido_peixe_cozido_forno",
+  "resultado": "cl:moido_peixe_cozido",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_peixe",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_moido_porco_0_0",
+  "resultado": "cl:moido_porco",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_pilao"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_moido_porco_cozido_forno",
+  "resultado": "cl:moido_porco_cozido",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_porco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_abacate",
+  "resultado": "cl:muda_abacate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:abacate",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_ameixa",
+  "resultado": "cl:muda_ameixa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:ameixa",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_amendoa",
+  "resultado": "cl:muda_amendoa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:amendoa",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_asimina",
+  "resultado": "cl:muda_asimina",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:asimina",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_avela",
+  "resultado": "cl:muda_avela",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:avela",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_azeitona",
+  "resultado": "cl:muda_azeitona",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:azeitona",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_banana",
+  "resultado": "cl:muda_banana",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:banana",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_baunilha",
+  "resultado": "cl:muda_baunilha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:baunilha",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_bolota",
+  "resultado": "cl:muda_bolota",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bolota",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_canela",
+  "resultado": "cl:muda_canela",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:canela",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_caqui",
+  "resultado": "cl:muda_caqui",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:caqui",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_carambola",
+  "resultado": "cl:muda_carambola",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:carambola",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_casca_papel",
+  "resultado": "cl:muda_casca_papel",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:paper",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_castanha",
+  "resultado": "cl:muda_castanha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:castanha",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_castanha_caju",
+  "resultado": "cl:muda_castanha_caju",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:castanha_caju",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_cereja",
+  "resultado": "cl:muda_cereja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cereja",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_coco",
+  "resultado": "cl:muda_coco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:coco",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_damasco",
+  "resultado": "cl:muda_damasco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:damasco",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_durian",
+  "resultado": "cl:muda_durian",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:durian",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_figo",
+  "resultado": "cl:muda_figo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:figo",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_fruta_pao",
+  "resultado": "cl:muda_fruta_pao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:fruta_pao",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_goiaba",
+  "resultado": "cl:muda_goiaba",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:goiaba",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_graviola",
+  "resultado": "cl:muda_graviola",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:graviola",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_groselha",
+  "resultado": "cl:muda_groselha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:groselha",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_jaca",
+  "resultado": "cl:muda_jaca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:jaca",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_laranja",
+  "resultado": "cl:muda_laranja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:laranja",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_lichia",
+  "resultado": "cl:muda_lichia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lichia",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_limao",
+  "resultado": "cl:muda_limao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:limao",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_limao_siciliano",
+  "resultado": "cl:muda_limao_siciliano",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:limao_siciliano",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_maca",
+  "resultado": "cl:muda_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:apple",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_mamao",
+  "resultado": "cl:muda_mamao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:mamao",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_manga",
+  "resultado": "cl:muda_manga",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:manga",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_maracuja",
+  "resultado": "cl:muda_maracuja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:maracuja",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_noz",
+  "resultado": "cl:muda_noz",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:noz",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_noz_iguape",
+  "resultado": "cl:muda_noz_iguape",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:noz_iguape",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_noz_moscada",
+  "resultado": "cl:muda_noz_moscada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:noz_moscada",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_peca",
+  "resultado": "cl:muda_peca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:peca",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_pera",
+  "resultado": "cl:muda_pera",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pera",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_pessego",
+  "resultado": "cl:muda_pessego",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pessego",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_pimenta_reino",
+  "resultado": "cl:muda_pimenta_reino",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pimenta_reino",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_pinoli",
+  "resultado": "cl:muda_pinoli",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pinoli",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_pistache",
+  "resultado": "cl:muda_pistache",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pistache",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_pitaya",
+  "resultado": "cl:muda_pitaya",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pitaya",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_rambutan",
+  "resultado": "cl:muda_rambutan",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:rambutan",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_roma",
+  "resultado": "cl:muda_roma",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:roma",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_tamarindo",
+  "resultado": "cl:muda_tamarindo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tamarindo",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_teia",
+  "resultado": "cl:muda_teia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:string",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_toranja",
+  "resultado": "cl:muda_toranja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:toranja",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muda_xarope_bordo",
+  "resultado": "cl:muda_xarope_bordo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:xarope_bordo",
+    "qtd": 8
+   },
+   {
+    "item": "minecraft:oak_sapling",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_abobora_0_0",
+  "resultado": "cl:muffin_abobora",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:pumpkin",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_bagas_brilhantes_0_0",
+  "resultado": "cl:muffin_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:glow_berries",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_bagas_doces_0_0",
+  "resultado": "cl:muffin_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_caramelo_0_0",
+  "resultado": "cl:muffin_caramelo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:caramelo",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_cenoura_0_0",
+  "resultado": "cl:muffin_cenoura",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_chocolate_0_0",
+  "resultado": "cl:muffin_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_coro_0_0",
+  "resultado": "cl:muffin_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chorus_fruit",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_maca_0_0",
+  "resultado": "cl:muffin_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_mel_0_0",
+  "resultado": "cl:muffin_mel",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:honey_bottle",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_muffin_melancia_0_0",
+  "resultado": "cl:muffin_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_nabo_assado_forno",
+  "resultado": "cl:nabo_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:nabo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_nabo_sueco_assado_forno",
+  "resultado": "cl:nabo_sueco_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:nabo_sueco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_noz_torrada_forno",
+  "resultado": "cl:noz_torrada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:noz",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_nuggets_frango_0_0",
+  "resultado": "cl:nuggets_frango",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "cl:moido_frango",
+    "qtd": 1
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_oleo_cozinha_0_0",
+  "resultado": "cl:oleo_cozinha",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_noz",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_rolo"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_oleo_cozinha_1_0",
+  "resultado": "cl:oleo_cozinha",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_rolo"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_oleo_cozinha_1_1",
+  "resultado": "cl:oleo_cozinha",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_rolo"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_oleo_cozinha_1_2",
+  "resultado": "cl:oleo_cozinha",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_rolo"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_oleo_cozinha_1_3",
+  "resultado": "cl:oleo_cozinha",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_rolo"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_omelete",
   "resultado": "cl:omelete",
   "qtd": 1,
@@ -43540,6 +51638,71 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ovos_bacon_0_0",
+  "resultado": "cl:ovos_bacon",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:egg",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ovos_mexidos_0_0",
+  "resultado": "cl:ovos_mexidos",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:egg",
+    "qtd": 1
+   },
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ovos_mexidos_0_1",
+  "resultado": "cl:ovos_mexidos",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:egg",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:hc_panela",
   "resultado": "cl:panela",
@@ -43578,6 +51741,44 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_pao_abobora_0_0",
+  "resultado": "cl:pao_abobora",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:pumpkin",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_pao_cenoura_0_0",
+  "resultado": "cl:pao_cenoura",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_pao_massa",
   "resultado": "minecraft:bread",
   "qtd": 1,
@@ -43589,6 +51790,103 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_paper_x2_paper_plants_0",
+  "resultado": "minecraft:paper",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_papel",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_pastinaca_assada_forno",
+  "resultado": "cl:pastinaca_assada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pastinaca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_peca_torrada_forno",
+  "resultado": "cl:peca_torrada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:peca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_peixe_fritas_0_0",
+  "resultado": "cl:peixe_fritas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:batata_frita",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_peixe_fritas_0_1",
+  "resultado": "cl:peixe_fritas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   },
+   {
+    "item": "cl:farinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:batata_frita",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
   ]
  },
  {
@@ -43616,6 +51914,236 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_bagas_brilhantes_0_0",
+  "resultado": "cl:picole_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_brilhantes",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_bagas_brilhantes_0_1",
+  "resultado": "cl:picole_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_brilhantes",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_bagas_doces_0_0",
+  "resultado": "cl:picole_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_doces",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_bagas_doces_0_1",
+  "resultado": "cl:picole_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_doces",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_chocolate_0_0",
+  "resultado": "cl:picole_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:achocolatado",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_chocolate_0_1",
+  "resultado": "cl:picole_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:achocolatado",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_coro_0_0",
+  "resultado": "cl:picole_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_coro",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_coro_0_1",
+  "resultado": "cl:picole_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_coro",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_maca_0_0",
+  "resultado": "cl:picole_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_maca",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_picole_maca_0_1",
+  "resultado": "cl:picole_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_maca",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
   ]
  },
  {
@@ -43660,6 +52188,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "fornalha",
+  "id": "cl:hc_pinoli_torrado_forno",
+  "resultado": "cl:pinoli_torrado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pinoli",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:hc_pipoca",
   "resultado": "cl:pipoca",
@@ -43672,6 +52218,145 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_pistache_torrado_forno",
+  "resultado": "cl:pistache_torrado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pistache",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ponche_frutas_0_0",
+  "resultado": "cl:ponche_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_fruta",
+    "qtd": 3
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ponche_frutas_0_1",
+  "resultado": "cl:ponche_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:apple",
+    "qtd": 3
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ponche_frutas_0_2",
+  "resultado": "cl:ponche_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 3
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_ponche_frutas_0_3",
+  "resultado": "cl:ponche_frutas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 3
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_pretzel_0_0",
+  "resultado": "cl:pretzel",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_pure_batata_0_0",
+  "resultado": "cl:pure_batata",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:baked_potato",
+    "qtd": 1
+   },
+   {
+    "item": "cl:manteiga",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_pure_maca_0_0",
+  "resultado": "cl:pure_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:apple",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
   ]
  },
  {
@@ -43695,6 +52380,415 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_queijo_quente_0_0",
+  "resultado": "cl:queijo_quente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   },
+   {
+    "item": "cl:manteiga",
+    "qtd": 1
+   },
+   {
+    "item": "cl:queijo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_rabanete_assado_forno",
+  "resultado": "cl:rabanete_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:rabanete",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rocambole_chocolate_0_0",
+  "resultado": "cl:rocambole_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   },
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   },
+   {
+    "item": "cl:creme_leite",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:hc_rolo",
+  "resultado": "cl:rolo",
+  "qtd": 1,
+  "grade": [
+   "SLS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "L": "#minecraft:logs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_0_0",
+  "resultado": "cl:rosquinha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_abobora_0_0",
+  "resultado": "cl:rosquinha_abobora",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:pumpkin",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_acucarada_0_0",
+  "resultado": "cl:rosquinha_acucarada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_bagas_brilhantes_0_0",
+  "resultado": "cl:rosquinha_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:glow_berries",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_bagas_doces_0_0",
+  "resultado": "cl:rosquinha_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_caramelo_0_0",
+  "resultado": "cl:rosquinha_caramelo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caramelo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_cenoura_0_0",
+  "resultado": "cl:rosquinha_cenoura",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_chocolate_0_0",
+  "resultado": "cl:rosquinha_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_coro_0_0",
+  "resultado": "cl:rosquinha_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chorus_fruit",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_granulado_0_0",
+  "resultado": "cl:rosquinha_granulado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:red_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:green_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:yellow_dye",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:blue_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_maca_0_0",
+  "resultado": "cl:rosquinha_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_mel_0_0",
+  "resultado": "cl:rosquinha_mel",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:honey_bottle",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_rosquinha_melancia_0_0",
+  "resultado": "cl:rosquinha_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa_liquida",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_ruibarbo_assado_forno",
+  "resultado": "cl:ruibarbo_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:ruibarbo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_sal",
   "resultado": "cl:sal",
   "qtd": 1,
@@ -43710,12 +52804,254 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_sanduiche_carneiro_0_0",
+  "resultado": "cl:sanduiche_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_carneiro",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sanduiche_coelho_0_0",
+  "resultado": "cl:sanduiche_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_coelho",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sanduiche_peixe_0_0",
+  "resultado": "cl:sanduiche_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_peixe",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sanduiche_porco_0_0",
+  "resultado": "cl:sanduiche_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_porco",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_abacaxi",
+  "resultado": "cl:semente_abacaxi",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:abacaxi",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_abobora_inverno",
+  "resultado": "cl:semente_abobora_inverno",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:abobora_inverno",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_abobrinha",
+  "resultado": "cl:semente_abobrinha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:abobrinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_agave",
+  "resultado": "cl:semente_agave",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:agave",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_alcachofra",
+  "resultado": "cl:semente_alcachofra",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:alcachofra",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_alface",
+  "resultado": "cl:semente_alface",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:alface",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_alfafa",
+  "resultado": "cl:semente_alfafa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:alfafa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_algodao",
+  "resultado": "cl:semente_algodao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:algodao",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_semente_alho",
   "resultado": "cl:semente_alho",
   "qtd": 1,
   "ingredientes": [
    {
     "item": "cl:alho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_alho_poro",
+  "resultado": "cl:semente_alho_poro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:alho_poro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_amaranto",
+  "resultado": "cl:semente_amaranto",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:amaranto",
     "qtd": 1
    }
   ],
@@ -43740,12 +53076,222 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_semente_amora",
+  "resultado": "cl:semente_amora",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:amora",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_amora_artica",
+  "resultado": "cl:semente_amora_artica",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:amora_artica",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_amora_preta",
+  "resultado": "cl:semente_amora_preta",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:amora_preta",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_araruta",
+  "resultado": "cl:semente_araruta",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:araruta",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_semente_arroz",
   "resultado": "cl:semente_arroz",
   "qtd": 1,
   "ingredientes": [
    {
     "item": "cl:arroz",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_aspargo",
+  "resultado": "cl:semente_aspargo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:aspargo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_aveia",
+  "resultado": "cl:semente_aveia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:aveia",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_babosa",
+  "resultado": "cl:semente_babosa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:babosa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_baga_cera",
+  "resultado": "cl:semente_baga_cera",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:baga_cera",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_batata_doce",
+  "resultado": "cl:semente_batata_doce",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:batata_doce",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_berinjela",
+  "resultado": "cl:semente_berinjela",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:berinjela",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_brocolis",
+  "resultado": "cl:semente_brocolis",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:brocolis",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_cabaca",
+  "resultado": "cl:semente_cabaca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cabaca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_cacto_barril",
+  "resultado": "cl:semente_cacto_barril",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cacto_barril",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_cafe",
+  "resultado": "cl:semente_cafe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cafe",
     "qtd": 1
    }
   ],
@@ -43770,12 +53316,222 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_semente_canola",
+  "resultado": "cl:semente_canola",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:canola",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_castanha_dagua",
+  "resultado": "cl:semente_castanha_dagua",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:castanha_dagua",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_semente_cebola",
   "resultado": "cl:semente_cebola",
   "qtd": 1,
   "ingredientes": [
    {
     "item": "cl:cebola",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_cebolinha",
+  "resultado": "cl:semente_cebolinha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cebolinha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_centeio",
+  "resultado": "cl:semente_centeio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:centeio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_cevada",
+  "resultado": "cl:semente_cevada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cevada",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_chia",
+  "resultado": "cl:semente_chia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:chia",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_cogumelo_branco",
+  "resultado": "cl:semente_cogumelo_branco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cogumelo_branco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_couve",
+  "resultado": "cl:semente_couve",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:couve",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_couve_bruxelas",
+  "resultado": "cl:semente_couve_bruxelas",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:couve_bruxelas",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_couve_chinesa",
+  "resultado": "cl:semente_couve_chinesa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:couve_chinesa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_couve_flor",
+  "resultado": "cl:semente_couve_flor",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:couve_flor",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_couve_rabano",
+  "resultado": "cl:semente_couve_rabano",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:couve_rabano",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_ervilha",
+  "resultado": "cl:semente_ervilha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:ervilha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_espinafre",
+  "resultado": "cl:semente_espinafre",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:espinafre",
     "qtd": 1
    }
   ],
@@ -43800,6 +53556,51 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_semente_folha_cha",
+  "resultado": "cl:semente_folha_cha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:folha_cha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_folha_tempero",
+  "resultado": "cl:semente_folha_tempero",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:folha_tempero",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_framboesa",
+  "resultado": "cl:semente_framboesa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:framboesa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_semente_fruta_cacto",
   "resultado": "cl:semente_fruta_cacto",
   "qtd": 1,
@@ -43815,12 +53616,432 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_semente_gengibre",
+  "resultado": "cl:semente_gengibre",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:gengibre",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_gergelim",
+  "resultado": "cl:semente_gergelim",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:gergelim",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_girassol_0_0",
+  "resultado": "cl:semente_girassol",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:sunflower",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_goji",
+  "resultado": "cl:semente_goji",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:goji",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_grao_de_bico",
+  "resultado": "cl:semente_grao_de_bico",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:grao_de_bico",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_guarana",
+  "resultado": "cl:semente_guarana",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:guarana",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_inhame",
+  "resultado": "cl:semente_inhame",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:inhame",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_iuca",
+  "resultado": "cl:semente_iuca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:iuca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_jicama",
+  "resultado": "cl:semente_jicama",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:jicama",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_juta",
+  "resultado": "cl:semente_juta",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:juta",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_kenaf",
+  "resultado": "cl:semente_kenaf",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:kenaf",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_kiwi",
+  "resultado": "cl:semente_kiwi",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:kiwi",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_lentilha",
+  "resultado": "cl:semente_lentilha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lentilha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_linho",
+  "resultado": "cl:semente_linho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:linho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_lotus",
+  "resultado": "cl:semente_lotus",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lotus",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_mandioca",
+  "resultado": "cl:semente_mandioca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:mandioca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_melao",
+  "resultado": "cl:semente_melao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:melao",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_semente_milho",
   "resultado": "cl:semente_milho",
   "qtd": 1,
   "ingredientes": [
    {
     "item": "cl:milho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_mirtilo",
+  "resultado": "cl:semente_mirtilo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:mirtilo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_morango",
+  "resultado": "cl:semente_morango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:morango",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_mostarda",
+  "resultado": "cl:semente_mostarda",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:mostarda",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_nabo",
+  "resultado": "cl:semente_nabo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:nabo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_nabo_sueco",
+  "resultado": "cl:semente_nabo_sueco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:nabo_sueco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_oxicoco",
+  "resultado": "cl:semente_oxicoco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oxicoco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_painco",
+  "resultado": "cl:semente_painco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:painco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_palma",
+  "resultado": "cl:semente_palma",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:palma",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_papiro",
+  "resultado": "cl:semente_papiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:papiro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_pastinaca",
+  "resultado": "cl:semente_pastinaca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pastinaca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_pepino",
+  "resultado": "cl:semente_pepino",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pepino",
     "qtd": 1
    }
   ],
@@ -43860,12 +54081,162 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_semente_quiabo",
+  "resultado": "cl:semente_quiabo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:quiabo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_quinoa",
+  "resultado": "cl:semente_quinoa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:quinoa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_rabanete",
+  "resultado": "cl:semente_rabanete",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:rabanete",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_semente_repolho",
   "resultado": "cl:semente_repolho",
   "qtd": 1,
   "ingredientes": [
    {
     "item": "cl:repolho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_ruibarbo",
+  "resultado": "cl:semente_ruibarbo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:ruibarbo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_sabugueiro",
+  "resultado": "cl:semente_sabugueiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:sabugueiro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_salsao",
+  "resultado": "cl:semente_salsao",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:salsao",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_sisal",
+  "resultado": "cl:semente_sisal",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:sisal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_soja",
+  "resultado": "cl:semente_soja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:soja",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_sorgo",
+  "resultado": "cl:semente_sorgo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:sorgo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_taboa",
+  "resultado": "cl:semente_taboa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:taboa",
     "qtd": 1
    }
   ],
@@ -43890,6 +54261,164 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_semente_tomatilho",
+  "resultado": "cl:semente_tomatilho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tomatilho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_trufa",
+  "resultado": "cl:semente_trufa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:trufa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_tupinambo",
+  "resultado": "cl:semente_tupinambo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tupinambo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_urtiga",
+  "resultado": "cl:semente_urtiga",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:urtiga",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_uva",
+  "resultado": "cl:semente_uva",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:uva",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_uva_do_monte",
+  "resultado": "cl:semente_uva_do_monte",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:uva_do_monte",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_uva_verde",
+  "resultado": "cl:semente_uva_verde",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:uva_verde",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_semente_zimbro",
+  "resultado": "cl:semente_zimbro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:zimbro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_slimeball_aloe_0",
+  "resultado": "minecraft:slime_ball",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:babosa",
+    "qtd": 3
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_smores_0_0",
+  "resultado": "cl:smores",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bolacha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:marshmallow",
+    "qtd": 1
+   },
+   {
+    "item": "cl:barra_chocolate",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_sopa_arroz",
   "resultado": "cl:sopa_arroz",
   "qtd": 1,
@@ -43909,12 +54438,50 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_sopa_batata_0_0",
+  "resultado": "cl:sopa_batata",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_sopa_cacto",
   "resultado": "cl:sopa_cacto",
   "qtd": 1,
   "ingredientes": [
    {
     "item": "minecraft:cactus",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_cenoura_0_0",
+  "resultado": "cl:sopa_cenoura",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
     "qtd": 1
    },
    {
@@ -43955,6 +54522,800 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carne_0_0",
+  "resultado": "cl:sopa_macarrao_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carne_0_1",
+  "resultado": "cl:sopa_macarrao_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carne_0_2",
+  "resultado": "cl:sopa_macarrao_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carne_0_3",
+  "resultado": "cl:sopa_macarrao_carne",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beef",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carneiro_0_0",
+  "resultado": "cl:sopa_macarrao_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carneiro_0_1",
+  "resultado": "cl:sopa_macarrao_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carneiro_0_2",
+  "resultado": "cl:sopa_macarrao_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_carneiro_0_3",
+  "resultado": "cl:sopa_macarrao_carneiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:mutton",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_coelho_0_0",
+  "resultado": "cl:sopa_macarrao_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_coelho_0_1",
+  "resultado": "cl:sopa_macarrao_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_coelho_0_2",
+  "resultado": "cl:sopa_macarrao_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_coelho_0_3",
+  "resultado": "cl:sopa_macarrao_coelho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:rabbit",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_frango_0_0",
+  "resultado": "cl:sopa_macarrao_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_frango_0_1",
+  "resultado": "cl:sopa_macarrao_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_frango_0_2",
+  "resultado": "cl:sopa_macarrao_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_frango_0_3",
+  "resultado": "cl:sopa_macarrao_frango",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chicken",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_legumes_0_0",
+  "resultado": "cl:sopa_macarrao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_legumes_0_1",
+  "resultado": "cl:sopa_macarrao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_legumes_0_2",
+  "resultado": "cl:sopa_macarrao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_legumes_0_3",
+  "resultado": "cl:sopa_macarrao_legumes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_peixe_0_0",
+  "resultado": "cl:sopa_macarrao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_peixe_0_1",
+  "resultado": "cl:sopa_macarrao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_peixe_0_2",
+  "resultado": "cl:sopa_macarrao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_peixe_0_3",
+  "resultado": "cl:sopa_macarrao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_peixe_0_4",
+  "resultado": "cl:sopa_macarrao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cod",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_peixe_0_5",
+  "resultado": "cl:sopa_macarrao_peixe",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:salmon",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_porco_0_0",
+  "resultado": "cl:sopa_macarrao_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_porco_0_1",
+  "resultado": "cl:sopa_macarrao_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_porco_0_2",
+  "resultado": "cl:sopa_macarrao_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:potato",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sopa_macarrao_porco_0_3",
+  "resultado": "cl:sopa_macarrao_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:macarrao",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caldo",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_sopa_tomate",
   "resultado": "cl:sopa_tomate",
   "qtd": 1,
@@ -43974,6 +55335,196 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_sorvete_0_0",
+  "resultado": "cl:sorvete",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sorvete_0_1",
+  "resultado": "cl:sorvete",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:leite_fresco",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sorvete_0_2",
+  "resultado": "cl:sorvete",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sorvete_0_3",
+  "resultado": "cl:sorvete",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   },
+   {
+    "item": "cl:sal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sorvete_caramelo_0_0",
+  "resultado": "cl:sorvete_caramelo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:sorvete",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caramelo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sorvete_chocolate_0_0",
+  "resultado": "cl:sorvete_chocolate",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:sorvete",
+    "qtd": 1
+   },
+   {
+    "item": "cl:cacau_po",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_stick_x4_cattail_x2_0",
+  "resultado": "minecraft:stick",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "cl:taboa",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_string_fiber_0",
+  "resultado": "minecraft:string",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_fibra",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_bagas_brilhantes_0_0",
+  "resultado": "cl:suco_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:glow_berries",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_bagas_doces_0_0",
+  "resultado": "cl:suco_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_suco_cacto",
   "resultado": "cl:suco_cacto",
   "qtd": 1,
@@ -43985,6 +55536,111 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_cenoura_0_0",
+  "resultado": "cl:suco_cenoura",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_coro_0_0",
+  "resultado": "cl:suco_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:chorus_fruit",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_maca_0_0",
+  "resultado": "cl:suco_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:apple",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_p8_0_0",
+  "resultado": "cl:suco_p8",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_vegetal",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_p8_0_1",
+  "resultado": "cl:suco_p8",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potato",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_suco_p8_0_2",
+  "resultado": "cl:suco_p8",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "cl_espremedor"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_sugar_x2_agave_0",
+  "resultado": "minecraft:sugar",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:agave",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -44053,6 +55709,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_torch_cattail_0",
+  "resultado": "minecraft:torch",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:oleo_cozinha",
+    "qtd": 1
+   },
+   {
+    "item": "cl:taboa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_torrada",
   "resultado": "cl:torrada",
   "qtd": 1,
@@ -44072,6 +55747,262 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:hc_torrada_geleia_bagas_brilhantes_0_0",
+  "resultado": "cl:torrada_geleia_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:torrada",
+    "qtd": 1
+   },
+   {
+    "item": "cl:geleia_bagas_brilhantes",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torrada_geleia_bagas_doces_0_0",
+  "resultado": "cl:torrada_geleia_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:torrada",
+    "qtd": 1
+   },
+   {
+    "item": "cl:geleia_bagas_doces",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torrada_geleia_coro_0_0",
+  "resultado": "cl:torrada_geleia_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:torrada",
+    "qtd": 1
+   },
+   {
+    "item": "cl:geleia_coro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torrada_geleia_maca_0_0",
+  "resultado": "cl:torrada_geleia_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:torrada",
+    "qtd": 1
+   },
+   {
+    "item": "cl:geleia_maca",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torrada_geleia_melancia_0_0",
+  "resultado": "cl:torrada_geleia_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:torrada",
+    "qtd": 1
+   },
+   {
+    "item": "cl:geleia_melancia",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tabua_corte"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torta_bagas_brilhantes_0_0",
+  "resultado": "cl:torta_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:glow_berries",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torta_bagas_doces_0_0",
+  "resultado": "cl:torta_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torta_caramelo_0_0",
+  "resultado": "cl:torta_caramelo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "cl:caramelo",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torta_cenoura_0_0",
+  "resultado": "cl:torta_cenoura",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torta_coro_0_0",
+  "resultado": "cl:torta_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:chorus_fruit",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torta_mel_0_0",
+  "resultado": "cl:torta_mel",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:honey_bottle",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_torta_melancia_0_0",
+  "resultado": "cl:torta_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 1
+   },
+   {
+    "item": "cl:massa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_assadeira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:hc_tortilha",
   "resultado": "cl:tortilha",
   "qtd": 1,
@@ -44082,6 +56013,321 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    },
    {
     "item": "cl:agua_boa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:hc_tupinambo_assado_forno",
+  "resultado": "cl:tupinambo_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tupinambo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "smoker",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vinagre_0_0",
+  "resultado": "cl:vinagre",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "#cl:hc_fruta",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vinagre_0_1",
+  "resultado": "cl:vinagre",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:apple",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_panela"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_bagas_brilhantes_0_0",
+  "resultado": "cl:vitamina_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_brilhantes",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_bagas_brilhantes_0_1",
+  "resultado": "cl:vitamina_bagas_brilhantes",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_brilhantes",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_bagas_doces_0_0",
+  "resultado": "cl:vitamina_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_doces",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_bagas_doces_0_1",
+  "resultado": "cl:vitamina_bagas_doces",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_bagas_doces",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_coro_0_0",
+  "resultado": "cl:vitamina_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_coro",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_coro_0_1",
+  "resultado": "cl:vitamina_coro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_coro",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_maca_0_0",
+  "resultado": "cl:vitamina_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_maca",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_maca_0_1",
+  "resultado": "cl:vitamina_maca",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_maca",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_melancia_0_0",
+  "resultado": "cl:vitamina_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_melancia",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ice",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_vitamina_melancia_0_1",
+  "resultado": "cl:vitamina_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:suco_melancia",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_tigela_mistura"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_water_barrelcactus_0",
+  "resultado": "minecraft:water_bucket",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cacto_barril",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bucket",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_x_bacon_0_0",
+  "resultado": "cl:x_bacon",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_carne",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:porkchop",
+    "qtd": 1
+   },
+   {
+    "item": "cl:queijo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "cl_frigideira"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:hc_x_burguer_0_0",
+  "resultado": "cl:x_burguer",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:moido_carne",
+    "qtd": 1
+   },
+   {
+    "item": "cl:maionese",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   },
+   {
+    "item": "cl:queijo",
     "qtd": 1
    }
   ],

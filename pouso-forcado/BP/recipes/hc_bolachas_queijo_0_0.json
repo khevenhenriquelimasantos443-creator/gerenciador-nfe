@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_bolachas_queijo_0_0"
+    },
+    "tags": [
+      "cl_tabua_corte"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:bolacha"
+      },
+      {
+        "item": "cl:queijo"
+      },
+      {
+        "item": "cl:bolacha"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bolachas_queijo"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:semente_alface",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_semente_alface",
+      "minecraft:display_name": {
+        "value": "item.cl:semente_alface.name"
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:block_placer": {
+        "block": "cl:planta_alface",
+        "use_on": [
+          "minecraft:farmland"
+        ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:hc_semente"
+        ]
+      }
+    }
+  }
+}

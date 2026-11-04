@@ -6144,6 +6144,1386 @@
     },
     "clc_templo_coluna_baixo": {
       "textures": "textures/blocks/cl/arte/templo_coluna_baixo"
+    },
+    "clhc_agave_0": {
+      "textures": "textures/blocks/cl/hc/agave_0"
+    },
+    "clhc_agave_1": {
+      "textures": "textures/blocks/cl/hc/agave_1"
+    },
+    "clhc_agave_2": {
+      "textures": "textures/blocks/cl/hc/agave_2"
+    },
+    "clhc_amaranto_0": {
+      "textures": "textures/blocks/cl/hc/amaranto_0"
+    },
+    "clhc_amaranto_1": {
+      "textures": "textures/blocks/cl/hc/amaranto_1"
+    },
+    "clhc_amaranto_2": {
+      "textures": "textures/blocks/cl/hc/amaranto_2"
+    },
+    "clhc_araruta_0": {
+      "textures": "textures/blocks/cl/hc/araruta_0"
+    },
+    "clhc_araruta_1": {
+      "textures": "textures/blocks/cl/hc/araruta_1"
+    },
+    "clhc_araruta_2": {
+      "textures": "textures/blocks/cl/hc/araruta_2"
+    },
+    "clhc_alcachofra_0": {
+      "textures": "textures/blocks/cl/hc/alcachofra_0"
+    },
+    "clhc_alcachofra_1": {
+      "textures": "textures/blocks/cl/hc/alcachofra_1"
+    },
+    "clhc_alcachofra_2": {
+      "textures": "textures/blocks/cl/hc/alcachofra_2"
+    },
+    "clhc_aspargo_0": {
+      "textures": "textures/blocks/cl/hc/aspargo_0"
+    },
+    "clhc_aspargo_1": {
+      "textures": "textures/blocks/cl/hc/aspargo_1"
+    },
+    "clhc_aspargo_2": {
+      "textures": "textures/blocks/cl/hc/aspargo_2"
+    },
+    "clhc_cevada_0": {
+      "textures": "textures/blocks/cl/hc/cevada_0"
+    },
+    "clhc_cevada_1": {
+      "textures": "textures/blocks/cl/hc/cevada_1"
+    },
+    "clhc_cevada_2": {
+      "textures": "textures/blocks/cl/hc/cevada_2"
+    },
+    "clhc_amora_preta_0": {
+      "textures": "textures/blocks/cl/hc/amora_preta_0"
+    },
+    "clhc_amora_preta_1": {
+      "textures": "textures/blocks/cl/hc/amora_preta_1"
+    },
+    "clhc_amora_preta_2": {
+      "textures": "textures/blocks/cl/hc/amora_preta_2"
+    },
+    "clhc_mirtilo_0": {
+      "textures": "textures/blocks/cl/hc/mirtilo_0"
+    },
+    "clhc_mirtilo_1": {
+      "textures": "textures/blocks/cl/hc/mirtilo_1"
+    },
+    "clhc_mirtilo_2": {
+      "textures": "textures/blocks/cl/hc/mirtilo_2"
+    },
+    "clhc_brocolis_0": {
+      "textures": "textures/blocks/cl/hc/brocolis_0"
+    },
+    "clhc_brocolis_1": {
+      "textures": "textures/blocks/cl/hc/brocolis_1"
+    },
+    "clhc_brocolis_2": {
+      "textures": "textures/blocks/cl/hc/brocolis_2"
+    },
+    "clhc_couve_bruxelas_0": {
+      "textures": "textures/blocks/cl/hc/couve_bruxelas_0"
+    },
+    "clhc_couve_bruxelas_1": {
+      "textures": "textures/blocks/cl/hc/couve_bruxelas_1"
+    },
+    "clhc_couve_bruxelas_2": {
+      "textures": "textures/blocks/cl/hc/couve_bruxelas_2"
+    },
+    "clhc_baga_cera_0": {
+      "textures": "textures/blocks/cl/hc/baga_cera_0"
+    },
+    "clhc_baga_cera_1": {
+      "textures": "textures/blocks/cl/hc/baga_cera_1"
+    },
+    "clhc_baga_cera_2": {
+      "textures": "textures/blocks/cl/hc/baga_cera_2"
+    },
+    "clhc_melao_0": {
+      "textures": "textures/blocks/cl/hc/melao_0"
+    },
+    "clhc_melao_1": {
+      "textures": "textures/blocks/cl/hc/melao_1"
+    },
+    "clhc_melao_2": {
+      "textures": "textures/blocks/cl/hc/melao_2"
+    },
+    "clhc_mandioca_0": {
+      "textures": "textures/blocks/cl/hc/mandioca_0"
+    },
+    "clhc_mandioca_1": {
+      "textures": "textures/blocks/cl/hc/mandioca_1"
+    },
+    "clhc_mandioca_2": {
+      "textures": "textures/blocks/cl/hc/mandioca_2"
+    },
+    "clhc_couve_flor_0": {
+      "textures": "textures/blocks/cl/hc/couve_flor_0"
+    },
+    "clhc_couve_flor_1": {
+      "textures": "textures/blocks/cl/hc/couve_flor_1"
+    },
+    "clhc_couve_flor_2": {
+      "textures": "textures/blocks/cl/hc/couve_flor_2"
+    },
+    "clhc_salsao_0": {
+      "textures": "textures/blocks/cl/hc/salsao_0"
+    },
+    "clhc_salsao_1": {
+      "textures": "textures/blocks/cl/hc/salsao_1"
+    },
+    "clhc_salsao_2": {
+      "textures": "textures/blocks/cl/hc/salsao_2"
+    },
+    "clhc_grao_de_bico_0": {
+      "textures": "textures/blocks/cl/hc/grao_de_bico_0"
+    },
+    "clhc_grao_de_bico_1": {
+      "textures": "textures/blocks/cl/hc/grao_de_bico_1"
+    },
+    "clhc_grao_de_bico_2": {
+      "textures": "textures/blocks/cl/hc/grao_de_bico_2"
+    },
+    "clhc_cafe_0": {
+      "textures": "textures/blocks/cl/hc/cafe_0"
+    },
+    "clhc_cafe_1": {
+      "textures": "textures/blocks/cl/hc/cafe_1"
+    },
+    "clhc_cafe_2": {
+      "textures": "textures/blocks/cl/hc/cafe_2"
+    },
+    "clhc_algodao_0": {
+      "textures": "textures/blocks/cl/hc/algodao_0"
+    },
+    "clhc_algodao_1": {
+      "textures": "textures/blocks/cl/hc/algodao_1"
+    },
+    "clhc_algodao_2": {
+      "textures": "textures/blocks/cl/hc/algodao_2"
+    },
+    "clhc_oxicoco_0": {
+      "textures": "textures/blocks/cl/hc/oxicoco_0"
+    },
+    "clhc_oxicoco_1": {
+      "textures": "textures/blocks/cl/hc/oxicoco_1"
+    },
+    "clhc_oxicoco_2": {
+      "textures": "textures/blocks/cl/hc/oxicoco_2"
+    },
+    "clhc_pepino_0": {
+      "textures": "textures/blocks/cl/hc/pepino_0"
+    },
+    "clhc_pepino_1": {
+      "textures": "textures/blocks/cl/hc/pepino_1"
+    },
+    "clhc_pepino_2": {
+      "textures": "textures/blocks/cl/hc/pepino_2"
+    },
+    "clhc_berinjela_0": {
+      "textures": "textures/blocks/cl/hc/berinjela_0"
+    },
+    "clhc_berinjela_1": {
+      "textures": "textures/blocks/cl/hc/berinjela_1"
+    },
+    "clhc_berinjela_2": {
+      "textures": "textures/blocks/cl/hc/berinjela_2"
+    },
+    "clhc_sabugueiro_0": {
+      "textures": "textures/blocks/cl/hc/sabugueiro_0"
+    },
+    "clhc_sabugueiro_1": {
+      "textures": "textures/blocks/cl/hc/sabugueiro_1"
+    },
+    "clhc_sabugueiro_2": {
+      "textures": "textures/blocks/cl/hc/sabugueiro_2"
+    },
+    "clhc_linho_0": {
+      "textures": "textures/blocks/cl/hc/linho_0"
+    },
+    "clhc_linho_1": {
+      "textures": "textures/blocks/cl/hc/linho_1"
+    },
+    "clhc_linho_2": {
+      "textures": "textures/blocks/cl/hc/linho_2"
+    },
+    "clhc_gengibre_0": {
+      "textures": "textures/blocks/cl/hc/gengibre_0"
+    },
+    "clhc_gengibre_1": {
+      "textures": "textures/blocks/cl/hc/gengibre_1"
+    },
+    "clhc_gengibre_2": {
+      "textures": "textures/blocks/cl/hc/gengibre_2"
+    },
+    "clhc_uva_0": {
+      "textures": "textures/blocks/cl/hc/uva_0"
+    },
+    "clhc_uva_1": {
+      "textures": "textures/blocks/cl/hc/uva_1"
+    },
+    "clhc_uva_2": {
+      "textures": "textures/blocks/cl/hc/uva_2"
+    },
+    "clhc_uva_verde_0": {
+      "textures": "textures/blocks/cl/hc/uva_verde_0"
+    },
+    "clhc_uva_verde_1": {
+      "textures": "textures/blocks/cl/hc/uva_verde_1"
+    },
+    "clhc_uva_verde_2": {
+      "textures": "textures/blocks/cl/hc/uva_verde_2"
+    },
+    "clhc_uva_do_monte_0": {
+      "textures": "textures/blocks/cl/hc/uva_do_monte_0"
+    },
+    "clhc_uva_do_monte_1": {
+      "textures": "textures/blocks/cl/hc/uva_do_monte_1"
+    },
+    "clhc_uva_do_monte_2": {
+      "textures": "textures/blocks/cl/hc/uva_do_monte_2"
+    },
+    "clhc_jicama_0": {
+      "textures": "textures/blocks/cl/hc/jicama_0"
+    },
+    "clhc_jicama_1": {
+      "textures": "textures/blocks/cl/hc/jicama_1"
+    },
+    "clhc_jicama_2": {
+      "textures": "textures/blocks/cl/hc/jicama_2"
+    },
+    "clhc_zimbro_0": {
+      "textures": "textures/blocks/cl/hc/zimbro_0"
+    },
+    "clhc_zimbro_1": {
+      "textures": "textures/blocks/cl/hc/zimbro_1"
+    },
+    "clhc_zimbro_2": {
+      "textures": "textures/blocks/cl/hc/zimbro_2"
+    },
+    "clhc_juta_0": {
+      "textures": "textures/blocks/cl/hc/juta_0"
+    },
+    "clhc_juta_1": {
+      "textures": "textures/blocks/cl/hc/juta_1"
+    },
+    "clhc_juta_2": {
+      "textures": "textures/blocks/cl/hc/juta_2"
+    },
+    "clhc_couve_0": {
+      "textures": "textures/blocks/cl/hc/couve_0"
+    },
+    "clhc_couve_1": {
+      "textures": "textures/blocks/cl/hc/couve_1"
+    },
+    "clhc_couve_2": {
+      "textures": "textures/blocks/cl/hc/couve_2"
+    },
+    "clhc_kenaf_0": {
+      "textures": "textures/blocks/cl/hc/kenaf_0"
+    },
+    "clhc_kenaf_1": {
+      "textures": "textures/blocks/cl/hc/kenaf_1"
+    },
+    "clhc_kenaf_2": {
+      "textures": "textures/blocks/cl/hc/kenaf_2"
+    },
+    "clhc_kiwi_0": {
+      "textures": "textures/blocks/cl/hc/kiwi_0"
+    },
+    "clhc_kiwi_1": {
+      "textures": "textures/blocks/cl/hc/kiwi_1"
+    },
+    "clhc_kiwi_2": {
+      "textures": "textures/blocks/cl/hc/kiwi_2"
+    },
+    "clhc_couve_rabano_0": {
+      "textures": "textures/blocks/cl/hc/couve_rabano_0"
+    },
+    "clhc_couve_rabano_1": {
+      "textures": "textures/blocks/cl/hc/couve_rabano_1"
+    },
+    "clhc_couve_rabano_2": {
+      "textures": "textures/blocks/cl/hc/couve_rabano_2"
+    },
+    "clhc_alho_poro_0": {
+      "textures": "textures/blocks/cl/hc/alho_poro_0"
+    },
+    "clhc_alho_poro_1": {
+      "textures": "textures/blocks/cl/hc/alho_poro_1"
+    },
+    "clhc_alho_poro_2": {
+      "textures": "textures/blocks/cl/hc/alho_poro_2"
+    },
+    "clhc_lentilha_0": {
+      "textures": "textures/blocks/cl/hc/lentilha_0"
+    },
+    "clhc_lentilha_1": {
+      "textures": "textures/blocks/cl/hc/lentilha_1"
+    },
+    "clhc_lentilha_2": {
+      "textures": "textures/blocks/cl/hc/lentilha_2"
+    },
+    "clhc_alface_0": {
+      "textures": "textures/blocks/cl/hc/alface_0"
+    },
+    "clhc_alface_1": {
+      "textures": "textures/blocks/cl/hc/alface_1"
+    },
+    "clhc_alface_2": {
+      "textures": "textures/blocks/cl/hc/alface_2"
+    },
+    "clhc_painco_0": {
+      "textures": "textures/blocks/cl/hc/painco_0"
+    },
+    "clhc_painco_1": {
+      "textures": "textures/blocks/cl/hc/painco_1"
+    },
+    "clhc_painco_2": {
+      "textures": "textures/blocks/cl/hc/painco_2"
+    },
+    "clhc_amora_0": {
+      "textures": "textures/blocks/cl/hc/amora_0"
+    },
+    "clhc_amora_1": {
+      "textures": "textures/blocks/cl/hc/amora_1"
+    },
+    "clhc_amora_2": {
+      "textures": "textures/blocks/cl/hc/amora_2"
+    },
+    "clhc_mostarda_0": {
+      "textures": "textures/blocks/cl/hc/mostarda_0"
+    },
+    "clhc_mostarda_1": {
+      "textures": "textures/blocks/cl/hc/mostarda_1"
+    },
+    "clhc_mostarda_2": {
+      "textures": "textures/blocks/cl/hc/mostarda_2"
+    },
+    "clhc_aveia_0": {
+      "textures": "textures/blocks/cl/hc/aveia_0"
+    },
+    "clhc_aveia_1": {
+      "textures": "textures/blocks/cl/hc/aveia_1"
+    },
+    "clhc_aveia_2": {
+      "textures": "textures/blocks/cl/hc/aveia_2"
+    },
+    "clhc_quiabo_0": {
+      "textures": "textures/blocks/cl/hc/quiabo_0"
+    },
+    "clhc_quiabo_1": {
+      "textures": "textures/blocks/cl/hc/quiabo_1"
+    },
+    "clhc_quiabo_2": {
+      "textures": "textures/blocks/cl/hc/quiabo_2"
+    },
+    "clhc_pastinaca_0": {
+      "textures": "textures/blocks/cl/hc/pastinaca_0"
+    },
+    "clhc_pastinaca_1": {
+      "textures": "textures/blocks/cl/hc/pastinaca_1"
+    },
+    "clhc_pastinaca_2": {
+      "textures": "textures/blocks/cl/hc/pastinaca_2"
+    },
+    "clhc_ervilha_0": {
+      "textures": "textures/blocks/cl/hc/ervilha_0"
+    },
+    "clhc_ervilha_1": {
+      "textures": "textures/blocks/cl/hc/ervilha_1"
+    },
+    "clhc_ervilha_2": {
+      "textures": "textures/blocks/cl/hc/ervilha_2"
+    },
+    "clhc_abacaxi_0": {
+      "textures": "textures/blocks/cl/hc/abacaxi_0"
+    },
+    "clhc_abacaxi_1": {
+      "textures": "textures/blocks/cl/hc/abacaxi_1"
+    },
+    "clhc_abacaxi_2": {
+      "textures": "textures/blocks/cl/hc/abacaxi_2"
+    },
+    "clhc_quinoa_0": {
+      "textures": "textures/blocks/cl/hc/quinoa_0"
+    },
+    "clhc_quinoa_1": {
+      "textures": "textures/blocks/cl/hc/quinoa_1"
+    },
+    "clhc_quinoa_2": {
+      "textures": "textures/blocks/cl/hc/quinoa_2"
+    },
+    "clhc_rabanete_0": {
+      "textures": "textures/blocks/cl/hc/rabanete_0"
+    },
+    "clhc_rabanete_1": {
+      "textures": "textures/blocks/cl/hc/rabanete_1"
+    },
+    "clhc_rabanete_2": {
+      "textures": "textures/blocks/cl/hc/rabanete_2"
+    },
+    "clhc_framboesa_0": {
+      "textures": "textures/blocks/cl/hc/framboesa_0"
+    },
+    "clhc_framboesa_1": {
+      "textures": "textures/blocks/cl/hc/framboesa_1"
+    },
+    "clhc_framboesa_2": {
+      "textures": "textures/blocks/cl/hc/framboesa_2"
+    },
+    "clhc_ruibarbo_0": {
+      "textures": "textures/blocks/cl/hc/ruibarbo_0"
+    },
+    "clhc_ruibarbo_1": {
+      "textures": "textures/blocks/cl/hc/ruibarbo_1"
+    },
+    "clhc_ruibarbo_2": {
+      "textures": "textures/blocks/cl/hc/ruibarbo_2"
+    },
+    "clhc_nabo_sueco_0": {
+      "textures": "textures/blocks/cl/hc/nabo_sueco_0"
+    },
+    "clhc_nabo_sueco_1": {
+      "textures": "textures/blocks/cl/hc/nabo_sueco_1"
+    },
+    "clhc_nabo_sueco_2": {
+      "textures": "textures/blocks/cl/hc/nabo_sueco_2"
+    },
+    "clhc_centeio_0": {
+      "textures": "textures/blocks/cl/hc/centeio_0"
+    },
+    "clhc_centeio_1": {
+      "textures": "textures/blocks/cl/hc/centeio_1"
+    },
+    "clhc_centeio_2": {
+      "textures": "textures/blocks/cl/hc/centeio_2"
+    },
+    "clhc_cebolinha_0": {
+      "textures": "textures/blocks/cl/hc/cebolinha_0"
+    },
+    "clhc_cebolinha_1": {
+      "textures": "textures/blocks/cl/hc/cebolinha_1"
+    },
+    "clhc_cebolinha_2": {
+      "textures": "textures/blocks/cl/hc/cebolinha_2"
+    },
+    "clhc_gergelim_0": {
+      "textures": "textures/blocks/cl/hc/gergelim_0"
+    },
+    "clhc_gergelim_1": {
+      "textures": "textures/blocks/cl/hc/gergelim_1"
+    },
+    "clhc_gergelim_2": {
+      "textures": "textures/blocks/cl/hc/gergelim_2"
+    },
+    "clhc_sisal_0": {
+      "textures": "textures/blocks/cl/hc/sisal_0"
+    },
+    "clhc_sisal_1": {
+      "textures": "textures/blocks/cl/hc/sisal_1"
+    },
+    "clhc_sisal_2": {
+      "textures": "textures/blocks/cl/hc/sisal_2"
+    },
+    "clhc_soja_0": {
+      "textures": "textures/blocks/cl/hc/soja_0"
+    },
+    "clhc_soja_1": {
+      "textures": "textures/blocks/cl/hc/soja_1"
+    },
+    "clhc_soja_2": {
+      "textures": "textures/blocks/cl/hc/soja_2"
+    },
+    "clhc_folha_tempero_0": {
+      "textures": "textures/blocks/cl/hc/folha_tempero_0"
+    },
+    "clhc_folha_tempero_1": {
+      "textures": "textures/blocks/cl/hc/folha_tempero_1"
+    },
+    "clhc_folha_tempero_2": {
+      "textures": "textures/blocks/cl/hc/folha_tempero_2"
+    },
+    "clhc_espinafre_0": {
+      "textures": "textures/blocks/cl/hc/espinafre_0"
+    },
+    "clhc_espinafre_1": {
+      "textures": "textures/blocks/cl/hc/espinafre_1"
+    },
+    "clhc_espinafre_2": {
+      "textures": "textures/blocks/cl/hc/espinafre_2"
+    },
+    "clhc_morango_0": {
+      "textures": "textures/blocks/cl/hc/morango_0"
+    },
+    "clhc_morango_1": {
+      "textures": "textures/blocks/cl/hc/morango_1"
+    },
+    "clhc_morango_2": {
+      "textures": "textures/blocks/cl/hc/morango_2"
+    },
+    "clhc_batata_doce_0": {
+      "textures": "textures/blocks/cl/hc/batata_doce_0"
+    },
+    "clhc_batata_doce_1": {
+      "textures": "textures/blocks/cl/hc/batata_doce_1"
+    },
+    "clhc_batata_doce_2": {
+      "textures": "textures/blocks/cl/hc/batata_doce_2"
+    },
+    "clhc_inhame_0": {
+      "textures": "textures/blocks/cl/hc/inhame_0"
+    },
+    "clhc_inhame_1": {
+      "textures": "textures/blocks/cl/hc/inhame_1"
+    },
+    "clhc_inhame_2": {
+      "textures": "textures/blocks/cl/hc/inhame_2"
+    },
+    "clhc_folha_cha_0": {
+      "textures": "textures/blocks/cl/hc/folha_cha_0"
+    },
+    "clhc_folha_cha_1": {
+      "textures": "textures/blocks/cl/hc/folha_cha_1"
+    },
+    "clhc_folha_cha_2": {
+      "textures": "textures/blocks/cl/hc/folha_cha_2"
+    },
+    "clhc_tomatilho_0": {
+      "textures": "textures/blocks/cl/hc/tomatilho_0"
+    },
+    "clhc_tomatilho_1": {
+      "textures": "textures/blocks/cl/hc/tomatilho_1"
+    },
+    "clhc_tomatilho_2": {
+      "textures": "textures/blocks/cl/hc/tomatilho_2"
+    },
+    "clhc_nabo_0": {
+      "textures": "textures/blocks/cl/hc/nabo_0"
+    },
+    "clhc_nabo_1": {
+      "textures": "textures/blocks/cl/hc/nabo_1"
+    },
+    "clhc_nabo_2": {
+      "textures": "textures/blocks/cl/hc/nabo_2"
+    },
+    "clhc_castanha_dagua_0": {
+      "textures": "textures/blocks/cl/hc/castanha_dagua_0"
+    },
+    "clhc_castanha_dagua_1": {
+      "textures": "textures/blocks/cl/hc/castanha_dagua_1"
+    },
+    "clhc_castanha_dagua_2": {
+      "textures": "textures/blocks/cl/hc/castanha_dagua_2"
+    },
+    "clhc_cogumelo_branco_0": {
+      "textures": "textures/blocks/cl/hc/cogumelo_branco_0"
+    },
+    "clhc_cogumelo_branco_1": {
+      "textures": "textures/blocks/cl/hc/cogumelo_branco_1"
+    },
+    "clhc_cogumelo_branco_2": {
+      "textures": "textures/blocks/cl/hc/cogumelo_branco_2"
+    },
+    "clhc_abobora_inverno_0": {
+      "textures": "textures/blocks/cl/hc/abobora_inverno_0"
+    },
+    "clhc_abobora_inverno_1": {
+      "textures": "textures/blocks/cl/hc/abobora_inverno_1"
+    },
+    "clhc_abobora_inverno_2": {
+      "textures": "textures/blocks/cl/hc/abobora_inverno_2"
+    },
+    "clhc_abobrinha_0": {
+      "textures": "textures/blocks/cl/hc/abobrinha_0"
+    },
+    "clhc_abobrinha_1": {
+      "textures": "textures/blocks/cl/hc/abobrinha_1"
+    },
+    "clhc_abobrinha_2": {
+      "textures": "textures/blocks/cl/hc/abobrinha_2"
+    },
+    "clhc_alfafa_0": {
+      "textures": "textures/blocks/cl/hc/alfafa_0"
+    },
+    "clhc_alfafa_1": {
+      "textures": "textures/blocks/cl/hc/alfafa_1"
+    },
+    "clhc_alfafa_2": {
+      "textures": "textures/blocks/cl/hc/alfafa_2"
+    },
+    "clhc_babosa_0": {
+      "textures": "textures/blocks/cl/hc/babosa_0"
+    },
+    "clhc_babosa_1": {
+      "textures": "textures/blocks/cl/hc/babosa_1"
+    },
+    "clhc_babosa_2": {
+      "textures": "textures/blocks/cl/hc/babosa_2"
+    },
+    "clhc_cacto_barril_0": {
+      "textures": "textures/blocks/cl/hc/cacto_barril_0"
+    },
+    "clhc_cacto_barril_1": {
+      "textures": "textures/blocks/cl/hc/cacto_barril_1"
+    },
+    "clhc_cacto_barril_2": {
+      "textures": "textures/blocks/cl/hc/cacto_barril_2"
+    },
+    "clhc_canola_0": {
+      "textures": "textures/blocks/cl/hc/canola_0"
+    },
+    "clhc_canola_1": {
+      "textures": "textures/blocks/cl/hc/canola_1"
+    },
+    "clhc_canola_2": {
+      "textures": "textures/blocks/cl/hc/canola_2"
+    },
+    "clhc_taboa_0": {
+      "textures": "textures/blocks/cl/hc/taboa_0"
+    },
+    "clhc_taboa_1": {
+      "textures": "textures/blocks/cl/hc/taboa_1"
+    },
+    "clhc_taboa_2": {
+      "textures": "textures/blocks/cl/hc/taboa_2"
+    },
+    "clhc_chia_0": {
+      "textures": "textures/blocks/cl/hc/chia_0"
+    },
+    "clhc_chia_1": {
+      "textures": "textures/blocks/cl/hc/chia_1"
+    },
+    "clhc_chia_2": {
+      "textures": "textures/blocks/cl/hc/chia_2"
+    },
+    "clhc_amora_artica_0": {
+      "textures": "textures/blocks/cl/hc/amora_artica_0"
+    },
+    "clhc_amora_artica_1": {
+      "textures": "textures/blocks/cl/hc/amora_artica_1"
+    },
+    "clhc_amora_artica_2": {
+      "textures": "textures/blocks/cl/hc/amora_artica_2"
+    },
+    "clhc_lotus_0": {
+      "textures": "textures/blocks/cl/hc/lotus_0"
+    },
+    "clhc_lotus_1": {
+      "textures": "textures/blocks/cl/hc/lotus_1"
+    },
+    "clhc_lotus_2": {
+      "textures": "textures/blocks/cl/hc/lotus_2"
+    },
+    "clhc_urtiga_0": {
+      "textures": "textures/blocks/cl/hc/urtiga_0"
+    },
+    "clhc_urtiga_1": {
+      "textures": "textures/blocks/cl/hc/urtiga_1"
+    },
+    "clhc_urtiga_2": {
+      "textures": "textures/blocks/cl/hc/urtiga_2"
+    },
+    "clhc_palma_0": {
+      "textures": "textures/blocks/cl/hc/palma_0"
+    },
+    "clhc_palma_1": {
+      "textures": "textures/blocks/cl/hc/palma_1"
+    },
+    "clhc_palma_2": {
+      "textures": "textures/blocks/cl/hc/palma_2"
+    },
+    "clhc_sorgo_0": {
+      "textures": "textures/blocks/cl/hc/sorgo_0"
+    },
+    "clhc_sorgo_1": {
+      "textures": "textures/blocks/cl/hc/sorgo_1"
+    },
+    "clhc_sorgo_2": {
+      "textures": "textures/blocks/cl/hc/sorgo_2"
+    },
+    "clhc_trufa_0": {
+      "textures": "textures/blocks/cl/hc/trufa_0"
+    },
+    "clhc_trufa_1": {
+      "textures": "textures/blocks/cl/hc/trufa_1"
+    },
+    "clhc_trufa_2": {
+      "textures": "textures/blocks/cl/hc/trufa_2"
+    },
+    "clhc_goji_0": {
+      "textures": "textures/blocks/cl/hc/goji_0"
+    },
+    "clhc_goji_1": {
+      "textures": "textures/blocks/cl/hc/goji_1"
+    },
+    "clhc_goji_2": {
+      "textures": "textures/blocks/cl/hc/goji_2"
+    },
+    "clhc_iuca_0": {
+      "textures": "textures/blocks/cl/hc/iuca_0"
+    },
+    "clhc_iuca_1": {
+      "textures": "textures/blocks/cl/hc/iuca_1"
+    },
+    "clhc_iuca_2": {
+      "textures": "textures/blocks/cl/hc/iuca_2"
+    },
+    "clhc_couve_chinesa_0": {
+      "textures": "textures/blocks/cl/hc/couve_chinesa_0"
+    },
+    "clhc_couve_chinesa_1": {
+      "textures": "textures/blocks/cl/hc/couve_chinesa_1"
+    },
+    "clhc_couve_chinesa_2": {
+      "textures": "textures/blocks/cl/hc/couve_chinesa_2"
+    },
+    "clhc_cabaca_0": {
+      "textures": "textures/blocks/cl/hc/cabaca_0"
+    },
+    "clhc_cabaca_1": {
+      "textures": "textures/blocks/cl/hc/cabaca_1"
+    },
+    "clhc_cabaca_2": {
+      "textures": "textures/blocks/cl/hc/cabaca_2"
+    },
+    "clhc_guarana_0": {
+      "textures": "textures/blocks/cl/hc/guarana_0"
+    },
+    "clhc_guarana_1": {
+      "textures": "textures/blocks/cl/hc/guarana_1"
+    },
+    "clhc_guarana_2": {
+      "textures": "textures/blocks/cl/hc/guarana_2"
+    },
+    "clhc_papiro_0": {
+      "textures": "textures/blocks/cl/hc/papiro_0"
+    },
+    "clhc_papiro_1": {
+      "textures": "textures/blocks/cl/hc/papiro_1"
+    },
+    "clhc_papiro_2": {
+      "textures": "textures/blocks/cl/hc/papiro_2"
+    },
+    "clhc_tupinambo_0": {
+      "textures": "textures/blocks/cl/hc/tupinambo_0"
+    },
+    "clhc_tupinambo_1": {
+      "textures": "textures/blocks/cl/hc/tupinambo_1"
+    },
+    "clhc_tupinambo_2": {
+      "textures": "textures/blocks/cl/hc/tupinambo_2"
+    },
+    "clhc_horta_arida": {
+      "textures": "textures/blocks/cl/hc/horta_arida"
+    },
+    "clhc_horta_gelada": {
+      "textures": "textures/blocks/cl/hc/horta_gelada"
+    },
+    "clhc_horta_sombria": {
+      "textures": "textures/blocks/cl/hc/horta_sombria"
+    },
+    "clhc_horta_umida": {
+      "textures": "textures/blocks/cl/hc/horta_umida"
+    },
+    "clhc_horta_tropical": {
+      "textures": "textures/blocks/cl/hc/horta_tropical"
+    },
+    "clhc_horta_ventosa": {
+      "textures": "textures/blocks/cl/hc/horta_ventosa"
+    },
+    "clhc_muda_bolota": {
+      "textures": "textures/blocks/cl/hc/muda_bolota"
+    },
+    "clhc_fruto_bolota_0": {
+      "textures": "textures/blocks/cl/hc/fruto_bolota_0"
+    },
+    "clhc_fruto_bolota_1": {
+      "textures": "textures/blocks/cl/hc/fruto_bolota_1"
+    },
+    "clhc_fruto_bolota_2": {
+      "textures": "textures/blocks/cl/hc/fruto_bolota_2"
+    },
+    "clhc_muda_amendoa": {
+      "textures": "textures/blocks/cl/hc/muda_amendoa"
+    },
+    "clhc_fruto_amendoa_0": {
+      "textures": "textures/blocks/cl/hc/fruto_amendoa_0"
+    },
+    "clhc_fruto_amendoa_1": {
+      "textures": "textures/blocks/cl/hc/fruto_amendoa_1"
+    },
+    "clhc_fruto_amendoa_2": {
+      "textures": "textures/blocks/cl/hc/fruto_amendoa_2"
+    },
+    "clhc_muda_maca": {
+      "textures": "textures/blocks/cl/hc/muda_maca"
+    },
+    "clhc_fruto_maca_0": {
+      "textures": "textures/blocks/cl/hc/fruto_maca_0"
+    },
+    "clhc_fruto_maca_1": {
+      "textures": "textures/blocks/cl/hc/fruto_maca_1"
+    },
+    "clhc_fruto_maca_2": {
+      "textures": "textures/blocks/cl/hc/fruto_maca_2"
+    },
+    "clhc_muda_damasco": {
+      "textures": "textures/blocks/cl/hc/muda_damasco"
+    },
+    "clhc_fruto_damasco_0": {
+      "textures": "textures/blocks/cl/hc/fruto_damasco_0"
+    },
+    "clhc_fruto_damasco_1": {
+      "textures": "textures/blocks/cl/hc/fruto_damasco_1"
+    },
+    "clhc_fruto_damasco_2": {
+      "textures": "textures/blocks/cl/hc/fruto_damasco_2"
+    },
+    "clhc_muda_abacate": {
+      "textures": "textures/blocks/cl/hc/muda_abacate"
+    },
+    "clhc_fruto_abacate_0": {
+      "textures": "textures/blocks/cl/hc/fruto_abacate_0"
+    },
+    "clhc_fruto_abacate_1": {
+      "textures": "textures/blocks/cl/hc/fruto_abacate_1"
+    },
+    "clhc_fruto_abacate_2": {
+      "textures": "textures/blocks/cl/hc/fruto_abacate_2"
+    },
+    "clhc_muda_banana": {
+      "textures": "textures/blocks/cl/hc/muda_banana"
+    },
+    "clhc_fruto_banana_0": {
+      "textures": "textures/blocks/cl/hc/fruto_banana_0"
+    },
+    "clhc_fruto_banana_1": {
+      "textures": "textures/blocks/cl/hc/fruto_banana_1"
+    },
+    "clhc_fruto_banana_2": {
+      "textures": "textures/blocks/cl/hc/fruto_banana_2"
+    },
+    "clhc_muda_fruta_pao": {
+      "textures": "textures/blocks/cl/hc/muda_fruta_pao"
+    },
+    "clhc_fruto_fruta_pao_0": {
+      "textures": "textures/blocks/cl/hc/fruto_fruta_pao_0"
+    },
+    "clhc_fruto_fruta_pao_1": {
+      "textures": "textures/blocks/cl/hc/fruto_fruta_pao_1"
+    },
+    "clhc_fruto_fruta_pao_2": {
+      "textures": "textures/blocks/cl/hc/fruto_fruta_pao_2"
+    },
+    "clhc_muda_noz_iguape": {
+      "textures": "textures/blocks/cl/hc/muda_noz_iguape"
+    },
+    "clhc_fruto_noz_iguape_0": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_iguape_0"
+    },
+    "clhc_fruto_noz_iguape_1": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_iguape_1"
+    },
+    "clhc_fruto_noz_iguape_2": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_iguape_2"
+    },
+    "clhc_muda_castanha_caju": {
+      "textures": "textures/blocks/cl/hc/muda_castanha_caju"
+    },
+    "clhc_fruto_castanha_caju_0": {
+      "textures": "textures/blocks/cl/hc/fruto_castanha_caju_0"
+    },
+    "clhc_fruto_castanha_caju_1": {
+      "textures": "textures/blocks/cl/hc/fruto_castanha_caju_1"
+    },
+    "clhc_fruto_castanha_caju_2": {
+      "textures": "textures/blocks/cl/hc/fruto_castanha_caju_2"
+    },
+    "clhc_muda_cereja": {
+      "textures": "textures/blocks/cl/hc/muda_cereja"
+    },
+    "clhc_fruto_cereja_0": {
+      "textures": "textures/blocks/cl/hc/fruto_cereja_0"
+    },
+    "clhc_fruto_cereja_1": {
+      "textures": "textures/blocks/cl/hc/fruto_cereja_1"
+    },
+    "clhc_fruto_cereja_2": {
+      "textures": "textures/blocks/cl/hc/fruto_cereja_2"
+    },
+    "clhc_muda_castanha": {
+      "textures": "textures/blocks/cl/hc/muda_castanha"
+    },
+    "clhc_fruto_castanha_0": {
+      "textures": "textures/blocks/cl/hc/fruto_castanha_0"
+    },
+    "clhc_fruto_castanha_1": {
+      "textures": "textures/blocks/cl/hc/fruto_castanha_1"
+    },
+    "clhc_fruto_castanha_2": {
+      "textures": "textures/blocks/cl/hc/fruto_castanha_2"
+    },
+    "clhc_muda_canela": {
+      "textures": "textures/blocks/cl/hc/muda_canela"
+    },
+    "clhc_fruto_canela_0": {
+      "textures": "textures/blocks/cl/hc/fruto_canela_0"
+    },
+    "clhc_fruto_canela_1": {
+      "textures": "textures/blocks/cl/hc/fruto_canela_1"
+    },
+    "clhc_fruto_canela_2": {
+      "textures": "textures/blocks/cl/hc/fruto_canela_2"
+    },
+    "clhc_muda_coco": {
+      "textures": "textures/blocks/cl/hc/muda_coco"
+    },
+    "clhc_fruto_coco_0": {
+      "textures": "textures/blocks/cl/hc/fruto_coco_0"
+    },
+    "clhc_fruto_coco_1": {
+      "textures": "textures/blocks/cl/hc/fruto_coco_1"
+    },
+    "clhc_fruto_coco_2": {
+      "textures": "textures/blocks/cl/hc/fruto_coco_2"
+    },
+    "clhc_muda_pitaya": {
+      "textures": "textures/blocks/cl/hc/muda_pitaya"
+    },
+    "clhc_fruto_pitaya_0": {
+      "textures": "textures/blocks/cl/hc/fruto_pitaya_0"
+    },
+    "clhc_fruto_pitaya_1": {
+      "textures": "textures/blocks/cl/hc/fruto_pitaya_1"
+    },
+    "clhc_fruto_pitaya_2": {
+      "textures": "textures/blocks/cl/hc/fruto_pitaya_2"
+    },
+    "clhc_muda_durian": {
+      "textures": "textures/blocks/cl/hc/muda_durian"
+    },
+    "clhc_fruto_durian_0": {
+      "textures": "textures/blocks/cl/hc/fruto_durian_0"
+    },
+    "clhc_fruto_durian_1": {
+      "textures": "textures/blocks/cl/hc/fruto_durian_1"
+    },
+    "clhc_fruto_durian_2": {
+      "textures": "textures/blocks/cl/hc/fruto_durian_2"
+    },
+    "clhc_muda_figo": {
+      "textures": "textures/blocks/cl/hc/muda_figo"
+    },
+    "clhc_fruto_figo_0": {
+      "textures": "textures/blocks/cl/hc/fruto_figo_0"
+    },
+    "clhc_fruto_figo_1": {
+      "textures": "textures/blocks/cl/hc/fruto_figo_1"
+    },
+    "clhc_fruto_figo_2": {
+      "textures": "textures/blocks/cl/hc/fruto_figo_2"
+    },
+    "clhc_muda_groselha": {
+      "textures": "textures/blocks/cl/hc/muda_groselha"
+    },
+    "clhc_fruto_groselha_0": {
+      "textures": "textures/blocks/cl/hc/fruto_groselha_0"
+    },
+    "clhc_fruto_groselha_1": {
+      "textures": "textures/blocks/cl/hc/fruto_groselha_1"
+    },
+    "clhc_fruto_groselha_2": {
+      "textures": "textures/blocks/cl/hc/fruto_groselha_2"
+    },
+    "clhc_muda_toranja": {
+      "textures": "textures/blocks/cl/hc/muda_toranja"
+    },
+    "clhc_fruto_toranja_0": {
+      "textures": "textures/blocks/cl/hc/fruto_toranja_0"
+    },
+    "clhc_fruto_toranja_1": {
+      "textures": "textures/blocks/cl/hc/fruto_toranja_1"
+    },
+    "clhc_fruto_toranja_2": {
+      "textures": "textures/blocks/cl/hc/fruto_toranja_2"
+    },
+    "clhc_muda_goiaba": {
+      "textures": "textures/blocks/cl/hc/muda_goiaba"
+    },
+    "clhc_fruto_goiaba_0": {
+      "textures": "textures/blocks/cl/hc/fruto_goiaba_0"
+    },
+    "clhc_fruto_goiaba_1": {
+      "textures": "textures/blocks/cl/hc/fruto_goiaba_1"
+    },
+    "clhc_fruto_goiaba_2": {
+      "textures": "textures/blocks/cl/hc/fruto_goiaba_2"
+    },
+    "clhc_muda_avela": {
+      "textures": "textures/blocks/cl/hc/muda_avela"
+    },
+    "clhc_fruto_avela_0": {
+      "textures": "textures/blocks/cl/hc/fruto_avela_0"
+    },
+    "clhc_fruto_avela_1": {
+      "textures": "textures/blocks/cl/hc/fruto_avela_1"
+    },
+    "clhc_fruto_avela_2": {
+      "textures": "textures/blocks/cl/hc/fruto_avela_2"
+    },
+    "clhc_muda_jaca": {
+      "textures": "textures/blocks/cl/hc/muda_jaca"
+    },
+    "clhc_fruto_jaca_0": {
+      "textures": "textures/blocks/cl/hc/fruto_jaca_0"
+    },
+    "clhc_fruto_jaca_1": {
+      "textures": "textures/blocks/cl/hc/fruto_jaca_1"
+    },
+    "clhc_fruto_jaca_2": {
+      "textures": "textures/blocks/cl/hc/fruto_jaca_2"
+    },
+    "clhc_muda_limao_siciliano": {
+      "textures": "textures/blocks/cl/hc/muda_limao_siciliano"
+    },
+    "clhc_fruto_limao_siciliano_0": {
+      "textures": "textures/blocks/cl/hc/fruto_limao_siciliano_0"
+    },
+    "clhc_fruto_limao_siciliano_1": {
+      "textures": "textures/blocks/cl/hc/fruto_limao_siciliano_1"
+    },
+    "clhc_fruto_limao_siciliano_2": {
+      "textures": "textures/blocks/cl/hc/fruto_limao_siciliano_2"
+    },
+    "clhc_muda_limao": {
+      "textures": "textures/blocks/cl/hc/muda_limao"
+    },
+    "clhc_fruto_limao_0": {
+      "textures": "textures/blocks/cl/hc/fruto_limao_0"
+    },
+    "clhc_fruto_limao_1": {
+      "textures": "textures/blocks/cl/hc/fruto_limao_1"
+    },
+    "clhc_fruto_limao_2": {
+      "textures": "textures/blocks/cl/hc/fruto_limao_2"
+    },
+    "clhc_muda_lichia": {
+      "textures": "textures/blocks/cl/hc/muda_lichia"
+    },
+    "clhc_fruto_lichia_0": {
+      "textures": "textures/blocks/cl/hc/fruto_lichia_0"
+    },
+    "clhc_fruto_lichia_1": {
+      "textures": "textures/blocks/cl/hc/fruto_lichia_1"
+    },
+    "clhc_fruto_lichia_2": {
+      "textures": "textures/blocks/cl/hc/fruto_lichia_2"
+    },
+    "clhc_muda_manga": {
+      "textures": "textures/blocks/cl/hc/muda_manga"
+    },
+    "clhc_fruto_manga_0": {
+      "textures": "textures/blocks/cl/hc/fruto_manga_0"
+    },
+    "clhc_fruto_manga_1": {
+      "textures": "textures/blocks/cl/hc/fruto_manga_1"
+    },
+    "clhc_fruto_manga_2": {
+      "textures": "textures/blocks/cl/hc/fruto_manga_2"
+    },
+    "clhc_muda_xarope_bordo": {
+      "textures": "textures/blocks/cl/hc/muda_xarope_bordo"
+    },
+    "clhc_fruto_xarope_bordo_0": {
+      "textures": "textures/blocks/cl/hc/fruto_xarope_bordo_0"
+    },
+    "clhc_fruto_xarope_bordo_1": {
+      "textures": "textures/blocks/cl/hc/fruto_xarope_bordo_1"
+    },
+    "clhc_fruto_xarope_bordo_2": {
+      "textures": "textures/blocks/cl/hc/fruto_xarope_bordo_2"
+    },
+    "clhc_muda_noz_moscada": {
+      "textures": "textures/blocks/cl/hc/muda_noz_moscada"
+    },
+    "clhc_fruto_noz_moscada_0": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_moscada_0"
+    },
+    "clhc_fruto_noz_moscada_1": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_moscada_1"
+    },
+    "clhc_fruto_noz_moscada_2": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_moscada_2"
+    },
+    "clhc_muda_azeitona": {
+      "textures": "textures/blocks/cl/hc/muda_azeitona"
+    },
+    "clhc_fruto_azeitona_0": {
+      "textures": "textures/blocks/cl/hc/fruto_azeitona_0"
+    },
+    "clhc_fruto_azeitona_1": {
+      "textures": "textures/blocks/cl/hc/fruto_azeitona_1"
+    },
+    "clhc_fruto_azeitona_2": {
+      "textures": "textures/blocks/cl/hc/fruto_azeitona_2"
+    },
+    "clhc_muda_laranja": {
+      "textures": "textures/blocks/cl/hc/muda_laranja"
+    },
+    "clhc_fruto_laranja_0": {
+      "textures": "textures/blocks/cl/hc/fruto_laranja_0"
+    },
+    "clhc_fruto_laranja_1": {
+      "textures": "textures/blocks/cl/hc/fruto_laranja_1"
+    },
+    "clhc_fruto_laranja_2": {
+      "textures": "textures/blocks/cl/hc/fruto_laranja_2"
+    },
+    "clhc_muda_mamao": {
+      "textures": "textures/blocks/cl/hc/muda_mamao"
+    },
+    "clhc_fruto_mamao_0": {
+      "textures": "textures/blocks/cl/hc/fruto_mamao_0"
+    },
+    "clhc_fruto_mamao_1": {
+      "textures": "textures/blocks/cl/hc/fruto_mamao_1"
+    },
+    "clhc_fruto_mamao_2": {
+      "textures": "textures/blocks/cl/hc/fruto_mamao_2"
+    },
+    "clhc_muda_casca_papel": {
+      "textures": "textures/blocks/cl/hc/muda_casca_papel"
+    },
+    "clhc_fruto_casca_papel_0": {
+      "textures": "textures/blocks/cl/hc/fruto_casca_papel_0"
+    },
+    "clhc_fruto_casca_papel_1": {
+      "textures": "textures/blocks/cl/hc/fruto_casca_papel_1"
+    },
+    "clhc_fruto_casca_papel_2": {
+      "textures": "textures/blocks/cl/hc/fruto_casca_papel_2"
+    },
+    "clhc_muda_maracuja": {
+      "textures": "textures/blocks/cl/hc/muda_maracuja"
+    },
+    "clhc_fruto_maracuja_0": {
+      "textures": "textures/blocks/cl/hc/fruto_maracuja_0"
+    },
+    "clhc_fruto_maracuja_1": {
+      "textures": "textures/blocks/cl/hc/fruto_maracuja_1"
+    },
+    "clhc_fruto_maracuja_2": {
+      "textures": "textures/blocks/cl/hc/fruto_maracuja_2"
+    },
+    "clhc_muda_asimina": {
+      "textures": "textures/blocks/cl/hc/muda_asimina"
+    },
+    "clhc_fruto_asimina_0": {
+      "textures": "textures/blocks/cl/hc/fruto_asimina_0"
+    },
+    "clhc_fruto_asimina_1": {
+      "textures": "textures/blocks/cl/hc/fruto_asimina_1"
+    },
+    "clhc_fruto_asimina_2": {
+      "textures": "textures/blocks/cl/hc/fruto_asimina_2"
+    },
+    "clhc_muda_pessego": {
+      "textures": "textures/blocks/cl/hc/muda_pessego"
+    },
+    "clhc_fruto_pessego_0": {
+      "textures": "textures/blocks/cl/hc/fruto_pessego_0"
+    },
+    "clhc_fruto_pessego_1": {
+      "textures": "textures/blocks/cl/hc/fruto_pessego_1"
+    },
+    "clhc_fruto_pessego_2": {
+      "textures": "textures/blocks/cl/hc/fruto_pessego_2"
+    },
+    "clhc_muda_pera": {
+      "textures": "textures/blocks/cl/hc/muda_pera"
+    },
+    "clhc_fruto_pera_0": {
+      "textures": "textures/blocks/cl/hc/fruto_pera_0"
+    },
+    "clhc_fruto_pera_1": {
+      "textures": "textures/blocks/cl/hc/fruto_pera_1"
+    },
+    "clhc_fruto_pera_2": {
+      "textures": "textures/blocks/cl/hc/fruto_pera_2"
+    },
+    "clhc_muda_peca": {
+      "textures": "textures/blocks/cl/hc/muda_peca"
+    },
+    "clhc_fruto_peca_0": {
+      "textures": "textures/blocks/cl/hc/fruto_peca_0"
+    },
+    "clhc_fruto_peca_1": {
+      "textures": "textures/blocks/cl/hc/fruto_peca_1"
+    },
+    "clhc_fruto_peca_2": {
+      "textures": "textures/blocks/cl/hc/fruto_peca_2"
+    },
+    "clhc_muda_pimenta_reino": {
+      "textures": "textures/blocks/cl/hc/muda_pimenta_reino"
+    },
+    "clhc_fruto_pimenta_reino_0": {
+      "textures": "textures/blocks/cl/hc/fruto_pimenta_reino_0"
+    },
+    "clhc_fruto_pimenta_reino_1": {
+      "textures": "textures/blocks/cl/hc/fruto_pimenta_reino_1"
+    },
+    "clhc_fruto_pimenta_reino_2": {
+      "textures": "textures/blocks/cl/hc/fruto_pimenta_reino_2"
+    },
+    "clhc_muda_caqui": {
+      "textures": "textures/blocks/cl/hc/muda_caqui"
+    },
+    "clhc_fruto_caqui_0": {
+      "textures": "textures/blocks/cl/hc/fruto_caqui_0"
+    },
+    "clhc_fruto_caqui_1": {
+      "textures": "textures/blocks/cl/hc/fruto_caqui_1"
+    },
+    "clhc_fruto_caqui_2": {
+      "textures": "textures/blocks/cl/hc/fruto_caqui_2"
+    },
+    "clhc_muda_pinoli": {
+      "textures": "textures/blocks/cl/hc/muda_pinoli"
+    },
+    "clhc_fruto_pinoli_0": {
+      "textures": "textures/blocks/cl/hc/fruto_pinoli_0"
+    },
+    "clhc_fruto_pinoli_1": {
+      "textures": "textures/blocks/cl/hc/fruto_pinoli_1"
+    },
+    "clhc_fruto_pinoli_2": {
+      "textures": "textures/blocks/cl/hc/fruto_pinoli_2"
+    },
+    "clhc_muda_pistache": {
+      "textures": "textures/blocks/cl/hc/muda_pistache"
+    },
+    "clhc_fruto_pistache_0": {
+      "textures": "textures/blocks/cl/hc/fruto_pistache_0"
+    },
+    "clhc_fruto_pistache_1": {
+      "textures": "textures/blocks/cl/hc/fruto_pistache_1"
+    },
+    "clhc_fruto_pistache_2": {
+      "textures": "textures/blocks/cl/hc/fruto_pistache_2"
+    },
+    "clhc_muda_ameixa": {
+      "textures": "textures/blocks/cl/hc/muda_ameixa"
+    },
+    "clhc_fruto_ameixa_0": {
+      "textures": "textures/blocks/cl/hc/fruto_ameixa_0"
+    },
+    "clhc_fruto_ameixa_1": {
+      "textures": "textures/blocks/cl/hc/fruto_ameixa_1"
+    },
+    "clhc_fruto_ameixa_2": {
+      "textures": "textures/blocks/cl/hc/fruto_ameixa_2"
+    },
+    "clhc_muda_roma": {
+      "textures": "textures/blocks/cl/hc/muda_roma"
+    },
+    "clhc_fruto_roma_0": {
+      "textures": "textures/blocks/cl/hc/fruto_roma_0"
+    },
+    "clhc_fruto_roma_1": {
+      "textures": "textures/blocks/cl/hc/fruto_roma_1"
+    },
+    "clhc_fruto_roma_2": {
+      "textures": "textures/blocks/cl/hc/fruto_roma_2"
+    },
+    "clhc_muda_rambutan": {
+      "textures": "textures/blocks/cl/hc/muda_rambutan"
+    },
+    "clhc_fruto_rambutan_0": {
+      "textures": "textures/blocks/cl/hc/fruto_rambutan_0"
+    },
+    "clhc_fruto_rambutan_1": {
+      "textures": "textures/blocks/cl/hc/fruto_rambutan_1"
+    },
+    "clhc_fruto_rambutan_2": {
+      "textures": "textures/blocks/cl/hc/fruto_rambutan_2"
+    },
+    "clhc_muda_graviola": {
+      "textures": "textures/blocks/cl/hc/muda_graviola"
+    },
+    "clhc_fruto_graviola_0": {
+      "textures": "textures/blocks/cl/hc/fruto_graviola_0"
+    },
+    "clhc_fruto_graviola_1": {
+      "textures": "textures/blocks/cl/hc/fruto_graviola_1"
+    },
+    "clhc_fruto_graviola_2": {
+      "textures": "textures/blocks/cl/hc/fruto_graviola_2"
+    },
+    "clhc_muda_teia": {
+      "textures": "textures/blocks/cl/hc/muda_teia"
+    },
+    "clhc_fruto_teia_0": {
+      "textures": "textures/blocks/cl/hc/fruto_teia_0"
+    },
+    "clhc_fruto_teia_1": {
+      "textures": "textures/blocks/cl/hc/fruto_teia_1"
+    },
+    "clhc_fruto_teia_2": {
+      "textures": "textures/blocks/cl/hc/fruto_teia_2"
+    },
+    "clhc_muda_carambola": {
+      "textures": "textures/blocks/cl/hc/muda_carambola"
+    },
+    "clhc_fruto_carambola_0": {
+      "textures": "textures/blocks/cl/hc/fruto_carambola_0"
+    },
+    "clhc_fruto_carambola_1": {
+      "textures": "textures/blocks/cl/hc/fruto_carambola_1"
+    },
+    "clhc_fruto_carambola_2": {
+      "textures": "textures/blocks/cl/hc/fruto_carambola_2"
+    },
+    "clhc_muda_tamarindo": {
+      "textures": "textures/blocks/cl/hc/muda_tamarindo"
+    },
+    "clhc_fruto_tamarindo_0": {
+      "textures": "textures/blocks/cl/hc/fruto_tamarindo_0"
+    },
+    "clhc_fruto_tamarindo_1": {
+      "textures": "textures/blocks/cl/hc/fruto_tamarindo_1"
+    },
+    "clhc_fruto_tamarindo_2": {
+      "textures": "textures/blocks/cl/hc/fruto_tamarindo_2"
+    },
+    "clhc_muda_baunilha": {
+      "textures": "textures/blocks/cl/hc/muda_baunilha"
+    },
+    "clhc_fruto_baunilha_0": {
+      "textures": "textures/blocks/cl/hc/fruto_baunilha_0"
+    },
+    "clhc_fruto_baunilha_1": {
+      "textures": "textures/blocks/cl/hc/fruto_baunilha_1"
+    },
+    "clhc_fruto_baunilha_2": {
+      "textures": "textures/blocks/cl/hc/fruto_baunilha_2"
+    },
+    "clhc_muda_noz": {
+      "textures": "textures/blocks/cl/hc/muda_noz"
+    },
+    "clhc_fruto_noz_0": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_0"
+    },
+    "clhc_fruto_noz_1": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_1"
+    },
+    "clhc_fruto_noz_2": {
+      "textures": "textures/blocks/cl/hc/fruto_noz_2"
     }
   }
 }

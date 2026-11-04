@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_nuggets_frango_0_0"
+    },
+    "tags": [
+      "cl_panela"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:moido_frango"
+      },
+      {
+        "item": "cl:farinha"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:nuggets_frango",
+      "count": 4
+    }
+  }
+}

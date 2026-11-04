@@ -1,0 +1,104 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "cl:amaranto",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:alcachofra",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:cevada",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:pimentao",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:pimenta",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:milho",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:pepino",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:sabugueiro",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:linho",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:alface",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:mostarda",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:cebola",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:pastinaca",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:amendoim",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:morango",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:abobora_inverno",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:alfafa",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:canola",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:tupinambo",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

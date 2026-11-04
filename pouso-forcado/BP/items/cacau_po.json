@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cacau_po",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_cacau_po",
+      "minecraft:display_name": {
+        "value": "item.cl:cacau_po.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_batata_manteiga_0_0"
+    },
+    "tags": [
+      "cl_tabua_corte"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:baked_potato"
+      },
+      {
+        "item": "cl:manteiga"
+      },
+      {
+        "item": "cl:sal"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:batata_manteiga"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:semente_urtiga",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_semente_urtiga",
+      "minecraft:display_name": {
+        "value": "item.cl:semente_urtiga.name"
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:block_placer": {
+        "block": "cl:planta_urtiga",
+        "use_on": [
+          "minecraft:farmland"
+        ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:hc_semente"
+        ]
+      }
+    }
+  }
+}

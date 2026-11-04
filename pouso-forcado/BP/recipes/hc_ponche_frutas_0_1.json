@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_ponche_frutas_0_1"
+    },
+    "tags": [
+      "cl_espremedor"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:apple"
+      },
+      {
+        "item": "minecraft:apple"
+      },
+      {
+        "item": "minecraft:apple"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:ponche_frutas"
+    }
+  }
+}

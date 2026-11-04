@@ -2650,3 +2650,64 @@ teste("bau_saque", 200, (t) => {
     t.succeed();
   });
 });
+
+// 1.47.0: Pam's HarvestCraft 2. Quebrar a horta dá uma colheita; farinha de osso espalha a horta; o fruto maduro dá a
+// laranja e volta à flor; a muda vira macieira com frutos; a árvore do mundo (feature) nasce com frutos pendurados.
+teste("hc2", 300, (t) => {
+  const j = robo(t, { x: 1.5, y: 2, z: 1.5 });
+  const dim = t.getDimension();
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`hc2: ${c} -> ${e}`); } };
+  for (let x = 0; x <= 7; x++) for (let z = 0; z <= 7; z++) t.setBlockType("minecraft:grass_block", { x, y: 1, z });
+  t.setBlockType("cl:horta_ventosa", { x: 1, y: 2, z: 4 });
+  t.setBlockType("cl:horta_sombria", { x: 4, y: 2, z: 4 });
+  t.setBlockType("cl:muda_maca", { x: 6, y: 2, z: 6 });
+  t.setBlockPermutation(BlockPermutation.resolve("cl:fruto_laranja", { "cl:estagio": 2 }), { x: 6, y: 4, z: 1 });
+  t.runAfterDelay(5, () => { j.lookAtBlock({ x: 1, y: 2, z: 4 }); log(`hc2: quebrar horta ${j.breakBlock({ x: 1, y: 2, z: 4 }, Direction.Up)}`); });
+  for (let k = 0; k < 10; k++) t.runAfterDelay(15 + k * 4, () => {
+    j.setItem(new ItemStack("minecraft:bone_meal", 1), 0, true);
+    j.lookAtBlock({ x: 4, y: 2, z: 4 });
+    j.interactWithBlock({ x: 4, y: 2, z: 4 }, Direction.Up);
+  });
+  t.runAfterDelay(60, () => {
+    j.getComponent("inventory").container.setItem(0, undefined);
+    j.lookAtBlock({ x: 6, y: 4, z: 1 });
+    j.interactWithBlock({ x: 6, y: 4, z: 1 }, Direction.West);
+  });
+  t.runAfterDelay(64, () => { const p = t.worldBlockLocation({ x: 6, y: 2, z: 6 }); cmd(`scriptevent cl:teste_hc2 crescer ${p.x} ${p.y} ${p.z}`); });
+  t.runAfterDelay(68, () => {
+    try {
+      dim.placeFeature("cl:hc2_arvore_cereja", t.worldBlockLocation({ x: 1, y: 2, z: 7 }), true);
+      dim.placeFeature("cl:hc2_horta_ventosa_tufo", t.worldBlockLocation({ x: 3, y: 2, z: 2 }), true);
+    } catch (e) {
+      log(`hc2: placeFeature falhou: ${e}`);
+    }
+  });
+  t.runAfterDelay(90, () => {
+    const itens = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 1.5, y: 2.5, z: 4.5 }), maxDistance: 2.5 }).map((e) => e.getComponent("item").itemStack.typeId);
+    let hortas = 0, silvestres = 0;
+    for (let x = 0; x <= 7; x++) for (let z = 0; z <= 7; z++) for (let y = 1; y <= 3; y++) {
+      const id = t.getBlock({ x, y, z }).typeId;
+      if (id === "cl:horta_sombria") hortas++;
+      if (id === "cl:horta_ventosa") silvestres++;
+    }
+    const contar = (id, cx, cz) => {
+      const o = t.worldBlockLocation({ x: cx, y: 2, z: cz });
+      let n = 0;
+      for (let dx = -3; dx <= 3; dx++) for (let dz = -3; dz <= 3; dz++) for (let dy = 0; dy <= 12; dy++) if (dim.getBlock({ x: o.x + dx, y: o.y + dy, z: o.z + dz })?.typeId === id) n++;
+      return n;
+    };
+    const r = {
+      itens, hortas, silvestres, laranjas: quantos(j, "cl:laranja"), estagio: t.getBlock({ x: 6, y: 4, z: 1 }).permutation.getState("cl:estagio"),
+      macieira: t.getBlock({ x: 6, y: 3, z: 6 }).typeId, macas: contar("cl:fruto_maca", 6, 6),
+      cerejeira: t.getBlock({ x: 1, y: 3, z: 7 }).typeId, cerejas: contar("cl:fruto_cereja", 1, 7),
+    };
+    log(`hc2: ${JSON.stringify(r)}`);
+    t.assert(itens.length === 1 && itens[0].startsWith("cl:"), "a horta não deu uma colheita");
+    t.assert(hortas >= 2, "a farinha de osso não espalhou a horta");
+    t.assert(r.laranjas === 1 && r.estagio === 0, "o fruto maduro não deu a laranja nem voltou à flor");
+    t.assert(r.macieira.endsWith("_log") && r.macas >= 1, "a muda não virou macieira com frutos");
+    t.assert(r.cerejeira.endsWith("_log") && r.cerejas >= 1, "a árvore do mundo não nasceu com frutos");
+    t.assert(silvestres >= 1, "a horta do mundo não nasceu");
+    t.succeed();
+  });
+});

@@ -14,6 +14,8 @@ const SEMPRE = { context: "AlwaysUnlocked" };
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const D = JSON.parse(readFileSync(join(RAIZ, "tools/dados/harvestcraft.json"), "utf8"));
+// 1.47.0: Pam's HarvestCraft 2 (Crops, Trees e Food Core), de tools/importar-hc2.py.
+const H2 = JSON.parse(readFileSync(join(RAIZ, "tools/dados/hc2.json"), "utf8"));
 const T = 32;
 const pasta = (rel) => (mkdirSync(join(RAIZ, rel), { recursive: true }), join(RAIZ, rel));
 const json = (rel, obj) => writeFileSync(join(RAIZ, rel), JSON.stringify(obj, null, 2) + "\n");
@@ -183,6 +185,295 @@ const ICONE = {
   },
 };
 
+// ---------- 1.47.0 (HarvestCraft 2): formas novas de colheita e de comida ----------
+const MARROM = hex("#7a5232"), MADEIRA = hex("#b98a55");
+const dentroDe = (lista) => (a, b) => lista.some((f) => f(a, b));
+Object.assign(COLHEITA, {
+  cacto: (c) => (x, y) => {
+    // Roseta de folhas pontudas (agave, babosa, palma, cacto-barril).
+    const folhas = [[16, 4, 3.2], [10, 9, 2.6], [22, 9, 2.6], [6, 15, 2.2], [26, 15, 2.2]];
+    const dentro = (a, b) => b <= 28 && folhas.some(([fx, topo, w]) => b >= topo && Math.abs(a - fx - (fx - 16) * (b - topo) * -0.02) < w * Math.min(1, (b - topo) / 10 + 0.15));
+    const p = solido(dentro, c, x, y, 0.3);
+    if (p && !borda(dentro, x, y) && ruido(x, y, 21) < 0.08) return hex("#f4f1e8");
+    return p;
+  },
+  raiz: (c) => (x, y) => {
+    if (y < 10 && (Math.abs(x - 13 - (10 - y) * -0.3) < 1.2 || Math.abs(x - 19 - (10 - y) * 0.3) < 1.2 || Math.abs(x - 16) < 1)) return VERDE;
+    const d = (a, b) => b >= 9 && b <= 29 && Math.abs(a - 16 - (b - 9) * 0.15) < 6 - (b - 9) * 0.28;
+    const p = solido(d, c, x, y, 0.3);
+    if (p && !borda(d, x, y) && y % 5 === 0) return mul(c, 0.8);
+    return p;
+  },
+  raiz_redonda: (c) => (x, y) => {
+    if (y < 10 && (Math.abs(x - 13 - (10 - y) * -0.4) < 1.2 || Math.abs(x - 19 - (10 - y) * 0.4) < 1.2)) return VERDE;
+    if (y > 26 && Math.abs(x - 16) < 1) return mul(c, 0.7);
+    const p = solido((a, b) => elipse(a, b, 16, 18, 9, 8.5), c, x, y, 0.35);
+    if (p && y > 20 && y < 24 && !borda((a, b) => elipse(a, b, 16, 18, 9, 8.5), x, y)) return mix(c, BRANCO, 0.4);
+    return p;
+  },
+  alcachofra: (c) => (x, y) => {
+    const d = (a, b) => elipse(a, b, 16, 17, 10, 11);
+    const p = solido(d, c, x, y, 0.25);
+    if (p && !borda(d, x, y) && ((x + Math.floor(y / 3) * 2) % 6 === 0 || y % 6 === 0)) return mul(c, 0.7);
+    if (!p && y > 27 && Math.abs(x - 16) < 1.5) return VERDE_ESC;
+    return p;
+  },
+  talo: (c) => (x, y) => {
+    for (const [cx, topo] of [[11, 6], [16, 3], [21, 7]]) {
+      if (y >= topo && y <= 28 && Math.abs(x - cx - (y - 16) * (cx - 16) * -0.015) < 1.8) return Math.abs(x - cx) < 0.6 ? mix(c, BRANCO, 0.3) : c;
+      if (y >= topo - 3 && y < topo + 2 && Math.abs(x - cx) < 3 - (topo + 2 - y) * 0.5) return VERDE;
+    }
+    if (y >= 26 && y <= 28 && x >= 9 && x <= 23) return mul(c, 0.7);
+    return null;
+  },
+  trigo: (c) => (x, y) => {
+    if (Math.abs(x - 16 - (y - 20) * 0.1) < 0.7 && y >= 4 && y <= 29) return mul(c, 0.7);
+    for (let k = 0; k < 6; k++) {
+      const gy = 6 + k * 3;
+      if (elipse(x, y, 13.5, gy, 2.4, 1.6) || elipse(x, y, 18.5, gy + 1.5, 2.4, 1.6)) return (x + y) % 3 ? c : mix(c, BRANCO, 0.25);
+    }
+    return null;
+  },
+  baga: (c) => (x, y) => {
+    if (y < 9 && Math.abs(x - 17 - (9 - y) * 0.4) < 1) return VERDE_ESC;
+    if (elipse(x, y, 20, 8, 4, 2)) return VERDE;
+    const bagas = [[12, 15, 5], [20, 15, 5], [16, 22, 5.5], [10, 23, 4], [22, 23, 4]];
+    for (const [bx, by, r] of bagas) {
+      const d = (a, b) => elipse(a, b, bx, by, r, r);
+      if (d(x, y)) return elipse(x, y, bx - 1.5, by - 1.5, 1.2, 1.2) ? mix(c, BRANCO, 0.5) : solido(d, c, x, y, 0.2);
+    }
+    return null;
+  },
+  brocolis: (c) => (x, y) => {
+    if (y >= 18 && y <= 29 && Math.abs(x - 16) < 3 - (29 - y) * 0.05) return mix(hex("#9ac860"), c, 0.3);
+    for (const [bx, by, r] of [[10, 13, 5.5], [16, 9, 6.5], [22, 13, 5.5], [16, 16, 5]]) {
+      const d = (a, b) => elipse(a, b, bx, by, r, r * 0.9);
+      if (d(x, y)) return ruido(x >> 1, y >> 1, 22) < 0.5 ? c : mul(c, 0.82);
+    }
+    return null;
+  },
+  fibra: (c) => (x, y) => {
+    if (y >= 16 && y <= 19 && x >= 9 && x <= 23) return MARROM;
+    const d = (a, b) => b >= 4 && b <= 29 && Math.abs(a - 16) < (b < 17 ? 4 + (17 - b) * 0.45 : 4 + (b - 17) * 0.35);
+    if (!d(x, y)) return null;
+    return borda(d, x, y) ? mul(c, 0.6) : x % 2 ? c : mul(c, 0.88);
+  },
+  alongado: (c) => (x, y) => {
+    const d = (a, b) => elipse(a + b - 32, a - b, 0, 0, 7, 19);
+    if (elipse(x, y, 8, 8, 4, 3) || (Math.abs(x - y) < 1.2 && x < 7)) return VERDE;
+    const p = solido(d, c, x, y, 0.35);
+    if (p && !borda(d, x, y) && (x - y) % 7 === 0 && ruido(x, y, 23) < 0.5) return mix(c, BRANCO, 0.25);
+    return p;
+  },
+  cacho: (c) => (x, y) => {
+    if (y < 7 && Math.abs(x - 16) < 1) return MARROM;
+    if (elipse(x, y, 21, 6, 4, 2.2)) return VERDE;
+    const bagas = [];
+    for (let fila = 0; fila < 5; fila++) for (let k = 0; k <= 4 - fila; k++) bagas.push([16 + (k - (4 - fila) / 2) * 4.6, 10 + fila * 4.2]);
+    for (const [bx, by] of bagas) {
+      const d = (a, b) => elipse(a, b, bx, by, 2.6, 2.6);
+      if (d(x, y)) return elipse(x, y, bx - 0.8, by - 0.8, 0.8, 0.8) ? mix(c, BRANCO, 0.5) : solido(d, c, x, y, 0.15);
+    }
+    return null;
+  },
+  folha: (c) => (x, y) => {
+    const d = dentroDe([(a, b) => elipse(a, b, 16, 18, 12, 10), (a, b) => elipse(a, b, 10, 12, 6, 6), (a, b) => elipse(a, b, 22, 12, 6, 6)]);
+    const p = solido(d, c, x, y, 0.3);
+    if (p && !borda(d, x, y) && (Math.abs(x - 16) < 0.6 || Math.abs(Math.abs(x - 16) - (y - 10) * 0.5) < 0.5)) return mix(c, BRANCO, 0.35);
+    return p;
+  },
+  vagem: (c) => (x, y) => {
+    const d = (a, b) => elipse(a + b - 32, a - b, 0, 0, 5, 20);
+    if (Math.abs(x - y) < 1.2 && x < 6) return VERDE_ESC;
+    const p = solido(d, c, x, y, 0.3);
+    if (p && !borda(d, x, y)) for (let k = -2; k <= 2; k++) if (elipse(x, y, 16 + k * 4, 16 + k * 4, 2, 2)) return mix(c, BRANCO, 0.2);
+    return p;
+  },
+  abacaxi: (c) => (x, y) => {
+    if (y < 11) {
+      for (const dx of [-4, 0, 4]) if (Math.abs(x - 16 - dx * (11 - y) / 8) < 1.3 && y > 2) return VERDE;
+      return null;
+    }
+    const d = (a, b) => elipse(a, b, 16, 20, 8, 9);
+    const p = solido(d, c, x, y, 0.3);
+    if (p && !borda(d, x, y) && ((x + y) % 5 === 0 || (x - y + 64) % 5 === 0)) return mul(c, 0.7);
+    return p;
+  },
+  noz: (c) => (x, y) => {
+    const d = (a, b) => elipse(a, b, 16, 18, 9, 10);
+    const p = solido(d, c, x, y, 0.3);
+    if (p && y < 12 && !borda(d, x, y)) return mul(c, 0.7);
+    if (p && Math.abs(x - 16) < 0.6 && y > 12) return mul(c, 0.6);
+    if (!p && y >= 5 && y <= 8 && Math.abs(x - 16) < 1) return mul(c, 0.5);
+    return p;
+  },
+  cogumelo: (c) => (x, y) => {
+    const chapeu = (a, b) => elipse(a, b, 16, 14, 12, 8) && b <= 15;
+    if (chapeu(x, y)) return solido(chapeu, c, x, y, 0.3);
+    const pe = (a, b) => b > 15 && b <= 28 && Math.abs(a - 16) < 4;
+    return solido(pe, mix(c, BRANCO, 0.6), x, y, 0.1);
+  },
+  morango: (c) => (x, y) => {
+    if (y < 10 && elipse(x, y, 16, 8, 7, 3)) return VERDE;
+    const d = (a, b) => b >= 8 && b <= 28 && Math.abs(a - 16) < 10 * Math.sin(Math.min(Math.PI, ((b - 6) / 23) * Math.PI)) ** 0.7;
+    const p = solido(d, c, x, y, 0.3);
+    if (p && !borda(d, x, y) && (x * 3 + y * 5) % 7 === 0) return hex("#f7e27a");
+    return p;
+  },
+  taboa: (c) => (x, y) => {
+    if (Math.abs(x - 16) < 0.8 && (y < 6 || y > 22)) return VERDE_ESC;
+    return solido((a, b) => b >= 6 && b <= 22 && Math.abs(a - 16) < 3.5, c, x, y, 0.25);
+  },
+  flor: (c) => (x, y) => {
+    const centro = (a, b) => elipse(a, b, 16, 18, 3, 3);
+    if (centro(x, y)) return hex("#f2c94c");
+    for (const ang of [0, 1, 2, 3, 4, 5]) {
+      const t = (ang * Math.PI) / 3, px = 16 + Math.cos(t) * 7, py = 18 + Math.sin(t) * 6;
+      if (elipse(x, y, px, py, 4, 4)) return solido((a, b) => elipse(a, b, px, py, 4, 4), c, x, y, 0.4);
+    }
+    return elipse(x, y, 16, 27, 12, 3) ? VERDE : null;
+  },
+  pera: (c) => (x, y) => {
+    if (y < 7 && Math.abs(x - 16) < 0.8) return MARROM;
+    if (elipse(x, y, 20, 6, 3, 1.5)) return VERDE;
+    const d = dentroDe([(a, b) => elipse(a, b, 16, 13, 5.5, 6), (a, b) => elipse(a, b, 16, 21, 8.5, 8)]);
+    return solido(d, c, x, y, 0.35);
+  },
+  banana: (c) => (x, y) => {
+    const d = (a, b) => {
+      const r = Math.hypot(a - 30, b - 2);
+      return r > 17 && r < 24 && a < 26 && b < 30 && a > 3;
+    };
+    const p = solido(d, c, x, y, 0.3);
+    if (p && (x < 6 || y > 26)) return MARROM;
+    return p;
+  },
+  cereja: (c) => (x, y) => {
+    if (Math.abs(x - 16 - (y - 4) * -0.3) < 0.8 && y >= 4 && y <= 17) return VERDE_ESC;
+    if (Math.abs(x - 16 - (y - 4) * 0.5) < 0.8 && y >= 4 && y <= 15) return VERDE_ESC;
+    for (const [bx, by] of [[11, 21], [22, 19]]) if (elipse(x, y, bx, by, 5, 5)) return solido((a, b) => elipse(a, b, bx, by, 5, 5), c, x, y, 0.4);
+    return elipse(x, y, 19, 4, 3, 1.5) ? VERDE : null;
+  },
+  canela: (c) => (x, y) => {
+    for (const k of [-5, 0, 5]) {
+      const d = (a, b) => Math.abs(a - b - k) < 2.6 && a + b > 10 && a + b < 54;
+      if (d(x, y)) return borda(d, x, y) ? mul(c, 0.6) : (x + y) % 4 === 0 ? mul(c, 0.8) : c;
+    }
+    return null;
+  },
+  coco: (c) => (x, y) => {
+    const d = (a, b) => elipse(a, b, 16, 17, 11, 11);
+    const p = solido(d, c, x, y, 0.15);
+    if (p && (elipse(x, y, 12, 13, 1.4, 1.4) || elipse(x, y, 18, 12, 1.4, 1.4) || elipse(x, y, 15, 17, 1.4, 1.4))) return hex("#2a1a10");
+    if (p && ruido(x, y, 24) < 0.15) return mul(c, 1.25);
+    return p;
+  },
+  xarope: (c) => (x, y) => {
+    if (y >= 3 && y <= 9 && Math.abs(x - 16) <= 2.5) return y < 5 ? hex("#e8e0c8") : hex("#d8ecf2");
+    const vidro = (a, b) => b >= 9 && b <= 28 && Math.abs(a - 16) <= 8 - Math.max(0, 12 - b);
+    if (!vidro(x, y)) return null;
+    if (borda(vidro, x, y)) return hex("#9fb8c4");
+    return y < 13 ? hex("#dcecf2") : mix(c, BRANCO, x === 11 ? 0.35 : 0);
+  },
+  papel: (c) => (x, y) => {
+    const d = (a, b) => elipse(a, b, 16, 16, 12, 6) || (Math.abs(a - 16) < 12 && b > 16 && b < 24);
+    const p = solido(d, c, x, y, 0.1);
+    if (p && y > 17 && y % 3 === 0) return mul(c, 0.85);
+    return p;
+  },
+  teia: (c) => (x, y) => {
+    const dx = x - 16, dy = y - 16, r = Math.hypot(dx, dy);
+    if (r > 14) return null;
+    const ang = Math.atan2(dy, dx);
+    if (Math.abs(Math.sin(ang * 4)) < 0.12 || Math.abs(r % 4.5 - 2) < 0.5) return c;
+    return null;
+  },
+  carambola: (c) => (x, y) => {
+    const dx = x - 16, dy = y - 17, r = Math.hypot(dx, dy), ang = Math.atan2(dy, dx);
+    const raio = 8 + 5 * Math.cos(ang * 5);
+    const p = solido((a, b) => Math.hypot(a - 16, b - 17) < 8 + 5 * Math.cos(Math.atan2(b - 17, a - 16) * 5), c, x, y, 0.3);
+    return r < raio ? p : null;
+  },
+});
+const ESPESSURA = (d, x, y, c, l = 0.3) => solido(d, c, x, y, l);
+Object.assign(ICONE, {
+  rosca: (c) => (x, y) => {
+    const anel = (a, b) => elipse(a, b, 16, 17, 12, 10) && !elipse(a, b, 16, 17, 4.5, 3.5);
+    if (!anel(x, y)) return null;
+    if (borda(anel, x, y)) return mul(hex("#c88a4a"), 0.6);
+    if (y > 21) return hex("#d8a050");
+    return (x * 7 + y * 3) % 11 === 0 ? BRANCO : mix(c, BRANCO, 0.1);
+  },
+  muffin: (c) => (x, y) => {
+    const forma = (a, b) => b >= 18 && b <= 28 && Math.abs(a - 16) <= 9 - (b - 18) * 0.25;
+    if (forma(x, y)) return borda(forma, x, y) ? hex("#8a8a8a") : x % 3 ? hex("#e8e4dc") : hex("#c8c4bc");
+    const topo = (a, b) => elipse(a, b, 16, 16, 11, 8) && b <= 19;
+    const p = ESPESSURA(topo, x, y, mix(c, hex("#d8a050"), 0.35), 0.35);
+    if (p && ruido(x, y, 25) < 0.12) return c;
+    return p;
+  },
+  torta: (c) => (x, y) => {
+    const prato = (a, b) => elipse(a, b, 16, 19, 14, 8);
+    if (!prato(x, y)) return null;
+    if (borda(prato, x, y)) return mul(hex("#d8a050"), 0.6);
+    if (!elipse(x, y, 16, 18, 11, 6)) return hex("#e0b060");
+    return (x + y) % 5 === 0 || (x - y + 64) % 5 === 0 ? hex("#f0c878") : c;
+  },
+  picole: (c) => (x, y) => {
+    if (y >= 23 && y <= 30 && Math.abs(x - 16) <= 1.5) return MADEIRA;
+    const d = (a, b) => b >= 3 && b <= 23 && Math.abs(a - 16) <= 6 && !(b < 6 && Math.abs(a - 16) > 6 - (6 - b));
+    return ESPESSURA(d, x, y, c, 0.35);
+  },
+  sorvete: (c) => (x, y) => {
+    const cone = (a, b) => b >= 15 && b <= 30 && Math.abs(a - 16) <= (30 - b) * 0.5;
+    if (cone(x, y)) return (x + y) % 4 === 0 || (x - y + 64) % 4 === 0 ? hex("#b07a3a") : hex("#e0b060");
+    return ESPESSURA((a, b) => elipse(a, b, 16, 11, 8, 7) && b <= 16, x, y, c, 0.35);
+  },
+  bolo: (c) => (x, y) => {
+    const fatia = (a, b) => b >= 10 && b <= 26 && a >= 5 && a <= 27 && b >= 10 + (27 - a) * 0.0 && b <= 26 && a <= 5 + (b - 6) * 1.4;
+    if (!fatia(x, y)) return null;
+    if (borda(fatia, x, y)) return mul(c, 0.55);
+    if (y < 13) return mix(c, BRANCO, 0.55);
+    return (y - 13) % 6 < 2 ? mix(c, BRANCO, 0.4) : c;
+  },
+  espeto: (c) => (x, y) => {
+    if (Math.abs(x - y) < 1 && x > 2 && x < 30) return MADEIRA;
+    for (const k of [9, 16, 23]) if (elipse(x, y, k, k, 4, 4)) return ESPESSURA((a, b) => elipse(a, b, k, k, 4, 4), x, y, k === 16 ? mix(c, VERDE, 0.4) : c, 0.3);
+    return null;
+  },
+  barra: (c) => (x, y) => {
+    const d = (a, b) => a >= 5 && a <= 27 && b >= 8 && b <= 24;
+    if (!d(x, y)) return null;
+    if (borda(d, x, y) || (x - 5) % 7 === 0 || (y - 8) % 8 === 0) return mul(c, 0.7);
+    return y < 16 && x > 18 ? hex("#c8c8d0") : c;
+  },
+  garrafa: (c) => (x, y) => {
+    if (y >= 2 && y <= 6 && Math.abs(x - 16) <= 2) return MADEIRA;
+    const vidro = (a, b) => (b >= 6 && b <= 11 && Math.abs(a - 16) <= 3) || (b > 11 && b <= 29 && Math.abs(a - 16) <= 8);
+    if (!vidro(x, y)) return null;
+    if (borda(vidro, x, y)) return hex("#9fb8c4");
+    return y < 14 ? hex("#dcecf2") : mix(c, BRANCO, x === 11 ? 0.35 : 0);
+  },
+  algodao: (c) => (x, y) => {
+    if (Math.abs(x - 16) < 1 && y > 18) return MADEIRA;
+    const d = (a, b) => elipse(a, b, 16, 11, 10, 9) && ruido(a >> 1, b >> 1, 26) < 0.92;
+    return ESPESSURA(d, x, y, c, 0.5);
+  },
+  fritas: (c) => (x, y) => {
+    const caixa = (a, b) => b >= 16 && b <= 29 && Math.abs(a - 16) <= 9 - (29 - b) * 0.15;
+    if (caixa(x, y)) return borda(caixa, x, y) ? hex("#8a1a1a") : hex("#d62d20");
+    for (const k of [-6, -3, 0, 3, 6]) if (Math.abs(x - 16 - k - (y - 16) * k * 0.03) < 1.2 && y >= 4 + Math.abs(k) && y < 17) return (y + k) % 4 ? c : mul(c, 0.85);
+    return null;
+  },
+  massa: (c) => (x, y) => {
+    const prato = (a, b) => elipse(a, b, 16, 21, 14, 7);
+    if (elipse(x, y, 16, 18, 10, 6)) return Math.sin(x * 1.3 + y * 0.4) > 0.2 ? c : mul(c, 0.82);
+    if (!prato(x, y)) return null;
+    return borda(prato, x, y) ? mul(BRANCO, 0.6) : BRANCO;
+  },
+});
+const pintorDe = (forma, cor) => (ICONE[forma] ?? COLHEITA[forma])(cor ? hex(cor) : undefined);
+
 // Semente: saquinho com a cor da cultura.
 const SEMENTE = (c) => (x, y) => {
   const saco = (a, b) => b >= 7 && b <= 27 && a >= 8 && a <= 24;
@@ -196,7 +487,7 @@ const SEMENTE = (c) => (x, y) => {
 // Plantação: 3 estágios (broto, planta, madura com a colheita).
 function estagio(cultura, k) {
   const c = hex(cultura.cor);
-  if (cultura.deserto) {
+  if (cultura.deserto && (!cultura.forma || cultura.forma === "cacto")) {
     // Cacto baixo com frutas rosadas.
     return png((x, y) => {
       const alto = [10, 18, 24][k];
@@ -236,6 +527,7 @@ const MODELOS = {
   pilao: [cubo(3, 0, 3, 13, 5, 13, "pedra"), cubo(8, 3, 8, 10, 11, 10, "madeira")],
   tigela_mistura: [cubo(2, 0, 2, 14, 5, 14, "madeira")],
   espremedor: [cubo(4, 0, 4, 12, 2, 12, "pedra"), cubo(6, 2, 6, 10, 6, 10, "pedra"), cubo(7, 6, 7, 9, 8, 9, "pedra")],
+  rolo: [cubo(3, 0, 6.5, 13, 3, 9.5, "madeira"), cubo(0, 1, 7.5, 3, 2, 8.5, "madeira"), cubo(13, 1, 7.5, 16, 2, 8.5, "madeira")],
 };
 const TEX_UTENSILIO = { madeira: "textures/blocks/planks_oak", metal: "textures/blocks/iron_block", pedra: "textures/blocks/stone", tampa: "textures/blocks/iron_block" };
 const FACES = ["north", "south", "east", "west", "up", "down"];
@@ -279,6 +571,8 @@ const icone = (id, pintor) => {
   itemTex.texture_data[`clhc_${id}`] = { textures: `textures/items/cl/hc/${id}` };
 };
 function item(id, comps, categoria = "items", stack = 64) {
+  const tags = [...(H2.etiquetas[`cl:${id}`] ?? []), ...(id.startsWith("semente_") ? ["cl:hc_semente"] : [])];
+  if (tags.length) comps = { ...comps, "minecraft:tags": { tags } };
   json(`BP/items/${id}.json`, {
     format_version: "1.21.60",
     "minecraft:item": {
@@ -300,14 +594,15 @@ const ingrediente = (i) => (i.startsWith("#") ? { tag: i.slice(1) } : { item: i 
 const valores = {}; // id -> [fome, sat] (para o Hunger Overhaul do script)
 const bebidas = {}, temperaturas = {}, origem = [];
 
-for (const c of D.culturas) {
+for (const c of [...D.culturas, ...H2.culturas]) {
   const semente = `semente_${c.id}`, planta = `planta_${c.id}`, produto = c.produto ?? `cl:${c.id}`;
   icone(semente, SEMENTE(hex(c.cor)));
   item(semente, { "minecraft:block_placer": { block: `cl:${planta}`, use_on: ["minecraft:farmland"] } }, "nature");
   if (!c.produto) {
+    const fome = c.fome ?? 1; // HC2: as fibras (algodão, linho...) não se comem
     icone(c.id, COLHEITA[c.forma](hex(c.cor)));
-    item(c.id, comida(1), "nature", 16);
-    valores[`cl:${c.id}`] = [1, 0.1];
+    item(c.id, fome ? comida(fome) : {}, fome ? "nature" : "items", fome ? pilhaHO(fome) : 64);
+    if (fome) valores[`cl:${c.id}`] = [fome, 0.1];
   }
   for (let k = 0; k < 3; k++) {
     writeFileSync(join(dirBloco, `${c.id}_${k}.png`), estagio(c, k));
@@ -353,7 +648,7 @@ for (const c of D.culturas) {
 }
 json("RP/models/blocks/cl_planta.geo.json", GEO_PLANTA);
 
-for (const u of D.utensilios) {
+for (const u of [...D.utensilios, H2.rolo]) {
   json(`RP/models/blocks/cl_${u.id}.geo.json`, geometria(u.id, MODELOS[u.id]));
   const usados = [...new Set(MODELOS[u.id].map((c) => c.m))];
   const mats = Object.fromEntries(usados.map((m) => [m, { texture: `clhc_u_${m}`, render_method: "opaque" }]));
@@ -412,6 +707,173 @@ for (const f of D.comidas) {
     },
   });
 }
+// ---------- 1.47.0: HarvestCraft 2 (hortas silvestres, árvores frutíferas, comidas do Food Core) ----------
+const hexDe = (rgb) => "#" + rgb.map((v) => v.toString(16).padStart(2, "0")).join("");
+const COR = Object.fromEntries([...D.culturas, ...H2.culturas, ...H2.arvores].map((c) => [c.produto ?? `cl:${c.id}`, c.cor]));
+const semForma = (id, em, ings, resultado, qtd) => receita(id, {
+  "minecraft:recipe_shapeless": {
+    description: { identifier: `cl:hc_${id}` }, tags: [em ? `cl_${em}` : "crafting_table"], ingredients: ings.map(ingrediente), unlock: SEMPRE,
+    result: qtd > 1 ? { item: resultado, count: qtd } : { item: resultado },
+  },
+});
+// Forno, defumador e fogueira (como no HC2); o forno do Bedrock não aceita etiqueta: uma receita por alternativa.
+const forno = (id, de, resultado) => de.filter((d) => !d.startsWith("#")).forEach((d, k) => receita(`${id}_forno${k || ""}`, {
+  "minecraft:recipe_furnace": { description: { identifier: `cl:hc_${id}_forno${k || ""}` }, tags: ["furnace", "smoker", "campfire", "soul_campfire"], input: d, output: resultado },
+}));
+const PLANTA_GEO = "geometry.cl.planta";
+const mat = (tex) => ({ "*": { texture: tex, render_method: "alpha_test", ambient_occlusion: 0, face_dimming: false } });
+const CHAO_HORTA = ["minecraft:grass_block", "minecraft:dirt", "minecraft:coarse_dirt", "minecraft:podzol", "minecraft:sand", "minecraft:red_sand", "minecraft:farmland", "minecraft:mud", "minecraft:moss_block"];
+const CHAO_MUDA = ["minecraft:grass_block", "minecraft:dirt", "minecraft:coarse_dirt", "minecraft:podzol", "minecraft:farmland", "minecraft:rooted_dirt", "minecraft:moss_block"];
+
+// Hortas: moita com as cores das colheitas de cada uma.
+function hortaPng(h) {
+  const cores = h.itens.map((i) => hex(COR[i] ?? "#c0c040"));
+  const pontos = [[11, 15], [20, 11], [24, 20], [14, 23], [7, 22], [19, 19], [16, 8]];
+  return png((x, y) => {
+    for (const [k, [bx, by]] of pontos.entries()) if (elipse(x, y, bx, by, 2.2, 2.2)) return elipse(x, y, bx - 0.7, by - 0.7, 0.7, 0.7) ? mix(cores[k % cores.length], BRANCO, 0.5) : cores[(k * 5) % cores.length];
+    for (const [fx, fy, rx, ry] of [[9, 21, 7, 7], [17, 14, 9, 8], [24, 21, 7, 7], [15, 25, 10, 6]]) {
+      if (elipse(x, y, fx, fy, rx, ry)) return mix(VERDE_ESC, VERDE, 0.3 + ruido(x, y, 30) * 0.7);
+    }
+    return null;
+  });
+}
+for (const h of H2.hortas) {
+  writeFileSync(join(dirBloco, `${h.id}.png`), hortaPng(h));
+  terreno.texture_data[`clhc_${h.id}`] = { textures: `textures/blocks/cl/hc/${h.id}` };
+  json(`BP/blocks/${h.id}.json`, {
+    format_version: "1.26.30",
+    "minecraft:block": {
+      description: { identifier: `cl:${h.id}`, menu_category: { category: "nature" } },
+      components: {
+        "minecraft:geometry": PLANTA_GEO, "minecraft:material_instances": mat(`clhc_${h.id}`), "minecraft:collision_box": false,
+        "minecraft:selection_box": { origin: [-6, 0, -6], size: [12, 13, 12] }, "minecraft:destructible_by_mining": { seconds_to_destroy: 0 },
+        "minecraft:destructible_by_explosion": { explosion_resistance: 0 }, "minecraft:light_dampening": 0, "minecraft:map_color": "#4f9a3a",
+        "minecraft:flammable": { catch_chance_modifier: 60, destroy_chance_modifier: 100 },
+        "minecraft:loot": `loot_tables/cl/hc/${h.id}.json`,
+        "minecraft:placement_filter": { conditions: [{ allowed_faces: ["up"], block_filter: CHAO_HORTA }] },
+        "cl:horta": {},
+      },
+    },
+  });
+  // Uma colheita da lista, sorteada (como a do HC2).
+  json(`BP/loot_tables/cl/hc/${h.id}.json`, { pools: [{ rolls: 1, entries: h.itens.map((i) => ({ type: "item", name: i, weight: 1 })) }] });
+  nomes.pt[`tile.cl:${h.id}.name`] = h.pt;
+  nomes.en[`tile.cl:${h.id}.name`] = h.en;
+  origem.push(`cl:${h.id}`);
+}
+
+// Árvores frutíferas: muda, fruto pendurado (3 estágios: flor, verde, maduro) e o item do fruto.
+function mudaPng(a) {
+  const c = hex(a.cor);
+  return png((x, y) => {
+    if (Math.abs(x - 16) < 1.2 && y >= 16 && y <= 31) return MARROM;
+    if (elipse(x, y, 12, 19, 1.8, 1.8) || elipse(x, y, 20, 12, 1.8, 1.8)) return c;
+    const copa = (p, q) => elipse(p, q, 16, 12, 9, 8) || elipse(p, q, 11, 17, 5, 4) || elipse(p, q, 21, 17, 5, 4);
+    if (copa(x, y)) return borda(copa, x, y) ? VERDE_ESC : mix(VERDE_ESC, VERDE, 0.4 + ruido(x, y, 31) * 0.6);
+    return null;
+  });
+}
+function frutoPng(a, k) {
+  const escala = [0, 0.5, 0.72][k];
+  const cor = k === 2 ? a.cor : hexDe(mix(hex("#7ab03a"), hex(a.cor), 0.3));
+  const pintor = k ? pintorDe(a.forma, cor) : null;
+  return png((x, y) => {
+    if (Math.abs(x - 16) < 0.8 && y <= 5) return VERDE_ESC;
+    if (k === 0) {
+      if (elipse(x, y, 16, 8, 3.5, 3.5)) return elipse(x, y, 16, 8, 1.2, 1.2) ? hex("#f2c94c") : BRANCO;
+      return null;
+    }
+    const x0 = 16 - 16 * escala, u = Math.floor((x - x0) / escala), v = Math.floor((y - 3) / escala);
+    return u < 0 || v < 0 || u > 31 || v > 31 ? null : pintor(u, v);
+  });
+}
+const ARVORES = {}, FRUTOS = {};
+for (const a of H2.arvores) {
+  const muda = `muda_${a.id}`, fruto = `fruto_${a.id}`;
+  writeFileSync(join(dirBloco, `${muda}.png`), mudaPng(a));
+  terreno.texture_data[`clhc_${muda}`] = { textures: `textures/blocks/cl/hc/${muda}` };
+  for (let k = 0; k < 3; k++) {
+    writeFileSync(join(dirBloco, `${fruto}_${k}.png`), frutoPng(a, k));
+    terreno.texture_data[`clhc_${fruto}_${k}`] = { textures: `textures/blocks/cl/hc/${fruto}_${k}` };
+  }
+  json(`BP/blocks/${muda}.json`, {
+    format_version: "1.26.30",
+    "minecraft:block": {
+      description: { identifier: `cl:${muda}`, menu_category: { category: "nature" } },
+      components: {
+        "minecraft:geometry": PLANTA_GEO, "minecraft:material_instances": mat(`clhc_${muda}`), "minecraft:collision_box": false,
+        "minecraft:selection_box": { origin: [-5, 0, -5], size: [10, 12, 10] }, "minecraft:destructible_by_mining": { seconds_to_destroy: 0 },
+        "minecraft:destructible_by_explosion": { explosion_resistance: 0 }, "minecraft:light_dampening": 0, "minecraft:map_color": a.cor,
+        "minecraft:placement_filter": { conditions: [{ allowed_faces: ["up"], block_filter: CHAO_MUDA }] },
+        "minecraft:tick": { interval_range: [600, 1200], looping: true }, "cl:muda_hc": {},
+      },
+    },
+  });
+  json(`BP/blocks/${fruto}.json`, {
+    format_version: "1.26.30",
+    "minecraft:block": {
+      description: { identifier: `cl:${fruto}`, menu_category: { category: "none" }, states: { "cl:estagio": { values: { min: 0, max: 2 } } } },
+      components: {
+        "minecraft:geometry": PLANTA_GEO, "minecraft:material_instances": mat(`clhc_${fruto}_0`), "minecraft:collision_box": false,
+        "minecraft:selection_box": { origin: [-4, 4, -4], size: [8, 12, 8] }, "minecraft:destructible_by_mining": { seconds_to_destroy: 0.1 },
+        "minecraft:destructible_by_explosion": { explosion_resistance: 0 }, "minecraft:light_dampening": 0, "minecraft:map_color": a.cor,
+        "minecraft:loot": "loot_tables/empty.json", "minecraft:tick": { interval_range: [600, 1200], looping: true }, "cl:fruto_hc": {},
+      },
+      permutations: [1, 2].map((k) => ({ condition: `q.block_state('cl:estagio') == ${k}`, components: { "minecraft:material_instances": mat(`clhc_${fruto}_${k}`) } })),
+    },
+  });
+  if (a.produto === `cl:${a.id}`) {
+    icone(a.id, pintorDe(a.forma, a.cor));
+    item(a.id, a.fome ? comida(a.fome) : {}, a.fome ? "nature" : "items", a.fome ? pilhaHO(a.fome) : 64);
+    if (a.fome) valores[`cl:${a.id}`] = [a.fome, 0.1];
+    nomes.pt[`item.cl:${a.id}.name`] = a.pt;
+    nomes.en[`item.cl:${a.id}.name`] = a.en;
+    origem.push(`cl:${a.id}`);
+  }
+  // Muda: 8 frutos e uma muda qualquer (no Bedrock, a de carvalho), como no HC2.
+  semForma(`muda_${a.id}`, "", [...Array(8).fill(a.produto), "minecraft:oak_sapling"], `cl:${muda}`, 1);
+  nomes.pt[`tile.cl:${muda}.name`] = `Muda de ${a.pt}`;
+  nomes.en[`tile.cl:${muda}.name`] = `${a.en.replace(/s$/, "")} Sapling`;
+  nomes.pt[`tile.cl:${fruto}.name`] = `${a.pt} (no pé)`;
+  nomes.en[`tile.cl:${fruto}.name`] = `${a.en} Fruit`;
+  origem.push(`cl:${muda}`, `cl:${fruto}`);
+  ARVORES[`cl:${muda}`] = { fruto: `cl:${fruto}`, tronco: a.tronco, folha: a.folha, altura: a.altura };
+  FRUTOS[`cl:${fruto}`] = a.produto;
+}
+
+// Comidas do Food Core e o que vai ao forno (Crops e Trees).
+for (const f of [...H2.comidas, ...H2.fornos]) {
+  const resultado = f.resultado ?? `cl:${f.mesmo ?? f.id}`;
+  if (!f.mesmo && !f.resultado) {
+    const [forma, cor] = f.icone.split(":");
+    icone(f.id, pintorDe(forma, cor));
+    item(f.id, f.fome ? comida(f.fome, f.bebida) : {}, f.fome ? "nature" : "items", f.fome ? pilhaHO(f.fome) : 64);
+    nomes.pt[`item.cl:${f.id}.name`] = f.pt;
+    nomes.en[`item.cl:${f.id}.name`] = f.en;
+    origem.push(`cl:${f.id}`);
+    if (f.fome) valores[`cl:${f.id}`] = [f.fome, 0.1];
+    if (f.agua) bebidas[`cl:${f.id}`] = f.agua;
+    if (f.temp) temperaturas[`cl:${f.id}`] = f.temp;
+  }
+  (f.receitas ?? []).forEach(([em, vs, qtd], r) => vs.forEach((ings, v) => semForma(`${f.id}_${r}_${v}`, em, ings, resultado, qtd)));
+  if (f.forno) forno(f.id, f.forno, resultado);
+}
+for (const e of H2.extras) e.variantes.forEach((ings, v) => semForma(`${e.id}_${v}`, e.em, ings, e.resultado, e.qtd));
+
+// Textos do HC2 (estágios do fruto e missões do Diário).
+for (const [k, pt, en] of [
+  ["cl.hc2.fruto.0", "Em flor", "Flowering"], ["cl.hc2.fruto.1", "Verde", "Unripe"], ["cl.hc2.fruto.2", "Maduro (toque para colher)", "Ripe (tap to pick)"],
+  ["cl.missao.hc2_horta.titulo", "Horta silvestre", "Wild garden"],
+  ["cl.missao.hc2_horta.desc", "Quebre uma horta silvestre (deserto, taiga, floresta, pântano, selva, planície ou savana): dá uma colheita da região.", "Break a wild garden (desert, taiga, forest, swamp, jungle, plains or savanna): it gives a crop of the region."],
+  ["cl.missao.hc2_rolo.titulo", "Rolo de Massa", "Roller"], ["cl.missao.hc2_rolo.desc", "Ponha um Rolo de Massa (2 gravetos e 1 tronco).", "Place a Roller (2 sticks and 1 log)."],
+  ["cl.missao.hc2_macarrao.titulo", "Macarrão", "Pasta"], ["cl.missao.hc2_macarrao.desc", "Abra massa no Rolo: tenha 2 Macarrões.", "Roll dough on the Roller: have 2 Pasta."],
+  ["cl.missao.hc2_arvore.titulo", "Pomar", "Orchard"],
+  ["cl.missao.hc2_arvore.desc", "Faça crescer uma árvore frutífera (muda = 8 frutos + muda de carvalho; farinha de osso ajuda).", "Grow a fruit tree (sapling = 8 fruits + oak sapling; bone meal helps)."],
+  ["cl.missao.hc2_fruta.titulo", "Fruta do pé", "Fresh from the tree"], ["cl.missao.hc2_fruta.desc", "Colha 10 frutos maduros das árvores.", "Pick 10 ripe fruits from trees."],
+]) {
+  nomes.pt[k] = pt;
+  nomes.en[k] = en;
+}
 json("RP/textures/item_texture.json", itemTex);
 json("RP/textures/terrain_texture.json", terreno);
 
@@ -430,11 +892,15 @@ writeFileSync(join(RAIZ, "scripts/harvest/gerado.ts"), `// Gerado por tools/gera
 export const CULTURAS: ReadonlyArray<{ id: string; planta: string; semente: string; produto: string; deserto: boolean }> = ${JSON.stringify(
   D.culturas.map((c) => ({ id: c.id, planta: `cl:planta_${c.id}`, semente: `cl:semente_${c.id}`, produto: c.produto ?? `cl:${c.id}`, deserto: !!c.deserto })),
 )};
-export const UTENSILIOS: ReadonlyArray<string> = ${JSON.stringify(D.utensilios.map((u) => `cl:${u.id}`))};
+export const UTENSILIOS: ReadonlyArray<string> = ${JSON.stringify([...D.utensilios, H2.rolo].map((u) => `cl:${u.id}`))};
+// HarvestCraft 2 (1.47.0): hortas silvestres, árvores (muda -> fruto, tronco, folha, altura base/a/b) e frutos (-> o que dá).
+export const HORTAS_HC: ReadonlyArray<string> = ${JSON.stringify(H2.hortas.map((h) => `cl:${h.id}`))};
+export const ARVORES_HC: Readonly<Record<string, { fruto: string; tronco: string; folha: string; altura: readonly [number, number, number] }>> = ${JSON.stringify(ARVORES)};
+export const FRUTOS_HC: Readonly<Record<string, string>> = ${JSON.stringify(FRUTOS)};
 // Fome e modificador de saturação das comidas do HarvestCraft (regra do Hunger Overhaul).
 export const COMIDAS_HC: Readonly<Record<string, readonly [number, number]>> = ${JSON.stringify(valores)};
 export const BEBIDAS_HC: Readonly<Record<string, number>> = ${JSON.stringify(bebidas)};
 export const TEMPERATURA_HC: Readonly<Record<string, number>> = ${JSON.stringify(temperaturas)};
 export const ITENS_HC: ReadonlyArray<string> = ${JSON.stringify(origem)};
 `);
-console.log(`harvestcraft: ${D.culturas.length} plantações, ${D.utensilios.length} utensílios, ${D.comidas.length} receitas de cozinha`);
+console.log(`harvestcraft: ${D.culturas.length + H2.culturas.length} plantações, ${D.utensilios.length + 1} utensílios, ${H2.hortas.length} hortas, ${H2.arvores.length} árvores, ${D.comidas.length + H2.comidas.length + H2.fornos.length} comidas`);

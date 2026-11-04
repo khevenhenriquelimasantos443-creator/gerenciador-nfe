@@ -68,6 +68,15 @@ def render(nome):
     k = ESTADO.get(nome)
     if k is not None and bloco.get("permutations"):
         mi.update(bloco["permutations"][min(k, len(bloco["permutations"]) - 1)]["components"].get("minecraft:material_instances", {}))
+    # Planos cruzados (hortas, mudas e frutos do HarvestCraft 2, 1.47.0): a textura plana, como as plantas do jogo.
+    if bloco["components"].get("minecraft:geometry") == "geometry.cl.planta":
+        plano = tex(mi["*"]["texture"])
+        caixa = plano.getbbox() or (0, 0, plano.width, plano.height)
+        img = plano.crop(caixa)
+        lado = max(img.size)
+        quad = Image.new("RGBA", (lado, lado), (0, 0, 0, 0))
+        quad.alpha_composite(img, ((lado - img.width) // 2, (lado - img.height) // 2))
+        return quad.resize((64, 64), Image.NEAREST)
     gira = "traits" in bloco["description"]
     faces = []
     for c in cubos(nome, bloco):

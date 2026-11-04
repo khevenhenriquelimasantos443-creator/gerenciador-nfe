@@ -154,6 +154,24 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.47.0 (Pam's HarvestCraft 2, o mais novo)
+
+- **86 plantações novas** (todas do HarvestCraft 2 Crops), de agave a abobrinha, cada uma com semente, os 3 estágios e o
+  valor de fome do mod (pela regra do Hunger Overhaul). As do deserto (hortas áridas) crescem melhor no deserto.
+- **Hortas silvestres** (6, como no mod): árida (deserto e mesa), gelada (taiga), sombria (floresta), úmida (pântano),
+  tropical (selva) e ventosa (planície e savana), 1 a cada 20 chunks, em moitas. Quebrar dá uma colheita da região;
+  farinha de osso espalha a horta (até 10 juntas).
+- **Árvores frutíferas** (49 do HarvestCraft 2 Trees): nascem nas florestas (temperadas, quentes e de coníferas, cada
+  uma 1 em 90 chunks) com os frutos pendurados embaixo das folhas. O fruto vai de flor a verde a maduro (cerca de
+  48 min); toque no maduro para colher. Muda = 8 frutos + 1 muda de carvalho. A maçã dá a maçã do jogo; a teia, linha;
+  a casca-de-papel, papel.
+- **Comidas do Food Core** (182) e as do forno (31: legumes assados, castanhas torradas, chá e café quentes), com
+  fome, hidratação e temperatura como as outras do HarvestCraft. Utensílio novo: **Rolo de Massa** (macarrão, óleo de
+  cozinha). Receitas das plantações: linha das fibras, papel, açúcar de agave, gravetos e tocha de taboa, balde d'água
+  do cacto-barril, garrafas de cabaça, pão de grãos.
+- Diário: cinco missões novas (horta silvestre, Rolo de Massa, macarrão, pomar e fruta do pé).
+- Arte toda própria (a do HarvestCraft 2 é de todos os direitos reservados).
+
 ## Novidades da 1.46.0 (Ex Nihilo: Sequentia, o mais novo)
 
 - **Malhas da peneira**: barbante, sílex, ferro, diamante, esmeralda e netherita (arte do mod). Toque na peneira com a

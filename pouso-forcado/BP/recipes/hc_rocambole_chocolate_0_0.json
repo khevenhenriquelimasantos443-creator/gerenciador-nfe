@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_rocambole_chocolate_0_0"
+    },
+    "tags": [
+      "cl_assadeira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:massa"
+      },
+      {
+        "item": "cl:cacau_po"
+      },
+      {
+        "item": "cl:creme_leite"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:rocambole_chocolate"
+    }
+  }
+}

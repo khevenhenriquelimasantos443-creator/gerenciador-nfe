@@ -1,0 +1,99 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "cl:aspargo",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:mirtilo",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:couve_bruxelas",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:baga_cera",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:algodao",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:oxicoco",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:uva_verde",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:jicama",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:couve",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:painco",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:amora",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:quiabo",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:arroz",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:folha_tempero",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:tomatilho",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:castanha_dagua",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:lotus",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "cl:taboa",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

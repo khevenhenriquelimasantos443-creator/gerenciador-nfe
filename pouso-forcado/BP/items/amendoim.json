@@ -21,6 +21,12 @@
       "minecraft:food": {
         "nutrition": 1,
         "saturation_modifier": 0.1
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:hc_vegetal",
+          "cl:hc_noz"
+        ]
       }
     }
   }

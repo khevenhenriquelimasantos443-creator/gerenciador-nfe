@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_biscoitos_leite_0_0"
+    },
+    "tags": [
+      "cl_tigela_mistura"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:leite_fresco"
+      },
+      {
+        "item": "minecraft:cookie"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:biscoitos_leite"
+    }
+  }
+}

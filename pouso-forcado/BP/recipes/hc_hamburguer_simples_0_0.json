@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_hamburguer_simples_0_0"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:moido_carne"
+      },
+      {
+        "item": "cl:maionese"
+      },
+      {
+        "item": "minecraft:bread"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:hamburguer_simples"
+    }
+  }
+}

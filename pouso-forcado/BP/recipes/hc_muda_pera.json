@@ -1,0 +1,46 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_muda_pera"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "cl:pera"
+      },
+      {
+        "item": "minecraft:oak_sapling"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:muda_pera"
+    }
+  }
+}
