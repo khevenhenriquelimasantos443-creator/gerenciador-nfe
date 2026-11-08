@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_transmitter_pressurized_tube_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S#S"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:glass"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tubo_pressurizado_basico",
+      "count": 8
+    }
+  }
+}

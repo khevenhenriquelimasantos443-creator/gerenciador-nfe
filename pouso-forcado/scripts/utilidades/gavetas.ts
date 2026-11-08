@@ -1,7 +1,7 @@
 import { Block, BlockCustomComponent, Direction, ItemStack, Player, RawMessage, system, Vector3, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { iconeDe, nomeDe } from "../catalogo/catalogo.js";
-import { DADOS_F51 } from "../conteudo/gerado.js";
+import { DADOS_F51, DADOS_F68 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { gravarEm, lerEm, registrarDetalhe } from "../util/dados.js";
@@ -19,7 +19,10 @@ import { codigoDoItem, guardarNoItem, lerCodigo } from "../util/item_guarda.js";
 type Slot = { t: string; n: number } | null;
 type Gav = { s: Slot[]; up?: string[]; trava?: boolean; tv?: (string | null)[]; c?: string };
 const T = "gaveta";
-const DEF = DADOS_F51.gavetas as unknown as Readonly<Record<string, readonly [number, number]>>;
+// 1.51.0: as Caixas do Mekanism (Bins) entram como gavetas de 1 espaço com capacidade fixa em itens (o 3º número),
+// sem melhorias e fora da rede do Controlador.
+const DEF = { ...DADOS_F51.gavetas, ...DADOS_F68.caixas } as unknown as Readonly<Record<string, readonly [number, number, number?]>>;
+const fixa = (id: string): number | undefined => DEF[id.replace("cl:", "")]?.[2];
 const MULT = DADOS_F51.melhoriasGaveta as Readonly<Record<string, number>>;
 const VAZIO = "cl:melhoria_gaveta_vazio", CHAVE = "cl:chave_gaveta", CONTROLADOR = "cl:controlador_gavetas", ACABAMENTO = "cl:acabamento_gaveta";
 const ehGaveta = (id: string) => DEF[id.replace("cl:", "")] !== undefined;
@@ -69,6 +72,8 @@ function pilhaDe(id: string): number {
 const mult = (g: Gav) => Math.max(1, (g.up ?? []).reduce((s, u) => s + (MULT[u.replace("cl:", "")] ?? 0), 0));
 const temVazio = (g: Gav) => (g.up ?? []).includes(VAZIO);
 function capacidade(tipo: string, g: Gav, item: string): number {
+  const f = fixa(tipo);
+  if (f) return f;
   const [, pilhas] = DEF[tipo.replace("cl:", "")] ?? [1, 32];
   if (ehCompacta(tipo)) {
     const c = cadeiaBase(g.c);
@@ -197,6 +202,7 @@ function tocar(j: Player, b: Block, face: Direction, p: Vector3): void {
   const g = ler(b);
   // Melhorias e chave.
   if (mao && (MULT[mao.typeId.replace("cl:", "")] !== undefined || mao.typeId === VAZIO)) {
+    if (fixa(b.typeId)) return aviso(j, "cl.mku.nao_aceita", 2);
     if ((g.up ?? []).length >= 7) return aviso(j, "cl.gaveta.max_melhorias", 2);
     (g.up ??= []).push(mao.typeId);
     gravar(b, g);
@@ -303,7 +309,7 @@ function rede(b: Block, max = 256): Block[] {
       } catch {
         continue;
       }
-      if (!n || (!ehGaveta(n.typeId) && n.typeId !== ACABAMENTO && n.typeId !== CONTROLADOR)) continue;
+      if (!n || ((!ehGaveta(n.typeId) || fixa(n.typeId)) && n.typeId !== ACABAMENTO && n.typeId !== CONTROLADOR)) continue;
       fila.push(n);
       if (ehGaveta(n.typeId)) achadas.push(n);
     }

@@ -259,6 +259,52 @@ export const tanqueComp: BlockCustomComponent = {
   },
 };
 
+// ---------- Pontas para Canos Mecânicos e Tubos Pressurizados (1.51.0) ----------
+/** Um bloco que dá ou recebe fluido/químico: o que pode sair, quanto cabe de cada um, mexer (+ entra, - sai) e gravar. */
+export type Ponta = {
+  oferece(): Array<[string, number]>;
+  aceita(q: string): number;
+  mexer(q: string, mb: number): void;
+  gravar(): void;
+};
+const PONTAS = new Map<string, (b: Block) => Ponta | undefined>();
+export function registrarPonta(ids: readonly string[], fn: (b: Block) => Ponta | undefined): void {
+  for (const id of ids) PONTAS.set(id, fn);
+}
+export const ehPonta = (id: string): boolean => PONTAS.has(id);
+export const pontaDe = (b: Block | undefined): Ponta | undefined => (b ? PONTAS.get(b.typeId)?.(b) : undefined);
+export const ehLiquidoMk = (q: string): boolean => ehLiquido(q);
+export const nomeQuimico = nomeQ;
+export { MB as MB_CILINDRO, RECIPIENTE as RECIPIENTE_MK, CHEIO as CHEIO_MK };
+registrarPonta(Object.keys(MAQ), (b) => {
+  const m = MAQ[b.typeId];
+  const e = ler<Estado>("mkq", b, novo());
+  return {
+    oferece: () => [...m.sai(e)].filter((q) => tem(e, q) > 0).map((q) => [q, tem(e, q)]),
+    aceita: (q) => (m.usa(e).has(q) ? Math.max(0, CAP - tem(e, q)) : 0),
+    mexer: (q, mb) => mexer(e, q, mb),
+    gravar: () => gravar("mkq", b, e),
+  };
+});
+registrarPonta(Object.keys(D.tanques), (b) => {
+  const [tipo, cap] = D.tanques[b.typeId];
+  const t = ler<Tanque>("mkt", b, { mb: 0 });
+  const serve = (q: string) => ehLiquido(q) === (tipo === "fluido");
+  return {
+    oferece: () => (t.q && t.mb > 0 ? [[t.q, t.mb]] : []),
+    aceita: (q) => (serve(q) && (!t.q || t.mb <= 0 || t.q === q) ? Math.max(0, cap - t.mb) : 0),
+    mexer: (q, mb) => {
+      t.q = q;
+      t.mb += mb;
+      if (t.mb <= 0) {
+        t.mb = 0;
+        delete t.q;
+      }
+    },
+    gravar: () => gravar("mkt", b, t),
+  };
+});
+
 const pendente = new Map<string, { cod?: string; tick: number }>();
 export function registrarMekanismQuimica(): void {
   const resumo = (e: Estado): RawMessage | undefined => {

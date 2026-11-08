@@ -70,7 +70,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
 - **Mekanism completo** (1.49.0+; Mekanism 10.7.19, aidancbrady e equipe, MIT): a química e o minério ×5 (Oxidador, Câmara
   de Dissolução, Lavador, Cristalizador, Condensentrador Rotativo, Câmara de Reação Pressurizada, Infusor Químico), os
   tanques de químico e de fluido, o Barril Pessoal, a fluorita e o PEAD, com as receitas, os números e a arte e os modelos 3D
-  originais (convertidos para o Bedrock por `tools/importar-mekanism-completo.py`).
+  originais (convertidos para o Bedrock por `tools/importar-mekanism-completo.py`). 1.50.0: fábricas, melhorias e
+  instaladores de nível. 1.51.0: chumbo, Caixas, transmissores (cabos, canos, tubos e transportadores), Bomba, Plenificador,
+  Minerador Digital, Teletransportador, Entrelaçador Quântico, Carregador de Chão, Classificador, Vibrador e Leitor
+  Sísmico, Alarme Industrial (com o som `industrial_alarm.ogg` do mod) e o ícone do Robit desenhado do modelo do mod.
 - **Mekanism Generators** e **Mekanism Tools** (aidancbrady, MIT): geradores, ferramentas e armaduras, com os números lidos
   no código-fonte público (github.com/aidancbrady/Mekanism). Código próprio; as armaduras usam a textura da armadura de
   ferro do jogo (Mojang, `Mojang/bedrock-samples`) tingida por `tools/gerar-armaduras.mjs`.

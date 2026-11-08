@@ -3,6 +3,7 @@
 # Lê os modelos (RP/models/blocks) e as texturas; grava RP/textures/items/cl/blocos/<bloco>.png.
 # Não roda no build (precisa de Python + Pillow): rode de novo quando mudar um modelo ou textura.
 #   python3 tools/icones-blocos.py
+import glob
 import json, math, os, sys
 from PIL import Image, ImageDraw
 
@@ -42,8 +43,21 @@ def rot_x(p, piv, ang):
     return (p[0], piv[1] + y * math.cos(a) - z * math.sin(a), piv[2] + y * math.sin(a) + z * math.cos(a))
 
 
+GEO_ARQ = {}  # identificador do modelo -> arquivo (os do Mekanism completo são geometry.cl.mk_*, de nome diferente do bloco)
+for _a in glob.glob(f"{R}/RP/models/blocks/*.geo.json"):
+    try:
+        for _g in json.load(open(_a))["minecraft:geometry"]:
+            GEO_ARQ[_g["description"]["identifier"]] = _a
+    except (ValueError, KeyError):
+        pass
+
+
 def cubos(nome, bloco):
     arq = f"{R}/RP/models/blocks/cl_{nome}.geo.json"
+    g = bloco["components"].get("minecraft:geometry")
+    ident = g.get("identifier") if isinstance(g, dict) else g
+    if not os.path.exists(arq) and ident in GEO_ARQ:
+        arq = GEO_ARQ[ident]
     if os.path.exists(arq):
         geo = json.load(open(arq))["minecraft:geometry"][0]
         g = bloco["components"]["minecraft:geometry"]
@@ -51,6 +65,9 @@ def cubos(nome, bloco):
         for bone in geo["bones"]:
             if nome == "cabo":
                 if bone["name"] in ("leste", "oeste"):
+                    continue
+            elif ident and ident.startswith("geometry.cl.mk_transmissor"):  # transmissores do Mekanism: um pedaço reto
+                if bone["name"] not in ("centro", "leste", "oeste"):
                     continue
             elif bone["name"] in escondidos:  # partes que só aparecem em algum estado (conteúdo, níveis)
                 continue

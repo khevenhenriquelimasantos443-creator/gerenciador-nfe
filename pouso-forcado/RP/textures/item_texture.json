@@ -7162,6 +7162,48 @@
     },
     "clc_instalador_nivel_definitivo": {
       "textures": "textures/items/cl/arte/instalador_nivel_definitivo"
+    },
+    "clc_torrao_chumbo": {
+      "textures": "textures/items/cl/arte/torrao_chumbo"
+    },
+    "clc_fragmento_chumbo": {
+      "textures": "textures/items/cl/arte/fragmento_chumbo"
+    },
+    "clc_po_sujo_chumbo": {
+      "textures": "textures/items/cl/arte/po_sujo_chumbo"
+    },
+    "clc_cristal_chumbo": {
+      "textures": "textures/items/cl/arte/cristal_chumbo"
+    },
+    "clc_cilindro_pasta_suja_chumbo": {
+      "textures": "textures/items/cl/c/cilindro_pasta_suja_chumbo"
+    },
+    "clc_cilindro_pasta_limpa_chumbo": {
+      "textures": "textures/items/cl/c/cilindro_pasta_limpa_chumbo"
+    },
+    "clc_teletransportador_portatil": {
+      "textures": "textures/items/cl/arte/teletransportador_portatil"
+    },
+    "clc_leitor_sismico": {
+      "textures": "textures/items/cl/arte/leitor_sismico"
+    },
+    "clc_nucleo_teletransporte": {
+      "textures": "textures/items/cl/arte/nucleo_teletransporte"
+    },
+    "clc_lingote_chumbo": {
+      "textures": "textures/items/cl/arte/lingote_chumbo"
+    },
+    "clc_chumbo_bruto": {
+      "textures": "textures/items/cl/arte/chumbo_bruto"
+    },
+    "clc_pepita_chumbo": {
+      "textures": "textures/items/cl/arte/pepita_chumbo"
+    },
+    "clc_po_chumbo": {
+      "textures": "textures/items/cl/arte/po_chumbo"
+    },
+    "clc_robit": {
+      "textures": "textures/items/cl/arte/robit"
     }
   }
 }

@@ -1,0 +1,129 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:tubo_pressurizado_definitivo",
+      "menu_category": {
+        "category": "nature"
+      },
+      "states": {
+        "cl:n": [
+          false,
+          true
+        ],
+        "cl:s": [
+          false,
+          true
+        ],
+        "cl:l": [
+          false,
+          true
+        ],
+        "cl:o": [
+          false,
+          true
+        ],
+        "cl:cima": [
+          false,
+          true
+        ],
+        "cl:baixo": [
+          false,
+          true
+        ],
+        "cl:extrai": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.mk_transmissor_pequeno",
+        "bone_visibility": {
+          "norte": "q.block_state('cl:n')",
+          "sul": "q.block_state('cl:s')",
+          "leste": "q.block_state('cl:l')",
+          "oeste": "q.block_state('cl:o')",
+          "cima": "q.block_state('cl:cima')",
+          "baixo": "q.block_state('cl:baixo')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_mkt_tubo_pressurizado_definitivo_lado",
+          "render_method": "alpha_test"
+        },
+        "lado": {
+          "texture": "clc_mkt_tubo_pressurizado_definitivo_lado",
+          "render_method": "alpha_test"
+        },
+        "centro": {
+          "texture": "clc_mkt_tubo_pressurizado_definitivo_centro",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#3a8a3a",
+      "minecraft:tick": {
+        "interval_range": [
+          20,
+          20
+        ],
+        "looping": true
+      },
+      "cl:mk_transmissor": {},
+      "minecraft:collision_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:light_dampening": 0
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:extrai')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "clc_mkt_tubo_pressurizado_definitivo_lado",
+              "render_method": "alpha_test"
+            },
+            "lado": {
+              "texture": "clc_mkt_tubo_pressurizado_definitivo_lado",
+              "render_method": "alpha_test"
+            },
+            "centro": {
+              "texture": "clc_conduto_item_extrai",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

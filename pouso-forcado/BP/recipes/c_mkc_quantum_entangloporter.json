@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_quantum_entangloporter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ICI",
+      "ATA",
+      "ICI"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "I": {
+        "item": "cl:lingote_obsidiana_refinada"
+      },
+      "T": {
+        "item": "cl:nucleo_teletransporte"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:entrelacador_quantico"
+    }
+  }
+}

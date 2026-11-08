@@ -1260,6 +1260,70 @@
  ],
  "receitas": [
   {
+   "id": "mkc_tier_installer_advanced",
+   "resultado": "cl:instalador_nivel_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "#minecraft:planks"
+   }
+  },
+  {
+   "id": "mkc_tier_installer_basic",
+   "resultado": "cl:instalador_nivel_basico",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "#minecraft:planks"
+   }
+  },
+  {
+   "id": "mkc_tier_installer_elite",
+   "resultado": "cl:instalador_nivel_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "#minecraft:planks"
+   }
+  },
+  {
+   "id": "mkc_tier_installer_ultimate",
+   "resultado": "cl:instalador_nivel_definitivo",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "#minecraft:planks"
+   }
+  },
+  {
    "id": "mkc_upgrade_anchor",
    "resultado": "cl:melhoria_ancora",
    "tipo": "shaped",
@@ -1320,6 +1384,20 @@
    }
   },
   {
+   "id": "mkc_upgrade_muffling",
+   "resultado": "cl:melhoria_silenciador",
+   "tipo": "shaped",
+   "padrao": [
+    " # ",
+    "#I#",
+    " # "
+   ],
+   "chave": {
+    "#": "minecraft:white_wool",
+    "I": "minecraft:iron_ingot"
+   }
+  },
+  {
    "id": "mkc_upgrade_speed",
    "resultado": "cl:melhoria_velocidade",
    "tipo": "shaped",
@@ -1331,6 +1409,22 @@
    "chave": {
     "#": "cl:po_osmio",
     "A": "cl:liga_enriquecida",
+    "G": "minecraft:glass"
+   }
+  },
+  {
+   "id": "mkc_upgrade_stone_generator",
+   "resultado": "cl:melhoria_gerador_pedra",
+   "tipo": "shaped",
+   "padrao": [
+    " G ",
+    "#AB",
+    " G "
+   ],
+   "chave": {
+    "#": "minecraft:water_bucket",
+    "A": "cl:liga_enriquecida",
+    "B": "minecraft:lava_bucket",
     "G": "minecraft:glass"
    }
   },

@@ -1,0 +1,2450 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_vibrador_sismico",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -6.308,
+        0.0,
+        -3.987
+       ],
+       "size": [
+        8.0,
+        2.5,
+        1.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "east": {
+         "uv": [
+          6.5,
+          9
+         ],
+         "uv_size": [
+          1.5,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "south": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "west": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1.5,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "up": {
+         "uv": [
+          16,
+          9.5
+         ],
+         "uv_size": [
+          -8,
+          -1.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -1.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -6.308,
+        0.0,
+        2.513
+       ],
+       "size": [
+        8.0,
+        2.5,
+        1.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "east": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1.5,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "south": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "west": {
+         "uv": [
+          6.5,
+          9
+         ],
+         "uv_size": [
+          1.5,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -1.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "down": {
+         "uv": [
+          16,
+          9.5
+         ],
+         "uv_size": [
+          -8,
+          -1.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -6.308,
+        0.0,
+        -2.487
+       ],
+       "size": [
+        1.5,
+        2.5,
+        5.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          1.5,
+          9
+         ],
+         "uv_size": [
+          5.0,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "west": {
+         "uv": [
+          1.5,
+          9
+         ],
+         "uv_size": [
+          5.0,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "up": {
+         "uv": [
+          9.5,
+          14.5
+         ],
+         "uv_size": [
+          -1.5,
+          -5.0
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "down": {
+         "uv": [
+          16,
+          14.5
+         ],
+         "uv_size": [
+          -1.5,
+          -5.0
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.192,
+        0.0,
+        -2.487
+       ],
+       "size": [
+        1.5,
+        2.5,
+        5.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          1.5,
+          9
+         ],
+         "uv_size": [
+          5.0,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "west": {
+         "uv": [
+          1.5,
+          9
+         ],
+         "uv_size": [
+          5.0,
+          2.5
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "up": {
+         "uv": [
+          16,
+          14.5
+         ],
+         "uv_size": [
+          -1.5,
+          -5.0
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "down": {
+         "uv": [
+          16,
+          14.5
+         ],
+         "uv_size": [
+          -1.5,
+          -5.0
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.808,
+        2.5,
+        3.013
+       ],
+       "size": [
+        0.5,
+        12.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.692,
+        2.5,
+        3.013
+       ],
+       "size": [
+        0.5,
+        12.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.692,
+        2.5,
+        -3.487
+       ],
+       "size": [
+        0.5,
+        12.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.808,
+        2.5,
+        -3.487
+       ],
+       "size": [
+        0.5,
+        12.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          0,
+          0.5
+         ],
+         "uv_size": [
+          0.5,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.808,
+        8.5,
+        -2.987
+       ],
+       "size": [
+        0.5,
+        0.5,
+        6.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          8
+         ],
+         "uv_size": [
+          0.5,
+          6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          8
+         ],
+         "uv_size": [
+          0.5,
+          6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          14
+         ],
+         "uv_size": [
+          -0.5,
+          -6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          14
+         ],
+         "uv_size": [
+          -0.5,
+          -6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.308,
+        8.5,
+        3.018
+       ],
+       "size": [
+        6.0,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          8
+         ],
+         "uv_size": [
+          0.5,
+          6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          7,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          6.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          14
+         ],
+         "uv_size": [
+          -0.5,
+          -6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          14
+         ],
+         "uv_size": [
+          -0.5,
+          -6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.692,
+        8.5,
+        -2.987
+       ],
+       "size": [
+        0.5,
+        0.5,
+        6.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          8
+         ],
+         "uv_size": [
+          0.5,
+          6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          8
+         ],
+         "uv_size": [
+          0.5,
+          6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          14
+         ],
+         "uv_size": [
+          -0.5,
+          -6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          14
+         ],
+         "uv_size": [
+          -0.5,
+          -6
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.697,
+        11.712,
+        -4.273
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.697,
+        11.712,
+        -4.227
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.803,
+        11.712,
+        -4.273
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.803,
+        11.712,
+        -4.227
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.697,
+        5.212,
+        -4.273
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.697,
+        5.212,
+        -4.227
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.803,
+        5.212,
+        -4.273
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5.803,
+        5.212,
+        -4.227
+       ],
+       "size": [
+        0.48,
+        0.5,
+        8.5
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -6.514,
+        11.803,
+        3.023
+       ],
+       "size": [
+        8.5,
+        0.5,
+        0.48
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -6.593,
+        11.803,
+        3.023
+       ],
+       "size": [
+        8.5,
+        0.5,
+        0.48
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        1.986,
+        3.15,
+        3.023
+       ],
+       "size": [
+        0.5,
+        8.5,
+        0.48
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1.907,
+        7.303,
+        3.023
+       ],
+       "size": [
+        8.5,
+        0.5,
+        0.48
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          7,
+          7.5
+         ],
+         "uv_size": [
+          0.5,
+          8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          7.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -8.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.308,
+        2.5,
+        3.013
+       ],
+       "size": [
+        2.0,
+        12.5,
+        1.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          14,
+          3.5
+         ],
+         "uv_size": [
+          2,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          14,
+          3.5
+         ],
+         "uv_size": [
+          0,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          14,
+          3.5
+         ],
+         "uv_size": [
+          2,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          13,
+          3.5
+         ],
+         "uv_size": [
+          1,
+          12.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -6.308,
+        15.0,
+        -3.987
+       ],
+       "size": [
+        8.0,
+        1.0,
+        8.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "east": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "south": {
+         "uv": [
+          0,
+          15
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "west": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "up": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        },
+        "down": {
+         "uv": [
+          16,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_seismic_vibrator_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4.308,
+        14.0,
+        -0.987
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4.308,
+        14.0,
+        0.013
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4.308,
+        14.0,
+        1.013
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4.308,
+        14.0,
+        2.013
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -0.808,
+        14.0,
+        2.013
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -0.808,
+        14.0,
+        1.013
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -0.808,
+        14.0,
+        0.013
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4.808,
+        14.5,
+        -2.487
+       ],
+       "size": [
+        5.0,
+        0.5,
+        5.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0.5,
+          4
+         ],
+         "uv_size": [
+          5.0,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          0.5,
+          9
+         ],
+         "uv_size": [
+          5.0,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          0.5,
+          9
+         ],
+         "uv_size": [
+          5.0,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          0.5,
+          9
+         ],
+         "uv_size": [
+          5.0,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          5.5,
+          9.5
+         ],
+         "uv_size": [
+          -5.0,
+          -5.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.808,
+        12.5,
+        -1.487
+       ],
+       "size": [
+        3.0,
+        2.0,
+        4.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          2,
+          3
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          2,
+          13
+         ],
+         "uv_size": [
+          4.5,
+          3
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          2,
+          3
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          2,
+          13
+         ],
+         "uv_size": [
+          4.5,
+          3
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          5.5,
+          16
+         ],
+         "uv_size": [
+          -4.5,
+          -3
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.308,
+        6.5,
+        -0.987
+       ],
+       "size": [
+        2.0,
+        1.0,
+        2.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          9,
+          7.5
+         ],
+         "uv_size": [
+          2,
+          1.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          9,
+          7.5
+         ],
+         "uv_size": [
+          2,
+          1.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          9,
+          7.5
+         ],
+         "uv_size": [
+          2,
+          1.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          9,
+          7.5
+         ],
+         "uv_size": [
+          2,
+          1.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          6.5,
+          15.5
+         ],
+         "uv_size": [
+          -2.0,
+          -2.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          6.5,
+          15.5
+         ],
+         "uv_size": [
+          -2.0,
+          -2.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.308,
+        9.0,
+        -0.987
+       ],
+       "size": [
+        2.0,
+        3.5,
+        2.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          2,
+          3.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          8.5,
+          9
+         ],
+         "uv_size": [
+          2.0,
+          3.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          2,
+          3.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          9,
+          9
+         ],
+         "uv_size": [
+          2,
+          3.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          6.5,
+          15.5
+         ],
+         "uv_size": [
+          -2.0,
+          -2.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -2.808,
+        6.5,
+        1.013
+       ],
+       "size": [
+        1.0,
+        1.0,
+        2.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          9,
+          11.5
+         ],
+         "uv_size": [
+          2,
+          1.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "west": {
+         "uv": [
+          9,
+          12
+         ],
+         "uv_size": [
+          2,
+          1
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "up": {
+         "uv": [
+          11,
+          7.5
+         ],
+         "uv_size": [
+          -1,
+          -2.0
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          -1,
+          -2
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4.308,
+        2.5,
+        3.518
+       ],
+       "size": [
+        4.0,
+        4.0,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          1,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "west": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          1,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "up": {
+         "uv": [
+          8,
+          1
+         ],
+         "uv_size": [
+          -8,
+          -1
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4.308,
+        2.5,
+        4.018
+       ],
+       "size": [
+        4.0,
+        4.0,
+        0.0
+       ],
+       "uv": {
+        "south": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        -0.808,
+        14.0,
+        -0.987
+       ],
+       "size": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "east": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          0.5
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_seismic_vibrator_2"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

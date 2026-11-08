@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_robit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "EAE",
+      "IPI"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "I": {
+        "item": "cl:lingote_obsidiana_refinada"
+      },
+      "P": {
+        "item": "cl:barril_pessoal"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:robit"
+    }
+  }
+}

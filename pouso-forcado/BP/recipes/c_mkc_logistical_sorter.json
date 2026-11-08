@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_logistical_sorter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "I#I",
+      "ICI",
+      "III"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:piston"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:classificador_logistico"
+    }
+  }
+}

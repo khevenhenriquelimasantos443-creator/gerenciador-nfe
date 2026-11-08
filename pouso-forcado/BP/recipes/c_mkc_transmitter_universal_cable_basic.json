@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_transmitter_universal_cable_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S#S"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:redstone"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cabo_universal_basico",
+      "count": 8
+    }
+  }
+}

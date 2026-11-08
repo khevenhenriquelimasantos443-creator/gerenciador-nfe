@@ -26,6 +26,11 @@
    "en": "Osmium Crystal"
   },
   {
+   "id": "cristal_chumbo",
+   "pt": "Cristal de Chumbo",
+   "en": "Lead Crystal"
+  },
+  {
    "id": "po_enxofre",
    "pt": "Pó de Enxofre",
    "en": "Sulfur Dust"
@@ -152,6 +157,13 @@
    "cor": "#124875"
   },
   {
+   "id": "cilindro_pasta_suja_chumbo",
+   "q": "dirty_lead",
+   "pt": "Cilindro de Pasta Suja de Chumbo",
+   "en": "Dirty Lead Slurry Tank",
+   "cor": "#22262c"
+  },
+  {
    "id": "cilindro_pasta_limpa_ferro",
    "q": "clean_iron",
    "pt": "Cilindro de Pasta Limpa de Ferro",
@@ -185,6 +197,13 @@
    "pt": "Cilindro de Pasta Limpa de Ósmio",
    "en": "Clean Osmium Slurry Tank",
    "cor": "#1e79c3"
+  },
+  {
+   "id": "cilindro_pasta_limpa_chumbo",
+   "q": "clean_lead",
+   "pt": "Cilindro de Pasta Limpa de Chumbo",
+   "en": "Clean Lead Slurry Tank",
+   "cor": "#3a404a"
   }
  ],
  "cilindroDe": {
@@ -204,11 +223,13 @@
   "dirty_copper": "cilindro_pasta_suja_cobre",
   "dirty_tin": "cilindro_pasta_suja_estanho",
   "dirty_osmium": "cilindro_pasta_suja_osmio",
+  "dirty_lead": "cilindro_pasta_suja_chumbo",
   "clean_iron": "cilindro_pasta_limpa_ferro",
   "clean_gold": "cilindro_pasta_limpa_ouro",
   "clean_copper": "cilindro_pasta_limpa_cobre",
   "clean_tin": "cilindro_pasta_limpa_estanho",
-  "clean_osmium": "cilindro_pasta_limpa_osmio"
+  "clean_osmium": "cilindro_pasta_limpa_osmio",
+  "clean_lead": "cilindro_pasta_limpa_chumbo"
  },
  "maquinas": [
   {
@@ -1098,6 +1119,55 @@
    },
    {
     "entra": [
+     "cl:minerio_chumbo",
+     "cl:minerio_chumbo_profundo"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_lead",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_chumbo_bruto"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      200
+     ]
+    ],
+    "sai_q": [
+     "dirty_lead",
+     6000
+    ]
+   },
+   {
+    "entra": [
+     "cl:chumbo_bruto"
+    ],
+    "qtd": 3,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_lead",
+     2000
+    ]
+   },
+   {
+    "entra": [
      "cl:minerio_estanho_lunar"
     ],
     "qtd": 1,
@@ -1314,6 +1384,18 @@
     ],
     "sai": [
      "cl:cristal_ouro",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "clean_lead",
+      200
+     ]
+    ],
+    "sai": [
+     "cl:cristal_chumbo",
      1
     ]
    },

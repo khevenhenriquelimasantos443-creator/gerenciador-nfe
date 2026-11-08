@@ -1358,6 +1358,11 @@
   "en": "Polished Blackstone Bricks",
   "icone": "textures/blocks/polished_blackstone_bricks"
  },
+ "minecraft:polished_blackstone_pressure_plate": {
+  "pt": "Placa de Pressão de Pedra-Negra Polida",
+  "en": "Polished Blackstone Pressure Plate",
+  "icone": "textures/blocks/polished_blackstone"
+ },
  "minecraft:popped_chorus_fruit": {
   "pt": "popped_chorus_fruit",
   "en": "popped_chorus_fruit"
@@ -1536,6 +1541,11 @@
   "pt": "Bloco de Redstone",
   "en": "Block of Redstone",
   "icone": "textures/blocks/redstone_block"
+ },
+ "minecraft:redstone_lamp": {
+  "pt": "Lâmpada de Redstone",
+  "en": "Redstone Lamp",
+  "icone": "textures/blocks/redstone_lamp_off"
  },
  "minecraft:redstone_ore": {
   "pt": "Minério de Redstone",

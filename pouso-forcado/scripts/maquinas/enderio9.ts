@@ -63,6 +63,7 @@ const CAPACIDADE: Record<string, number> = {
 export function registrarItemComEnergia(id: string, capacidade: number): void {
   CAPACIDADE[id] = capacidade;
 }
+export const capacidadeItem = (id: string): number | undefined => CAPACIDADE[id];
 const PROP_RF = "eio_rf";
 export const cargaItem = (i: ItemStack): number => (i.getDynamicProperty(PROP_RF) as number | undefined) ?? 0;
 export function definirCarga(i: ItemStack, v: number): void {

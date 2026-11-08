@@ -2,27 +2,27 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_triturador_mk"
+      "identifier": "cl:c_mkc_seismic_vibrator"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      "RCR",
-      "LIL",
-      "RCR"
+      "I#I",
+      "CXC",
+      "III"
     ],
     "key": {
-      "R": {
-        "item": "minecraft:redstone"
-      },
-      "L": {
-        "item": "minecraft:lava_bucket"
+      "#": {
+        "item": "minecraft:lapis_lazuli"
       },
       "C": {
         "item": "cl:circuito_controle_basico"
       },
       "I": {
+        "item": "cl:lingote_estanho"
+      },
+      "X": {
         "item": "cl:revestimento_aco"
       }
     },
@@ -30,7 +30,7 @@
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:triturador_mk"
+      "item": "cl:vibrador_sismico"
     }
   }
 }

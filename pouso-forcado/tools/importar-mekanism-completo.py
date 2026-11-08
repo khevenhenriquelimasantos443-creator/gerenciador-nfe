@@ -111,6 +111,17 @@ def geometria(pid, nome):
                 uv[face] = {"uv": [u[0], u[1]], "uv_size": [u[2] - u[0], u[3] - u[1]], "material_instance": mat}
         if uv:
             cubos.append({"origin": [f[0] - 8, f[1], f[2] - 8], "size": [max(t[i] - f[i], 0) for i in range(3)], "uv": uv})
+    # Modelos maiores que um bloco (Minerador Digital 3×3×2, Vibrador Sísmico): encolhidos para caber, centrados.
+    if min(lo) < -0.05 or max(hi) > 16.05:
+        esc = 16 / max(hi[i] - lo[i] for i in range(3))
+        cx, cz = (lo[0] + hi[0]) / 2, (lo[2] + hi[2]) / 2
+        for c in cubos:
+            o = [c["origin"][0] + 8, c["origin"][1], c["origin"][2] + 8]
+            o = [8 + (o[0] - cx) * esc, (o[1] - lo[1]) * esc, 8 + (o[2] - cz) * esc]
+            c["origin"] = [round(o[0] - 8, 3), round(o[1], 3), round(o[2] - 8, 3)]
+            c["size"] = [round(v * esc, 3) for v in c["size"]]
+        altura = min(16, (hi[1] - lo[1]) * esc)
+        lo, hi = [0, 0, 0], [16, altura, 16]
     geo = {"format_version": "1.12.0", "minecraft:geometry": [{
         "description": {"identifier": f"geometry.cl.mk_{pid}", "texture_width": 16, "texture_height": 16,
                         "visible_bounds_width": 2, "visible_bounds_height": 2, "visible_bounds_offset": [0, 0.5, 0]},
@@ -146,12 +157,12 @@ NOVOS_Q = {"sulfur_dioxide": "dioxido_enxofre", "sulfur_trioxide": "trioxido_enx
 cor_q = {mm.group(1): "#" + mm.group(2).lower() for mm in re.finditer(r'\("(\w+)", 0x[0-9A-Fa-f]{2}([0-9A-Fa-f]{6})',
                                                                         open(os.path.join(SRC, "src/main/java/mekanism/common/ChemicalConstants.java")).read())}
 cor_q.setdefault("water_vapor", "#d8e4ec")
-COR_METAL = {"iron": "#af8e77", "gold": "#f2cd67", "copper": "#c87240", "tin": "#ccccd9", "osmium": "#1e79c3"}
+COR_METAL = {"iron": "#af8e77", "gold": "#f2cd67", "copper": "#c87240", "tin": "#ccccd9", "osmium": "#1e79c3", "lead": "#3a404a"}
 cilindros = []
 for q, pid in NOVOS_Q.items():
     if q.startswith(("dirty_", "clean_")):
         metal = q.split("_", 1)[1]
-        pt_m = {"iron": "Ferro", "gold": "Ouro", "copper": "Cobre", "tin": "Estanho", "osmium": "Ósmio"}[metal]
+        pt_m = {"iron": "Ferro", "gold": "Ouro", "copper": "Cobre", "tin": "Estanho", "osmium": "Ósmio", "lead": "Chumbo"}[metal]
         sujo = q.startswith("dirty_")
         pt, en = f"Cilindro de Pasta {'Suja' if sujo else 'Limpa'} de {pt_m}", f"{'Dirty' if sujo else 'Clean'} {metal.title()} Slurry Tank"
         cor = COR_METAL[metal] if not sujo else "#" + "".join(f"{int(int(COR_METAL[metal][i:i + 2], 16) * 0.6):02x}" for i in (1, 3, 5))
@@ -338,6 +349,144 @@ P2 = {f"{t}_{tipo}_factory" for tipo in FABRICA_TIPO for t in NIVEL_F} | {k for 
 receitas2 = receitas_de(P2)
 json.dump({"fabricas": fabricas, "itens": itens2, "receitas": receitas2}, open(os.path.join(R, "tools/dados/conteudo/mekanism_p2.json"), "w"), ensure_ascii=False, indent=1)
 print(f"mekanism completo p2: {len(fabricas)} fábricas, {len(itens2)} itens, {len(receitas2)} receitas, processos {proc_f}")
+
+# ---------- Parte 3 (1.51.0): armazenamento, logística e utilidades ----------
+N3 = (("basic", "basico", "basica"), ("advanced", "avancado", "avancada"), ("elite", "elite", "elite"), ("ultimate", "definitivo", "definitiva"))
+caixas = []
+cap_bin = {m.group(1).lower(): int(m.group(2).replace("_", "")) for m in re.finditer(r"(BASIC|ADVANCED|ELITE|ULTIMATE)\(BaseTier\.\w+, ([\d_]+)\)",
+                                                                                 open(os.path.join(SRC, "src/main/java/mekanism/common/tier/BinTier.java")).read())}
+for t, _m, f in N3:
+    pid = f"caixa_{f}"
+    pre = "" if t == "basic" else f"{t}_"
+    for face, arq in (("frente", f"{pre}front"), ("lado", f"{pre}side"), ("topo", f"{pre}top"), ("baixo", "bottom")):
+        salvar(abrir(f"block/bin/{arq}.png"), f"RP/textures/blocks/cl/arte/{pid}_{face}.png")
+    usados.append(pid)
+    pt, en = nome_de(f"{t}_bin")
+    caixas.append({"id": pid, "pt": pt, "en": en, "cap": cap_bin[t]})
+def taxa(arq, t):
+    """Números do nível (capacidade, vazão...) do arquivo do mod; FluidType.BUCKET_VOLUME = 1000."""
+    txt = open(os.path.join(SRC, f"src/main/java/mekanism/common/tier/{arq}.java")).read()
+    args = re.search(rf"{t.upper()}\(BaseTier\.\w+, ([^)]*)\)", txt).group(1)
+    r = []
+    for x in args.split(","):
+        x = x.strip().replace("FluidType.BUCKET_VOLUME", "1000").replace("_", "").rstrip("L")
+        if re.fullmatch(r"[\d\s*/]+", x):
+            r.append(int(eval(x)))  # só dígitos, * e /
+    return r
+
+
+transmissores = []
+for tipo, arq, pre in (("universal_cable", "CableTier", "cabo_universal"), ("mechanical_pipe", "PipeTier", "cano_mecanico"),
+                       ("pressurized_tube", "TubeTier", "tubo_pressurizado"), ("logistical_transporter", "TransporterTier", "transportador_logistico")):
+    for t, m, _f in N3:
+        pt, en = nome_de(f"{t}_{tipo}")
+        transmissores.append({"id": f"{pre}_{m}", "pt": pt, "en": en, "tipo": pre, "nivel": m, "taxa": taxa(arq, t)})
+# Transmissores: o modelo pequeno (cabos, canos e tubos: miolo de 6 px, braços de 4) e o grande (transportadores: 8 e 6),
+# com os braços que aparecem conforme os estados cl:n/s/l/o/cima/baixo; miolo e braços com a arte do mod.
+def geo_transmissor(nome, m, b):
+    a, z = 8 - m / 2, 8 + m / 2  # miolo de a a z
+    p, q = 8 - b / 2, 8 + b / 2  # braço de p a q
+    cubo = lambda f, t, mat: {"origin": [f[0] - 8, f[1], f[2] - 8], "size": [t[i] - f[i] for i in range(3)],
+                              "uv": {fc: {"uv": [0, 0], "uv_size": [16, 16], "material_instance": mat} for fc in ("north", "south", "east", "west", "up", "down")}}
+    ossos = {"centro": [cubo([a, a, a], [z, z, z], "centro")],
+             "norte": [cubo([p, p, 0], [q, q, a], "lado")], "sul": [cubo([p, p, z], [q, q, 16], "lado")],
+             "oeste": [cubo([0, p, p], [a, q, q], "lado")], "leste": [cubo([z, p, p], [16, q, q], "lado")],
+             "baixo": [cubo([p, 0, p], [q, a, q], "lado")], "cima": [cubo([p, z, p], [q, 16, q], "lado")]}
+    geo = {"format_version": "1.12.0", "minecraft:geometry": [{
+        "description": {"identifier": f"geometry.cl.mk_{nome}", "texture_width": 16, "texture_height": 16,
+                        "visible_bounds_width": 2, "visible_bounds_height": 2, "visible_bounds_offset": [0, 0.5, 0]},
+        "bones": [{"name": o, "pivot": [0, 0, 0], "cubes": c} for o, c in ossos.items()]}]}
+    with open(os.path.join(R, f"RP/models/blocks/cl_mk_{nome}.geo.json"), "w") as g:
+        json.dump(geo, g, indent=1)
+    return {"origin": [a - 8, a, a - 8], "size": [m, m, m]}
+
+
+caixa_t = {"pequeno": geo_transmissor("transmissor_pequeno", 6, 4), "grande": geo_transmissor("transmissor_grande", 8, 6)}
+for tr in transmissores:
+    en_t = {"basico": "basic", "avancado": "advanced", "elite": "elite", "definitivo": "ultimate"}[tr["nivel"]]
+    tipo_en = {"cabo_universal": "universal_cable", "cano_mecanico": "mechanical_pipe", "tubo_pressurizado": "pressurized_tube",
+               "transportador_logistico": "logistical_transporter"}[tr["tipo"]]
+    for parte, arq in (("centro", f"{en_t}_{tipo_en}"), ("lado", f"{en_t}_{tipo_en}_vertical")):
+        salvar(abrir(f"block/models/multipart/{arq}.png"), f"RP/textures/blocks/cl/arte/mkt_{tr['id']}_{parte}.png")
+    usados.append(tr["id"])
+    tr["modelo"] = "grande" if tr["tipo"] == "transportador_logistico" else "pequeno"
+    tr["caixa"] = caixa_t[tr["modelo"]]
+MAQ3 = {"electric_pump": "bomba_eletrica", "fluidic_plenisher": "plenificador_fluidico", "digital_miner": "minerador_digital", "chargepad": "carregador_chao",
+        "quantum_entangloporter": "entrelacador_quantico", "logistical_sorter": "classificador_logistico", "seismic_vibrator": "vibrador_sismico",
+        "industrial_alarm": "alarme_industrial", "teleporter": "teletransportador", "teleporter_frame": "moldura_teletransportador"}
+maquinas3 = []
+for m, pid in MAQ3.items():
+    pt, en = nome_de(m)
+    maquinas3.append({"id": pid, "pt": pt, "en": en, "modelo": geometria(pid, f"block/{m}")})
+itens3 = []
+for m, pid in (("portable_teleporter", "teletransportador_portatil"), ("seismic_reader", "leitor_sismico"), ("teleportation_core", "nucleo_teletransporte")):
+    pt, en = nome_de(m)
+    salvar(abrir(f"item/{m}.png"), f"RP/textures/items/cl/arte/{pid}.png")
+    usados.append(pid)
+    itens3.append({"id": pid, "pt": pt, "en": en})
+# Chumbo: itens, blocos e minérios com a arte do mod; o Robit (item) com um ícone desenhado da frente do modelo 3D.
+CHUMBO_I = {"ingot_lead": "lingote_chumbo", "raw_lead": "chumbo_bruto", "nugget_lead": "pepita_chumbo", "dust_lead": "po_chumbo"}
+CHUMBO_B = {"block_lead": "bloco_chumbo", "block_raw_lead": "bloco_chumbo_bruto", "lead_ore": "minerio_chumbo", "deepslate_lead_ore": "minerio_chumbo_profundo"}
+for m, pid in CHUMBO_I.items():
+    pt, en = nome_de(m)
+    salvar(abrir(f"item/{m}.png"), f"RP/textures/items/cl/arte/{pid}.png")
+    usados.append(pid)
+    itens3.append({"id": pid, "pt": pt, "en": en})
+blocos3 = []
+for m, pid in CHUMBO_B.items():
+    pt, en = nome_de(m)
+    salvar(abrir(f"block/{m}.png"), f"RP/textures/blocks/cl/arte/{pid}.png")
+    usados.append(pid)
+    blocos3.append({"id": pid, "pt": pt, "en": en})
+
+
+def icone_frente(modelo, textura):
+    """Ícone 32×32 do modelo visto de frente (as faces sul, de trás para a frente)."""
+    els = json.load(open(os.path.join(MOD, f"{modelo}.json")))["elements"]
+    tex = abrir(textura)
+    k = tex.width / 16
+    im = Image.new("RGBA", (32, 32))
+    for e in sorted(els, key=lambda e: e["to"][2]):
+        fc = e["faces"].get("south")
+        if not fc:
+            continue
+        f, t = e["from"], e["to"]
+        x0, y0, x1, y1 = round(f[0] * 2), round((16 - t[1]) * 2), round(t[0] * 2), round((16 - f[1]) * 2)
+        u = fc["uv"]
+        pedaco = tex.crop((round(min(u[0], u[2]) * k), round(min(u[1], u[3]) * k), max(round(max(u[0], u[2]) * k), round(min(u[0], u[2]) * k) + 1),
+                           max(round(max(u[1], u[3]) * k), round(min(u[1], u[3]) * k) + 1)))
+        if x1 > x0 and y1 > y0:
+            pedaco = pedaco.resize((x1 - x0, y1 - y0), Image.NEAREST)
+            im.alpha_composite(pedaco, (x0, y0))
+    # 2 px mais para cima e centrado na altura
+    caixa = im.getbbox()
+    if caixa:
+        rec = im.crop(caixa)
+        im = Image.new("RGBA", (32, 32))
+        im.alpha_composite(rec, ((32 - rec.width) // 2, (32 - rec.height) // 2))
+    return im
+
+
+salvar(icone_frente("item/robit", "entity/robit/robit.png"), "RP/textures/items/cl/arte/robit.png")
+usados.append("robit")
+pt, en = nome_de("robit")
+itens3.append({"id": "robit", "pt": pt, "en": en})
+P3 = {k for k, v in NOVOS.items() if v.startswith(("caixa_", "cabo_universal_", "cano_mecanico_", "tubo_pressurizado_", "transportador_logistico_"))} | set(MAQ3) | \
+    {"portable_teleporter", "seismic_reader", "teleportation_core", "robit"} | set(CHUMBO_I) | set(CHUMBO_B)
+receitas3 = receitas_de(P3)
+# Fornalha do chumbo (minério, bruto e pó viram lingote; a de alto-forno é igual).
+fornalha3 = {}
+for nome, j in todos_json():
+    if j.get("type") == "minecraft:smelting" and j.get("result", {}).get("id") == "mekanism:ingot_lead":
+        for e in lista(j["ingredient"]) or []:
+            fornalha3[e] = "cl:lingote_chumbo"
+mineradorJ = J["digitalMiner"]
+json.dump({"caixas": caixas, "transmissores": transmissores, "maquinas": maquinas3, "itens": itens3, "blocos": blocos3, "receitas": receitas3,
+           "fornalha": fornalha3,
+           "energia": {"bomba": J["electricPump"], "plenificador": J["fluidicPlenisher"], "minerador": mineradorJ, "vibrador": J["seismicVibrator"]}},
+          open(os.path.join(R, "tools/dados/conteudo/mekanism_p3.json"), "w"), ensure_ascii=False, indent=1)
+print(f"mekanism completo p3: {len(caixas)} caixas {cap_bin}, {len(transmissores)} transmissores, {len(maquinas3)} máquinas, {len(itens3)} itens, "
+      f"{len(blocos3)} blocos, {len(receitas3)} receitas, fornalha {fornalha3}")
 
 saida = {"itens": itens, "cilindros": cilindros, "cilindroDe": CILINDRO, "maquinas": maquinas, "tanques": tanques, "blocos": blocos,
          "receitas": receitas, "processos": proc, "ce": CE}

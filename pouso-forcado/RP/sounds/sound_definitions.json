@@ -1,0 +1,6 @@
+{
+  "format_version": "1.20.20",
+  "sound_definitions": {
+    "cl.mk.alarme": { "category": "block", "max_distance": 32, "sounds": [{ "name": "sounds/cl/mk_alarme", "volume": 1.0 }] }
+  }
+}

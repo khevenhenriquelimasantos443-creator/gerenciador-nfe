@@ -1,0 +1,61 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:moldura_teletransportador",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.mk_moldura_teletransportador",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_mkm_teleporter_frame",
+          "render_method": "alpha_test"
+        },
+        "m_teleporter_frame": {
+          "texture": "clc_mkm_teleporter_frame",
+          "render_method": "alpha_test"
+        },
+        "m_teleporter_frame_led": {
+          "texture": "clc_mkm_teleporter_frame_led",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#c9ced3",
+      "minecraft:light_emission": 4,
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:light_dampening": 0
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_fluidic_plenisher"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "III",
+      "CPC",
+      "III"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "I": {
+        "item": "cl:lingote_estanho"
+      },
+      "P": {
+        "item": "cl:bomba_eletrica"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:plenificador_fluidico"
+    }
+  }
+}

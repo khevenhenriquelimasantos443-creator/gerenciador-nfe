@@ -31,6 +31,12 @@
    "mek": "clump_osmium"
   },
   {
+   "id": "torrao_chumbo",
+   "pt": "Aglomerado de Chumbo",
+   "en": "Lead Clump",
+   "mek": "clump_lead"
+  },
+  {
    "id": "fragmento_ferro",
    "pt": "Estilhaço de ferro",
    "en": "Iron Shard",
@@ -61,6 +67,12 @@
    "mek": "shard_osmium"
   },
   {
+   "id": "fragmento_chumbo",
+   "pt": "Estilhaço de chumbo",
+   "en": "Lead Shard",
+   "mek": "shard_lead"
+  },
+  {
    "id": "po_sujo_ferro",
    "pt": "Pó de Ferro Sujo",
    "en": "Dirty Iron Dust",
@@ -89,6 +101,12 @@
    "pt": "Pó de Ósmio Sujo",
    "en": "Dirty Osmium Dust",
    "mek": "dirty_dust_osmium"
+  },
+  {
+   "id": "po_sujo_chumbo",
+   "pt": "Pó de Chumbo Sujo",
+   "en": "Dirty Lead Dust",
+   "mek": "dirty_dust_lead"
   },
   {
    "id": "ferro_enriquecido",
@@ -300,6 +318,38 @@
     "A": "cl:liga_reforcada",
     "C": "cl:circuito_controle_elite",
     "I": "minecraft:gold_ingot"
+   }
+  },
+  {
+   "id": "mk10_combiner",
+   "resultado": "cl:combinador",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "_X_",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "X": "cl:revestimento_aco",
+    "_": "minecraft:cobblestone"
+   }
+  },
+  {
+   "id": "mk10_crusher",
+   "resultado": "cl:triturador_mk",
+   "tipo": "shaped",
+   "padrao": [
+    "RCR",
+    "BXB",
+    "RCR"
+   ],
+   "chave": {
+    "B": "minecraft:lava_bucket",
+    "C": "cl:circuito_controle_basico",
+    "R": "minecraft:redstone",
+    "X": "cl:revestimento_aco"
    }
   },
   {
@@ -639,6 +689,47 @@
     "qtd": 3,
     "sai": [
      "cl:po_ouro",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_sujo_chumbo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_chumbo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_chumbo",
+     "cl:minerio_chumbo_profundo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_chumbo",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_chumbo_bruto"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_chumbo",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "cl:chumbo_bruto"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:po_chumbo",
      4
     ]
    },
@@ -2058,6 +2149,26 @@
     "qtd": 1,
     "sai": [
      "cl:po_obsidiana_refinada",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_chumbo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_chumbo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:torrao_chumbo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_sujo_chumbo",
      1
     ]
    },
@@ -3765,6 +3876,34 @@
    },
    {
     "entra": [
+     "cl:chumbo_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_chumbo_profundo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:chumbo_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_chumbo",
+     1
+    ]
+   },
+   {
+    "entra": [
      "cl:po_carvao"
     ],
     "qtd": 8,
@@ -4699,6 +4838,21 @@
      "minecraft:redstone",
      1,
      1.0
+    ]
+   },
+   {
+    "entra": [
+     "#minecraft:planks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stick",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
     ]
    },
    {
@@ -6236,6 +6390,59 @@
    },
    {
     "entra": [
+     "cl:minerio_chumbo",
+     "cl:minerio_chumbo_profundo"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_chumbo",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_chumbo_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_chumbo",
+     18
+    ]
+   },
+   {
+    "entra": [
+     "cl:chumbo_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_chumbo",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_chumbo"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_chumbo",
+     1
+    ]
+   },
+   {
+    "entra": [
      "cl:minerio_estanho_lunar"
     ],
     "qtd": 1,
@@ -7225,6 +7432,59 @@
     "porTick": true,
     "sai": [
      "cl:fragmento_ouro",
+     8
+    ]
+   },
+   {
+    "entra": [
+     "cl:cristal_chumbo"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_chumbo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_chumbo",
+     "cl:minerio_chumbo_profundo"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_chumbo",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_chumbo_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_chumbo",
+     24
+    ]
+   },
+   {
+    "entra": [
+     "cl:chumbo_bruto"
+    ],
+    "qtd": 3,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_chumbo",
      8
     ]
    },

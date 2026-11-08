@@ -304,7 +304,7 @@ function cuidarCeu(): void {
 
 export function registrarLua(): void {
   world.afterEvents.entitySpawn.subscribe(({ entity, cause }) => {
-    if (cause !== EntityInitializationCause.Spawned || entity.dimension.id !== LUA) return;
+    if (cause !== EntityInitializationCause.Spawned || !entity.isValid || entity.dimension.id !== LUA) return;
     const tipo = entity.typeId;
     const novo = EVOLUIDO[tipo];
     if (!novo && !SOMEM.has(tipo)) return;

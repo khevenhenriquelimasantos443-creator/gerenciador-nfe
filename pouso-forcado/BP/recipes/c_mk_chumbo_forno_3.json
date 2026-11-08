@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_mk_chumbo_forno_3"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:chumbo_bruto",
+    "output": "cl:lingote_chumbo"
+  }
+}

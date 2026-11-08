@@ -1,0 +1,249 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_alarme_industrial",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -3,
+        0,
+        -3
+       ],
+       "size": [
+        6,
+        1,
+        6
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.0
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "east": {
+         "uv": [
+          0,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.0
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "south": {
+         "uv": [
+          9,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.0
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "west": {
+         "uv": [
+          6,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.0
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "up": {
+         "uv": [
+          3,
+          4.5
+         ],
+         "uv_size": [
+          3,
+          3.0
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "down": {
+         "uv": [
+          6,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          -3.0
+         ],
+         "material_instance": "m_industrial_alarm"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        1,
+        -1
+       ],
+       "size": [
+        2,
+        3,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          9,
+          1
+         ],
+         "uv_size": [
+          1,
+          1.5
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "east": {
+         "uv": [
+          8,
+          1
+         ],
+         "uv_size": [
+          1,
+          1.5
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "south": {
+         "uv": [
+          11,
+          1
+         ],
+         "uv_size": [
+          1,
+          1.5
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "west": {
+         "uv": [
+          10,
+          1
+         ],
+         "uv_size": [
+          1,
+          1.5
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "up": {
+         "uv": [
+          9,
+          0.5
+         ],
+         "uv_size": [
+          1,
+          1.0
+         ],
+         "material_instance": "m_industrial_alarm"
+        }
+       }
+      },
+      {
+       "origin": [
+        -2,
+        1,
+        -2
+       ],
+       "size": [
+        4,
+        4,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          2,
+          2
+         ],
+         "uv_size": [
+          2,
+          2
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "east": {
+         "uv": [
+          0,
+          2
+         ],
+         "uv_size": [
+          2,
+          2
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "south": {
+         "uv": [
+          6,
+          2
+         ],
+         "uv_size": [
+          2,
+          2
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "west": {
+         "uv": [
+          4,
+          2
+         ],
+         "uv_size": [
+          2,
+          2
+         ],
+         "material_instance": "m_industrial_alarm"
+        },
+        "up": {
+         "uv": [
+          2,
+          0
+         ],
+         "uv_size": [
+          2,
+          2
+         ],
+         "material_instance": "m_industrial_alarm"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

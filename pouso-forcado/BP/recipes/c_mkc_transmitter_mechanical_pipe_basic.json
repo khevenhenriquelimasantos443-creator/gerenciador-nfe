@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_transmitter_mechanical_pipe_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S#S"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:bucket"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cano_mecanico_basico",
+      "count": 8
+    }
+  }
+}

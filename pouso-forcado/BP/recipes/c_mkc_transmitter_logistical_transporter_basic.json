@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_transmitter_logistical_transporter_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S#S"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:transportador_logistico_basico",
+      "count": 8
+    }
+  }
+}

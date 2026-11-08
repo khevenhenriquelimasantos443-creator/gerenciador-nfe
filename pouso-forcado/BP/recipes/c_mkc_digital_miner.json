@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_digital_miner"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "SRS",
+      "TXT"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "R": {
+        "item": "cl:robit"
+      },
+      "S": {
+        "item": "cl:classificador_logistico"
+      },
+      "T": {
+        "item": "cl:nucleo_teletransporte"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:minerador_digital"
+    }
+  }
+}

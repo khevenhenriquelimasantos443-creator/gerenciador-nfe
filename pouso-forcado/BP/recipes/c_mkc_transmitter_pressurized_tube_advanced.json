@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_transmitter_pressurized_tube_advanced"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PPP",
+      "PAP",
+      "PPP"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "P": {
+        "item": "cl:tubo_pressurizado_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tubo_pressurizado_avancado",
+      "count": 8
+    }
+  }
+}

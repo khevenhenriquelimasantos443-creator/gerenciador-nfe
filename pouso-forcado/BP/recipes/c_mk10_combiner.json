@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_combiner"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "_X_",
+      "ACA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "C": {
+        "item": "cl:circuito_controle_elite"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      },
+      "_": {
+        "item": "minecraft:cobblestone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:combinador"
+    }
+  }
+}

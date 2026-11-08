@@ -2818,3 +2818,216 @@ teste("mku", 400, (t) => {
     t.succeed();
   });
 });
+
+// ---------- 1.51.0: Mekanism completo, parte 3 ----------
+const bateriasEm = (t, ...ps) => {
+  for (const p of ps) {
+    t.setBlockType("cl:bateria", p);
+    const b = t.getBlock(p);
+    b.setPermutation(b.permutation.withState("cl:carga", 15));
+  }
+};
+const emMundo = (t, p) => { const w = t.worldBlockLocation(p); return `${w.x} ${w.y} ${w.z}`; };
+const comando = (j, nome) => (c) => { try { j.runCommand(c); } catch (e) { log(`${nome}: ${c} -> ${e}`); } };
+
+// Caixa Básica: 4.096 de um item; a 65ª pilha de 64 não entra.
+teste("mkl_caixa", 300, (t) => {
+  const j = robo(t, { x: 4.5, y: 1, z: 4.5 });
+  const cmd = comando(j, "mkl_caixa");
+  t.setBlockType("cl:caixa_basica", { x: 2, y: 1, z: 2 });
+  const inv = () => j.getComponent("minecraft:inventory").container;
+  for (let k = 0; k < 65; k++)
+    t.runAfterDelay(5 + 3 * k, () => {
+      inv().setItem(j.selectedSlotIndex, new ItemStack("minecraft:cobblestone", 64));
+      cmd(`scriptevent cl:teste_gaveta por ${emMundo(t, { x: 2, y: 1, z: 2 })} 0`);
+    });
+  t.runAfterDelay(5 + 3 * 65 + 5, () => {
+    const mao = inv().getItem(j.selectedSlotIndex);
+    log(`mkl_caixa: sobrou na mão ${mao?.amount}`);
+    t.assert(mao?.amount === 64, "a Caixa Básica não parou em 4.096");
+    t.succeed();
+  });
+});
+
+// Cano Mecânico (água entre tanques de fluido) e Tubo Pressurizado (oxigênio entre tanques de químico).
+teste("mkl_cano", 400, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkl_cano");
+  const linha = (z, tanque, ponte, cheio, vazio) => {
+    // tanque A (x 0) - ponte (x 1, tira) - ponte (x 2) - tanque B (x 3); baús em cima e embaixo dos tanques
+    for (const x of [0, 3]) {
+      t.setBlockType("minecraft:chest", { x, y: 1, z });
+      t.setBlockType(tanque, { x, y: 2, z });
+      t.setBlockType("minecraft:chest", { x, y: 3, z });
+    }
+    t.setBlockType(ponte, { x: 1, y: 2, z });
+    t.setBlockType(ponte, { x: 2, y: 2, z });
+    bau(t, { x: 0, y: 3, z }).addItem(new ItemStack(cheio, 5));
+    bau(t, { x: 3, y: 3, z }).addItem(new ItemStack(vazio, 3));
+  };
+  linha(0, "cl:tanque_fluido_basico", "cl:cano_mecanico_basico", "minecraft:water_bucket", "minecraft:bucket");
+  linha(4, "cl:tanque_quimico_basico", "cl:tubo_pressurizado_basico", "cl:cilindro_oxigenio", "cl:cilindro_vazio");
+  t.runAfterDelay(30, () => {
+    cmd(`scriptevent cl:teste_mkl modo ${emMundo(t, { x: 1, y: 2, z: 0 })}`);
+    cmd(`scriptevent cl:teste_mkl modo ${emMundo(t, { x: 1, y: 2, z: 4 })}`);
+  });
+  t.runAfterDelay(200, () => {
+    const r = { agua: noBau(bau(t, { x: 3, y: 1, z: 0 }), "minecraft:water_bucket"), oxigenio: noBau(bau(t, { x: 3, y: 1, z: 4 }), "cl:cilindro_oxigenio") };
+    log(`mkl_cano: ${JSON.stringify(r)}`);
+    t.assert(r.agua >= 1, "o Cano Mecânico não levou a água ao outro tanque");
+    t.assert(r.oxigenio >= 1, "o Tubo Pressurizado não levou o oxigênio ao outro tanque");
+    t.succeed();
+  });
+});
+
+// Transportador Logístico (baú -> baú) e Classificador (só o ferro passa).
+teste("mkl_transportador", 300, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkl_transportador");
+  t.setBlockType("minecraft:chest", { x: 0, y: 1, z: 0 });
+  t.setBlockType("cl:transportador_logistico_elite", { x: 1, y: 1, z: 0 });
+  t.setBlockType("cl:transportador_logistico_elite", { x: 2, y: 1, z: 0 });
+  t.setBlockType("minecraft:chest", { x: 3, y: 1, z: 0 });
+  bau(t, { x: 0, y: 1, z: 0 }).addItem(new ItemStack("minecraft:cobblestone", 64));
+  // Classificador virado para o norte: tira do baú ao sul (z 5) e põe no baú ao norte (z 3).
+  t.setBlockPermutation(BlockPermutation.resolve("cl:classificador_logistico", { "minecraft:cardinal_direction": "north" }), { x: 5, y: 1, z: 4 });
+  t.setBlockType("minecraft:chest", { x: 5, y: 1, z: 5 });
+  t.setBlockType("minecraft:chest", { x: 5, y: 1, z: 3 });
+  bau(t, { x: 5, y: 1, z: 5 }).addItem(new ItemStack("minecraft:cobblestone", 16));
+  bau(t, { x: 5, y: 1, z: 5 }).addItem(new ItemStack("minecraft:iron_ingot", 5));
+  t.runAfterDelay(10, () => {
+    cmd(`scriptevent cl:teste_mkl modo ${emMundo(t, { x: 1, y: 1, z: 0 })}`);
+    cmd(`scriptevent cl:teste_mkl classificar minecraft:iron_ingot ${emMundo(t, { x: 5, y: 1, z: 4 })}`);
+  });
+  t.runAfterDelay(120, () => {
+    const r = {
+      levou: noBau(bau(t, { x: 3, y: 1, z: 0 }), "minecraft:cobblestone"),
+      ferro: noBau(bau(t, { x: 5, y: 1, z: 3 }), "minecraft:iron_ingot"),
+      pedra: noBau(bau(t, { x: 5, y: 1, z: 3 }), "minecraft:cobblestone"),
+    };
+    log(`mkl_transportador: ${JSON.stringify(r)}`);
+    t.assert(r.levou >= 32, "o Transportador Logístico Elite não levou os itens");
+    t.assert(r.ferro === 5 && r.pedra === 0, "o Classificador não separou pelo filtro");
+    t.succeed();
+  });
+});
+
+// Bomba Elétrica: água (fonte infinita, não some) e lava (some); baldes vazios no baú de cima voltam cheios.
+teste("mkl_bomba", 300, (t) => {
+  robo(t, { x: 7.5, y: 1, z: 7.5 });
+  t.setBlockType("minecraft:water", { x: 1, y: 0, z: 1 });
+  t.setBlockType("cl:bomba_eletrica", { x: 1, y: 1, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 1, y: 2, z: 1 });
+  bateriasEm(t, { x: 2, y: 1, z: 1 }, { x: 0, y: 1, z: 1 });
+  bau(t, { x: 1, y: 2, z: 1 }).addItem(new ItemStack("minecraft:bucket", 2));
+  t.setBlockType("minecraft:lava", { x: 5, y: 0, z: 1 });
+  t.setBlockType("cl:bomba_eletrica", { x: 5, y: 1, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 5, y: 2, z: 1 });
+  bateriasEm(t, { x: 6, y: 1, z: 1 }, { x: 4, y: 1, z: 1 });
+  bau(t, { x: 5, y: 2, z: 1 }).addItem(new ItemStack("minecraft:bucket", 1));
+  t.runAfterDelay(150, () => {
+    const r = {
+      agua: noBau(bau(t, { x: 1, y: 2, z: 1 }), "minecraft:water_bucket"),
+      aguaFica: t.getBlock({ x: 1, y: 0, z: 1 }).typeId,
+      lava: noBau(bau(t, { x: 5, y: 2, z: 1 }), "minecraft:lava_bucket"),
+      lavaSome: t.getBlock({ x: 5, y: 0, z: 1 }).typeId,
+    };
+    log(`mkl_bomba: ${JSON.stringify(r)}`);
+    t.assert(r.agua === 2 && r.aguaFica === "minecraft:water", "a Bomba não encheu os baldes de água (ou apagou a fonte infinita)");
+    t.assert(r.lava === 1 && r.lavaSome !== "minecraft:lava", "a Bomba não tirou a lava");
+    t.succeed();
+  });
+});
+
+// Minerador Digital: filtro de minério de ferro, raio 1, 3 camadas embaixo; guarda no baú de cima.
+teste("mkl_minerador", 600, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkl_minerador");
+  t.setBlockType("cl:minerador_digital", { x: 3, y: 4, z: 3 });
+  t.setBlockType("minecraft:chest", { x: 3, y: 5, z: 3 });
+  bateriasEm(t, { x: 4, y: 4, z: 3 }, { x: 4, y: 4, z: 4 }, { x: 4, y: 4, z: 2 });
+  t.setBlockType("minecraft:iron_ore", { x: 3, y: 3, z: 3 });
+  t.setBlockType("minecraft:iron_ore", { x: 2, y: 1, z: 2 });
+  t.setBlockType("minecraft:stone", { x: 4, y: 2, z: 3 });
+  t.runAfterDelay(5, () => cmd(`scriptevent cl:teste_mkl minerar minecraft:iron_ore ${emMundo(t, { x: 3, y: 4, z: 3 })}`));
+  t.runAfterDelay(400, () => {
+    const r = {
+      ferro: noBau(bau(t, { x: 3, y: 5, z: 3 }), "minecraft:raw_iron"),
+      a: t.getBlock({ x: 3, y: 3, z: 3 }).typeId,
+      b: t.getBlock({ x: 2, y: 1, z: 2 }).typeId,
+      pedra: t.getBlock({ x: 4, y: 2, z: 3 }).typeId,
+    };
+    log(`mkl_minerador: ${JSON.stringify(r)}`);
+    t.assert(r.ferro >= 2 && r.a === "minecraft:air" && r.b === "minecraft:air", "o Minerador Digital não minerou o ferro");
+    t.assert(r.pedra === "minecraft:stone", "o Minerador Digital minerou fora do filtro");
+    t.succeed();
+  });
+});
+
+// Teletransportador: duas molduras na mesma frequência; o robô entra numa e sai na outra.
+teste("mkl_tp", 300, (t) => {
+  const moldura = (cx) => {
+    t.setBlockType("cl:teletransportador", { x: cx, y: 1, z: 2 });
+    for (let y = 1; y <= 4; y++) for (const x of [cx - 1, cx + 1]) t.setBlockType("cl:moldura_teletransportador", { x, y, z: 2 });
+    t.setBlockType("cl:moldura_teletransportador", { x: cx, y: 4, z: 2 });
+    bateriasEm(t, { x: cx, y: 1, z: 1 });
+  };
+  moldura(1);
+  moldura(5);
+  const j = robo(t, { x: 7.5, y: 1, z: 6.5 });
+  const cmd = comando(j, "mkl_tp");
+  t.runAfterDelay(5, () => {
+    cmd(`scriptevent cl:teste_mkl freq teste ${emMundo(t, { x: 1, y: 1, z: 2 })}`);
+    cmd(`scriptevent cl:teste_mkl freq teste ${emMundo(t, { x: 5, y: 1, z: 2 })}`);
+  });
+  t.runAfterDelay(15, () => j.teleport(t.worldLocation({ x: 1.5, y: 2, z: 2.5 })));
+  t.runAfterDelay(80, () => {
+    const p = t.relativeLocation(j.location);
+    log(`mkl_tp: robô em ${JSON.stringify({ x: p.x.toFixed(1), y: p.y.toFixed(1), z: p.z.toFixed(1) })}`);
+    t.assert(Math.floor(p.x) === 5 && Math.floor(p.z) === 2, "o Teletransportador não levou o robô ao outro");
+    t.succeed();
+  });
+});
+
+// Entrelaçador Quântico: itens entram num e saem no outro da mesma frequência; Carregador de Chão; Cabo Universal.
+teste("mkl_qe", 300, (t) => {
+  const j = robo(t, { x: 6.5, y: 2, z: 6.5 });
+  const cmd = comando(j, "mkl_qe");
+  // Os dois com baú em cima e embaixo: o que entra num sai no outro.
+  for (const x of [0, 3]) {
+    t.setBlockType("minecraft:chest", { x, y: 1, z: 0 });
+    t.setBlockType("cl:entrelacador_quantico", { x, y: 2, z: 0 });
+    t.setBlockType("minecraft:chest", { x, y: 3, z: 0 });
+  }
+  bau(t, { x: 0, y: 3, z: 0 }).addItem(new ItemStack("minecraft:diamond", 10));
+  // Carregador de Chão com o robô em cima, segurando um Teletransportador Portátil vazio.
+  t.setBlockType("cl:carregador_chao", { x: 6, y: 1, z: 6 });
+  bateriasEm(t, { x: 7, y: 1, z: 6 }, { x: 5, y: 1, z: 6 });
+  // Cabo Universal: bateria - cabo - cabo - Câmara de Enriquecimento.
+  t.setBlockType("minecraft:chest", { x: 0, y: 1, z: 5 });
+  t.setBlockType("cl:camara_enriquecimento", { x: 0, y: 2, z: 5 });
+  t.setBlockType("minecraft:chest", { x: 0, y: 3, z: 5 });
+  bau(t, { x: 0, y: 3, z: 5 }).addItem(new ItemStack("minecraft:iron_ore", 4));
+  t.setBlockType("cl:cabo_universal_basico", { x: 1, y: 2, z: 5 });
+  t.setBlockType("cl:cabo_universal_basico", { x: 2, y: 2, z: 5 });
+  bateriasEm(t, { x: 3, y: 2, z: 5 });
+  t.runAfterDelay(5, () => {
+    cmd(`scriptevent cl:teste_mkl freq teste ${emMundo(t, { x: 0, y: 2, z: 0 })}`);
+    cmd(`scriptevent cl:teste_mkl freq teste ${emMundo(t, { x: 3, y: 2, z: 0 })}`);
+    j.getComponent("minecraft:inventory").container.setItem(j.selectedSlotIndex, new ItemStack("cl:teletransportador_portatil", 1));
+  });
+  t.runAfterDelay(160, () => {
+    const it = j.getComponent("minecraft:inventory").container.getItem(j.selectedSlotIndex);
+    const r = {
+      diamantes: noBau(bau(t, { x: 3, y: 1, z: 0 }), "minecraft:diamond"),
+      voltou: noBau(bau(t, { x: 0, y: 1, z: 0 }), "minecraft:diamond"),
+      carga: Number((it?.getLore()[0] ?? "0").replace(/§./g, "").split(" ")[0].replace(/\./g, "")) || 0, // a descrição "x / y RF"
+      po: noBau(bau(t, { x: 0, y: 1, z: 5 }), "cl:po_ferro"),
+    };
+    log(`mkl_qe: ${JSON.stringify(r)}`);
+    t.assert(r.diamantes === 10, "o Entrelaçador Quântico não passou os itens");
+    t.assert(r.carga > 0, "o Carregador de Chão não carregou o item");
+    t.assert(r.po >= 2, "o Cabo Universal não levou energia à máquina");
+    t.succeed();
+  });
+});

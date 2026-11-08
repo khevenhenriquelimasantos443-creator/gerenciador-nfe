@@ -8301,6 +8301,390 @@
     },
     "clc_mkm_smelting_factory_top": {
       "textures": "textures/blocks/cl/arte/mkm_smelting_factory_top"
+    },
+    "clc_caixa_basica": {
+      "textures": "textures/blocks/cl/c/caixa_basica"
+    },
+    "clc_caixa_basica_frente": {
+      "textures": "textures/blocks/cl/arte/caixa_basica_frente"
+    },
+    "clc_caixa_basica_lado": {
+      "textures": "textures/blocks/cl/arte/caixa_basica_lado"
+    },
+    "clc_caixa_basica_topo": {
+      "textures": "textures/blocks/cl/arte/caixa_basica_topo"
+    },
+    "clc_caixa_basica_baixo": {
+      "textures": "textures/blocks/cl/arte/caixa_basica_baixo"
+    },
+    "clc_caixa_avancada": {
+      "textures": "textures/blocks/cl/c/caixa_avancada"
+    },
+    "clc_caixa_avancada_frente": {
+      "textures": "textures/blocks/cl/arte/caixa_avancada_frente"
+    },
+    "clc_caixa_avancada_lado": {
+      "textures": "textures/blocks/cl/arte/caixa_avancada_lado"
+    },
+    "clc_caixa_avancada_topo": {
+      "textures": "textures/blocks/cl/arte/caixa_avancada_topo"
+    },
+    "clc_caixa_avancada_baixo": {
+      "textures": "textures/blocks/cl/arte/caixa_avancada_baixo"
+    },
+    "clc_caixa_elite": {
+      "textures": "textures/blocks/cl/c/caixa_elite"
+    },
+    "clc_caixa_elite_frente": {
+      "textures": "textures/blocks/cl/arte/caixa_elite_frente"
+    },
+    "clc_caixa_elite_lado": {
+      "textures": "textures/blocks/cl/arte/caixa_elite_lado"
+    },
+    "clc_caixa_elite_topo": {
+      "textures": "textures/blocks/cl/arte/caixa_elite_topo"
+    },
+    "clc_caixa_elite_baixo": {
+      "textures": "textures/blocks/cl/arte/caixa_elite_baixo"
+    },
+    "clc_caixa_definitiva": {
+      "textures": "textures/blocks/cl/c/caixa_definitiva"
+    },
+    "clc_caixa_definitiva_frente": {
+      "textures": "textures/blocks/cl/arte/caixa_definitiva_frente"
+    },
+    "clc_caixa_definitiva_lado": {
+      "textures": "textures/blocks/cl/arte/caixa_definitiva_lado"
+    },
+    "clc_caixa_definitiva_topo": {
+      "textures": "textures/blocks/cl/arte/caixa_definitiva_topo"
+    },
+    "clc_caixa_definitiva_baixo": {
+      "textures": "textures/blocks/cl/arte/caixa_definitiva_baixo"
+    },
+    "clc_cabo_universal_basico": {
+      "textures": "textures/blocks/cl/c/cabo_universal_basico"
+    },
+    "clc_cabo_universal_avancado": {
+      "textures": "textures/blocks/cl/c/cabo_universal_avancado"
+    },
+    "clc_cabo_universal_elite": {
+      "textures": "textures/blocks/cl/c/cabo_universal_elite"
+    },
+    "clc_cabo_universal_definitivo": {
+      "textures": "textures/blocks/cl/c/cabo_universal_definitivo"
+    },
+    "clc_cano_mecanico_basico": {
+      "textures": "textures/blocks/cl/c/cano_mecanico_basico"
+    },
+    "clc_cano_mecanico_avancado": {
+      "textures": "textures/blocks/cl/c/cano_mecanico_avancado"
+    },
+    "clc_cano_mecanico_elite": {
+      "textures": "textures/blocks/cl/c/cano_mecanico_elite"
+    },
+    "clc_cano_mecanico_definitivo": {
+      "textures": "textures/blocks/cl/c/cano_mecanico_definitivo"
+    },
+    "clc_tubo_pressurizado_basico": {
+      "textures": "textures/blocks/cl/c/tubo_pressurizado_basico"
+    },
+    "clc_tubo_pressurizado_avancado": {
+      "textures": "textures/blocks/cl/c/tubo_pressurizado_avancado"
+    },
+    "clc_tubo_pressurizado_elite": {
+      "textures": "textures/blocks/cl/c/tubo_pressurizado_elite"
+    },
+    "clc_tubo_pressurizado_definitivo": {
+      "textures": "textures/blocks/cl/c/tubo_pressurizado_definitivo"
+    },
+    "clc_transportador_logistico_basico": {
+      "textures": "textures/blocks/cl/c/transportador_logistico_basico"
+    },
+    "clc_transportador_logistico_avancado": {
+      "textures": "textures/blocks/cl/c/transportador_logistico_avancado"
+    },
+    "clc_transportador_logistico_elite": {
+      "textures": "textures/blocks/cl/c/transportador_logistico_elite"
+    },
+    "clc_transportador_logistico_definitivo": {
+      "textures": "textures/blocks/cl/c/transportador_logistico_definitivo"
+    },
+    "clc_bomba_eletrica_frente": {
+      "textures": "textures/blocks/cl/c/bomba_eletrica_frente"
+    },
+    "clc_bomba_eletrica_lado": {
+      "textures": "textures/blocks/cl/c/bomba_eletrica_lado"
+    },
+    "clc_bomba_eletrica_topo": {
+      "textures": "textures/blocks/cl/c/bomba_eletrica_topo"
+    },
+    "clc_bomba_eletrica_baixo": {
+      "textures": "textures/blocks/cl/c/bomba_eletrica_baixo"
+    },
+    "clc_plenificador_fluidico_frente": {
+      "textures": "textures/blocks/cl/c/plenificador_fluidico_frente"
+    },
+    "clc_plenificador_fluidico_lado": {
+      "textures": "textures/blocks/cl/c/plenificador_fluidico_lado"
+    },
+    "clc_plenificador_fluidico_topo": {
+      "textures": "textures/blocks/cl/c/plenificador_fluidico_topo"
+    },
+    "clc_plenificador_fluidico_baixo": {
+      "textures": "textures/blocks/cl/c/plenificador_fluidico_baixo"
+    },
+    "clc_minerador_digital_frente": {
+      "textures": "textures/blocks/cl/c/minerador_digital_frente"
+    },
+    "clc_minerador_digital_lado": {
+      "textures": "textures/blocks/cl/c/minerador_digital_lado"
+    },
+    "clc_minerador_digital_topo": {
+      "textures": "textures/blocks/cl/c/minerador_digital_topo"
+    },
+    "clc_minerador_digital_baixo": {
+      "textures": "textures/blocks/cl/c/minerador_digital_baixo"
+    },
+    "clc_carregador_chao_frente": {
+      "textures": "textures/blocks/cl/c/carregador_chao_frente"
+    },
+    "clc_carregador_chao_lado": {
+      "textures": "textures/blocks/cl/c/carregador_chao_lado"
+    },
+    "clc_carregador_chao_topo": {
+      "textures": "textures/blocks/cl/c/carregador_chao_topo"
+    },
+    "clc_carregador_chao_baixo": {
+      "textures": "textures/blocks/cl/c/carregador_chao_baixo"
+    },
+    "clc_entrelacador_quantico_frente": {
+      "textures": "textures/blocks/cl/c/entrelacador_quantico_frente"
+    },
+    "clc_entrelacador_quantico_lado": {
+      "textures": "textures/blocks/cl/c/entrelacador_quantico_lado"
+    },
+    "clc_entrelacador_quantico_topo": {
+      "textures": "textures/blocks/cl/c/entrelacador_quantico_topo"
+    },
+    "clc_entrelacador_quantico_baixo": {
+      "textures": "textures/blocks/cl/c/entrelacador_quantico_baixo"
+    },
+    "clc_classificador_logistico_frente": {
+      "textures": "textures/blocks/cl/c/classificador_logistico_frente"
+    },
+    "clc_classificador_logistico_lado": {
+      "textures": "textures/blocks/cl/c/classificador_logistico_lado"
+    },
+    "clc_classificador_logistico_topo": {
+      "textures": "textures/blocks/cl/c/classificador_logistico_topo"
+    },
+    "clc_classificador_logistico_baixo": {
+      "textures": "textures/blocks/cl/c/classificador_logistico_baixo"
+    },
+    "clc_vibrador_sismico_frente": {
+      "textures": "textures/blocks/cl/c/vibrador_sismico_frente"
+    },
+    "clc_vibrador_sismico_lado": {
+      "textures": "textures/blocks/cl/c/vibrador_sismico_lado"
+    },
+    "clc_vibrador_sismico_topo": {
+      "textures": "textures/blocks/cl/c/vibrador_sismico_topo"
+    },
+    "clc_vibrador_sismico_baixo": {
+      "textures": "textures/blocks/cl/c/vibrador_sismico_baixo"
+    },
+    "clc_alarme_industrial_frente": {
+      "textures": "textures/blocks/cl/c/alarme_industrial_frente"
+    },
+    "clc_alarme_industrial_lado": {
+      "textures": "textures/blocks/cl/c/alarme_industrial_lado"
+    },
+    "clc_alarme_industrial_topo": {
+      "textures": "textures/blocks/cl/c/alarme_industrial_topo"
+    },
+    "clc_alarme_industrial_baixo": {
+      "textures": "textures/blocks/cl/c/alarme_industrial_baixo"
+    },
+    "clc_teletransportador_frente": {
+      "textures": "textures/blocks/cl/c/teletransportador_frente"
+    },
+    "clc_teletransportador_lado": {
+      "textures": "textures/blocks/cl/c/teletransportador_lado"
+    },
+    "clc_teletransportador_topo": {
+      "textures": "textures/blocks/cl/c/teletransportador_topo"
+    },
+    "clc_teletransportador_baixo": {
+      "textures": "textures/blocks/cl/c/teletransportador_baixo"
+    },
+    "clc_moldura_teletransportador": {
+      "textures": "textures/blocks/cl/c/moldura_teletransportador"
+    },
+    "clc_minerio_chumbo": {
+      "textures": "textures/blocks/cl/arte/minerio_chumbo"
+    },
+    "clc_minerio_chumbo_profundo": {
+      "textures": "textures/blocks/cl/arte/minerio_chumbo_profundo"
+    },
+    "clc_bloco_chumbo": {
+      "textures": "textures/blocks/cl/arte/bloco_chumbo"
+    },
+    "clc_bloco_chumbo_bruto": {
+      "textures": "textures/blocks/cl/arte/bloco_chumbo_bruto"
+    },
+    "clc_mkm_base_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_base_bottom"
+    },
+    "clc_mkm_chargepad": {
+      "textures": "textures/blocks/cl/arte/mkm_chargepad"
+    },
+    "clc_mkm_chargepad_elements": {
+      "textures": "textures/blocks/cl/arte/mkm_chargepad_elements"
+    },
+    "clc_mkm_chargepad_led": {
+      "textures": "textures/blocks/cl/arte/mkm_chargepad_led"
+    },
+    "clc_mkm_digital_miner": {
+      "textures": "textures/blocks/cl/arte/mkm_digital_miner"
+    },
+    "clc_mkm_digital_miner_elements1": {
+      "textures": "textures/blocks/cl/arte/mkm_digital_miner_elements1"
+    },
+    "clc_mkm_digital_miner_elements2": {
+      "textures": "textures/blocks/cl/arte/mkm_digital_miner_elements2"
+    },
+    "clc_mkm_electric_pump": {
+      "textures": "textures/blocks/cl/arte/mkm_electric_pump"
+    },
+    "clc_mkm_fluidic_plenisher": {
+      "textures": "textures/blocks/cl/arte/mkm_fluidic_plenisher"
+    },
+    "clc_mkm_industrial_alarm": {
+      "textures": "textures/blocks/cl/arte/mkm_industrial_alarm"
+    },
+    "clc_mkm_leds": {
+      "textures": "textures/blocks/cl/arte/mkm_leds"
+    },
+    "clc_mkm_logistical_sorter": {
+      "textures": "textures/blocks/cl/arte/mkm_logistical_sorter"
+    },
+    "clc_mkm_quantum_entangloporter": {
+      "textures": "textures/blocks/cl/arte/mkm_quantum_entangloporter"
+    },
+    "clc_mkm_seismic_vibrator_1": {
+      "textures": "textures/blocks/cl/arte/mkm_seismic_vibrator_1"
+    },
+    "clc_mkm_seismic_vibrator_2": {
+      "textures": "textures/blocks/cl/arte/mkm_seismic_vibrator_2"
+    },
+    "clc_mkm_teleporter": {
+      "textures": "textures/blocks/cl/arte/mkm_teleporter"
+    },
+    "clc_mkm_teleporter_frame": {
+      "textures": "textures/blocks/cl/arte/mkm_teleporter_frame"
+    },
+    "clc_mkm_teleporter_frame_led": {
+      "textures": "textures/blocks/cl/arte/mkm_teleporter_frame_led"
+    },
+    "clc_mkm_teleporter_led": {
+      "textures": "textures/blocks/cl/arte/mkm_teleporter_led"
+    },
+    "clc_mkt_cabo_universal_avancado_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_avancado_centro"
+    },
+    "clc_mkt_cabo_universal_avancado_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_avancado_lado"
+    },
+    "clc_mkt_cabo_universal_basico_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_basico_centro"
+    },
+    "clc_mkt_cabo_universal_basico_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_basico_lado"
+    },
+    "clc_mkt_cabo_universal_definitivo_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_definitivo_centro"
+    },
+    "clc_mkt_cabo_universal_definitivo_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_definitivo_lado"
+    },
+    "clc_mkt_cabo_universal_elite_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_elite_centro"
+    },
+    "clc_mkt_cabo_universal_elite_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cabo_universal_elite_lado"
+    },
+    "clc_mkt_cano_mecanico_avancado_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_avancado_centro"
+    },
+    "clc_mkt_cano_mecanico_avancado_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_avancado_lado"
+    },
+    "clc_mkt_cano_mecanico_basico_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_basico_centro"
+    },
+    "clc_mkt_cano_mecanico_basico_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_basico_lado"
+    },
+    "clc_mkt_cano_mecanico_definitivo_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_definitivo_centro"
+    },
+    "clc_mkt_cano_mecanico_definitivo_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_definitivo_lado"
+    },
+    "clc_mkt_cano_mecanico_elite_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_elite_centro"
+    },
+    "clc_mkt_cano_mecanico_elite_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_cano_mecanico_elite_lado"
+    },
+    "clc_mkt_transportador_logistico_avancado_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_avancado_centro"
+    },
+    "clc_mkt_transportador_logistico_avancado_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_avancado_lado"
+    },
+    "clc_mkt_transportador_logistico_basico_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_basico_centro"
+    },
+    "clc_mkt_transportador_logistico_basico_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_basico_lado"
+    },
+    "clc_mkt_transportador_logistico_definitivo_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_definitivo_centro"
+    },
+    "clc_mkt_transportador_logistico_definitivo_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_definitivo_lado"
+    },
+    "clc_mkt_transportador_logistico_elite_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_elite_centro"
+    },
+    "clc_mkt_transportador_logistico_elite_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_transportador_logistico_elite_lado"
+    },
+    "clc_mkt_tubo_pressurizado_avancado_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_avancado_centro"
+    },
+    "clc_mkt_tubo_pressurizado_avancado_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_avancado_lado"
+    },
+    "clc_mkt_tubo_pressurizado_basico_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_basico_centro"
+    },
+    "clc_mkt_tubo_pressurizado_basico_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_basico_lado"
+    },
+    "clc_mkt_tubo_pressurizado_definitivo_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_definitivo_centro"
+    },
+    "clc_mkt_tubo_pressurizado_definitivo_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_definitivo_lado"
+    },
+    "clc_mkt_tubo_pressurizado_elite_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_elite_centro"
+    },
+    "clc_mkt_tubo_pressurizado_elite_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_elite_lado"
     }
   }
 }

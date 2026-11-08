@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_teleporter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CXC",
+      "XTX",
+      "CXC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "T": {
+        "item": "cl:nucleo_teletransporte"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:teletransportador"
+    }
+  }
+}

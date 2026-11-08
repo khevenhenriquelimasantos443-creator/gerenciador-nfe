@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_chargepad"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "SES"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:polished_blackstone_pressure_plate"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:carregador_chao"
+    }
+  }
+}

@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.50.0";
+export const VERSAO = "1.51.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -678,6 +678,8 @@ export const THERMAL = {
     "minecraft:salmon": "minecraft:cooked_salmon",
     "minecraft:kelp": "minecraft:dried_kelp",
     "cl:po_ferro": "minecraft:iron_ingot", "cl:po_ouro": "minecraft:gold_ingot", "cl:po_cobre": "minecraft:copper_ingot", "cl:po_estanho": "cl:lingote_estanho",
+    // 1.51.0: o chumbo do Mekanism.
+    "cl:po_chumbo": "cl:lingote_chumbo", "cl:chumbo_bruto": "cl:lingote_chumbo", "cl:minerio_chumbo": "cl:lingote_chumbo", "cl:minerio_chumbo_profundo": "cl:lingote_chumbo",
     "cl:argamassa": "cl:tijolo_refratario",
     "cl:cadinho_cru": "cl:cadinho",
     "cl:bicho_seda": "cl:bicho_seda_cozido",

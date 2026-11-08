@@ -398,6 +398,18 @@ for nome, tam, veios, y0, y1 in (("fluorita", 5, 5, -64, 23), ("fluorita_funda",
         "distribution": {"iterations": veios, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
                          "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [y0, y1]}}}})
 
+# 1.51.0 (Mekanism completo, parte 3): minério de chumbo com os números do mod (OreType.LEAD): 8 veios de até 9 por chunk,
+# trapézio de 24 abaixo do fundo até y 64 (o pico fica perto de y -12), trocando pedra (ou ardósia: o profundo).
+escrever("BP/features/mk_veio_chumbo.json", {"format_version": "1.13.0", "minecraft:ore_feature": {
+    "description": {"identifier": "cl:mk_veio_chumbo"}, "count": 9,
+    "replace_rules": [{"places_block": "cl:minerio_chumbo", "may_replace": ["minecraft:stone", "minecraft:andesite", "minecraft:diorite", "minecraft:granite"]},
+                      {"places_block": "cl:minerio_chumbo_profundo", "may_replace": ["minecraft:deepslate", "minecraft:tuff"]}]}})
+escrever("BP/feature_rules/mk_veio_chumbo_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+    "description": {"identifier": "cl:mk_veio_chumbo_regra", "places_feature": "cl:mk_veio_chumbo"},
+    "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "overworld"}]},
+    "distribution": {"iterations": 8, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                     "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "triangle", "extent": [-88, 64]}}}})
+
 # 1.47.0 (Pam's HarvestCraft 2): as 6 hortas silvestres (cada uma no seu tipo de bioma: 1 em 20 chunks, 32 tentativas
 # espalhadas ±6 e ±2 na altura) e as árvores frutíferas (cada árvore 1 em 90 chunks na floresta do seu grupo; os frutos
 # ficam pendurados embaixo das folhas).

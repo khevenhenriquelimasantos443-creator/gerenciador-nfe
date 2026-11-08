@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_transmitter_universal_cable_ultimate"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PPP",
+      "PAP",
+      "PPP"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "P": {
+        "item": "cl:cabo_universal_elite"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cabo_universal_definitivo",
+      "count": 8
+    }
+  }
+}

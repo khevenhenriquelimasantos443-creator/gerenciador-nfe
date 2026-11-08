@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_upgrade_stone_generator"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " G ",
+      "#AB",
+      " G "
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:water_bucket"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "B": {
+        "item": "minecraft:lava_bucket"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:melhoria_gerador_pedra"
+    }
+  }
+}

@@ -1,0 +1,1329 @@
+{
+ "caixas": [
+  {
+   "id": "caixa_basica",
+   "pt": "Caixa Básica",
+   "en": "Basic Bin",
+   "cap": 4096
+  },
+  {
+   "id": "caixa_avancada",
+   "pt": "Compartimento Avançado",
+   "en": "Advanced Bin",
+   "cap": 8192
+  },
+  {
+   "id": "caixa_elite",
+   "pt": "Compartimento Elite",
+   "en": "Elite Bin",
+   "cap": 32768
+  },
+  {
+   "id": "caixa_definitiva",
+   "pt": "Compartimento Ultimate",
+   "en": "Ultimate Bin",
+   "cap": 262144
+  }
+ ],
+ "transmissores": [
+  {
+   "id": "cabo_universal_basico",
+   "pt": "Cabo Universal Básico",
+   "en": "Basic Universal Cable",
+   "tipo": "cabo_universal",
+   "nivel": "basico",
+   "taxa": [
+    8000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "cabo_universal_avancado",
+   "pt": "Cabo Universal Avançado",
+   "en": "Advanced Universal Cable",
+   "tipo": "cabo_universal",
+   "nivel": "avancado",
+   "taxa": [
+    128000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "cabo_universal_elite",
+   "pt": "Cabo Universal Elite",
+   "en": "Elite Universal Cable",
+   "tipo": "cabo_universal",
+   "nivel": "elite",
+   "taxa": [
+    1024000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "cabo_universal_definitivo",
+   "pt": "Cabo Universal Ultimate",
+   "en": "Ultimate Universal Cable",
+   "tipo": "cabo_universal",
+   "nivel": "definitivo",
+   "taxa": [
+    8192000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "cano_mecanico_basico",
+   "pt": "Cano Mecânico Básico",
+   "en": "Basic Mechanical Pipe",
+   "tipo": "cano_mecanico",
+   "nivel": "basico",
+   "taxa": [
+    2000,
+    250
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "cano_mecanico_avancado",
+   "pt": "Cano Mecânico Avançado",
+   "en": "Advanced Mechanical Pipe",
+   "tipo": "cano_mecanico",
+   "nivel": "avancado",
+   "taxa": [
+    8000,
+    1000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "cano_mecanico_elite",
+   "pt": "Cano Mecânico Elite",
+   "en": "Elite Mechanical Pipe",
+   "tipo": "cano_mecanico",
+   "nivel": "elite",
+   "taxa": [
+    32000,
+    8000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "cano_mecanico_definitivo",
+   "pt": "Cano Mecânico Ultimate",
+   "en": "Ultimate Mechanical Pipe",
+   "tipo": "cano_mecanico",
+   "nivel": "definitivo",
+   "taxa": [
+    128000,
+    32000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "tubo_pressurizado_basico",
+   "pt": "Tubo Pressurizado Básico",
+   "en": "Basic Pressurized Tube",
+   "tipo": "tubo_pressurizado",
+   "nivel": "basico",
+   "taxa": [
+    4000,
+    750
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "tubo_pressurizado_avancado",
+   "pt": "Tubo Pressurizado Avançado",
+   "en": "Advanced Pressurized Tube",
+   "tipo": "tubo_pressurizado",
+   "nivel": "avancado",
+   "taxa": [
+    16000,
+    2000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "tubo_pressurizado_elite",
+   "pt": "Tubo Pressurizado Elite",
+   "en": "Elite Pressurized Tube",
+   "tipo": "tubo_pressurizado",
+   "nivel": "elite",
+   "taxa": [
+    256000,
+    64000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "tubo_pressurizado_definitivo",
+   "pt": "Tubo Pressurizado Ultimate",
+   "en": "Ultimate Pressurized Tube",
+   "tipo": "tubo_pressurizado",
+   "nivel": "definitivo",
+   "taxa": [
+    1024000,
+    256000
+   ],
+   "modelo": "pequeno",
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "transportador_logistico_basico",
+   "pt": "Transportador Logístico Básico",
+   "en": "Basic Logistical Transporter",
+   "tipo": "transportador_logistico",
+   "nivel": "basico",
+   "taxa": [
+    1,
+    5
+   ],
+   "modelo": "grande",
+   "caixa": {
+    "origin": [
+     -4.0,
+     4.0,
+     -4.0
+    ],
+    "size": [
+     8,
+     8,
+     8
+    ]
+   }
+  },
+  {
+   "id": "transportador_logistico_avancado",
+   "pt": "Transportador Logístico Avançado",
+   "en": "Advanced Logistical Transporter",
+   "tipo": "transportador_logistico",
+   "nivel": "avancado",
+   "taxa": [
+    16,
+    10
+   ],
+   "modelo": "grande",
+   "caixa": {
+    "origin": [
+     -4.0,
+     4.0,
+     -4.0
+    ],
+    "size": [
+     8,
+     8,
+     8
+    ]
+   }
+  },
+  {
+   "id": "transportador_logistico_elite",
+   "pt": "Transportador Logístico Elite",
+   "en": "Elite Logistical Transporter",
+   "tipo": "transportador_logistico",
+   "nivel": "elite",
+   "taxa": [
+    32,
+    20
+   ],
+   "modelo": "grande",
+   "caixa": {
+    "origin": [
+     -4.0,
+     4.0,
+     -4.0
+    ],
+    "size": [
+     8,
+     8,
+     8
+    ]
+   }
+  },
+  {
+   "id": "transportador_logistico_definitivo",
+   "pt": "Transportador Ultimate Logístico",
+   "en": "Ultimate Logistical Transporter",
+   "tipo": "transportador_logistico",
+   "nivel": "definitivo",
+   "taxa": [
+    64,
+    50
+   ],
+   "modelo": "grande",
+   "caixa": {
+    "origin": [
+     -4.0,
+     4.0,
+     -4.0
+    ],
+    "size": [
+     8,
+     8,
+     8
+    ]
+   }
+  }
+ ],
+ "maquinas": [
+  {
+   "id": "bomba_eletrica",
+   "pt": "Bomba Elétrica",
+   "en": "Electric Pump",
+   "modelo": {
+    "geometria": "geometry.cl.mk_bomba_eletrica",
+    "materiais": {
+     "m_electric_pump": "clc_mkm_electric_pump",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -4,
+      0,
+      -8
+     ],
+     "size": [
+      8,
+      16,
+      12
+     ]
+    }
+   }
+  },
+  {
+   "id": "plenificador_fluidico",
+   "pt": "Preenchedor Fluídico",
+   "en": "Fluidic Plenisher",
+   "modelo": {
+    "geometria": "geometry.cl.mk_plenificador_fluidico",
+    "materiais": {
+     "m_fluidic_plenisher": "clc_mkm_fluidic_plenisher",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_ports_large": "clc_mkm_ports_large",
+     "m_ports_large_led": "clc_mkm_ports_large_led"
+    },
+    "caixa": {
+     "origin": [
+      -6,
+      0,
+      -6
+     ],
+     "size": [
+      12,
+      16,
+      14
+     ]
+    }
+   }
+  },
+  {
+   "id": "minerador_digital",
+   "pt": "Mineradora Digital",
+   "en": "Digital Miner",
+   "modelo": {
+    "geometria": "geometry.cl.mk_minerador_digital",
+    "materiais": {
+     "m_digital_miner_elements1": "clc_mkm_digital_miner_elements1",
+     "m_digital_miner": "clc_mkm_digital_miner",
+     "m_digital_miner_elements2": "clc_mkm_digital_miner_elements2",
+     "m_ports": "clc_mkm_ports",
+     "m_leds": "clc_mkm_leds",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      11,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "carregador_chao",
+   "pt": "Carregador",
+   "en": "Chargepad",
+   "modelo": {
+    "geometria": "geometry.cl.mk_carregador_chao",
+    "materiais": {
+     "m_chargepad": "clc_mkm_chargepad",
+     "m_base_bottom": "clc_mkm_base_bottom",
+     "m_chargepad_elements": "clc_mkm_chargepad_elements",
+     "m_ports": "clc_mkm_ports",
+     "m_chargepad_led": "clc_mkm_chargepad_led",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      12,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "entrelacador_quantico",
+   "pt": "Entreleportador Quântico",
+   "en": "Quantum Entangloporter",
+   "modelo": {
+    "geometria": "geometry.cl.mk_entrelacador_quantico",
+    "materiais": {
+     "m_quantum_entangloporter": "clc_mkm_quantum_entangloporter",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "classificador_logistico",
+   "pt": "Separador Logístico",
+   "en": "Logistical Sorter",
+   "modelo": {
+    "geometria": "geometry.cl.mk_classificador_logistico",
+    "materiais": {
+     "m_logistical_sorter": "clc_mkm_logistical_sorter",
+     "m_ports_large": "clc_mkm_ports_large",
+     "m_ports_large_led": "clc_mkm_ports_large_led",
+     "m_ports": "clc_mkm_ports",
+     "m_leds": "clc_mkm_leds"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      11,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "vibrador_sismico",
+   "pt": "Vibrador Sísmico",
+   "en": "Seismic Vibrator",
+   "modelo": {
+    "geometria": "geometry.cl.mk_vibrador_sismico",
+    "materiais": {
+     "m_seismic_vibrator_1": "clc_mkm_seismic_vibrator_1",
+     "m_seismic_vibrator_2": "clc_mkm_seismic_vibrator_2",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "alarme_industrial",
+   "pt": "Alarme Industrial",
+   "en": "Industrial Alarm",
+   "modelo": {
+    "geometria": "geometry.cl.mk_alarme_industrial",
+    "materiais": {
+     "m_industrial_alarm": "clc_mkm_industrial_alarm"
+    },
+    "caixa": {
+     "origin": [
+      -3,
+      0,
+      -3
+     ],
+     "size": [
+      6,
+      5,
+      6
+     ]
+    }
+   }
+  },
+  {
+   "id": "teletransportador",
+   "pt": "Teletransportador",
+   "en": "Teleporter",
+   "modelo": {
+    "geometria": "geometry.cl.mk_teletransportador",
+    "materiais": {
+     "m_teleporter": "clc_mkm_teleporter",
+     "m_teleporter_led": "clc_mkm_teleporter_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "moldura_teletransportador",
+   "pt": "Estrutura do Teletransportador",
+   "en": "Teleporter Frame",
+   "modelo": {
+    "geometria": "geometry.cl.mk_moldura_teletransportador",
+    "materiais": {
+     "m_teleporter_frame": "clc_mkm_teleporter_frame",
+     "m_teleporter_frame_led": "clc_mkm_teleporter_frame_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ],
+ "itens": [
+  {
+   "id": "teletransportador_portatil",
+   "pt": "Teletransportador Portátil",
+   "en": "Portable Teleporter"
+  },
+  {
+   "id": "leitor_sismico",
+   "pt": "Leitor Sísmico",
+   "en": "Seismic Reader"
+  },
+  {
+   "id": "nucleo_teletransporte",
+   "pt": "Núcleo de Teletransportação",
+   "en": "Teleportation Core"
+  },
+  {
+   "id": "lingote_chumbo",
+   "pt": "Barra de Chumbo",
+   "en": "Lead Ingot"
+  },
+  {
+   "id": "chumbo_bruto",
+   "pt": "Chumbo bruto",
+   "en": "Raw Lead"
+  },
+  {
+   "id": "pepita_chumbo",
+   "pt": "Pepita de Chumbo",
+   "en": "Lead Nugget"
+  },
+  {
+   "id": "po_chumbo",
+   "pt": "Pó de Chumbo",
+   "en": "Lead Dust"
+  },
+  {
+   "id": "robit",
+   "pt": "Robit",
+   "en": "Robit"
+  }
+ ],
+ "blocos": [
+  {
+   "id": "bloco_chumbo",
+   "pt": "Bloco de Chumbo",
+   "en": "Block of Lead"
+  },
+  {
+   "id": "bloco_chumbo_bruto",
+   "pt": "Bloco de Chumbo Bruto",
+   "en": "Block of Raw Lead"
+  },
+  {
+   "id": "minerio_chumbo",
+   "pt": "Minério de chumbo",
+   "en": "Lead Ore"
+  },
+  {
+   "id": "minerio_chumbo_profundo",
+   "pt": "Minério de Chumbo de Ardósia",
+   "en": "Deepslate Lead Ore"
+  }
+ ],
+ "receitas": [
+  {
+   "id": "mkc_chargepad",
+   "resultado": "cl:carregador_chao",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "SES"
+   ],
+   "chave": {
+    "#": "minecraft:polished_blackstone_pressure_plate",
+    "E": "cl:tablet_energia",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_digital_miner",
+   "resultado": "cl:minerador_digital",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "SRS",
+    "TXT"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_basico",
+    "R": "cl:robit",
+    "S": "cl:classificador_logistico",
+    "T": "cl:nucleo_teletransporte",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_electric_pump",
+   "resultado": "cl:bomba_eletrica",
+   "tipo": "shaped",
+   "padrao": [
+    " B ",
+    "AXA",
+    "OOO"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "B": "minecraft:bucket",
+    "O": "cl:lingote_osmio",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_fluidic_plenisher",
+   "resultado": "cl:plenificador_fluidico",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "CPC",
+    "III"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "I": "cl:lingote_estanho",
+    "P": "cl:bomba_eletrica"
+   }
+  },
+  {
+   "id": "mkc_industrial_alarm",
+   "resultado": "cl:alarme_industrial",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "C#C",
+    "III"
+   ],
+   "chave": {
+    "#": "minecraft:redstone_lamp",
+    "C": "cl:circuito_controle_basico",
+    "I": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_logistical_sorter",
+   "resultado": "cl:classificador_logistico",
+   "tipo": "shaped",
+   "padrao": [
+    "I#I",
+    "ICI",
+    "III"
+   ],
+   "chave": {
+    "#": "minecraft:piston",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "mkc_portable_teleporter",
+   "resultado": "cl:teletransportador_portatil",
+   "tipo": "shaped",
+   "padrao": [
+    " E ",
+    "CTC",
+    " E "
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "E": "cl:tablet_energia",
+    "T": "cl:nucleo_teletransporte"
+   }
+  },
+  {
+   "id": "mkc_quantum_entangloporter",
+   "resultado": "cl:entrelacador_quantico",
+   "tipo": "shaped",
+   "padrao": [
+    "ICI",
+    "ATA",
+    "ICI"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_obsidiana_refinada",
+    "T": "cl:nucleo_teletransporte"
+   }
+  },
+  {
+   "id": "mkc_robit",
+   "resultado": "cl:robit",
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "EAE",
+    "IPI"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "E": "cl:tablet_energia",
+    "I": "cl:lingote_obsidiana_refinada",
+    "P": "cl:barril_pessoal",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_seismic_reader",
+   "resultado": "cl:leitor_sismico",
+   "tipo": "shaped",
+   "padrao": [
+    "S#S",
+    "SES",
+    "SSS"
+   ],
+   "chave": {
+    "#": "minecraft:lapis_lazuli",
+    "E": "cl:tablet_energia",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_seismic_vibrator",
+   "resultado": "cl:vibrador_sismico",
+   "tipo": "shaped",
+   "padrao": [
+    "I#I",
+    "CXC",
+    "III"
+   ],
+   "chave": {
+    "#": "minecraft:lapis_lazuli",
+    "C": "cl:circuito_controle_basico",
+    "I": "cl:lingote_estanho",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_teleportation_core",
+   "resultado": "cl:nucleo_teletransporte",
+   "tipo": "shaped",
+   "padrao": [
+    "#A#",
+    "IDI",
+    "#A#"
+   ],
+   "chave": {
+    "#": "minecraft:ender_pearl",
+    "A": "cl:liga_atomica",
+    "D": "minecraft:diamond",
+    "I": "minecraft:gold_ingot"
+   }
+  },
+  {
+   "id": "mkc_teleporter",
+   "resultado": "cl:teletransportador",
+   "tipo": "shaped",
+   "padrao": [
+    "CXC",
+    "XTX",
+    "CXC"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "T": "cl:nucleo_teletransporte",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_teleporter_frame",
+   "resultado": "cl:moldura_teletransportador",
+   "qtd": 9,
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "IGI",
+    "III"
+   ],
+   "chave": {
+    "G": "cl:lingote_glowstone_refinado",
+    "I": "cl:lingote_obsidiana_refinada"
+   }
+  },
+  {
+   "id": "mkc_transmitter_universal_cable_advanced",
+   "resultado": "cl:cabo_universal_avancado",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "P": "cl:cabo_universal_basico"
+   }
+  },
+  {
+   "id": "mkc_transmitter_universal_cable_basic",
+   "resultado": "cl:cabo_universal_basico",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "S#S"
+   ],
+   "chave": {
+    "#": "minecraft:redstone",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_transmitter_universal_cable_elite",
+   "resultado": "cl:cabo_universal_elite",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "P": "cl:cabo_universal_avancado"
+   }
+  },
+  {
+   "id": "mkc_transmitter_universal_cable_ultimate",
+   "resultado": "cl:cabo_universal_definitivo",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "P": "cl:cabo_universal_elite"
+   }
+  },
+  {
+   "id": "mkc_transmitter_mechanical_pipe_advanced",
+   "resultado": "cl:cano_mecanico_avancado",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "P": "cl:cano_mecanico_basico"
+   }
+  },
+  {
+   "id": "mkc_transmitter_mechanical_pipe_basic",
+   "resultado": "cl:cano_mecanico_basico",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "S#S"
+   ],
+   "chave": {
+    "#": "minecraft:bucket",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_transmitter_mechanical_pipe_elite",
+   "resultado": "cl:cano_mecanico_elite",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "P": "cl:cano_mecanico_avancado"
+   }
+  },
+  {
+   "id": "mkc_transmitter_mechanical_pipe_ultimate",
+   "resultado": "cl:cano_mecanico_definitivo",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "P": "cl:cano_mecanico_elite"
+   }
+  },
+  {
+   "id": "mkc_transmitter_pressurized_tube_advanced",
+   "resultado": "cl:tubo_pressurizado_avancado",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "P": "cl:tubo_pressurizado_basico"
+   }
+  },
+  {
+   "id": "mkc_transmitter_pressurized_tube_basic",
+   "resultado": "cl:tubo_pressurizado_basico",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "S#S"
+   ],
+   "chave": {
+    "#": "minecraft:glass",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_transmitter_pressurized_tube_elite",
+   "resultado": "cl:tubo_pressurizado_elite",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "P": "cl:tubo_pressurizado_avancado"
+   }
+  },
+  {
+   "id": "mkc_transmitter_pressurized_tube_ultimate",
+   "resultado": "cl:tubo_pressurizado_definitivo",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "P": "cl:tubo_pressurizado_elite"
+   }
+  },
+  {
+   "id": "mkc_transmitter_logistical_transporter_advanced",
+   "resultado": "cl:transportador_logistico_avancado",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "P": "cl:transportador_logistico_basico"
+   }
+  },
+  {
+   "id": "mkc_transmitter_logistical_transporter_basic",
+   "resultado": "cl:transportador_logistico_basico",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "S#S"
+   ],
+   "chave": {
+    "#": "cl:circuito_controle_basico",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_transmitter_logistical_transporter_elite",
+   "resultado": "cl:transportador_logistico_elite",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "P": "cl:transportador_logistico_avancado"
+   }
+  },
+  {
+   "id": "mkc_transmitter_logistical_transporter_ultimate",
+   "resultado": "cl:transportador_logistico_definitivo",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "P": "cl:transportador_logistico_elite"
+   }
+  },
+  {
+   "id": "mkc_processing_lead_nugget_from_ingot",
+   "resultado": "cl:pepita_chumbo",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_chumbo"
+   ]
+  },
+  {
+   "id": "mkc_processing_lead_raw_storage_blocks_from_raw",
+   "resultado": "cl:bloco_chumbo_bruto",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:chumbo_bruto",
+    "P": "cl:chumbo_bruto"
+   }
+  },
+  {
+   "id": "mkc_processing_lead_storage_blocks_from_ingots",
+   "resultado": "cl:bloco_chumbo",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:lingote_chumbo",
+    "P": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_processing_lead_raw_from_raw_block",
+   "resultado": "cl:chumbo_bruto",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_chumbo_bruto"
+   ]
+  },
+  {
+   "id": "mkc_processing_lead_ingot_from_block",
+   "resultado": "cl:lingote_chumbo",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_chumbo"
+   ]
+  },
+  {
+   "id": "mkc_processing_lead_ingot_from_nuggets",
+   "resultado": "cl:lingote_chumbo",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:pepita_chumbo",
+    "P": "cl:pepita_chumbo"
+   }
+  },
+  {
+   "id": "mkc_bin_advanced",
+   "resultado": "cl:caixa_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "_C_",
+    "APA",
+    "___"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "P": "cl:caixa_basica",
+    "_": "minecraft:cobblestone"
+   }
+  },
+  {
+   "id": "mkc_bin_basic",
+   "resultado": "cl:caixa_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "_C_",
+    "A A",
+    "___"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "_": "minecraft:cobblestone"
+   }
+  },
+  {
+   "id": "mkc_bin_elite",
+   "resultado": "cl:caixa_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "_C_",
+    "APA",
+    "___"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "P": "cl:caixa_avancada",
+    "_": "minecraft:cobblestone"
+   }
+  },
+  {
+   "id": "mkc_bin_ultimate",
+   "resultado": "cl:caixa_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "_C_",
+    "APA",
+    "___"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "P": "cl:caixa_elite",
+    "_": "minecraft:cobblestone"
+   }
+  }
+ ],
+ "fornalha": {
+  "cl:po_chumbo": "cl:lingote_chumbo",
+  "cl:minerio_chumbo": "cl:lingote_chumbo",
+  "cl:minerio_chumbo_profundo": "cl:lingote_chumbo",
+  "cl:chumbo_bruto": "cl:lingote_chumbo"
+ },
+ "energia": {
+  "bomba": 100,
+  "plenificador": 100,
+  "minerador": 1000,
+  "vibrador": 50
+ }
+}

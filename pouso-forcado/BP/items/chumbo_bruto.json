@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:chumbo_bruto",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_chumbo_bruto",
+      "minecraft:display_name": {
+        "value": "item.cl:chumbo_bruto.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

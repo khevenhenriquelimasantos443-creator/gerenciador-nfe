@@ -127,6 +127,11 @@ export type Acao =
   | "hc2_fruta"
   | "mk_melhoria"
   | "mk_fabrica"
+  | "mk_cano"
+  | "mk_transportador"
+  | "mk_minerador"
+  | "mk_teletransporte"
+  | "mk_sismico"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -480,6 +485,16 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       // 1.50.0: Mekanism completo, parte 2 (melhorias e fábricas)
       { id: "mk_melhoria", requer: ["mk10_circuito"], objetivo: { tipo: "acao", acao: "mk_melhoria", qtd: 1 }, recompensa: [{ item: "cl:po_osmio", quantidade: 4 }] },
       { id: "mk_fabrica", requer: ["mk_melhoria"], objetivo: { tipo: "acao", acao: "mk_fabrica", qtd: 1 }, recompensa: [{ item: "cl:circuito_controle_basico", quantidade: 4 }] },
+      // 1.51.0: Mekanism completo, parte 3 (armazenamento, logística e utilidades)
+      { id: "mk_chumbo", requer: ["mk10_enriquecer"], objetivo: { tipo: "ter", item: "cl:lingote_chumbo", qtd: 8 }, recompensa: [{ item: "cl:po_osmio", quantidade: 4 }] },
+      { id: "mk_caixa", requer: ["mk10_circuito"], objetivo: { tipo: "colocar", bloco: "cl:caixa_basica", qtd: 1 }, recompensa: [{ item: "cl:liga_enriquecida", quantidade: 4 }] },
+      { id: "mk_cabo", requer: ["mk10_circuito"], objetivo: { tipo: "colocar", bloco: "cl:cabo_universal_basico", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
+      { id: "mk_cano", requer: ["mk_cabo", "mkq_oxidador"], objetivo: { tipo: "acao", acao: "mk_cano", qtd: 1 }, recompensa: [{ item: "cl:cilindro_vazio", quantidade: 4 }] },
+      { id: "mk_transportador", requer: ["mk_cabo"], objetivo: { tipo: "acao", acao: "mk_transportador", qtd: 1 }, recompensa: [{ item: "cl:liga_enriquecida", quantidade: 4 }] },
+      { id: "mk_minerador", requer: ["mk_transportador", "mk_chumbo"], objetivo: { tipo: "acao", acao: "mk_minerador", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 4 }] },
+      { id: "mk_teletransporte", requer: ["mk_minerador"], objetivo: { tipo: "acao", acao: "mk_teletransporte", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
+      { id: "mk_entrelacador", requer: ["mk_teletransporte"], objetivo: { tipo: "colocar", bloco: "cl:entrelacador_quantico", qtd: 1 }, recompensa: [{ item: "cl:liga_atomica", quantidade: 2 }] },
+      { id: "mk_sismico", requer: ["mk_chumbo"], objetivo: { tipo: "acao", acao: "mk_sismico", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 16 }] },
     ],
   },
   {

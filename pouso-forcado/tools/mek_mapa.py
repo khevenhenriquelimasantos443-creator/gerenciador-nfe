@@ -3,7 +3,7 @@
 # completo (entram no mapa para as receitas, mas não na lista de itens da 1.21.0).
 import re
 
-METAIS = {"iron": "ferro", "gold": "ouro", "copper": "cobre", "tin": "estanho", "osmium": "osmio"}
+METAIS = {"iron": "ferro", "gold": "ouro", "copper": "cobre", "tin": "estanho", "osmium": "osmio", "lead": "chumbo"}
 JA = {
     "dust_iron": "po_ferro", "dust_gold": "po_ouro", "dust_copper": "po_cobre", "dust_tin": "po_estanho", "dust_osmium": "po_osmio",
     "dust_obsidian": "po_obsidiana", "dust_quartz": "po_quartzo", "dust_lapis_lazuli": "po_lapis", "dust_coal": "po_carvao", "dust_lithium": "po_litio",
@@ -100,6 +100,31 @@ NOVOS.update({"upgrade_speed": "melhoria_velocidade", "upgrade_energy": "melhori
               "upgrade_muffling": "melhoria_silenciador", "upgrade_anchor": "melhoria_ancora", "upgrade_stone_generator": "melhoria_gerador_pedra",
               "upgrade_filter": "melhoria_filtro"})
 NOVOS.update({f"{t}_tier_installer": f"instalador_nivel_{p}" for t, p in (("basic", "basico"), ("advanced", "avancado"), ("elite", "elite"), ("ultimate", "definitivo"))})
+# Parte 3 (1.51.0): armazenamento, logística e utilidades.
+_N3 = (("basic", "basico", "basica"), ("advanced", "avancado", "avancada"), ("elite", "elite", "elite"), ("ultimate", "definitivo", "definitiva"))
+NOVOS.update({f"{t}_bin": f"caixa_{f}" for t, _m, f in _N3})
+NOVOS.update({f"{t}_universal_cable": f"cabo_universal_{m}" for t, m, _f in _N3})
+NOVOS.update({f"{t}_mechanical_pipe": f"cano_mecanico_{m}" for t, m, _f in _N3})
+NOVOS.update({f"{t}_pressurized_tube": f"tubo_pressurizado_{m}" for t, m, _f in _N3})
+NOVOS.update({f"{t}_logistical_transporter": f"transportador_logistico_{m}" for t, m, _f in _N3})
+NOVOS.update({"electric_pump": "bomba_eletrica", "fluidic_plenisher": "plenificador_fluidico", "digital_miner": "minerador_digital",
+              "chargepad": "carregador_chao", "quantum_entangloporter": "entrelacador_quantico", "logistical_sorter": "classificador_logistico",
+              "seismic_vibrator": "vibrador_sismico", "industrial_alarm": "alarme_industrial", "teleporter": "teletransportador",
+              "teleporter_frame": "moldura_teletransportador", "portable_teleporter": "teletransportador_portatil", "seismic_reader": "leitor_sismico",
+              "teleportation_core": "nucleo_teletransporte"})
+# Chumbo (o pack não tinha): minério normal e profundo, bruto, lingote, pepita, pó e blocos (o resto sai de METAIS).
+NOVOS.update({"ingot_lead": "lingote_chumbo", "raw_lead": "chumbo_bruto", "nugget_lead": "pepita_chumbo", "dust_lead": "po_chumbo",
+              "block_lead": "bloco_chumbo", "block_raw_lead": "bloco_chumbo_bruto", "lead_ore": "minerio_chumbo",
+              "deepslate_lead_ore": "minerio_chumbo_profundo", "robit": "robit"})
+TAGS.update({"mekanism:transmitters/logistical_transporters": "cl:transportador_logistico_basico", "c:chests/ender": "minecraft:ender_chest",
+             "mekanism:personal_storage": "cl:barril_pessoal",
+             "c:ingots/lead": "cl:lingote_chumbo", "c:raw_materials/lead": "cl:chumbo_bruto", "c:nuggets/lead": "cl:pepita_chumbo",
+             "c:storage_blocks/lead": "cl:bloco_chumbo", "c:storage_blocks/raw_lead": "cl:bloco_chumbo_bruto",
+             "c:ores/lead": ["cl:minerio_chumbo", "cl:minerio_chumbo_profundo"], "c:ores_in_ground/stone": None, "c:ores_in_ground/deepslate": None,
+             # Ingredientes das partes 2 e 3 que faltavam (sem o equivalente no Bedrock, o mais próximo).
+             "minecraft:planks": "#minecraft:planks", "c:buckets/water": "minecraft:water_bucket", "c:buckets/lava": "minecraft:lava_bucket",
+             "c:ender_pearls": "minecraft:ender_pearl", "mekanism:stone_crafting_materials": "minecraft:cobblestone",
+             "mekanism:muffling_center": "minecraft:iron_ingot", "c:dusts/redstone": "minecraft:redstone"})
 TODOS.update(NOVOS)
 for en, pt in METAIS.items():
     TAGS[f"mekanism:crystals/{en}"] = f"cl:cristal_{pt}"

@@ -154,6 +154,32 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.51.0 (Mekanism completo, parte 3: armazenamento, logística e utilidades)
+
+- **Chumbo**: minério normal e profundo (8 veios de até 9 por chunk, abaixo da altura 64, mais comum perto de -12),
+  bruto, lingote, pepita, pó e blocos; o processamento ×2 a ×5 do Mekanism vale para ele. Com o chumbo entram as receitas
+  que faltavam (Triturador, Combinador, Instaladores de Nível, Silenciador, Gerador de Pedra, Alarme Industrial).
+- **Caixas** (Bins) Básica, Avançada, Elite e Definitiva: 4.096, 8.192, 32.768 e 262.144 de um item só. Funcionam como
+  as gavetas (tocar guarda, bater tira; quebrada, leva tudo dentro).
+- **Transmissores** nos 4 níveis, com o modelo e a arte do mod e a vazão de cada nível:
+  - **Cabo Universal**: energia (entra na rede do pack, liga em tudo que os outros cabos ligam).
+  - **Cano Mecânico** (água, lava, salmoura) e **Tubo Pressurizado** (químicos): ligam máquinas e tanques do Mekanism.
+  - **Transportador Logístico**: itens entre baús e máquinas (1, 16, 32 ou 64 itens a cada meio segundo).
+  - Tocar troca o modo: **TIRA** (miolo laranja: puxa do que está encostado) ou **RECEBE** (entrega).
+- **Bomba Elétrica** (tira fluido de baixo; a água não acaba, a lava sim; baldes vazios no baú de cima voltam cheios) e
+  **Plenificador Fluídico** (espalha o fluido em volta e embaixo).
+- **Minerador Digital**: raio até 32, altura mínima e máxima, filtros de bloco (`#minerios` pega todos os minérios),
+  modo Inverso e Toque Suave; guarda no baú de cima. Energia e tempo do mod (80 tiques por bloco).
+- **Teletransportador**: moldura de 3 × 4 com o Teletransportador no meio de baixo; quem entra no vão vai para o mais
+  perto da mesma frequência (pública ou privada). **Teletransportador Portátil** (carrega em qualquer carregador).
+- **Entrelaçador Quântico**: tudo na mesma frequência é um lugar só (1 espaço de item, energia, fluido e químico).
+- **Carregador de Chão** (carrega os itens com energia de quem fica em cima), **Classificador Logístico** (filtra itens
+  de um baú para a frente), **Vibrador e Leitor Sísmico** (mostra o que tem embaixo, camada por camada) e **Alarme
+  Industrial** (toca com o som do mod quando recebe redstone).
+- **Robit** e **Núcleo de Teletransportação** (itens; o Robit de verdade vem na parte 5).
+- Ícones 3D das máquinas do Mekanism agora mostram o modelo do mod (também os das partes 1 e 2).
+- Diário: 9 missões novas (chumbo, caixa, cabo, canos, transportador, minerador, teletransporte, entrelaçador, sísmico).
+
 ## Novidades da 1.50.0 (Mekanism completo, parte 2: fábricas, melhorias e instaladores de nível)
 
 - **Fábricas** (as 9 do mod: Fundição, Enriquecimento, Trituração, Compressão, Combinação, Purificação, Injeção, Infusão e

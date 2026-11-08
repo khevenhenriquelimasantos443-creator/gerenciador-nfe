@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_electric_pump"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " B ",
+      "AXA",
+      "OOO"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "O": {
+        "item": "cl:lingote_osmio"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bomba_eletrica"
+    }
+  }
+}

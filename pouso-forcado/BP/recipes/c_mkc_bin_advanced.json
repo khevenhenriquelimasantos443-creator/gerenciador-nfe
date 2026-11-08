@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_bin_advanced"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "_C_",
+      "APA",
+      "___"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "cl:circuito_controle_avancado"
+      },
+      "P": {
+        "item": "cl:caixa_basica"
+      },
+      "_": {
+        "item": "minecraft:cobblestone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:caixa_avancada"
+    }
+  }
+}
