@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_sps_casing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PAP",
+      "A#A",
+      "PAP"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:pastilha_plutonio"
+      },
+      "A": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:folha_pead"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:revestimento_sps"
+    }
+  }
+}

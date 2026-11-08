@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_solar_neutron_activator"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "CXC",
+      "III"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:folha_pead"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "C": {
+        "item": "cl:circuito_controle_elite"
+      },
+      "I": {
+        "item": "cl:lingote_bronze"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:ativador_neutrons_solar"
+    }
+  }
+}

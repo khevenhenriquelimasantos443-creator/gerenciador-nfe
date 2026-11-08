@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_atomic_disassembler"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AEA",
+      "A#A",
+      " I "
+    ],
+    "key": {
+      "#": {
+        "item": "cl:liga_atomica"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "I": {
+        "item": "cl:lingote_obsidiana_refinada"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:desmontador_atomico"
+    }
+  }
+}

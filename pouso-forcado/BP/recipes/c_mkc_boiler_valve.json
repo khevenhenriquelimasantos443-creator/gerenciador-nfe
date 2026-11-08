@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_boiler_valve"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " # ",
+      "#C#",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "cl:revestimento_caldeira"
+      },
+      "C": {
+        "item": "cl:circuito_controle_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:valvula_caldeira",
+      "count": 2
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:unidade_qio_hiperdensa",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_unidade_qio_hiperdensa",
+      "minecraft:display_name": {
+        "value": "item.cl:unidade_qio_hiperdensa.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

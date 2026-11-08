@@ -1,6 +1,6 @@
 import { Block, BlockCustomComponent, Container, GameMode, ItemStack, Player, RawMessage, system, world } from "@minecraft/server";
 import { registrarNoCatalogo, Receita } from "../catalogo/catalogo.js";
-import { DADOS_F66 } from "../conteudo/gerado.js";
+import { DADOS_F66, DADOS_F69 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { codigoDoItem, guardarNoItem, lerCodigo } from "../util/item_guarda.js";
@@ -32,7 +32,9 @@ const D = DADOS_F66 as unknown as {
 };
 const VAZIO = "cl:cilindro_vazio", BALDE = "minecraft:bucket";
 const MB = 1000, CAP = 10000, FLUXO = 100, GUARDA = 8;
-const LIQUIDOS: Readonly<Record<string, string>> = { water: "minecraft:water_bucket", brine: "cl:balde_salmoura", lava: "minecraft:lava_bucket" };
+// 1.52.0: água pesada e pasta nutritiva (baldes da parte 4).
+const LIQUIDOS: Readonly<Record<string, string>> = { water: "minecraft:water_bucket", brine: "cl:balde_salmoura", lava: "minecraft:lava_bucket",
+  ...(DADOS_F69.liquidos as Record<string, string>) };
 const CHEIO = new Map<string, { q: string; vazio: string }>();
 const RECIPIENTE = new Map<string, string>();
 for (const [q, id] of Object.entries(D.cilindroDe)) {
@@ -138,7 +140,7 @@ function cristalizar(b: Block, _ent: Container, e: Estado): Status {
   }
   return "parada";
 }
-/** Por tique no mod (Lavador, Infusor): até 100 operações por ciclo. */
+/** Por tique no mod (Lavador, Infusor, Centrífuga, Ativador): até 100 operações por ciclo. ce 0 = sem energia (Ativador Solar). */
 function fluxo(lista: R[], ce: number) {
   return (_b: Block, _ent: Container, e: Estado): Status => {
     for (const r of lista) {
@@ -147,7 +149,7 @@ function fluxo(lista: R[], ce: number) {
       for (const [q, mb] of ent) n = Math.min(n, Math.floor(tem(e, q) / mb));
       if (r.sai_q) n = Math.min(n, Math.floor((CAP - tem(e, r.sai_q[0])) / r.sai_q[1]));
       if (n <= 0) continue;
-      if (!gastarMk(_b, ce)) return "sem_energia";
+      if (ce > 0 && !gastarMk(_b, ce)) return "sem_energia";
       for (const [q, mb] of ent) mexer(e, q, -mb * n);
       if (r.sai_q) mexer(e, r.sai_q[0], r.sai_q[1] * n);
       return "ok";
@@ -172,7 +174,57 @@ const ceReacao = (r: R) => Math.max(1, Math.round(((D.ce.reaction + (r.energia ?
 type Maq = { faz: (b: Block, ent: Container, e: Estado) => Status; usa: (e: Estado) => ReadonlySet<string>; sai: (e: Estado) => ReadonlySet<string>; som: string };
 const fixo = (s: ReadonlySet<string>) => () => s;
 const ROT_GAS = new Set(PROC.rotary.map((r) => r.gas!)), ROT_LIQ = new Set(PROC.rotary.map((r) => r.liquido!));
+// ---------- Parte 4 (1.52.0) ----------
+const PROC4 = PROC as Record<string, R[]>;
+/** Ativador de Nêutrons Solar: só de dia, com o céu aberto em cima (não gasta energia). */
+const ativador = (() => {
+  const f = fluxo(PROC4.activating ?? [], 0);
+  return (b: Block, ent: Container, e: Estado): Status => {
+    const t = world.getTimeOfDay();
+    if (t > 12500 && t < 23500) return "parada";
+    try {
+      const topo = b.dimension.getTopmostBlock({ x: b.x, z: b.z });
+      if (topo && topo.y > b.y + 1) return "parada";
+    } catch {
+      return "parada";
+    }
+    return f(b, ent, e);
+  };
+})();
+/** Liquidificador Nutricional: comida → 50 mB de Pasta Nutritiva por ponto de fome. */
+// A fome das comidas do jogo (quando o componente de comida não vem na pilha).
+const NUTRICAO: Readonly<Record<string, number>> = Object.fromEntries(Object.entries({
+  bread: 5, apple: 4, baked_potato: 5, carrot: 3, potato: 1, beetroot: 1, cooked_beef: 8, cooked_porkchop: 8, cooked_chicken: 6, cooked_mutton: 6,
+  cooked_rabbit: 5, cooked_cod: 5, cooked_salmon: 6, golden_carrot: 6, golden_apple: 4, pumpkin_pie: 8, cookie: 2, melon_slice: 2, sweet_berries: 2,
+  glow_berries: 2, dried_kelp: 1, beef: 3, porkchop: 3, chicken: 2, mutton: 2, rabbit: 3, cod: 2, salmon: 2, mushroom_stew: 6, rabbit_stew: 10,
+  beetroot_soup: 6, honey_bottle: 6,
+}).map(([k, v]) => [`minecraft:${k}`, v]));
+function liquidificar(b: Block, ent: Container, e: Estado): Status {
+  for (let s = 0; s < ent.size; s++) {
+    const p = ent.getItem(s);
+    let fome: number | undefined;
+    try {
+      fome = p?.getComponent("minecraft:food")?.nutrition;
+    } catch {
+      fome = undefined;
+    }
+    fome ??= p ? NUTRICAO[p.typeId] : undefined;
+    if (!p || !fome) continue;
+    const mb = fome * 50;
+    if (tem(e, "nutritional_paste") + mb > CAP) return "parada";
+    if (!gastarMk(b, D.ce.oxidizing)) return "sem_energia";
+    tirar(ent, p.typeId);
+    mexer(e, "nutritional_paste", mb);
+    return "ok";
+  }
+  return "parada";
+}
+const ceNucleo = (r: R) => Math.max(1, Math.round(((D.ce.nucleosynthesizing ?? 100000) * (r.ticks ?? 100)) / 100));
 const MAQ: Readonly<Record<string, Maq>> = {
+  "cl:centrifuga_isotopica": { faz: fluxo(PROC4.centrifuging ?? [], D.ce.centrifuging ?? 200), usa: fixo(entradasQ(PROC4.centrifuging ?? [])), sai: fixo(saidasQ(PROC4.centrifuging ?? [])), som: "random.fizz" },
+  "cl:ativador_neutrons_solar": { faz: ativador, usa: fixo(entradasQ(PROC4.activating ?? [])), sai: fixo(saidasQ(PROC4.activating ?? [])), som: "random.orb" },
+  "cl:nucleossintetizador": { faz: porItem(PROC4.nucleosynthesizing ?? [], ceNucleo), usa: fixo(entradasQ(PROC4.nucleosynthesizing ?? [])), sai: fixo(new Set()), som: "beacon.activate" },
+  "cl:liquidificador_nutricional": { faz: liquidificar, usa: fixo(new Set()), sai: fixo(new Set(["nutritional_paste"])), som: "random.drink" },
   "cl:oxidador_quimico": { faz: porItem(PROC.oxidizing, () => D.ce.oxidizing), usa: fixo(new Set()), sai: fixo(saidasQ(PROC.oxidizing)), som: "random.fizz" },
   "cl:camara_dissolucao": { faz: porItem(PROC.dissolution, () => D.ce.dissolution), usa: fixo(entradasQ(PROC.dissolution)), sai: fixo(saidasQ(PROC.dissolution)), som: "bubble.pop" },
   "cl:lavador_quimico": { faz: fluxo(PROC.washing, D.ce.washing), usa: fixo(entradasQ(PROC.washing)), sai: fixo(saidasQ(PROC.washing)), som: "bubble.pop" },

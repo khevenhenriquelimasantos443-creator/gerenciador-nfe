@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_fuelwood_heater"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SCS",
+      "#X#",
+      "SSS"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:furnace"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:aquecedor_lenha"
+    }
+  }
+}

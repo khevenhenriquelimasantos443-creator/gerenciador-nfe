@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_free_runners_armored"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "#P#",
+      "I I"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:po_diamante"
+      },
+      "I": {
+        "item": "cl:lingote_bronze"
+      },
+      "P": {
+        "item": "cl:corredores_livres"
+      },
+      "S": {
+        "item": "cl:bloco_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:corredores_livres_blindados"
+    }
+  }
+}

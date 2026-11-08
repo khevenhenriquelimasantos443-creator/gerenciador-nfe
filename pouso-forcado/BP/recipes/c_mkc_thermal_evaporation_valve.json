@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_thermal_evaporation_valve"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " # ",
+      "#C#",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "cl:bloco_evaporacao"
+      },
+      "C": {
+        "item": "cl:circuito_controle_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:valvula_evaporacao"
+    }
+  }
+}

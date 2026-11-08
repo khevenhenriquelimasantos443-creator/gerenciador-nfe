@@ -1,0 +1,1359 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_laser_mk",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -3,
+        2,
+        -4
+       ],
+       "size": [
+        6,
+        7,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7.5,
+          5
+         ],
+         "uv_size": [
+          3.0,
+          3.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          3.5,
+          5
+         ],
+         "uv_size": [
+          4.0,
+          3.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          7.5,
+          5
+         ],
+         "uv_size": [
+          3.0,
+          3.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          3.5,
+          5
+         ],
+         "uv_size": [
+          4.0,
+          3.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          10.5,
+          5
+         ],
+         "uv_size": [
+          -3.0,
+          -4
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          10.5,
+          5
+         ],
+         "uv_size": [
+          -3.0,
+          -4
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        0.9920000000000009,
+        10,
+        -0.5
+       ],
+       "size": [
+        1.0,
+        3,
+        1.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          6,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          1.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          6,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          1.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          6,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          1.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        3,
+        8,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        3,
+        6,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        3,
+        4,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        3,
+        2,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        8,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        6,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        4,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        2,
+        -4
+       ],
+       "size": [
+        1,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          0,
+          4.5
+         ],
+         "uv_size": [
+          4,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          4,
+          5
+         ],
+         "uv_size": [
+          -4,
+          -0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3,
+        9,
+        -3
+       ],
+       "size": [
+        6,
+        1,
+        6
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          0,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          0,
+          7.5
+         ],
+         "uv_size": [
+          3,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          3,
+          8
+         ],
+         "uv_size": [
+          -3,
+          -3
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        10,
+        -1
+       ],
+       "size": [
+        2,
+        6,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          4.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          3
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          4.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          3
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          4.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          3
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          4.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          3
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          6,
+          4.5
+         ],
+         "uv_size": [
+          -1.5,
+          -1.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        2.992000000000001,
+        3,
+        1
+       ],
+       "size": [
+        1.0,
+        5,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        2.992000000000001,
+        3,
+        -2
+       ],
+       "size": [
+        1.0,
+        5,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.992,
+        3,
+        -2
+       ],
+       "size": [
+        1.0,
+        5,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.992,
+        3,
+        1
+       ],
+       "size": [
+        1.0,
+        5,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          6.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          2.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        0,
+        -4
+       ],
+       "size": [
+        8,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_ports"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_ports"
+        },
+        "south": {
+         "uv": [
+          0,
+          7
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_ports"
+        },
+        "west": {
+         "uv": [
+          0,
+          7
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_ports"
+        },
+        "up": {
+         "uv": [
+          16,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_ports"
+        },
+        "down": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3,
+        1,
+        -3
+       ],
+       "size": [
+        6,
+        1,
+        6
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7.5,
+          0
+         ],
+         "uv_size": [
+          3.0,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          7.5,
+          0
+         ],
+         "uv_size": [
+          3.0,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          7.5,
+          0
+         ],
+         "uv_size": [
+          3.0,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          7.5,
+          0
+         ],
+         "uv_size": [
+          3.0,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -2,
+        13,
+        -2
+       ],
+       "size": [
+        4,
+        1,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          2,
+          10.5
+         ],
+         "uv_size": [
+          -2,
+          -2.0
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          2,
+          10.5
+         ],
+         "uv_size": [
+          -2,
+          -2.0
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -2,
+        11,
+        -2
+       ],
+       "size": [
+        4,
+        1,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "east": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "south": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "west": {
+         "uv": [
+          0,
+          10
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_laser"
+        },
+        "up": {
+         "uv": [
+          2,
+          10.5
+         ],
+         "uv_size": [
+          -2,
+          -2.0
+         ],
+         "material_instance": "m_laser"
+        },
+        "down": {
+         "uv": [
+          2,
+          10.5
+         ],
+         "uv_size": [
+          -2,
+          -2.0
+         ],
+         "material_instance": "m_laser"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        0,
+        -4
+       ],
+       "size": [
+        8,
+        0,
+        8
+       ],
+       "uv": {
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

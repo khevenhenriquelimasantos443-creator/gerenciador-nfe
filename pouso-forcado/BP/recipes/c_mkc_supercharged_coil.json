@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_supercharged_coil"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ccc",
+      "C#C",
+      "AAA"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:laser_mk"
+      },
+      "A": {
+        "item": "cl:pastilha_polonio"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "c": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bobina_supercarregada"
+    }
+  }
+}

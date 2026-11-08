@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_portable_qio_dashboard"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AAA",
+      "A#A",
+      "ATA"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:painel_qio"
+      },
+      "A": {
+        "item": "cl:pastilha_polonio"
+      },
+      "T": {
+        "item": "cl:nucleo_teletransporte"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_qio_portatil"
+    }
+  }
+}

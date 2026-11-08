@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_mekasuit_helmet"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PCP",
+      "P#P",
+      "AEA"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:netherite_helmet"
+      },
+      "A": {
+        "item": "cl:pastilha_polonio"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "E": {
+        "item": "cl:celula_inducao_basico"
+      },
+      "P": {
+        "item": "cl:folha_pead"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:capacete_mekasuit"
+    }
+  }
+}

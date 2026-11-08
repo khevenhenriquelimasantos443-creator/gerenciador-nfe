@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_mk_p4_forno_4"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:minerio_uranio",
+    "output": "cl:lingote_uranio"
+  }
+}

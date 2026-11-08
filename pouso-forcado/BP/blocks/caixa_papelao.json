@@ -1,0 +1,68 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:caixa_papelao",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.mk_caixa_papelao",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_mkm_cardboard_box_side_plain",
+          "render_method": "alpha_test"
+        },
+        "m_cardboard_box_side_plain": {
+          "texture": "clc_mkm_cardboard_box_side_plain",
+          "render_method": "alpha_test"
+        },
+        "m_cardboard_box_side_storage": {
+          "texture": "clc_mkm_cardboard_box_side_storage",
+          "render_method": "alpha_test"
+        },
+        "m_cardboard_box_bottom": {
+          "texture": "clc_mkm_cardboard_box_bottom",
+          "render_method": "alpha_test"
+        },
+        "m_cardboard_box_inside": {
+          "texture": "clc_mkm_cardboard_box_inside",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#5a6470",
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:light_dampening": 0
+    }
+  }
+}

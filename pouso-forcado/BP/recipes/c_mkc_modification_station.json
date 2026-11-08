@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_modification_station"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PWP",
+      "CXC",
+      "PAP"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:pastilha_polonio"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "P": {
+        "item": "cl:folha_pead"
+      },
+      "W": {
+        "item": "minecraft:chest"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:estacao_modificacao"
+    }
+  }
+}

@@ -410,6 +410,22 @@ escrever("BP/feature_rules/mk_veio_chumbo_regra.json", {"format_version": "1.13.
     "distribution": {"iterations": 8, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
                      "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "triangle", "extent": [-88, 64]}}}})
 
+# 1.52.0 (Mekanism completo, parte 4): urânio, ósmio e estanho com os números do mod (OreType): [nome, minério, veios por
+# chunk, tamanho, distribuição, y de, y até]. "Trapézio" vira o triângulo do Bedrock; "acima do fundo" conta de -64.
+for nome, minerio, veios, tam, dist, y0, y1 in (
+        ("estanho_pequeno", "estanho", 14, 4, "triangle", -20, 94), ("estanho_grande", "estanho", 12, 9, "triangle", -32, 72),
+        ("osmio_alto", "osmio", 65, 7, "triangle", 72, 296), ("osmio_meio", "osmio", 6, 9, "triangle", -32, 56), ("osmio_pequeno", "osmio", 8, 4, "uniform", -64, 64),
+        ("uranio_pequeno", "uranio", 4, 4, "triangle", -64, 8), ("uranio_enterrado", "uranio", 7, 9, "triangle", -88, -8)):
+    escrever(f"BP/features/mk_veio_{nome}.json", {"format_version": "1.13.0", "minecraft:ore_feature": {
+        "description": {"identifier": f"cl:mk_veio_{nome}"}, "count": tam,
+        "replace_rules": [{"places_block": f"cl:minerio_{minerio}", "may_replace": ["minecraft:stone", "minecraft:andesite", "minecraft:diorite", "minecraft:granite"]},
+                          {"places_block": f"cl:minerio_{minerio}_profundo", "may_replace": ["minecraft:deepslate", "minecraft:tuff"]}]}})
+    escrever(f"BP/feature_rules/mk_veio_{nome}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:mk_veio_{nome}_regra", "places_feature": f"cl:mk_veio_{nome}"},
+        "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "overworld"}]},
+        "distribution": {"iterations": veios, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                         "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": dist, "extent": [y0, y1]}}}})
+
 # 1.47.0 (Pam's HarvestCraft 2): as 6 hortas silvestres (cada uma no seu tipo de bioma: 1 em 20 chunks, 32 tentativas
 # espalhadas ±6 e ±2 na altura) e as árvores frutíferas (cada árvore 1 em 90 chunks na floresta do seu grupo; os frutos
 # ficam pendurados embaixo das folhas).

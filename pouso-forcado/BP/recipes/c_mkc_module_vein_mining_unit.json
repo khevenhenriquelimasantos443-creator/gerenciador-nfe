@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_vein_mining_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "xPs",
+      "HHH"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:diamond_pickaxe"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "H": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      },
+      "s": {
+        "item": "minecraft:diamond_shovel"
+      },
+      "x": {
+        "item": "minecraft:diamond_axe"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_veio"
+    }
+  }
+}

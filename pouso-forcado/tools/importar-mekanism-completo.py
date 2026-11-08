@@ -11,7 +11,7 @@ import json, os, re, sys
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from mek_mapa import FABRICA_TIPO, METAIS, NIVEL_F, NOVOS, TAGS, TODOS, simples, um  # noqa: E402
+from mek_mapa import BLOCOS5, ITENS5, MODULOS5, CONDUTORES4, ESTRUTURA4, FABRICA_TIPO, ITENS4, MAQ4, METAIS, NIVEL_F, NOVOS, RECURSOS4, TAGS, TODOS, simples, um  # noqa: E402
 
 R = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 SRC = sys.argv[1] if len(sys.argv) > 1 else sys.exit("uso: python3 tools/importar-mekanism-completo.py <pasta do Mekanism>")
@@ -22,14 +22,22 @@ TEX = os.path.join(ASSETS, "textures")
 MOD = os.path.join(ASSETS, "models")
 EN = json.load(open(os.path.join(GEN, "assets/mekanism/lang/en_us.json")))
 PT = json.load(open(os.path.join(ASSETS, "lang/pt_br.json")))
+# Mekanism Generators (parte 4): outra pasta, mesmos jeitos.
+GEN_G = os.path.join(SRC, "src/datagen/generated/mekanismgenerators")
+REC_G = os.path.join(GEN_G, "data/mekanismgenerators/recipe")
+ASSETS_G = os.path.join(SRC, "src/generators/resources/assets/mekanismgenerators")
+EN.update(json.load(open(os.path.join(GEN_G, "assets/mekanismgenerators/lang/en_us.json"))))
+_ptg = os.path.join(ASSETS_G, "lang/pt_br.json")
+PT.update(json.load(open(_ptg)) if os.path.exists(_ptg) else {})
 usados = []
 
 
 def nome_de(m):
-    for chave in ("item", "block", "chemical"):
-        k = f"{chave}.mekanism.{m}"
-        if k in EN:
-            return PT.get(k, EN[k]), EN[k]
+    for mod in ("mekanism", "mekanismgenerators"):
+        for chave in ("item", "block", "chemical"):
+            k = f"{chave}.{mod}.{m}"
+            if k in EN:
+                return PT.get(k, EN[k]), EN[k]
     return m, m
 
 
@@ -40,22 +48,28 @@ def salvar(im, rel):
 
 
 def abrir(rel):
-    im = Image.open(os.path.join(TEX, rel)).convert("RGBA")
+    arq = os.path.join(TEX, rel)
+    if not os.path.exists(arq):
+        arq = os.path.join(ASSETS_G, "textures", rel)
+    im = Image.open(arq).convert("RGBA")
     return im.crop((0, 0, im.width, im.width)) if im.height > im.width else im  # 1º quadro das animadas
 
 
 # ---------- modelos Java -> Bedrock ----------
 def modelo_java(nome):
     """Modelo do Mekanism com os pais do mod resolvidos (e as partes dos modelos compostos juntas)."""
-    d = json.load(open(os.path.join(MOD, f"{nome}.json")))
+    arq = os.path.join(MOD, f"{nome}.json")
+    if not os.path.exists(arq):
+        arq = os.path.join(ASSETS_G, "models", f"{nome}.json")
+    d = json.load(open(arq))
     pai = d.get("parent", "")
-    base = modelo_java(pai.split(":", 1)[1]) if pai.startswith("mekanism:") else {"textures": {}, "elements": []}
+    base = modelo_java(pai.split(":", 1)[1]) if pai.startswith(("mekanism:", "mekanismgenerators:")) else {"textures": {}, "elements": []}
     tex = {**base.get("textures", {}), **d.get("textures", {})}
     elems = d.get("elements")
     if "children" in d:  # neoforge:composite: cada parte com as suas texturas (ou com o seu modelo pai)
         elems = []
         for filho in d["children"].values():
-            sub = modelo_java(filho["parent"].split(":", 1)[1]) if filho.get("parent", "").startswith("mekanism:") else {"textures": {}, "elements": []}
+            sub = modelo_java(filho["parent"].split(":", 1)[1]) if filho.get("parent", "").startswith(("mekanism:", "mekanismgenerators:")) else {"textures": {}, "elements": []}
             t = {**tex, **sub["textures"], **filho.get("textures", {})}
             for e in [*sub["elements"], *filho.get("elements", [])]:
                 e = json.loads(json.dumps(e))
@@ -111,6 +125,8 @@ def geometria(pid, nome):
                 uv[face] = {"uv": [u[0], u[1]], "uv_size": [u[2] - u[0], u[3] - u[1]], "material_instance": mat}
         if uv:
             cubos.append({"origin": [f[0] - 8, f[1], f[2] - 8], "size": [max(t[i] - f[i], 0) for i in range(3)], "uv": uv})
+    if not cubos:
+        raise ValueError(f"{nome}: modelo sem cubos (bloco inteiro)")
     # Modelos maiores que um bloco (Minerador Digital 3×3×2, Vibrador Sísmico): encolhidos para caber, centrados.
     if min(lo) < -0.05 or max(hi) > 16.05:
         esc = 16 / max(hi[i] - lo[i] for i in range(3))
@@ -152,17 +168,26 @@ for m, pid in ITENS_P1.items():
 CILINDRO = {"oxygen": "cilindro_oxigenio", "hydrogen": "cilindro_hidrogenio", "chlorine": "cilindro_cloro", "hydrogen_chloride": "cilindro_acido"}
 NOVOS_Q = {"sulfur_dioxide": "dioxido_enxofre", "sulfur_trioxide": "trioxido_enxofre", "sulfuric_acid": "acido_sulfurico",
            "water_vapor": "vapor_agua", "ethene": "eteno", "lithium": "litio", "sodium": "sodio",
+           # parte 4 (1.52.0): a química nuclear e a da fusão
+           "uranium_oxide": "oxido_uranio", "hydrofluoric_acid": "acido_fluoridrico", "uranium_hexafluoride": "hexafluoreto_uranio",
+           "fissile_fuel": "combustivel_fissil", "nuclear_waste": "residuo_nuclear", "spent_nuclear_waste": "residuo_nuclear_gasto",
+           "plutonium": "plutonio", "polonium": "polonio", "antimatter": "antimateria", "steam": "vapor", "deuterium": "deuterio",
+           "tritium": "tritio", "fusion_fuel": "combustivel_fusao",
            **{f"dirty_{en}": f"pasta_suja_{pt}" for en, pt in METAIS.items()}, **{f"clean_{en}": f"pasta_limpa_{pt}" for en, pt in METAIS.items()}}
 # Cores dos químicos (ChemicalConstants: 0xAARRGGBB); o vapor d'água usa a do vapor.
 cor_q = {mm.group(1): "#" + mm.group(2).lower() for mm in re.finditer(r'\("(\w+)", 0x[0-9A-Fa-f]{2}([0-9A-Fa-f]{6})',
                                                                         open(os.path.join(SRC, "src/main/java/mekanism/common/ChemicalConstants.java")).read())}
 cor_q.setdefault("water_vapor", "#d8e4ec")
-COR_METAL = {"iron": "#af8e77", "gold": "#f2cd67", "copper": "#c87240", "tin": "#ccccd9", "osmium": "#1e79c3", "lead": "#3a404a"}
+for _q, _c in {"uranium_oxide": "#e1f573", "hydrofluoric_acid": "#c6c7bd", "uranium_hexafluoride": "#809960", "fissile_fuel": "#2e332f",
+               "nuclear_waste": "#4f412a", "spent_nuclear_waste": "#262015", "plutonium": "#1f919c", "polonium": "#1b9e7b", "antimatter": "#a464b3",
+               "steam": "#c4c4c4", "deuterium": "#ff3232", "tritium": "#64ff70", "fusion_fuel": "#7e007d"}.items():
+    cor_q.setdefault(_q, _c)
+COR_METAL = {"iron": "#af8e77", "gold": "#f2cd67", "copper": "#c87240", "tin": "#ccccd9", "osmium": "#1e79c3", "lead": "#3a404a", "uranium": "#46664f"}
 cilindros = []
 for q, pid in NOVOS_Q.items():
     if q.startswith(("dirty_", "clean_")):
         metal = q.split("_", 1)[1]
-        pt_m = {"iron": "Ferro", "gold": "Ouro", "copper": "Cobre", "tin": "Estanho", "osmium": "Ósmio", "lead": "Chumbo"}[metal]
+        pt_m = {"iron": "Ferro", "gold": "Ouro", "copper": "Cobre", "tin": "Estanho", "osmium": "Ósmio", "lead": "Chumbo", "uranium": "Urânio"}[metal]
         sujo = q.startswith("dirty_")
         pt, en = f"Cilindro de Pasta {'Suja' if sujo else 'Limpa'} de {pt_m}", f"{'Dirty' if sujo else 'Clean'} {metal.title()} Slurry Tank"
         cor = COR_METAL[metal] if not sujo else "#" + "".join(f"{int(int(COR_METAL[metal][i:i + 2], 16) * 0.6):02x}" for i in (1, 3, 5))
@@ -207,10 +232,11 @@ blocos.append({"id": "barril_pessoal", "pt": pt, "en": en})
 
 # ---------- receitas das máquinas ----------
 def todos_json():
-    for raiz, _, arqs in os.walk(REC):
-        for a in sorted(arqs):
-            if a.endswith(".json"):
-                yield os.path.relpath(os.path.join(raiz, a), REC)[:-5], json.load(open(os.path.join(raiz, a)))
+    for pasta, pre in ((REC, ""), (REC_G, "generators/")):
+        for raiz, _, arqs in os.walk(pasta):
+            for a in sorted(arqs):
+                if a.endswith(".json"):
+                    yield pre + os.path.relpath(os.path.join(raiz, a), pasta)[:-5], json.load(open(os.path.join(raiz, a)))
 
 
 def lista(x):
@@ -219,7 +245,8 @@ def lista(x):
 
 
 q = lambda c: (c.get("chemical") or c.get("id") or c.get("tag", "")).split(":", 1)[1]
-proc = {k: [] for k in ("oxidizing", "chemical_infusing", "dissolution", "washing", "crystallizing", "rotary", "reaction")}
+proc = {k: [] for k in ("oxidizing", "chemical_infusing", "dissolution", "washing", "crystallizing", "rotary", "reaction",
+                         "centrifuging", "activating", "nucleosynthesizing")}
 pulou = []
 for nome, j in todos_json():
     t = j.get("type", "").replace("mekanism:", "")
@@ -263,7 +290,7 @@ for nome, j in todos_json():
             proc[t].append({"gas": g, "liquido": "brine"})
     elif t == "reaction":
         e = lista(j["item_input"])
-        if not e or "lategame" in nome:
+        if not e:
             pulou.append(nome)
             continue
         r = {"entra": e, "qtd": j["item_input"].get("count", 1), "agua": j["fluid_input"]["amount"] if "water" in j["fluid_input"].get("tag", "") else 0,
@@ -278,6 +305,20 @@ for nome, j in todos_json():
             pulou.append(nome)
             continue
         proc[t].append(r)
+
+    elif t in ("centrifuging", "activating"):
+        a, s_ = q(j["input"]), q(j["output"])
+        if a not in CILINDRO or s_ not in CILINDRO:
+            pulou.append(nome)
+            continue
+        proc[t].append({"entra_q": [[a, j["input"]["amount"]]], "sai_q": [s_, j["output"]["amount"]]})
+    elif t == "nucleosynthesizing":
+        e, s_ = lista(j["item_input"]), simples(j["output"])
+        if not e or not s_:
+            pulou.append(nome)
+            continue
+        proc[t].append({"entra": e, "qtd": j["item_input"].get("count", 1), "entra_q": [[q(j["chemical_input"]), j["chemical_input"]["amount"]]],
+                        "sai": [s_, j["output"].get("count", 1)], "ticks": j.get("duration", 100)})
 
 # ---------- receitas de bancada ----------
 def receitas_de(ids):
@@ -321,7 +362,8 @@ uso = open(os.path.join(SRC, "src/main/java/mekanism/common/config/UsageConfig.j
 J = {m.group(1): int(m.group(2).replace("_", "")) for m in re.finditer(r'"(\w+)", ([\d_]+)L\)', uso)}
 # Máquinas de operação (ticks do mod por operação) e de fluxo (100 tiques de fluxo por ciclo de 5 s): J -> cE (40 RF).
 ce = lambda jt, ticks: max(1, round(jt * ticks / 2.5 / 40))
-CE = {"oxidizing": ce(J["chemicalOxidizer"], 100), "dissolution": ce(J["chemicalDissolutionChamber"], 100), "crystallizing": ce(J["chemicalCrystallizer"], 200),
+CE = {"centrifuging": ce(J["isotopicCentrifuge"], 100), "activating": 0, "nucleosynthesizing": J["antiprotonicNucleosynthesizer"],
+      "oxidizing": ce(J["chemicalOxidizer"], 100), "dissolution": ce(J["chemicalDissolutionChamber"], 100), "crystallizing": ce(J["chemicalCrystallizer"], 200),
       "washing": ce(J["chemicalWasher"], 100), "chemical_infusing": ce(J["chemicalInfuser"], 100), "rotary": ce(J["rotaryCondensentrator"], 100),
       "reaction": J["pressurizedReactionBase"]}
 
@@ -487,6 +529,128 @@ json.dump({"caixas": caixas, "transmissores": transmissores, "maquinas": maquina
           open(os.path.join(R, "tools/dados/conteudo/mekanism_p3.json"), "w"), ensure_ascii=False, indent=1)
 print(f"mekanism completo p3: {len(caixas)} caixas {cap_bin}, {len(transmissores)} transmissores, {len(maquinas3)} máquinas, {len(itens3)} itens, "
       f"{len(blocos3)} blocos, {len(receitas3)} receitas, fornalha {fornalha3}")
+
+# ---------- Parte 4 (1.52.0): urânio, química nuclear, multiblocos e reatores ----------
+def tex_bloco(m):
+    """A textura de um bloco cúbico do mod (as variantes de entrada das válvulas e portas; os da fusão usam reactor_*)."""
+    for cand in (m, f"{m}_input", m.replace("fusion_reactor_", "reactor_"), m.replace("fusion_reactor_", "reactor_") + "_input",
+                 {"fusion_reactor_frame": "reactor_frame", "fusion_reactor_controller": "reactor_controller"}.get(m, m)):
+        for base in (os.path.join(TEX, "block"), os.path.join(ASSETS_G, "textures/block")):
+            if os.path.exists(os.path.join(base, f"{cand}.png")):
+                return f"block/{cand}.png"
+    return None
+
+
+def tem_modelo(m):
+    return any(os.path.exists(os.path.join(b, f"block/{m}.json")) for b in (MOD, os.path.join(ASSETS_G, "models")))
+
+
+itens4 = []
+for m, pid in {**{k: v for k, v in RECURSOS4.items() if not k.startswith(("block_", "deepslate_")) and not k.endswith("_ore")}, **ITENS4}.items():
+    pt, en = nome_de(m)
+    arq = f"item/{m}.png" if m != "geiger_counter" else "item/geiger_counter_0.png"
+    if os.path.exists(os.path.join(TEX, arq)) or os.path.exists(os.path.join(ASSETS_G, "textures", arq)):
+        salvar(abrir(arq), f"RP/textures/items/cl/arte/{pid}.png")
+        usados.append(pid)
+    itens4.append({"id": pid, "pt": pt, "en": en})
+cubos4, modelos4 = [], []
+for m, pid in {**{k: v for k, v in RECURSOS4.items() if k.startswith(("block_", "deepslate_")) or k.endswith("_ore")}, **ESTRUTURA4}.items():
+    pt, en = nome_de(m)
+    MOD_ESP = {"fission_fuel_assembly": "block/fission/fuel_assembly", "control_rod_assembly": "block/fission/control_rod_assembly"}
+    if m in MOD_ESP or m in ("supercharged_coil", "electromagnetic_coil", "rotational_complex", "saturating_condenser", "turbine_rotor", "pressure_disperser") and tem_modelo(m):
+        try:
+            modelos4.append({"id": pid, "pt": pt, "en": en, "modelo": geometria(pid, MOD_ESP.get(m, f"block/{m}"))})
+            continue
+        except (KeyError, FileNotFoundError, ValueError):
+            pass
+    t = tex_bloco(m)
+    if t:
+        salvar(abrir(t), f"RP/textures/blocks/cl/arte/{pid}.png")
+        usados.append(pid)
+    cubos4.append({"id": pid, "pt": pt, "en": en, "vidro": "glass" in m})
+maquinas4 = []
+for m, pid in MAQ4.items():
+    pt, en = nome_de(m)
+    try:
+        maquinas4.append({"id": pid, "pt": pt, "en": en, "modelo": geometria(pid, f"block/{m}")})
+    except (KeyError, FileNotFoundError):
+        maquinas4.append({"id": pid, "pt": pt, "en": en})
+condutores4 = []
+cond_tier = {m.group(1).lower(): float(m.group(3).replace("_", "")) for m in re.finditer(r"(BASIC|ADVANCED|ELITE|ULTIMATE)\(BaseTier\.\w+, ([\d.]+), [\w.]+, ([\d_]+)",
+                                                                                     open(os.path.join(SRC, "src/main/java/mekanism/common/tier/ConductorTier.java")).read())}
+for m, pid in CONDUTORES4.items():
+    pt, en = nome_de(m)
+    t = m.split("_")[0]
+    mod = json.load(open(os.path.join(MOD, f"block/transmitter/small/thermodynamic_conductor/{t}.json")))["textures"]
+    for parte, chave in (("centro", "center_down"), ("lado", "side")):
+        salvar(abrir(mod[chave].split(":", 1)[1] + ".png"), f"RP/textures/blocks/cl/arte/mkt_{pid}_{parte}.png")
+    usados.append(pid)
+    condutores4.append({"id": pid, "pt": pt, "en": en, "nivel": t, "conducao": cond_tier.get(t, 10), "caixa": caixa_t["pequeno"]})
+ind_cel = {m.group(1).lower(): int(m.group(2).replace("_", "")) for m in re.finditer(r"(BASIC|ADVANCED|ELITE|ULTIMATE)\(BaseTier\.\w+, ([\d_]+)L\)",
+                                                                                 open(os.path.join(SRC, "src/main/java/mekanism/common/tier/InductionCellTier.java")).read())}
+ind_prov = {m.group(1).lower(): int(m.group(2).replace("_", "")) for m in re.finditer(r"(BASIC|ADVANCED|ELITE|ULTIMATE)\(BaseTier\.\w+, ([\d_]+)L\)",
+                                                                                  open(os.path.join(SRC, "src/main/java/mekanism/common/tier/InductionProviderTier.java")).read())}
+liquidos4 = []
+for q_, pid in (("heavy_water", "balde_agua_pesada"), ("nutritional_paste", "balde_pasta_nutritiva")):
+    npt, nen = nome_de(f"{q_}_bucket")
+    arq = f"item/{q_}_bucket.png"
+    if os.path.exists(os.path.join(TEX, arq)):
+        salvar(abrir(arq), f"RP/textures/items/cl/arte/{pid}.png")
+        usados.append(pid)
+    qpt, qen = nome_de(q_)
+    liquidos4.append({"q": q_, "id": pid, "pt": npt, "en": nen, "qpt": qpt, "qen": qen})
+P4 = set(RECURSOS4) | set(ITENS4) | set(MAQ4) | set(ESTRUTURA4) | set(CONDUTORES4)
+receitas4 = receitas_de(P4)
+fornalha4 = {}
+for nome, j in todos_json():
+    if j.get("type") == "minecraft:smelting":
+        rid = j.get("result", {}).get("id", "")
+        if rid.split(":", 1)[-1] in ("ingot_uranium", "ingot_osmium", "ingot_tin"):
+            for e in lista(j["ingredient"]) or []:
+                if e.startswith("cl:") and e[3:] in RECURSOS4.values() or e in ("cl:po_uranio",):
+                    fornalha4[e] = um(rid)
+json.dump({"itens": itens4, "cubos": cubos4, "modelos": modelos4, "maquinas": maquinas4, "condutores": condutores4, "liquidos": liquidos4,
+           "receitas": receitas4, "fornalha": fornalha4, "celulas": ind_cel, "provedores": ind_prov,
+           "energia": {k: J[k] for k in ("isotopicCentrifuge", "nutritionalLiquifier", "antiprotonicNucleosynthesizer", "laser", "dimensionalStabilizer")}},
+          open(os.path.join(R, "tools/dados/conteudo/mekanism_p4.json"), "w"), ensure_ascii=False, indent=1)
+print(f"mekanism completo p4: {len(itens4)} itens, {len(cubos4)} cubos, {len(modelos4)} modelos, {len(maquinas4)} máquinas, {len(condutores4)} condutores "
+      f"{cond_tier}, {len(receitas4)} receitas, fornalha {fornalha4}, células {ind_cel}, provedores {ind_prov}")
+
+# ---------- Parte 5 (1.53.0): equipamentos, módulos, QIO e o Robit ----------
+itens5 = []
+for m, pid in {**MODULOS5, **ITENS5}.items():
+    pt, en = nome_de(m)
+    if m.startswith("module_") and m != "module_base":  # os módulos usam "module.<mod>.<nome>" e a descrição
+        k = m[len("module_"):]
+        for mod in ("mekanism", "mekanismgenerators"):
+            if f"module.{mod}.{k}" in EN:
+                pt, en = PT.get(f"module.{mod}.{k}", EN[f"module.{mod}.{k}"]), EN[f"module.{mod}.{k}"]
+                desc_pt, desc_en = PT.get(f"description.{mod}.{k}", ""), EN.get(f"description.{mod}.{k}", "")
+                break
+    arq = next((a for a in (f"item/{m}.png", f"item/{m}_config.png") if os.path.exists(os.path.join(TEX, a)) or os.path.exists(os.path.join(ASSETS_G, "textures", a))), None)
+    if arq:
+        salvar(abrir(arq), f"RP/textures/items/cl/arte/{pid}.png")
+        usados.append(pid)
+    itens5.append({"id": pid, "pt": pt, "en": en, "arte": bool(arq), "modulo": m.startswith("module_") and m != "module_base"})
+blocos5 = []
+for m, pid in BLOCOS5.items():
+    pt, en = nome_de(m)
+    try:
+        blocos5.append({"id": pid, "pt": pt, "en": en, "modelo": geometria(pid, f"block/{m}")})
+    except (KeyError, FileNotFoundError, ValueError):
+        t = tex_bloco(m)
+        if t:
+            salvar(abrir(t), f"RP/textures/blocks/cl/arte/{pid}.png")
+            usados.append(pid)
+        blocos5.append({"id": pid, "pt": pt, "en": en})
+qio = {m.group(1).lower(): [int(m.group(2).replace("_", "")), int(m.group(3).replace("_", ""))] for m in re.finditer(r"(BASE|HYPER_DENSE|TIME_DILATING|SUPERMASSIVE)\(BaseTier\.\w+, ([\d_]+)L?, ([\d_]+)\)",
+                                                                                                     open(os.path.join(SRC, "src/main/java/mekanism/common/tier/QIODriveTier.java")).read())}
+receitas5 = receitas_de(set(MODULOS5) | set(ITENS5) | set(BLOCOS5))
+gear = open(os.path.join(SRC, "src/main/java/mekanism/common/config/GearConfig.java")).read()
+G = {m.group(1): int(m.group(2).replace("_", "")) for m in re.finditer(r'GEAR_([A-Z_]+), "\w+", ([\d_]+)L?\)', gear)}
+json.dump({"itens": itens5, "blocos": blocos5, "receitas": receitas5, "qio": qio, "gear": G},
+          open(os.path.join(R, "tools/dados/conteudo/mekanism_p5.json"), "w"), ensure_ascii=False, indent=1)
+print(f"mekanism completo p5: {len(itens5)} itens ({sum(i['arte'] for i in itens5)} com arte), {len(blocos5)} blocos, {len(receitas5)} receitas, qio {qio}, {len(G)} números")
 
 saida = {"itens": itens, "cilindros": cilindros, "cilindroDe": CILINDRO, "maquinas": maquinas, "tanques": tanques, "blocos": blocos,
          "receitas": receitas, "processos": proc, "ce": CE}

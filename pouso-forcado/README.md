@@ -154,6 +154,52 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.53.0 (Mekanism completo, parte 5: equipamentos, QIO e Robit)
+
+- **Meka-Tool** (16 MJ) e **MekaSuit** (capacete, armadura, calça e botas, 16 MJ cada), com os **módulos** instalados na
+  **Estação de Modificação** (segure a peça e toque a estação):
+  - Meka-Tool: Energia (×2 a capacidade por unidade), Escavação (pressa), Ataque, Cultivo (ara em área), Toque Suave,
+    Fortuna, Explosão (área), Veio (minérios e toras ligados), Teletransporte (usar: vai até onde olha, 100 blocos).
+  - MekaSuit: Visão noturna, Respiração na água, Purificação (tira efeitos ruins), Nutrição (alimenta), Blindagem contra
+    radiação, Dosímetro/Geiger, Recarga Solar, Jetpack, Modulação Gravitacional (jetpack que paira), Distribuição de Carga,
+    Élitro (queda lenta), Locomoção (velocidade), Giroscópio (rapidez embaixo d'água), Geotérmico (carrega na lava),
+    Propulsão (pulo), Atração Magnética (puxa itens), Passos Gelados, Repulsão Hidrostática (nadar rápido), Surfista da Alma.
+  - A MekaSuit absorve dano gastando energia (100 kJ por ponto, dividido entre as peças) e segura a queda.
+- **Desintegrador Atômico** (modos normal, veio e veio estendido), **Arco Elétrico** (flechas de energia; modo fogo),
+  **Lança-Chamas** (hidrogênio; modos combate, calor e inferno), **Corredores Livres** (sem dano de queda), **Jetpack
+  Blindado**, **Máscara e Tanque de Mergulho**, **Configurador** (gira máquinas), **Leitor de Rede**, **Dicionário**
+  (etiquetas do bloco), **Conta-Gotas** (mostra/esvazia tanques), **Cantil** (pasta nutritiva), **Caixa de Papelão** (leva
+  um bloco com o que tem dentro), **Baú Pessoal**.
+- **QIO**: Matriz de Discos (4 discos do mod, até 12 por matriz), Painel (e o Painel Portátil), Importador, Exportador e
+  Adaptador de Redstone, por frequência.
+- **Robit**: nasce no Carregador de Chão; segue você, pega itens do chão, funde, volta para casa e recarrega no carregador.
+- Diário: missões de Meka-Tool, módulos, MekaSuit, QIO e Robit.
+- O que o Bedrock não deixa: voo livre (vira jetpack que paira), élitros no peito (vira queda lenta), passo alto do Servo,
+  emitir redstone (o Adaptador só mostra a contagem). Ficaram de fora as máquinas de pigmento e pintura, a Montadora de
+  Fórmulas, o Oredictionificador e a Mesa de Segurança.
+
+## Novidades da 1.52.0 (Mekanism completo, parte 4: urânio, multiblocos e reatores)
+
+- **Minérios de urânio, ósmio e estanho** com os números de geração do mod, mais pepitas, pós e blocos que faltavam.
+- **Química nuclear**: bolo amarelo → óxido de urânio + ácido fluorídrico → hexafluoreto de urânio → **Centrífuga
+  Isotópica** → combustível físsil; resíduo nuclear → plutônio (Centrífuga) ou polônio (**Ativador de Nêutrons Solar**);
+  pastilhas; **Nucleossintetizador Antiprotônico** (antimatéria transforma itens). **Água pesada** pela Bomba Elétrica
+  com Melhoria de Filtro → deutério no Separador; lítio → trítio no Ativador; deutério + trítio → combustível D-T.
+- **Multiblocos** (montados como no mod; tocar mostra o painel):
+  - **Tanque Dinâmico** (350.000 mB de fluido ou 16 milhões de mB de químico por bloco de dentro).
+  - **Planta de Evaporação Térmica** (4×4, até 18 de altura: água → salmoura → lítio, com sol e aquecedores).
+  - **Matriz de Indução** (células de 8 GJ a 4 TJ, provedores de 256 kJ/t a 131 MJ/t).
+  - **Caldeira Térmica** (calor → vapor; Elementos de Superaquecimento e Dispersores de Pressão).
+  - **SPS** (polônio + energia → antimatéria).
+  - **Reator de Fissão** (combustível físsil + água → vapor + resíduo; dano e derretimento se faltar água).
+  - **Turbina Industrial** (vapor → energia, com pás, bobinas, dispersores, ventilações e condensadores).
+  - **Reator de Fusão** (D-T; acende com Hohlraum e 400 MJ de laser).
+- **Aquecedor Resistivo**, **Aquecedor a Lenha**, **Condutores Termodinâmicos**, **Laser**, **Amplificador de Laser**,
+  **Feixe Trator**, **Estabilizador Dimensional**, **Barril de Resíduos Radioativos**, **Liquidificador Nutricional**.
+- **Radiação**: resíduo, plutônio e polônio soltos no mundo (máquina quebrada, derretimento) deixam o lugar radioativo;
+  a dose dá fome, fraqueza, náusea e dano. **Roupa Hazmat** protege; **Contador Geiger** e **Dosímetro** medem.
+- Diário: 9 missões novas (urânio, multibloco, indução, combustível físsil, Hazmat, fissão, turbina, antimatéria, fusão).
+
 ## Novidades da 1.51.0 (Mekanism completo, parte 3: armazenamento, logística e utilidades)
 
 - **Chumbo**: minério normal e profundo (8 veios de até 9 por chunk, abaixo da altura 64, mais comum perto de -12),

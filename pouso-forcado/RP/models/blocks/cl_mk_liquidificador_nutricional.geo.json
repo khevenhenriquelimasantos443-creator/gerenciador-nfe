@@ -1,0 +1,1221 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_liquidificador_nutricional",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        5,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          13.5
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "east": {
+         "uv": [
+          8,
+          13.5
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          0,
+          13.5
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          8,
+          13.5
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "up": {
+         "uv": [
+          16,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        15,
+        -8
+       ],
+       "size": [
+        16,
+        1,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "east": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "up": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.9,
+        5,
+        -8
+       ],
+       "size": [
+        0.09999999999999964,
+        10,
+        1
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.9,
+        5,
+        7
+       ],
+       "size": [
+        0.09999999999999964,
+        10,
+        1
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7.5,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          0.5,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.9,
+        5,
+        -8
+       ],
+       "size": [
+        0.09999999999999964,
+        1,
+        16
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.9,
+        14,
+        -8
+       ],
+       "size": [
+        0.09999999999999964,
+        1,
+        16
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          8,
+          13
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        5,
+        7.9
+       ],
+       "size": [
+        1,
+        10,
+        0.09999999999999964
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        7,
+        5,
+        7.9
+       ],
+       "size": [
+        1,
+        10,
+        0.09999999999999964
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7.5,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          0.5,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        5,
+        7.9
+       ],
+       "size": [
+        16,
+        1,
+        0.09999999999999964
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        14,
+        7.9
+       ],
+       "size": [
+        16,
+        1,
+        0.09999999999999964
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          13
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        5,
+        -8
+       ],
+       "size": [
+        1,
+        10,
+        0.1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        7,
+        5,
+        -8
+       ],
+       "size": [
+        1,
+        10,
+        0.1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        5,
+        -8
+       ],
+       "size": [
+        16,
+        1,
+        0.1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        14,
+        -8
+       ],
+       "size": [
+        16,
+        1,
+        0.1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          8,
+          13
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        5,
+        -8
+       ],
+       "size": [
+        0.1,
+        10,
+        1
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        5,
+        7
+       ],
+       "size": [
+        0.1,
+        10,
+        1
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -0.5,
+          5.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        5,
+        -8
+       ],
+       "size": [
+        0.1,
+        1,
+        16
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          8,
+          8.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        14,
+        -8
+       ],
+       "size": [
+        0.1,
+        1,
+        16
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          8,
+          13
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.9,
+        6,
+        -7
+       ],
+       "size": [
+        0.09999999999999964,
+        8,
+        14
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0.5,
+          9
+         ],
+         "uv_size": [
+          7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          -7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        6,
+        7.9
+       ],
+       "size": [
+        14,
+        8,
+        0.09999999999999964
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          -7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          0.5,
+          9
+         ],
+         "uv_size": [
+          7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        6,
+        -8
+       ],
+       "size": [
+        14,
+        8,
+        0.1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0.5,
+          9
+         ],
+         "uv_size": [
+          7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          -7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        6,
+        -7
+       ],
+       "size": [
+        0.1,
+        8,
+        14
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          -7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          0.5,
+          9
+         ],
+         "uv_size": [
+          7.0,
+          4
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        5,
+        -1
+       ],
+       "size": [
+        2,
+        2,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          9,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "east": {
+         "uv": [
+          9,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "south": {
+         "uv": [
+          9,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "west": {
+         "uv": [
+          9,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3,
+        7,
+        -1
+       ],
+       "size": [
+        6,
+        0,
+        2
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          10,
+          10
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          4.5,
+          4.5
+         ],
+         "uv_size": [
+          -1.0,
+          -1.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        7,
+        -1
+       ],
+       "size": [
+        2,
+        0,
+        2
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          10,
+          10
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          4.5,
+          4.5
+         ],
+         "uv_size": [
+          -1.0,
+          -1.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        3
+       ],
+       "size": [
+        2,
+        0,
+        2
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          10,
+          10
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          4.5,
+          4.5
+         ],
+         "uv_size": [
+          -1.0,
+          -1.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        -5
+       ],
+       "size": [
+        2,
+        0,
+        2
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          10,
+          10
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          4.5,
+          4.5
+         ],
+         "uv_size": [
+          -1.0,
+          -1.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        3,
+        7,
+        -1
+       ],
+       "size": [
+        2,
+        0,
+        2
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          10,
+          10
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          4.5,
+          4.5
+         ],
+         "uv_size": [
+          -1.0,
+          -1.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        -3
+       ],
+       "size": [
+        2,
+        0,
+        2
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          9.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          4.5,
+          4.5
+         ],
+         "uv_size": [
+          -0.5,
+          -1.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        1
+       ],
+       "size": [
+        2,
+        0,
+        2
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          10,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        },
+        "down": {
+         "uv": [
+          4,
+          4.5
+         ],
+         "uv_size": [
+          -0.5,
+          -1.0
+         ],
+         "material_instance": "m_nutritional_liquifier"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

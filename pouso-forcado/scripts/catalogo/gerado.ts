@@ -221,6 +221,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Dagger",
   "icone": "textures/items/cl/arte/adaga_slime_rainha"
  },
+ "cl:adaptador_logico_fissao": {
+  "pt": "Adaptador Lógico do Reator de Fissão",
+  "en": "Fission Reactor Logic Adapter",
+  "icone": "textures/items/cl/blocos/adaptador_logico_fissao"
+ },
+ "cl:adaptador_logico_fusao": {
+  "pt": "Adaptador Lógico do Reator de Fusão",
+  "en": "Fusion Reactor Logic Adapter",
+  "icone": "textures/items/cl/blocos/adaptador_logico_fusao"
+ },
+ "cl:adaptador_redstone_qio": {
+  "pt": "Adaptador de Redstone do OIQ",
+  "en": "QIO Redstone Adapter",
+  "icone": "textures/items/cl/blocos/adaptador_redstone_qio"
+ },
  "cl:agave": {
   "pt": "Agave",
   "en": "Agave",
@@ -441,6 +456,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Blackberry",
   "icone": "textures/items/cl/hc/amora_preta"
  },
+ "cl:amplificador_laser": {
+  "pt": "Amplificador de Laser",
+  "en": "Laser Amplifier",
+  "icone": "textures/items/cl/blocos/amplificador_laser"
+ },
  "cl:amuleto_afundar": {
   "pt": "Amuleto de Afundar",
   "en": "Charm of Sinking",
@@ -471,10 +491,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Heater",
   "icone": "textures/items/cl/blocos/aquecedor"
  },
+ "cl:aquecedor_lenha": {
+  "pt": "Aquecedor a Lenha",
+  "en": "Fuelwood Heater",
+  "icone": "textures/items/cl/blocos/aquecedor_lenha"
+ },
  "cl:aquecedor_picareta": {
   "pt": "Aquecedor de Picareta",
   "en": "Pickaxe Heater",
   "icone": "textures/items/cl/arte/aquecedor_picareta"
+ },
+ "cl:aquecedor_resistivo": {
+  "pt": "Aquecedor Resistivo",
+  "en": "Resistive Heater",
+  "icone": "textures/items/cl/blocos/aquecedor_resistivo"
  },
  "cl:araruta": {
   "pt": "Araruta",
@@ -490,6 +520,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Arbusto Arenoso",
   "en": "Sandy Shrub",
   "icone": "textures/items/cl/blocos/arbusto_arenoso"
+ },
+ "cl:arco_eletrico": {
+  "pt": "Arco Elétrico",
+  "en": "Electric Bow",
+  "icone": "textures/items/cl/arte/arco_eletrico"
  },
  "cl:arco_longo_aco": {
   "pt": "Arco Longo de Aço",
@@ -886,6 +921,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bakeware",
   "icone": "textures/items/cl/arte/blocos/assadeira"
  },
+ "cl:ativador_neutrons_solar": {
+  "pt": "Ativador Neutrônico Solar",
+  "en": "Solar Neutron Activator",
+  "icone": "textures/items/cl/blocos/ativador_neutrons_solar"
+ },
  "cl:atrator_universal": {
   "pt": "Atrator Universal",
   "en": "Universal Attractor",
@@ -1046,6 +1086,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Fire Water Bucket",
   "icone": "textures/items/cl/arte/balde_agua_fogo"
  },
+ "cl:balde_agua_pesada": {
+  "pt": "Balde de Água Pesada",
+  "en": "Heavy Water Bucket",
+  "icone": "textures/items/cl/c/balde_agua_pesada"
+ },
  "cl:balde_biodiesel": {
   "pt": "Balde de Biodiesel",
   "en": "Biodiesel Bucket",
@@ -1100,6 +1145,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Balde de Orvalho do Vazio",
   "en": "Dew of the Void Bucket",
   "icone": "textures/items/cl/arte/balde_orvalho_vazio"
+ },
+ "cl:balde_pasta_nutritiva": {
+  "pt": "Balde de pasta nutricional",
+  "en": "Nutritional Paste Bucket",
+  "icone": "textures/items/cl/c/balde_pasta_nutritiva"
  },
  "cl:balde_petroleo": {
   "pt": "Balde de Petróleo",
@@ -1306,10 +1356,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Personal Barrel",
   "icone": "textures/items/cl/blocos/barril_pessoal"
  },
+ "cl:barril_residuos_radioativos": {
+  "pt": "Barril de resíduos radioativos",
+  "en": "Radioactive Waste Barrel",
+  "icone": "textures/items/cl/blocos/barril_residuos_radioativos"
+ },
  "cl:basalto_lunar": {
   "pt": "Basalto Lunar",
   "en": "Moon Basalt",
   "icone": "textures/items/cl/blocos/basalto_lunar"
+ },
+ "cl:base_modulo": {
+  "pt": "Base de Módulos",
+  "en": "Module Base",
+  "icone": "textures/items/cl/arte/base_modulo"
+ },
+ "cl:base_tinta": {
+  "pt": "Base de Tinturas",
+  "en": "Dye Base",
+  "icone": "textures/items/cl/arte/base_tinta"
  },
  "cl:batata_chips": {
   "pt": "Batata Chips",
@@ -1440,6 +1505,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Baú de Peças",
   "en": "Part Chest",
   "icone": "textures/items/cl/blocos/bau_pecas"
+ },
+ "cl:bau_pessoal": {
+  "pt": "Baú Pessoal",
+  "en": "Personal Chest",
+  "icone": "textures/items/cl/blocos/bau_pessoal"
  },
  "cl:bau_terra": {
   "pt": "Baú de Terra 9000!",
@@ -1706,6 +1776,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Angel Block",
   "icone": "textures/items/cl/blocos/bloco_angelical"
  },
+ "cl:bloco_biocombustivel": {
+  "pt": "Bloco de Biocombustível",
+  "en": "Block of Bio Fuel",
+  "icone": "textures/items/cl/blocos/bloco_biocombustivel"
+ },
  "cl:bloco_bronze": {
   "pt": "Bloco de Bronze",
   "en": "Block of Bronze",
@@ -1801,6 +1876,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Tin",
   "icone": "textures/items/cl/blocos/bloco_estanho"
  },
+ "cl:bloco_estanho_bruto": {
+  "pt": "Bloco de Estanho Bruto",
+  "en": "Block of Raw Tin",
+  "icone": "textures/items/cl/blocos/bloco_estanho_bruto"
+ },
+ "cl:bloco_evaporacao": {
+  "pt": "Bloco de Evaporação Térmica",
+  "en": "Thermal Evaporation Block",
+  "icone": "textures/items/cl/blocos/bloco_evaporacao"
+ },
  "cl:bloco_ferro_comprimido": {
   "pt": "Bloco de Ferro Comprimido",
   "en": "Compressed Iron Block",
@@ -1830,6 +1915,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Fluorita",
   "en": "Block of Fluorite",
   "icone": "textures/items/cl/blocos/bloco_fluorita"
+ },
+ "cl:bloco_glowstone_refinado": {
+  "pt": "Pedra luminosa refinada",
+  "en": "Refined Glowstone",
+  "icone": "textures/items/cl/blocos/bloco_glowstone_refinado"
  },
  "cl:bloco_grafite": {
   "pt": "Bloco de Grafite",
@@ -1881,6 +1971,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Machine Block",
   "icone": "textures/items/cl/arte/blocos/bloco_maquina"
  },
+ "cl:bloco_obsidiana_refinada": {
+  "pt": "Obsidiana refinada",
+  "en": "Refined Obsidian",
+  "icone": "textures/items/cl/blocos/bloco_obsidiana_refinada"
+ },
+ "cl:bloco_osmio": {
+  "pt": "Bloco de Ósmio",
+  "en": "Block of Osmium",
+  "icone": "textures/items/cl/blocos/bloco_osmio"
+ },
+ "cl:bloco_osmio_bruto": {
+  "pt": "Bloco de Ósmio Bruto",
+  "en": "Block of Raw Osmium",
+  "icone": "textures/items/cl/blocos/bloco_osmio_bruto"
+ },
  "cl:bloco_ouro_rosa": {
   "pt": "Bloco de Ouro Rosa",
   "en": "Block of Rose Gold",
@@ -1905,6 +2010,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Safira Lunar",
   "en": "Lunar Sapphire Block",
   "icone": "textures/items/cl/blocos/bloco_safira_lunar"
+ },
+ "cl:bloco_sal": {
+  "pt": "Bloco de sal",
+  "en": "Salt Block",
+  "icone": "textures/items/cl/blocos/bloco_sal"
  },
  "cl:bloco_slime_brasa": {
   "pt": "Bloco de Slime de Brasa",
@@ -1946,6 +2056,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Uraninite Block",
   "icone": "textures/items/cl/blocos/bloco_uraninita"
  },
+ "cl:bloco_uranio": {
+  "pt": "Bloco de Urânio",
+  "en": "Block of Uranium",
+  "icone": "textures/items/cl/blocos/bloco_uranio"
+ },
+ "cl:bloco_uranio_bruto": {
+  "pt": "Bloco de Urânio Bruto",
+  "en": "Block of Raw Uranium",
+  "icone": "textures/items/cl/blocos/bloco_uranio_bruto"
+ },
  "cl:bloco_yellorium": {
   "pt": "Bloco de Yellorium",
   "en": "Yellorium Block",
@@ -1966,6 +2086,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "LV Coil Block Item",
   "icone": "textures/items/cl/c/bobina_bt"
  },
+ "cl:bobina_eletromagnetica": {
+  "pt": "Bobina Eletromagnética",
+  "en": "Electromagnetic Coil",
+  "icone": "textures/items/cl/blocos/bobina_eletromagnetica"
+ },
  "cl:bobina_elite": {
   "pt": "Bobina de Elite",
   "en": "Elite Coil",
@@ -1975,6 +2100,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bobina de Fio de Cobre",
   "en": "LV Wire Coil",
   "icone": "textures/items/cl/arte/bobina_fio_cobre"
+ },
+ "cl:bobina_supercarregada": {
+  "pt": "Bobina supercarregada",
+  "en": "Supercharged Coil",
+  "icone": "textures/items/cl/blocos/bobina_supercarregada"
  },
  "cl:bobina_suprema": {
   "pt": "Bobina Suprema",
@@ -2036,6 +2166,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dumplings",
   "icone": "textures/items/cl/arte/bolinhos"
  },
+ "cl:bolo_amarelo_uranio": {
+  "pt": "Bolo Amarelo de Urânio",
+  "en": "Yellow Cake Uranium",
+  "icone": "textures/items/cl/arte/bolo_amarelo_uranio"
+ },
  "cl:bolo_carne": {
   "pt": "Bolo de Carne",
   "en": "Meatloaf",
@@ -2075,6 +2210,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bomba Elétrica",
   "en": "Electric Pump",
   "icone": "textures/items/cl/blocos/bomba_eletrica"
+ },
+ "cl:botas_hazmat": {
+  "pt": "Botas Anti-Radiação",
+  "en": "Hazmat Boots",
+  "icone": "textures/items/cl/arte/botas_hazmat"
+ },
+ "cl:botas_mekasuit": {
+  "pt": "Botas MekaSuit",
+  "en": "MekaSuit Boots",
+  "icone": "textures/items/cl/arte/botas_mekasuit"
  },
  "cl:botas_placa_aco": {
   "pt": "Botas de Placa de Aço",
@@ -2406,6 +2551,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Monster Box",
   "icone": "textures/items/cl/blocos/caixa_monstros"
  },
+ "cl:caixa_papelao": {
+  "pt": "Caixa de papelão",
+  "en": "Cardboard Box",
+  "icone": "textures/items/cl/blocos/caixa_papelao"
+ },
  "cl:caixote_batata": {
   "pt": "Caixote de Batata",
   "en": "Potato Crate",
@@ -2491,6 +2641,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Roasted Cashew",
   "icone": "textures/items/cl/hc/caju_torrado"
  },
+ "cl:calca_hazmat": {
+  "pt": "Calça Anti-Radiação",
+  "en": "Hazmat Pants",
+  "icone": "textures/items/cl/arte/calca_hazmat"
+ },
  "cl:calcario": {
   "pt": "Calcário",
   "en": "Limestone",
@@ -2535,6 +2690,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Calcário Tijolinhos",
   "en": "Small Bricks Limestone",
   "icone": "textures/items/cl/blocos/calcario_tijolos_pequenos"
+ },
+ "cl:calcas_mekasuit": {
+  "pt": "Calça MekaSuit",
+  "en": "MekaSuit Pants",
+  "icone": "textures/items/cl/arte/calcas_mekasuit"
  },
  "cl:calcas_placa_aco": {
   "pt": "Calças de Placa de Aço",
@@ -2755,6 +2915,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Canola",
   "en": "Canola",
   "icone": "textures/items/cl/hc/canola"
+ },
+ "cl:cantil": {
+  "pt": "Cantil",
+  "en": "Canteen",
+  "icone": "textures/items/cl/arte/cantil"
+ },
+ "cl:capacete_mekasuit": {
+  "pt": "Capacete MekaSuit",
+  "en": "MekaSuit Helmet",
+  "icone": "textures/items/cl/arte/capacete_mekasuit"
  },
  "cl:capacete_placa_aco": {
   "pt": "Capacete de Placa de Aço",
@@ -3091,6 +3261,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Blank Card",
   "icone": "textures/items/cl/arte/cartao_branco"
  },
+ "cl:cartao_configuracao": {
+  "pt": "Cartão de Configuração",
+  "en": "Configuration Card",
+  "icone": "textures/items/cl/arte/cartao_configuracao"
+ },
  "cl:cartao_vinculo": {
   "pt": "Cartão de Vínculo",
   "en": "Binding Card",
@@ -3321,6 +3496,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Iron Cell",
   "icone": "textures/items/cl/arte/celula_ferro"
  },
+ "cl:celula_inducao_avancado": {
+  "pt": "Célula de Indução Avançada",
+  "en": "Advanced Induction Cell",
+  "icone": "textures/items/cl/blocos/celula_inducao_avancado"
+ },
+ "cl:celula_inducao_basico": {
+  "pt": "Célula de Indução Básica",
+  "en": "Basic Induction Cell",
+  "icone": "textures/items/cl/blocos/celula_inducao_basico"
+ },
+ "cl:celula_inducao_definitivo": {
+  "pt": "Célula de Indução Ultimate",
+  "en": "Ultimate Induction Cell",
+  "icone": "textures/items/cl/blocos/celula_inducao_definitivo"
+ },
+ "cl:celula_inducao_elite": {
+  "pt": "Célula de Indução Elite",
+  "en": "Elite Induction Cell",
+  "icone": "textures/items/cl/blocos/celula_inducao_elite"
+ },
  "cl:celula_madeira": {
   "pt": "Célula de Madeira",
   "en": "Wood Cell",
@@ -3410,6 +3605,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Centeio",
   "en": "Rye",
   "icone": "textures/items/cl/hc/centeio"
+ },
+ "cl:centrifuga_isotopica": {
+  "pt": "Centrífuga Isotópica",
+  "en": "Isotopic Centrifuge",
+  "icone": "textures/items/cl/blocos/centrifuga_isotopica"
  },
  "cl:cereja": {
   "pt": "Cereja",
@@ -3741,15 +3941,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Hydrogen Chloride Tank",
   "icone": "textures/items/cl/arte/cilindro_acido"
  },
+ "cl:cilindro_acido_fluoridrico": {
+  "pt": "Cilindro de Ácido hidrofluórico líquido",
+  "en": "Liquid Hydrofluoric Acid Tank",
+  "icone": "textures/items/cl/c/cilindro_acido_fluoridrico"
+ },
  "cl:cilindro_acido_sulfurico": {
   "pt": "Cilindro de Ácido Sulfúrico Líquido",
   "en": "Liquid Sulfuric Acid Tank",
   "icone": "textures/items/cl/c/cilindro_acido_sulfurico"
  },
+ "cl:cilindro_antimateria": {
+  "pt": "Cilindro de Antimatter",
+  "en": "Antimatter Tank",
+  "icone": "textures/items/cl/c/cilindro_antimateria"
+ },
  "cl:cilindro_cloro": {
   "pt": "Cilindro de Cloro",
   "en": "Chlorine Tank",
   "icone": "textures/items/cl/arte/cilindro_cloro"
+ },
+ "cl:cilindro_combustivel_fissil": {
+  "pt": "Cilindro de Fissile Fuel",
+  "en": "Fissile Fuel Tank",
+  "icone": "textures/items/cl/c/cilindro_combustivel_fissil"
+ },
+ "cl:cilindro_combustivel_fusao": {
+  "pt": "Cilindro de Combustível D-T Líquido",
+  "en": "Liquid D-T Fuel Tank",
+  "icone": "textures/items/cl/c/cilindro_combustivel_fusao"
+ },
+ "cl:cilindro_deuterio": {
+  "pt": "Cilindro de Deutério Líquido",
+  "en": "Liquid Deuterium Tank",
+  "icone": "textures/items/cl/c/cilindro_deuterio"
  },
  "cl:cilindro_dioxido_enxofre": {
   "pt": "Cilindro de Dióxido de enxofre líquido",
@@ -3761,6 +3986,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Liquid Ethene Tank",
   "icone": "textures/items/cl/c/cilindro_eteno"
  },
+ "cl:cilindro_hexafluoreto_uranio": {
+  "pt": "Cilindro de Hexafluoreto de urânio líquido",
+  "en": "Liquid Uranium Hexafluoride Tank",
+  "icone": "textures/items/cl/c/cilindro_hexafluoreto_uranio"
+ },
  "cl:cilindro_hidrogenio": {
   "pt": "Cilindro de Hidrogênio",
   "en": "Hydrogen Tank",
@@ -3770,6 +4000,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cilindro de Lítio líquido",
   "en": "Liquid Lithium Tank",
   "icone": "textures/items/cl/c/cilindro_litio"
+ },
+ "cl:cilindro_oxido_uranio": {
+  "pt": "Cilindro de Óxido de urânio líquido",
+  "en": "Liquid Uranium Oxide Tank",
+  "icone": "textures/items/cl/c/cilindro_oxido_uranio"
  },
  "cl:cilindro_oxigenio": {
   "pt": "Cilindro de Oxigênio",
@@ -3806,6 +4041,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Clean Gold Slurry Tank",
   "icone": "textures/items/cl/c/cilindro_pasta_limpa_ouro"
  },
+ "cl:cilindro_pasta_limpa_uranio": {
+  "pt": "Cilindro de Pasta Limpa de Urânio",
+  "en": "Clean Uranium Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_limpa_uranio"
+ },
  "cl:cilindro_pasta_suja_chumbo": {
   "pt": "Cilindro de Pasta Suja de Chumbo",
   "en": "Dirty Lead Slurry Tank",
@@ -3836,6 +4076,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dirty Gold Slurry Tank",
   "icone": "textures/items/cl/c/cilindro_pasta_suja_ouro"
  },
+ "cl:cilindro_pasta_suja_uranio": {
+  "pt": "Cilindro de Pasta Suja de Urânio",
+  "en": "Dirty Uranium Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_suja_uranio"
+ },
+ "cl:cilindro_plutonio": {
+  "pt": "Cilindro de Plutonium",
+  "en": "Plutonium Tank",
+  "icone": "textures/items/cl/c/cilindro_plutonio"
+ },
+ "cl:cilindro_polonio": {
+  "pt": "Cilindro de Polonium",
+  "en": "Polonium Tank",
+  "icone": "textures/items/cl/c/cilindro_polonio"
+ },
+ "cl:cilindro_residuo_nuclear": {
+  "pt": "Cilindro de Nuclear Waste",
+  "en": "Nuclear Waste Tank",
+  "icone": "textures/items/cl/c/cilindro_residuo_nuclear"
+ },
+ "cl:cilindro_residuo_nuclear_gasto": {
+  "pt": "Cilindro de Spent Nuclear Waste",
+  "en": "Spent Nuclear Waste Tank",
+  "icone": "textures/items/cl/c/cilindro_residuo_nuclear_gasto"
+ },
  "cl:cilindro_sodio": {
   "pt": "Cilindro de Sódio líquido",
   "en": "Liquid Sodium Tank",
@@ -3845,6 +4110,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cilindro de Trióxido de enxofre líquido",
   "en": "Liquid Sulfur Trioxide Tank",
   "icone": "textures/items/cl/c/cilindro_trioxido_enxofre"
+ },
+ "cl:cilindro_tritio": {
+  "pt": "Cilindro de Trítio Líquido",
+  "en": "Liquid Tritium Tank",
+  "icone": "textures/items/cl/c/cilindro_tritio"
+ },
+ "cl:cilindro_vapor": {
+  "pt": "Cilindro de Vapor líquido",
+  "en": "Liquid Steam Tank",
+  "icone": "textures/items/cl/c/cilindro_vapor"
  },
  "cl:cilindro_vapor_agua": {
   "pt": "Cilindro de Water Vapor",
@@ -4011,6 +4286,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Combiner",
   "icone": "textures/items/cl/blocos/combinador"
  },
+ "cl:complexo_rotacional": {
+  "pt": "Complexo Rotacional",
+  "en": "Rotational Complex",
+  "icone": "textures/items/cl/blocos/complexo_rotacional"
+ },
  "cl:componente_ferro": {
   "pt": "Componente de Ferro",
   "en": "Iron Mechanical Component",
@@ -4131,6 +4411,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Advanced Condenser",
   "icone": "textures/items/cl/arte/blocos/condensador_avancado"
  },
+ "cl:condensador_saturante": {
+  "pt": "Saturando Condensador",
+  "en": "Saturating Condenser",
+  "icone": "textures/items/cl/blocos/condensador_saturante"
+ },
  "cl:condensentrador_rotativo": {
   "pt": "Condensentrador Rotativo",
   "en": "Rotary Condensentrator",
@@ -4156,6 +4441,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Item Conduit",
   "icone": "textures/items/cl/blocos/conduto_item"
  },
+ "cl:condutor_termico_avancado": {
+  "pt": "Condutor Termodinâmico Avançado",
+  "en": "Advanced Thermodynamic Conductor",
+  "icone": "textures/items/cl/blocos/condutor_termico_avancado"
+ },
+ "cl:condutor_termico_basico": {
+  "pt": "Condutor Termodinâmico Básico",
+  "en": "Basic Thermodynamic Conductor",
+  "icone": "textures/items/cl/blocos/condutor_termico_basico"
+ },
+ "cl:condutor_termico_definitivo": {
+  "pt": "Condutor Termodinâmico Ultimate",
+  "en": "Ultimate Thermodynamic Conductor",
+  "icone": "textures/items/cl/blocos/condutor_termico_definitivo"
+ },
+ "cl:condutor_termico_elite": {
+  "pt": "Condutor Termodinâmico Elite",
+  "en": "Elite Thermodynamic Conductor",
+  "icone": "textures/items/cl/blocos/condutor_termico_elite"
+ },
+ "cl:configurador": {
+  "pt": "Configurador",
+  "en": "Configurator",
+  "icone": "textures/items/cl/arte/configurador"
+ },
+ "cl:conjunto_barras_controle": {
+  "pt": "Montagem de Hastes de Controle",
+  "en": "Control Rod Assembly",
+  "icone": "textures/items/cl/blocos/conjunto_barras_controle"
+ },
+ "cl:conjunto_combustivel_fissao": {
+  "pt": "Montagem de Combustível de Fissão",
+  "en": "Fission Fuel Assembly",
+  "icone": "textures/items/cl/blocos/conjunto_combustivel_fissao"
+ },
  "cl:construtor_corpos": {
   "pt": "Construtor de Corpos",
   "en": "Shell Constructor",
@@ -4166,10 +4486,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Part Builder",
   "icone": "textures/items/cl/blocos/construtor_pecas"
  },
+ "cl:conta_gotas": {
+  "pt": "Medidor Conta-Gotas",
+  "en": "Gauge Dropper",
+  "icone": "textures/items/cl/arte/conta_gotas"
+ },
+ "cl:contador_geiger": {
+  "pt": "Contador Geiger",
+  "en": "Geiger Counter",
+  "icone": "textures/items/cl/arte/contador_geiger"
+ },
  "cl:contratante_esqueletico": {
   "pt": "Contratante Esquelético",
   "en": "Skeletal Contractor",
   "icone": "textures/items/cl/arte/contratante_esqueletico"
+ },
+ "cl:controlador_evaporacao": {
+  "pt": "Controlador de Evaporação Térmica",
+  "en": "Thermal Evaporation Controller",
+  "icone": "textures/items/cl/blocos/controlador_evaporacao"
  },
  "cl:controlador_fundicao": {
   "pt": "Controlador da Fundição",
@@ -4180,6 +4515,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Controlador da Fundição Fantástica",
   "en": "Foundry Controller",
   "icone": "textures/items/cl/blocos/controlador_fundicao_fantastica"
+ },
+ "cl:controlador_fusao": {
+  "pt": "Controlador do Reator de Fusão",
+  "en": "Fusion Reactor Controller",
+  "icone": "textures/items/cl/blocos/controlador_fusao"
  },
  "cl:controlador_gavetas": {
   "pt": "Controlador de Gavetas",
@@ -4275,6 +4615,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corindo Violeta",
   "en": "Violet Corundum",
   "icone": "textures/items/cl/blocos/corindo_violeta"
+ },
+ "cl:corredores_livres": {
+  "pt": "Corredores Livres",
+  "en": "Free Runners",
+  "icone": "textures/items/cl/c/corredores_livres"
+ },
+ "cl:corredores_livres_blindados": {
+  "pt": "Corredores Livres Blindados",
+  "en": "Armored Free Runners",
+  "icone": "textures/items/cl/c/corredores_livres_blindados"
  },
  "cl:corrente_almas": {
   "pt": "Corrente de Almas",
@@ -4476,6 +4826,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Earthslime Crystal",
   "icone": "textures/items/cl/arte/cristal_slime_terra"
  },
+ "cl:cristal_uranio": {
+  "pt": "Cristal de Urânio",
+  "en": "Uranium Crystal",
+  "icone": "textures/items/cl/arte/cristal_uranio"
+ },
  "cl:cristal_vibrante": {
   "pt": "Cristal Vibrante",
   "en": "Vibrant Crystal",
@@ -4566,6 +4921,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Energy Discharger",
   "icone": "textures/items/cl/blocos/descarregador_nitro"
  },
+ "cl:desmontador_atomico": {
+  "pt": "Desintegrador Atômico",
+  "en": "Atomic Disassembler",
+  "icone": "textures/items/cl/c/desmontador_atomico"
+ },
  "cl:diamante_enriquecido": {
   "pt": "Diamante Enriquecido",
   "en": "Enriched Diamond",
@@ -4575,6 +4935,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Diário de Bordo",
   "en": "Logbook",
   "icone": "textures/items/cl/arte/diario_bordo"
+ },
+ "cl:dicionario": {
+  "pt": "Dicionário",
+  "en": "Dictionary",
+  "icone": "textures/items/cl/arte/dicionario"
  },
  "cl:dinamo_cinetico": {
   "pt": "Dínamo Cinético",
@@ -4621,10 +4986,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Airship",
   "icone": "textures/items/cl/arte/dirigivel"
  },
+ "cl:dispersor_pressao": {
+  "pt": "Dispersor de Pressão",
+  "en": "Pressure Disperser",
+  "icone": "textures/items/cl/blocos/dispersor_pressao"
+ },
  "cl:distribuidor_oxigenio": {
   "pt": "Distribuidor de Bolha de Oxigênio",
   "en": "Oxygen Bubble Distributor",
   "icone": "textures/items/cl/blocos/distribuidor_oxigenio"
+ },
+ "cl:dosimetro": {
+  "pt": "Dosímetro",
+  "en": "Dosimeter",
+  "icone": "textures/items/cl/arte/dosimetro"
  },
  "cl:dreno": {
   "pt": "Dreno",
@@ -4701,6 +5076,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Rotor Shaft",
   "icone": "textures/items/cl/blocos/eixo_rotor"
  },
+ "cl:elemento_superaquecimento": {
+  "pt": "Elemento de Superaquecimento",
+  "en": "Superheating Element",
+  "icone": "textures/items/cl/blocos/elemento_superaquecimento"
+ },
  "cl:eletrodo_zumbi": {
   "pt": "Eletrodo Zumbi",
   "en": "Zombie Electrode",
@@ -4715,6 +5095,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Elevador",
   "en": "Elevator",
   "icone": "textures/items/cl/blocos/elevador"
+ },
+ "cl:elitro_pead": {
+  "pt": "Élitros Reforçado com PEAD",
+  "en": "HDPE Reinforced Elytra",
+  "icone": "textures/items/cl/arte/elitro_pead"
  },
  "cl:empacotador": {
   "pt": "Empacotador Automático",
@@ -5556,6 +5941,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Squeezer",
   "icone": "textures/items/cl/blocos/espremedor_ie"
  },
+ "cl:estabilizador_dimensional": {
+  "pt": "Estabilizador Dimensional",
+  "en": "Dimensional Stabilizer",
+  "icone": "textures/items/cl/blocos/estabilizador_dimensional"
+ },
  "cl:estacao_agricola": {
   "pt": "Estação Agrícola",
   "en": "Farming Station",
@@ -5571,10 +5961,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tool Station",
   "icone": "textures/items/cl/blocos/estacao_ferramentas"
  },
+ "cl:estacao_modificacao": {
+  "pt": "Estação de Modificação",
+  "en": "Modification Station",
+  "icone": "textures/items/cl/blocos/estacao_modificacao"
+ },
  "cl:estacas_punji": {
   "pt": "Estacas Punji",
   "en": "Punji Sticks",
   "icone": "textures/items/cl/blocos/estacas_punji"
+ },
+ "cl:estanho_bruto": {
+  "pt": "Estanho Bruto",
+  "en": "Raw Tin",
+  "icone": "textures/items/cl/arte/estanho_bruto"
  },
  "cl:estanho_enriquecido": {
   "pt": "Estanho Enriquecido",
@@ -5725,6 +6125,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Evaporador Térmico",
   "en": "Thermal Evaporation Controller",
   "icone": "textures/items/cl/blocos/evaporador"
+ },
+ "cl:exportador_qio": {
+  "pt": "Exportador do OIQ",
+  "en": "QIO Exporter",
+  "icone": "textures/items/cl/blocos/exportador_qio"
  },
  "cl:expositor": {
   "pt": "Expositor",
@@ -6086,10 +6491,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Baked Beans",
   "icone": "textures/items/cl/arte/feijao_assado"
  },
+ "cl:feixe_trator_laser": {
+  "pt": "Raio Trator a Laser",
+  "en": "Laser Tractor Beam",
+  "icone": "textures/items/cl/blocos/feixe_trator_laser"
+ },
  "cl:fermentador": {
   "pt": "Fermentador",
   "en": "Fermenter",
   "icone": "textures/items/cl/blocos/fermentador"
+ },
+ "cl:ferramenta_meka": {
+  "pt": "Meka-Tool",
+  "en": "Meka-Tool",
+  "icone": "textures/items/cl/c/ferramenta_meka"
  },
  "cl:ferro_condutor": {
   "pt": "Lingote de Liga Condutiva",
@@ -6411,6 +6826,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Iron Shard",
   "icone": "textures/items/cl/arte/fragmento_ferro"
  },
+ "cl:fragmento_fissil_reprocessado": {
+  "pt": "Fragmento Fissil Reprocessado",
+  "en": "Reprocessed Fissile Fragment",
+  "icone": "textures/items/cl/arte/fragmento_fissil_reprocessado"
+ },
  "cl:fragmento_meteorito": {
   "pt": "Fragmento de Meteorito",
   "en": "Meteorite Fragment",
@@ -6430,6 +6850,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Fragmento Sintonizado",
   "en": "Attuned Shard",
   "icone": "textures/items/cl/c/fragmento_sintonizado"
+ },
+ "cl:fragmento_uranio": {
+  "pt": "Estilhaço de urânio",
+  "en": "Uranium Shard",
+  "icone": "textures/items/cl/arte/fragmento_uranio"
  },
  "cl:framboesa": {
   "pt": "Framboesa",
@@ -7181,6 +7606,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Propeller",
   "icone": "textures/items/cl/arte/helice_aviao"
  },
+ "cl:hohlraum": {
+  "pt": "Hohlraum",
+  "en": "Hohlraum",
+  "icone": "textures/items/cl/arte/hohlraum"
+ },
  "cl:horta_arida": {
   "pt": "Horta Árida",
   "en": "Arid Garden",
@@ -7215,6 +7645,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Ídolo Amaldiçoado",
   "en": "Cursed Idol",
   "icone": "textures/items/cl/arte/blocos/idolo_amaldicoado"
+ },
+ "cl:importador_qio": {
+  "pt": "Importador OIQ",
+  "en": "QIO Importer",
+  "icone": "textures/items/cl/blocos/importador_qio"
  },
  "cl:impressora": {
   "pt": "Impressora",
@@ -7351,6 +7786,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Jackfruit",
   "icone": "textures/items/cl/hc/jaca"
  },
+ "cl:jaleco_hazmat": {
+  "pt": "Veste Anti-Radiação",
+  "en": "Hazmat Gown",
+  "icone": "textures/items/cl/arte/jaleco_hazmat"
+ },
  "cl:jantar_frango": {
   "pt": "Jantar de Frango",
   "en": "Chicken Dinner",
@@ -7390,6 +7830,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Jetpack de Aço",
   "en": "Steel Jetpack",
   "icone": "textures/items/cl/arte/jetpack_aco"
+ },
+ "cl:jetpack_blindado": {
+  "pt": "Jetpack Blindado",
+  "en": "Armored Jetpack",
+  "icone": "textures/items/cl/c/jetpack_blindado"
  },
  "cl:jetpack_bronze": {
   "pt": "Jetpack de Bronze",
@@ -7766,6 +8211,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Red Fancy Lamp",
   "icone": "textures/items/cl/arte/blocos/lampada_vermelha"
  },
+ "cl:lanca_chamas": {
+  "pt": "Lança-Chamas",
+  "en": "Flamethrower",
+  "icone": "textures/items/cl/c/lanca_chamas"
+ },
  "cl:lanterna": {
   "pt": "Lanterna",
   "en": "Fancy Lantern",
@@ -7796,6 +8246,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Orange",
   "icone": "textures/items/cl/hc/laranja"
  },
+ "cl:laser_mk": {
+  "pt": "Laser",
+  "en": "Laser",
+  "icone": "textures/items/cl/blocos/laser_mk"
+ },
  "cl:lata_cobre": {
   "pt": "Lata de Cobre",
   "en": "Copper Canister",
@@ -7825,6 +8280,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Leite Fresco",
   "en": "Fresh Milk",
   "icone": "textures/items/cl/hc/leite_fresco"
+ },
+ "cl:leitor_rede": {
+  "pt": "Leitor de Rede",
+  "en": "Network Reader",
+  "icone": "textures/items/cl/arte/leitor_rede"
  },
  "cl:leitor_sismico": {
   "pt": "Leitor Sísmico",
@@ -8021,6 +8481,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Ingot",
   "icone": "textures/items/cl/arte/lingote_slime_rainha"
  },
+ "cl:lingote_uranio": {
+  "pt": "Lingote de Urânio",
+  "en": "Uranium Ingot",
+  "icone": "textures/items/cl/arte/lingote_uranio"
+ },
  "cl:lingote_yellorium": {
   "pt": "Lingote de Yellorium",
   "en": "Yellorium Ingot",
@@ -8035,6 +8500,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Linho",
   "en": "Flax",
   "icone": "textures/items/cl/hc/linho"
+ },
+ "cl:liquidificador_nutricional": {
+  "pt": "Liquidificador Nutricional",
+  "en": "Nutritional Liquifier",
+  "icone": "textures/items/cl/blocos/liquidificador_nutricional"
  },
  "cl:lirio_ender_planta": {
   "pt": "Lírio Ender",
@@ -9036,6 +9506,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Gas Mask",
   "icone": "textures/items/cl/arte/mascara"
  },
+ "cl:mascara_hazmat": {
+  "pt": "Máscara Anti-Radiação",
+  "en": "Hazmat Mask",
+  "icone": "textures/items/cl/arte/mascara_hazmat"
+ },
+ "cl:mascara_mergulho": {
+  "pt": "Máscara de Mergulho",
+  "en": "Scuba Mask",
+  "icone": "textures/items/cl/c/mascara_mergulho"
+ },
  "cl:mascara_oxigenio": {
   "pt": "Máscara de Oxigênio",
   "en": "Oxygen Mask",
@@ -9070,6 +9550,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Matriz de Conversão",
   "en": "Conversion Matrix",
   "icone": "textures/items/cl/arte/matriz_conversao"
+ },
+ "cl:matriz_foco_laser": {
+  "pt": "Matriz Focal do Laser",
+  "en": "Laser Focus Matrix",
+  "icone": "textures/items/cl/blocos/matriz_foco_laser"
+ },
+ "cl:matriz_unidades_qio": {
+  "pt": "Matriz de Disco do OIQ",
+  "en": "QIO Drive Array",
+  "icone": "textures/items/cl/blocos/matriz_unidades_qio"
  },
  "cl:melao": {
   "pt": "Melão",
@@ -9316,10 +9806,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Moon Copper Ore",
   "icone": "textures/items/cl/blocos/minerio_cobre_lunar"
  },
+ "cl:minerio_estanho": {
+  "pt": "Minério de Estanho",
+  "en": "Tin Ore",
+  "icone": "textures/items/cl/blocos/minerio_estanho"
+ },
  "cl:minerio_estanho_lunar": {
   "pt": "Minério de Estanho Lunar",
   "en": "Moon Tin Ore",
   "icone": "textures/items/cl/blocos/minerio_estanho_lunar"
+ },
+ "cl:minerio_estanho_profundo": {
+  "pt": "Minério de Estanho Profundo",
+  "en": "Deepslate Tin Ore",
+  "icone": "textures/items/cl/blocos/minerio_estanho_profundo"
  },
  "cl:minerio_fluorita": {
   "pt": "Minério de Fluorita",
@@ -9331,6 +9831,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Deepslate Fluorite Ore",
   "icone": "textures/items/cl/blocos/minerio_fluorita_profundo"
  },
+ "cl:minerio_osmio": {
+  "pt": "Minério de Ósmio",
+  "en": "Osmium Ore",
+  "icone": "textures/items/cl/blocos/minerio_osmio"
+ },
+ "cl:minerio_osmio_profundo": {
+  "pt": "Minério de Ósmio Profundo",
+  "en": "Deepslate Osmium Ore",
+  "icone": "textures/items/cl/blocos/minerio_osmio_profundo"
+ },
  "cl:minerio_queijo": {
   "pt": "Minério de Queijo",
   "en": "Cheese Ore",
@@ -9340,6 +9850,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Minério de Safira Lunar",
   "en": "Lunar Sapphire Ore",
   "icone": "textures/items/cl/blocos/minerio_safira_lunar"
+ },
+ "cl:minerio_uranio": {
+  "pt": "Minério de Urânio",
+  "en": "Uranium Ore",
+  "icone": "textures/items/cl/blocos/minerio_uranio"
+ },
+ "cl:minerio_uranio_profundo": {
+  "pt": "Minério de Urânio Profundo",
+  "en": "Deepslate Uranium Ore",
+  "icone": "textures/items/cl/blocos/minerio_uranio_profundo"
  },
  "cl:mirtilo": {
   "pt": "Mirtilo",
@@ -9726,6 +10246,171 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Piggybackpack",
   "icone": "textures/items/cl/arte/mochila_porco"
  },
+ "cl:modulo_almas": {
+  "pt": "Unidade Surfista da Alma",
+  "en": "Soul Surfer Unit",
+  "icone": "textures/items/cl/arte/modulo_almas"
+ },
+ "cl:modulo_ataque": {
+  "pt": "Unidade de Amplificação de Ataque",
+  "en": "Attack Amplification Unit",
+  "icone": "textures/items/cl/arte/modulo_ataque"
+ },
+ "cl:modulo_blindagem_radiacao": {
+  "pt": "Unidade de Escudo de Radiação",
+  "en": "Radiation Shielding Unit",
+  "icone": "textures/items/cl/arte/modulo_blindagem_radiacao"
+ },
+ "cl:modulo_cor": {
+  "pt": "Unidade de Modulação de Cor",
+  "en": "Color Modulation Unit",
+  "icone": "textures/items/cl/arte/modulo_cor"
+ },
+ "cl:modulo_cultivo": {
+  "pt": "Unidade de Agricultura",
+  "en": "Farming Unit",
+  "icone": "textures/items/cl/arte/modulo_cultivo"
+ },
+ "cl:modulo_dissipacao_laser": {
+  "pt": "Unidade de Dissipação de Laser",
+  "en": "Laser Dissipation Unit",
+  "icone": "textures/items/cl/arte/modulo_dissipacao_laser"
+ },
+ "cl:modulo_distribuicao_carga": {
+  "pt": "Unidade de Distribuição de Energia",
+  "en": "Charge Distribution Unit",
+  "icone": "textures/items/cl/arte/modulo_distribuicao_carga"
+ },
+ "cl:modulo_dosimetro": {
+  "pt": "Unidade de Dosímetro",
+  "en": "Dosimeter Unit",
+  "icone": "textures/items/cl/arte/modulo_dosimetro"
+ },
+ "cl:modulo_elitro": {
+  "pt": "Unidade de Élitros",
+  "en": "Elytra Unit",
+  "icone": "textures/items/cl/arte/modulo_elitro"
+ },
+ "cl:modulo_energia": {
+  "pt": "Unidade de Energia",
+  "en": "Energy Unit",
+  "icone": "textures/items/cl/arte/modulo_energia"
+ },
+ "cl:modulo_escavacao": {
+  "pt": "Unidade de Intensificação de Escavação",
+  "en": "Excavation Escalation Unit",
+  "icone": "textures/items/cl/arte/modulo_escavacao"
+ },
+ "cl:modulo_explosao": {
+  "pt": "Unidade de Explosão",
+  "en": "Blasting Unit",
+  "icone": "textures/items/cl/arte/modulo_explosao"
+ },
+ "cl:modulo_fortuna": {
+  "pt": "Unidade de Fortuna",
+  "en": "Ore Refinement Unit",
+  "icone": "textures/items/cl/arte/modulo_fortuna"
+ },
+ "cl:modulo_geiger": {
+  "pt": "Unidade Geiger",
+  "en": "Geiger Unit",
+  "icone": "textures/items/cl/arte/modulo_geiger"
+ },
+ "cl:modulo_gelo": {
+  "pt": "Unidade de Passos Gelados",
+  "en": "Frost Walker Unit",
+  "icone": "textures/items/cl/arte/modulo_gelo"
+ },
+ "cl:modulo_geotermico": {
+  "pt": "Unidade Geradora Geotérmica",
+  "en": "Geothermal Generator Unit",
+  "icone": "textures/items/cl/arte/modulo_geotermico"
+ },
+ "cl:modulo_giroscopio": {
+  "pt": "Unidade de Estabilização Giroscópica",
+  "en": "Gyroscopic Stabilization Unit",
+  "icone": "textures/items/cl/arte/modulo_giroscopio"
+ },
+ "cl:modulo_gravitacional": {
+  "pt": "Unidade de Modulação Gravitacional",
+  "en": "Gravitational Modulating Unit",
+  "icone": "textures/items/cl/arte/modulo_gravitacional"
+ },
+ "cl:modulo_hidrostatico": {
+  "pt": "Unidade de Repulsão Hidrostática",
+  "en": "Hydrostatic Repulsor Unit",
+  "icone": "textures/items/cl/arte/modulo_hidrostatico"
+ },
+ "cl:modulo_jetpack": {
+  "pt": "Unidade de Jetpack",
+  "en": "Jetpack Unit",
+  "icone": "textures/items/cl/arte/modulo_jetpack"
+ },
+ "cl:modulo_locomocao": {
+  "pt": "Unidade de Propulsão Locomotiva",
+  "en": "Locomotive Boosting Unit",
+  "icone": "textures/items/cl/arte/modulo_locomocao"
+ },
+ "cl:modulo_magnetico": {
+  "pt": "Unidade de Atração Magnética",
+  "en": "Magnetic Attraction Unit",
+  "icone": "textures/items/cl/arte/modulo_magnetico"
+ },
+ "cl:modulo_nutricao": {
+  "pt": "Unidade de Injeção nutricional",
+  "en": "Nutritional Injection Unit",
+  "icone": "textures/items/cl/arte/modulo_nutricao"
+ },
+ "cl:modulo_propulsao": {
+  "pt": "Unidade de Propulsão Hidráulica",
+  "en": "Hydraulic Propulsion Unit",
+  "icone": "textures/items/cl/arte/modulo_propulsao"
+ },
+ "cl:modulo_purificacao": {
+  "pt": "Unidade de Purificação Inalatória",
+  "en": "Inhalation Purification Unit",
+  "icone": "textures/items/cl/arte/modulo_purificacao"
+ },
+ "cl:modulo_respiracao": {
+  "pt": "Unidade de Respiração Eletrolítica",
+  "en": "Electrolytic Breathing Unit",
+  "icone": "textures/items/cl/arte/modulo_respiracao"
+ },
+ "cl:modulo_servo": {
+  "pt": "Unidade de Servo Motorizada",
+  "en": "Motorized Servo Unit",
+  "icone": "textures/items/cl/arte/modulo_servo"
+ },
+ "cl:modulo_solar": {
+  "pt": "Unidade de Recargamento Solar",
+  "en": "Solar Recharging Unit",
+  "icone": "textures/items/cl/arte/modulo_solar"
+ },
+ "cl:modulo_teletransporte": {
+  "pt": "Unidade de Teleporte",
+  "en": "Teleportation Unit",
+  "icone": "textures/items/cl/arte/modulo_teletransporte"
+ },
+ "cl:modulo_toque_suave": {
+  "pt": "Unidade de Toque suave",
+  "en": "Silk Touch Unit",
+  "icone": "textures/items/cl/arte/modulo_toque_suave"
+ },
+ "cl:modulo_tosquia": {
+  "pt": "Unidade de Tosquia",
+  "en": "Shearing Unit",
+  "icone": "textures/items/cl/arte/modulo_tosquia"
+ },
+ "cl:modulo_veio": {
+  "pt": "Unidade de Mineração de Veios",
+  "en": "Vein Mining Unit",
+  "icone": "textures/items/cl/arte/modulo_veio"
+ },
+ "cl:modulo_visao": {
+  "pt": "Unidade de Aprimoramento de Visão",
+  "en": "Vision Enhancement Unit",
+  "icone": "textures/items/cl/arte/modulo_visao"
+ },
  "cl:moido_carne": {
   "pt": "Carne Moída",
   "en": "Ground Beef",
@@ -9985,6 +10670,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Molde: Travessa",
   "en": "Crossbar Cast",
   "icone": "textures/items/cl/arte/molde_travessa"
+ },
+ "cl:moldura_fusao": {
+  "pt": "Armação do Reator de Fusão",
+  "en": "Fusion Reactor Frame",
+  "icone": "textures/items/cl/blocos/moldura_fusao"
  },
  "cl:moldura_teletransportador": {
   "pt": "Estrutura do Teletransportador",
@@ -10476,6 +11166,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Teleportation Core",
   "icone": "textures/items/cl/arte/nucleo_teletransporte"
  },
+ "cl:nucleossintetizador": {
+  "pt": "Nucleossintetizador Antiprotônico",
+  "en": "Antiprotonic Nucleosynthesizer",
+  "icone": "textures/items/cl/blocos/nucleossintetizador"
+ },
  "cl:nuggets_frango": {
   "pt": "Nuggets de Frango",
   "en": "Chicken Nugget",
@@ -10570,6 +11265,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Orquídea Vermelha",
   "en": "Red Orchid",
   "icone": "textures/items/cl/arte/orquidea_vermelha"
+ },
+ "cl:osmio_bruto": {
+  "pt": "Ósmio Bruto",
+  "en": "Raw Osmium",
+  "icone": "textures/items/cl/arte/osmio_bruto"
  },
  "cl:osmio_po": {
   "pt": "Pó de Minério de Ósmio",
@@ -10720,6 +11420,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pá de Sílex",
   "en": "Flint Shovel",
   "icone": "textures/items/cl/arte/pa_silex"
+ },
+ "cl:pa_turbina_mk": {
+  "pt": "Pá da Turbina",
+  "en": "Turbine Blade",
+  "icone": "textures/items/cl/arte/pa_turbina_mk"
  },
  "cl:pa_turbina_pneumatica": {
   "pt": "Pá de Turbina",
@@ -10926,6 +11631,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Ship Console",
   "icone": "textures/items/cl/arte/blocos/painel_nave"
  },
+ "cl:painel_qio": {
+  "pt": "Painel do OIQ",
+  "en": "QIO Dashboard",
+  "icone": "textures/items/cl/blocos/painel_qio"
+ },
+ "cl:painel_qio_portatil": {
+  "pt": "Painel Portátil da QIO",
+  "en": "Portable QIO Dashboard",
+  "icone": "textures/items/cl/arte/painel_qio_portatil"
+ },
  "cl:painel_solar": {
   "pt": "Painel Solar",
   "en": "Solar Panel",
@@ -11045,6 +11760,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pasta Dielétrica",
   "en": "Dielectric Paste",
   "icone": "textures/items/cl/arte/pasta_dieletrica"
+ },
+ "cl:pastilha_antimateria": {
+  "pt": "Pastilha de Antimatéria",
+  "en": "Antimatter Pellet",
+  "icone": "textures/items/cl/arte/pastilha_antimateria"
+ },
+ "cl:pastilha_plutonio": {
+  "pt": "Pastilha de Plutônio",
+  "en": "Plutonium Pellet",
+  "icone": "textures/items/cl/arte/pastilha_plutonio"
+ },
+ "cl:pastilha_polonio": {
+  "pt": "Pastilha de Polônio",
+  "en": "Polonium Pellet",
+  "icone": "textures/items/cl/arte/pastilha_polonio"
  },
  "cl:pastinaca": {
   "pt": "Pastinaca",
@@ -13551,6 +14281,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pebble",
   "icone": "textures/items/cl/arte/pedrinha"
  },
+ "cl:peitoral_mekasuit": {
+  "pt": "Armadura Corporal MekaSuit",
+  "en": "MekaSuit Bodyarmor",
+  "icone": "textures/items/cl/arte/peitoral_mekasuit"
+ },
  "cl:peitoral_placa_aco": {
   "pt": "Peitoral de Placa de Aço",
   "en": "Steel Plate Chestplate",
@@ -13691,6 +14426,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cucumber",
   "icone": "textures/items/cl/hc/pepino"
  },
+ "cl:pepita_aco": {
+  "pt": "Pepita de Aço",
+  "en": "Steel Nugget",
+  "icone": "textures/items/cl/arte/pepita_aco"
+ },
  "cl:pepita_aco_end": {
   "pt": "Pepita de Aço do End",
   "en": "End Steel Nugget",
@@ -13706,6 +14446,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Soularium Nugget",
   "icone": "textures/items/cl/arte/pepita_almario"
  },
+ "cl:pepita_bronze": {
+  "pt": "Pepita de Bronze",
+  "en": "Bronze Nugget",
+  "icone": "textures/items/cl/arte/pepita_bronze"
+ },
  "cl:pepita_chumbo": {
   "pt": "Pepita de Chumbo",
   "en": "Lead Nugget",
@@ -13715,6 +14460,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pepita de Cobalto",
   "en": "Cobalt Nugget",
   "icone": "textures/items/cl/arte/pepita_cobalto"
+ },
+ "cl:pepita_estanho": {
+  "pt": "Pepita de Estanho",
+  "en": "Tin Nugget",
+  "icone": "textures/items/cl/arte/pepita_estanho"
  },
  "cl:pepita_experiencia": {
   "pt": "Pepita de Experiência",
@@ -13731,6 +14481,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pulsating Alloy Nugget",
   "icone": "textures/items/cl/arte/pepita_ferro_pulsante"
  },
+ "cl:pepita_glowstone_refinado": {
+  "pt": "Pepita de Pedra Luminosa Refinada",
+  "en": "Refined Glowstone Nugget",
+  "icone": "textures/items/cl/arte/pepita_glowstone_refinado"
+ },
  "cl:pepita_liga_energetica": {
   "pt": "Pepita de Liga Energética",
   "en": "Energetic Alloy Nugget",
@@ -13745,6 +14500,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pepita de Liga Vibrante",
   "en": "Vibrant Alloy Nugget",
   "icone": "textures/items/cl/arte/pepita_liga_vibrante"
+ },
+ "cl:pepita_obsidiana_refinada": {
+  "pt": "Pepita de Obsidiana Refinada",
+  "en": "Refined Obsidian Nugget",
+  "icone": "textures/items/cl/arte/pepita_obsidiana_refinada"
+ },
+ "cl:pepita_osmio": {
+  "pt": "Pepita de Ósmio",
+  "en": "Osmium Nugget",
+  "icone": "textures/items/cl/arte/pepita_osmio"
+ },
+ "cl:pepita_uranio": {
+  "pt": "Pepita de Urânio",
+  "en": "Uranium Nugget",
+  "icone": "textures/items/cl/arte/pepita_uranio"
  },
  "cl:pera": {
   "pt": "Pera",
@@ -15136,6 +15906,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Steel Dust",
   "icone": "textures/items/cl/arte/po_aco"
  },
+ "cl:po_bronze": {
+  "pt": "Pó de Bronze",
+  "en": "Bronze Dust",
+  "icone": "textures/items/cl/arte/po_bronze"
+ },
  "cl:po_carvao": {
   "pt": "Pó de Carvão",
   "en": "Powdered Coal",
@@ -15166,6 +15941,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Sulfur Dust",
   "icone": "textures/items/cl/arte/po_enxofre"
  },
+ "cl:po_esmeralda": {
+  "pt": "Pó de Esmeralda",
+  "en": "Emerald Dust",
+  "icone": "textures/items/cl/arte/po_esmeralda"
+ },
  "cl:po_estanho": {
   "pt": "Pó de Estanho",
   "en": "Pulverized Tin",
@@ -15195,6 +15975,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pó de Lítio",
   "en": "Lithium Dust",
   "icone": "textures/items/cl/arte/po_litio"
+ },
+ "cl:po_netherita": {
+  "pt": "Pó de Netherita",
+  "en": "Netherite Dust",
+  "icone": "textures/items/cl/arte/po_netherita"
  },
  "cl:po_obsidiana": {
   "pt": "Pó de Obsidiana",
@@ -15266,6 +16051,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dirty Gold Dust",
   "icone": "textures/items/cl/arte/po_sujo_ouro"
  },
+ "cl:po_sujo_uranio": {
+  "pt": "Pó de urânio sujo",
+  "en": "Dirty Uranium Dust",
+  "icone": "textures/items/cl/arte/po_sujo_uranio"
+ },
+ "cl:po_uranio": {
+  "pt": "Pó de Urânio",
+  "en": "Uranium Dust",
+  "icone": "textures/items/cl/arte/po_uranio"
+ },
  "cl:po_yellorium": {
   "pt": "Pó de Yellorium",
   "en": "Yellorium Dust",
@@ -15301,15 +16096,35 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Access Port",
   "icone": "textures/items/cl/blocos/porta_acesso_reator"
  },
+ "cl:porta_fissao": {
+  "pt": "Porta do Reator de Fissão",
+  "en": "Fission Reactor Port",
+  "icone": "textures/items/cl/blocos/porta_fissao"
+ },
  "cl:porta_fluido_turbina": {
   "pt": "Porta de Fluido da Turbina",
   "en": "Turbine Fluid Port",
   "icone": "textures/items/cl/blocos/porta_fluido_turbina"
  },
+ "cl:porta_fusao": {
+  "pt": "Porta do Reator de Fusão",
+  "en": "Fusion Reactor Port",
+  "icone": "textures/items/cl/blocos/porta_fusao"
+ },
+ "cl:porta_inducao": {
+  "pt": "Porta de Indução",
+  "en": "Induction Port",
+  "icone": "textures/items/cl/blocos/porta_inducao"
+ },
  "cl:porta_refrigeracao": {
   "pt": "Porta de Refrigeração",
   "en": "Reactor Coolant Port",
   "icone": "textures/items/cl/blocos/porta_refrigeracao"
+ },
+ "cl:porta_sps": {
+  "pt": "Porta do AFS",
+  "en": "SPS Port",
+  "icone": "textures/items/cl/blocos/porta_sps"
  },
  "cl:portao_ender_ardente": {
   "pt": "Portão Ender Ardente",
@@ -15510,6 +16325,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Propulsor de Pedra",
   "en": "Stone Thruster",
   "icone": "textures/items/cl/arte/propulsor_pedra"
+ },
+ "cl:provedor_inducao_avancado": {
+  "pt": "Provedor de Indução Avançado",
+  "en": "Advanced Induction Provider",
+  "icone": "textures/items/cl/blocos/provedor_inducao_avancado"
+ },
+ "cl:provedor_inducao_basico": {
+  "pt": "Provedor de Indução Básico",
+  "en": "Basic Induction Provider",
+  "icone": "textures/items/cl/blocos/provedor_inducao_basico"
+ },
+ "cl:provedor_inducao_definitivo": {
+  "pt": "Provedor de Indução Ultimate",
+  "en": "Ultimate Induction Provider",
+  "icone": "textures/items/cl/blocos/provedor_inducao_definitivo"
+ },
+ "cl:provedor_inducao_elite": {
+  "pt": "Provedor de Indução Elite",
+  "en": "Elite Induction Provider",
+  "icone": "textures/items/cl/blocos/provedor_inducao_elite"
  },
  "cl:pulseira_murcha": {
   "pt": "Pulseira Murcha",
@@ -15721,6 +16556,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Andesite Casing",
   "icone": "textures/items/cl/blocos/revestimento_andesita"
  },
+ "cl:revestimento_caldeira": {
+  "pt": "Revestimento da Caldeira",
+  "en": "Boiler Casing",
+  "icone": "textures/items/cl/blocos/revestimento_caldeira"
+ },
+ "cl:revestimento_fissao": {
+  "pt": "Revestimento do Reator de Fissão",
+  "en": "Fission Reactor Casing",
+  "icone": "textures/items/cl/blocos/revestimento_fissao"
+ },
+ "cl:revestimento_inducao": {
+  "pt": "Revestimento de Indução",
+  "en": "Induction Casing",
+  "icone": "textures/items/cl/blocos/revestimento_inducao"
+ },
+ "cl:revestimento_sps": {
+  "pt": "Revestimento do AFS",
+  "en": "SPS Casing",
+  "icone": "textures/items/cl/blocos/revestimento_sps"
+ },
+ "cl:revestimento_turbina_mk": {
+  "pt": "Revestimento da Turbina",
+  "en": "Turbine Casing",
+  "icone": "textures/items/cl/blocos/revestimento_turbina_mk"
+ },
  "cl:robit": {
   "pt": "Robit",
   "en": "Robit",
@@ -15865,6 +16725,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Rosquinha de Melancia",
   "en": "Melon Donut",
   "icone": "textures/items/cl/hc/rosquinha_melancia"
+ },
+ "cl:rotor_turbina": {
+  "pt": "Rotor de Turbina",
+  "en": "Turbine Rotor",
+  "icone": "textures/items/cl/blocos/rotor_turbina"
  },
  "cl:ruibarbo": {
   "pt": "Ruibarbo",
@@ -16771,6 +17636,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Substrate",
   "icone": "textures/items/cl/arte/substrato"
  },
+ "cl:sucata_netherita_suja": {
+  "pt": "Pó de Netherita sujo",
+  "en": "Dirty Netherite Scrap",
+  "icone": "textures/items/cl/arte/sucata_netherita_suja"
+ },
  "cl:suco_bagas_brilhantes": {
   "pt": "Suco de Bagas Brilhantes",
   "en": "Glow Berry Juice",
@@ -16920,6 +17790,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tanque de Fluido Pressurizado",
   "en": "Pressurized Fluid Tank",
   "icone": "textures/items/cl/blocos/tanque_fluido_pressurizado"
+ },
+ "cl:tanque_mergulho": {
+  "pt": "Tanque de Mergulho",
+  "en": "Scuba Tank",
+  "icone": "textures/items/cl/c/tanque_mergulho"
  },
  "cl:tanque_oxigenio_leve": {
   "pt": "Tanque de Oxigênio Leve",
@@ -17381,6 +18256,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Gold Clump",
   "icone": "textures/items/cl/arte/torrao_ouro"
  },
+ "cl:torrao_uranio": {
+  "pt": "Aglomerado de urânio",
+  "en": "Uranium Clump",
+  "icone": "textures/items/cl/arte/torrao_uranio"
+ },
  "cl:torre_defesa": {
   "pt": "Torre de Defesa",
   "en": "Defense Turret",
@@ -17626,6 +18506,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Baked Sunchoke",
   "icone": "textures/items/cl/hc/tupinambo_assado"
  },
+ "cl:unidade_qio_base": {
+  "pt": "Disco da QIO",
+  "en": "QIO Drive",
+  "icone": "textures/items/cl/arte/unidade_qio_base"
+ },
+ "cl:unidade_qio_dilatacao": {
+  "pt": "Disco Dilatador do Tempo da QIO",
+  "en": "Time-Dilating QIO Drive",
+  "icone": "textures/items/cl/arte/unidade_qio_dilatacao"
+ },
+ "cl:unidade_qio_hiperdensa": {
+  "pt": "Disco Hiperdenso da QIO",
+  "en": "Hyper-Dense QIO Drive",
+  "icone": "textures/items/cl/arte/unidade_qio_hiperdensa"
+ },
+ "cl:unidade_qio_supermassiva": {
+  "pt": "Disco Supermassivo da QIO",
+  "en": "Supermassive QIO Drive",
+  "icone": "textures/items/cl/arte/unidade_qio_supermassiva"
+ },
  "cl:upgrade_alcance_1": {
   "pt": "Upgrade de Alcance +1",
   "en": "Range Upgrade +1",
@@ -17711,6 +18611,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Poor Raw Uraninite",
   "icone": "textures/items/cl/arte/uraninita_bruta_pobre"
  },
+ "cl:uranio_bruto": {
+  "pt": "Urânio Bruto",
+  "en": "Raw Uranium",
+  "icone": "textures/items/cl/arte/uranio_bruto"
+ },
  "cl:urtiga": {
   "pt": "Urtiga",
   "en": "Nettles",
@@ -17736,10 +18641,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "XP Vacuum",
   "icone": "textures/items/cl/blocos/vacuo_xp"
  },
+ "cl:valvula_caldeira": {
+  "pt": "Válvula da Caldeira",
+  "en": "Boiler Valve",
+  "icone": "textures/items/cl/blocos/valvula_caldeira"
+ },
  "cl:valvula_camara": {
   "pt": "Válvula da Câmara",
   "en": "Pressure Chamber Valve",
   "icone": "textures/items/cl/blocos/valvula_camara"
+ },
+ "cl:valvula_dinamica": {
+  "pt": "Válvula Dinâmica",
+  "en": "Dynamic Valve",
+  "icone": "textures/items/cl/blocos/valvula_dinamica"
+ },
+ "cl:valvula_evaporacao": {
+  "pt": "Válvula de Evaporação Térmica",
+  "en": "Thermal Evaporation Valve",
+  "icone": "textures/items/cl/blocos/valvula_evaporacao"
+ },
+ "cl:valvula_turbina_mk": {
+  "pt": "Válvula da Turbina",
+  "en": "Turbine Valve",
+  "icone": "textures/items/cl/blocos/valvula_turbina_mk"
  },
  "cl:vara_experiencia": {
   "pt": "Vara de Experiência",
@@ -17781,6 +18706,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Sail",
   "icone": "textures/items/cl/blocos/vela_moinho"
  },
+ "cl:ventilacao_turbina": {
+  "pt": "Ventilador de Turbina",
+  "en": "Turbine Vent",
+  "icone": "textures/items/cl/blocos/ventilacao_turbina"
+ },
  "cl:ventilador": {
   "pt": "Ventilador Revestido",
   "en": "Encased Fan",
@@ -17820,6 +18750,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Vidro Entalhado",
   "en": "Carved Glass",
   "icone": "textures/items/cl/blocos/vidro_entalhado"
+ },
+ "cl:vidro_estrutural": {
+  "pt": "Vidro estrutural",
+  "en": "Structural Glass",
+  "icone": "textures/items/cl/blocos/vidro_estrutural"
  },
  "cl:vidro_fume_refratario": {
   "pt": "Vidro Fumê Refratário",
@@ -17865,6 +18800,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Vidro do Reator",
   "en": "Reactor Glass",
   "icone": "textures/items/cl/blocos/vidro_reator"
+ },
+ "cl:vidro_reator_mk": {
+  "pt": "Vidro de Reator (Mekanism)",
+  "en": "Reactor Glass",
+  "icone": "textures/items/cl/blocos/vidro_reator_mk"
  },
  "cl:vidro_refratario": {
   "pt": "Vidro Refratário",
@@ -18614,6 +19554,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Diamond",
   "icone": "textures/blocks/diamond_block"
  },
+ "minecraft:diamond_leggings": {
+  "pt": "Calças de Diamante",
+  "en": "Diamond Leggings",
+  "icone": "textures/items/diamond_leggings"
+ },
  "minecraft:diamond_ore": {
   "pt": "Minério de Diamante",
   "en": "Diamond Ore",
@@ -18673,6 +19618,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Ovo",
   "en": "Egg",
   "icone": "textures/items/egg"
+ },
+ "minecraft:elytra": {
+  "pt": "Élitros",
+  "en": "Elytra",
+  "icone": "textures/items/elytra"
  },
  "minecraft:emerald": {
   "pt": "Esmeralda",
@@ -18939,6 +19889,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Capacete de Ferro",
   "en": "Iron Helmet",
   "icone": "textures/items/iron_helmet"
+ },
+ "minecraft:iron_hoe": {
+  "pt": "Enxada de Ferro",
+  "en": "Iron Hoe",
+  "icone": "textures/items/iron_hoe"
  },
  "minecraft:iron_ingot": {
   "pt": "Barra de Ferro",
@@ -19227,10 +20182,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Netherite",
   "icone": "textures/blocks/netherite_block"
  },
+ "minecraft:netherite_boots": {
+  "pt": "Botas de Netherita",
+  "en": "Netherite Boots",
+  "icone": "textures/items/netherite_boots"
+ },
+ "minecraft:netherite_chestplate": {
+  "pt": "Peitoral de Netherita",
+  "en": "Netherite Chestplate",
+  "icone": "textures/items/netherite_chestplate"
+ },
+ "minecraft:netherite_helmet": {
+  "pt": "Capacete de Netherita",
+  "en": "Netherite Helmet",
+  "icone": "textures/items/netherite_helmet"
+ },
  "minecraft:netherite_ingot": {
   "pt": "Barra de Netherita",
   "en": "Netherite Ingot",
   "icone": "textures/items/netherite_ingot"
+ },
+ "minecraft:netherite_leggings": {
+  "pt": "Calças de Netherita",
+  "en": "Netherite Leggings",
+  "icone": "textures/items/netherite_leggings"
  },
  "minecraft:netherite_scrap": {
   "pt": "Fragmentos de Netherita",
@@ -35048,6 +36023,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_mk10_bio_fuel",
+  "resultado": "cl:biocombustivel",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_biocombustivel",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_mk10_chemical_infuser",
   "resultado": "cl:infusor_quimico",
@@ -36170,6 +37160,156 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_0",
+  "resultado": "cl:lingote_estanho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:minerio_estanho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_1",
+  "resultado": "cl:lingote_estanho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:minerio_estanho_profundo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_2",
+  "resultado": "cl:lingote_estanho",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:estanho_bruto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_3",
+  "resultado": "cl:lingote_uranio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:po_uranio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_4",
+  "resultado": "cl:lingote_uranio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:minerio_uranio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_5",
+  "resultado": "cl:lingote_uranio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:minerio_uranio_profundo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_6",
+  "resultado": "cl:lingote_uranio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:uranio_bruto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_7",
+  "resultado": "cl:lingote_osmio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:minerio_osmio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_8",
+  "resultado": "cl:lingote_osmio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:minerio_osmio_profundo",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_mk_p4_forno_9",
+  "resultado": "cl:lingote_osmio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:osmio_bruto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_mk_pa_aco",
   "resultado": "cl:mk_pa_aco",
@@ -36715,6 +37855,46 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_antiprotonic_nucleosynthesizer",
+  "resultado": "cl:nucleossintetizador",
+  "qtd": 1,
+  "grade": [
+   "#C#",
+   "AXA",
+   "#C#"
+  ],
+  "chaves": {
+   "#": "cl:liga_atomica",
+   "A": "cl:pastilha_antimateria",
+   "C": "cl:circuito_controle_supremo",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_atomic_disassembler",
+  "resultado": "cl:desmontador_atomico",
+  "qtd": 1,
+  "grade": [
+   "AEA",
+   "A#A",
+   " I "
+  ],
+  "chaves": {
+   "#": "cl:liga_atomica",
+   "A": "cl:liga_enriquecida",
+   "E": "cl:tablet_energia",
+   "I": "cl:lingote_obsidiana_refinada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_bin_advanced",
   "resultado": "cl:caixa_avancada",
   "qtd": 1,
@@ -36787,6 +37967,76 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:circuito_controle_supremo",
    "P": "cl:caixa_elite",
    "_": "minecraft:cobblestone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_boiler_casing",
+  "resultado": "cl:revestimento_caldeira",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SIS",
+   " S "
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_boiler_valve",
+  "resultado": "cl:valvula_caldeira",
+  "qtd": 2,
+  "grade": [
+   " # ",
+   "#C#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:revestimento_caldeira",
+   "C": "cl:circuito_controle_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_canteen",
+  "resultado": "cl:cantil",
+  "qtd": 1,
+  "grade": [
+   " I ",
+   "I#I",
+   " I "
+  ],
+  "chaves": {
+   "#": "minecraft:bowl",
+   "I": "cl:lingote_estanho"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_cardboard_box",
+  "resultado": "cl:caixa_papelao",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:serragem"
   },
   "estacoes": [
    "crafting_table"
@@ -36989,6 +38239,60 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_configuration_card",
+  "resultado": "cl:cartao_configuracao",
+  "qtd": 1,
+  "grade": [
+   " A ",
+   "ACA",
+   " A "
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_configurator",
+  "resultado": "cl:configurador",
+  "qtd": 1,
+  "grade": [
+   "II",
+   " A",
+   " S"
+  ],
+  "chaves": {
+   "A": "cl:lingote_osmio",
+   "I": "minecraft:iron_ingot",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_dictionary",
+  "resultado": "cl:dicionario",
+  "qtd": 1,
+  "grade": [
+   "C",
+   "#"
+  ],
+  "chaves": {
+   "#": "minecraft:book",
+   "C": "cl:circuito_controle_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_digital_miner",
   "resultado": "cl:minerador_digital",
   "qtd": 1,
@@ -37011,6 +38315,63 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_dimensional_stabilizer",
+  "resultado": "cl:estabilizador_dimensional",
+  "qtd": 1,
+  "grade": [
+   "ICI",
+   "ADA",
+   "ICI"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "D": "minecraft:diamond_block",
+   "I": "cl:lingote_obsidiana_refinada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_dosimeter",
+  "resultado": "cl:dosimetro",
+  "qtd": 1,
+  "grade": [
+   " I ",
+   "IRI",
+   " I "
+  ],
+  "chaves": {
+   "I": "cl:lingote_chumbo",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_dye_base",
+  "resultado": "cl:base_tinta",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:serragem",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:clay_ball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_dynamic_tank",
   "resultado": "cl:tanque_dinamico",
   "qtd": 4,
@@ -37022,6 +38383,43 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "B": "minecraft:bucket",
    "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_dynamic_valve",
+  "resultado": "cl:valvula_dinamica",
+  "qtd": 2,
+  "grade": [
+   " # ",
+   "#C#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:tanque_dinamico",
+   "C": "cl:circuito_controle_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_electric_bow",
+  "resultado": "cl:arco_eletrico",
+  "qtd": 1,
+  "grade": [
+   "#A ",
+   "# E",
+   "#A "
+  ],
+  "chaves": {
+   "#": "minecraft:string",
+   "A": "cl:liga_enriquecida",
+   "E": "cl:tablet_energia"
   },
   "estacoes": [
    "crafting_table"
@@ -37769,6 +39167,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_flamethrower",
+  "resultado": "cl:lanca_chamas",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "ITS",
+   "#C#"
+  ],
+  "chaves": {
+   "#": "cl:lingote_bronze",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_estanho",
+   "S": "minecraft:flint_and_steel",
+   "T": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_fluid_tank_advanced",
   "resultado": "cl:tanque_fluido_avancado",
   "qtd": 1,
@@ -37863,6 +39282,190 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_free_runners",
+  "resultado": "cl:corredores_livres",
+  "qtd": 1,
+  "grade": [
+   "C C",
+   "A A",
+   "E E"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico",
+   "E": "cl:tablet_energia"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_free_runners_armored",
+  "resultado": "cl:corredores_livres_blindados",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "#P#",
+   "I I"
+  ],
+  "chaves": {
+   "#": "cl:po_diamante",
+   "I": "cl:lingote_bronze",
+   "P": "cl:corredores_livres",
+   "S": "cl:bloco_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_fuelwood_heater",
+  "resultado": "cl:aquecedor_lenha",
+  "qtd": 1,
+  "grade": [
+   "SCS",
+   "#X#",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "minecraft:furnace",
+   "C": "cl:circuito_controle_basico",
+   "S": "cl:lingote_aco",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_gauge_dropper",
+  "resultado": "cl:conta_gotas",
+  "qtd": 1,
+  "grade": [
+   " O ",
+   "G G",
+   "GGG"
+  ],
+  "chaves": {
+   "G": "minecraft:glass_pane",
+   "O": "cl:lingote_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_geiger_counter",
+  "resultado": "cl:contador_geiger",
+  "qtd": 1,
+  "grade": [
+   " I ",
+   "ICI",
+   " I "
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_basico",
+   "I": "cl:lingote_chumbo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_hazmat_boots",
+  "resultado": "cl:botas_hazmat",
+  "qtd": 1,
+  "grade": [
+   "I I",
+   "IDI"
+  ],
+  "chaves": {
+   "D": "minecraft:black_dye",
+   "I": "cl:lingote_chumbo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_hazmat_gown",
+  "resultado": "cl:jaleco_hazmat",
+  "qtd": 1,
+  "grade": [
+   "IDI",
+   "III",
+   "III"
+  ],
+  "chaves": {
+   "D": "minecraft:orange_dye",
+   "I": "cl:lingote_chumbo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_hazmat_mask",
+  "resultado": "cl:mascara_hazmat",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "IDI"
+  ],
+  "chaves": {
+   "D": "minecraft:orange_dye",
+   "I": "cl:lingote_chumbo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_hazmat_pants",
+  "resultado": "cl:calca_hazmat",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "IDI",
+   "I I"
+  ],
+  "chaves": {
+   "D": "minecraft:orange_dye",
+   "I": "cl:lingote_chumbo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_hdpe_elytra",
+  "resultado": "cl:elitro_pead",
+  "qtd": 1,
+  "grade": [
+   "AHA",
+   "HPH",
+   "H H"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "H": "cl:folha_pead",
+   "P": "minecraft:elytra"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_hdpe_rod",
   "resultado": "cl:barra_pead",
   "qtd": 1,
@@ -37895,6 +39498,194 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_induction_casing",
+  "resultado": "cl:revestimento_inducao",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SES",
+   " S "
+  ],
+  "chaves": {
+   "E": "cl:tablet_energia",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_cell_advanced",
+  "resultado": "cl:celula_inducao_avancado",
+  "qtd": 1,
+  "grade": [
+   "EPE",
+   "P#P",
+   "EPE"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_avancado",
+   "E": "cl:tablet_energia",
+   "P": "cl:celula_inducao_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_cell_basic",
+  "resultado": "cl:celula_inducao_basico",
+  "qtd": 1,
+  "grade": [
+   "LEL",
+   "E#E",
+   "LEL"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_basico",
+   "E": "cl:tablet_energia",
+   "L": "cl:po_litio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_cell_elite",
+  "resultado": "cl:celula_inducao_elite",
+  "qtd": 1,
+  "grade": [
+   "EPE",
+   "P#P",
+   "EPE"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_elite",
+   "E": "cl:tablet_energia",
+   "P": "cl:celula_inducao_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_cell_ultimate",
+  "resultado": "cl:celula_inducao_definitivo",
+  "qtd": 1,
+  "grade": [
+   "EPE",
+   "P#P",
+   "EPE"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_definitivo",
+   "E": "cl:tablet_energia",
+   "P": "cl:celula_inducao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_port",
+  "resultado": "cl:porta_inducao",
+  "qtd": 2,
+  "grade": [
+   " # ",
+   "#C#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:revestimento_inducao",
+   "C": "cl:circuito_controle_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_provider_advanced",
+  "resultado": "cl:provedor_inducao_avancado",
+  "qtd": 1,
+  "grade": [
+   "CPC",
+   "P#P",
+   "CPC"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_avancado",
+   "C": "cl:circuito_controle_avancado",
+   "P": "cl:provedor_inducao_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_provider_basic",
+  "resultado": "cl:provedor_inducao_basico",
+  "qtd": 1,
+  "grade": [
+   "LCL",
+   "C#C",
+   "LCL"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_basico",
+   "C": "cl:circuito_controle_basico",
+   "L": "cl:po_litio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_provider_elite",
+  "resultado": "cl:provedor_inducao_elite",
+  "qtd": 1,
+  "grade": [
+   "CPC",
+   "P#P",
+   "CPC"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_elite",
+   "C": "cl:circuito_controle_elite",
+   "P": "cl:provedor_inducao_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_induction_provider_ultimate",
+  "resultado": "cl:provedor_inducao_definitivo",
+  "qtd": 1,
+  "grade": [
+   "CPC",
+   "P#P",
+   "CPC"
+  ],
+  "chaves": {
+   "#": "cl:cubo_energia_definitivo",
+   "C": "cl:circuito_controle_supremo",
+   "P": "cl:provedor_inducao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_industrial_alarm",
   "resultado": "cl:alarme_industrial",
   "qtd": 1,
@@ -37914,6 +39705,101 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_isotopic_centrifuge",
+  "resultado": "cl:centrifuga_isotopica",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "CTC",
+   "III"
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_supremo",
+   "I": "cl:lingote_chumbo",
+   "T": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_jetpack_armored",
+  "resultado": "cl:jetpack_blindado",
+  "qtd": 1,
+  "grade": [
+   "# #",
+   "ISI",
+   " P "
+  ],
+  "chaves": {
+   "#": "cl:po_diamante",
+   "I": "cl:lingote_bronze",
+   "P": "cl:jetpack",
+   "S": "cl:bloco_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_laser",
+  "resultado": "cl:laser_mk",
+  "qtd": 1,
+  "grade": [
+   "AE ",
+   "AX#",
+   "AE "
+  ],
+  "chaves": {
+   "#": "minecraft:diamond",
+   "A": "cl:liga_reforcada",
+   "E": "cl:tablet_energia",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_laser_amplifier",
+  "resultado": "cl:amplificador_laser",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SE#",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "minecraft:diamond",
+   "E": "cl:cubo_energia_basico",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_laser_tractor_beam",
+  "resultado": "cl:feixe_trator_laser",
+  "qtd": 1,
+  "grade": [
+   "P",
+   "#"
+  ],
+  "chaves": {
+   "#": "cl:amplificador_laser",
+   "P": "cl:barril_pessoal"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_logistical_sorter",
   "resultado": "cl:classificador_logistico",
   "qtd": 1,
@@ -37926,6 +39812,824 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "#": "minecraft:piston",
    "C": "cl:circuito_controle_basico",
    "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_meka_tool",
+  "resultado": "cl:ferramenta_meka",
+  "qtd": 1,
+  "grade": [
+   "CoC",
+   "P#P",
+   "AEA"
+  ],
+  "chaves": {
+   "#": "cl:desmontador_atomico",
+   "A": "cl:pastilha_polonio",
+   "C": "cl:circuito_controle_supremo",
+   "E": "cl:celula_inducao_basico",
+   "P": "cl:folha_pead",
+   "o": "cl:configurador"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_mekasuit_bodyarmor",
+  "resultado": "cl:peitoral_mekasuit",
+  "qtd": 1,
+  "grade": [
+   "PCP",
+   "P#P",
+   "AEA"
+  ],
+  "chaves": {
+   "#": "minecraft:netherite_chestplate",
+   "A": "cl:pastilha_polonio",
+   "C": "cl:circuito_controle_supremo",
+   "E": "cl:celula_inducao_basico",
+   "P": "cl:folha_pead"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_mekasuit_boots",
+  "resultado": "cl:botas_mekasuit",
+  "qtd": 1,
+  "grade": [
+   "PCP",
+   "P#P",
+   "AEA"
+  ],
+  "chaves": {
+   "#": "minecraft:netherite_boots",
+   "A": "cl:pastilha_polonio",
+   "C": "cl:circuito_controle_supremo",
+   "E": "cl:celula_inducao_basico",
+   "P": "cl:folha_pead"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_mekasuit_helmet",
+  "resultado": "cl:capacete_mekasuit",
+  "qtd": 1,
+  "grade": [
+   "PCP",
+   "P#P",
+   "AEA"
+  ],
+  "chaves": {
+   "#": "minecraft:netherite_helmet",
+   "A": "cl:pastilha_polonio",
+   "C": "cl:circuito_controle_supremo",
+   "E": "cl:celula_inducao_basico",
+   "P": "cl:folha_pead"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_mekasuit_pants",
+  "resultado": "cl:calcas_mekasuit",
+  "qtd": 1,
+  "grade": [
+   "PCP",
+   "P#P",
+   "AEA"
+  ],
+  "chaves": {
+   "#": "minecraft:netherite_leggings",
+   "A": "cl:pastilha_polonio",
+   "C": "cl:circuito_controle_supremo",
+   "E": "cl:celula_inducao_basico",
+   "P": "cl:folha_pead"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_modification_station",
+  "resultado": "cl:estacao_modificacao",
+  "qtd": 1,
+  "grade": [
+   "PWP",
+   "CXC",
+   "PAP"
+  ],
+  "chaves": {
+   "A": "cl:pastilha_polonio",
+   "C": "cl:circuito_controle_supremo",
+   "P": "cl:folha_pead",
+   "W": "minecraft:chest",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_attack_amplification_unit",
+  "resultado": "cl:modulo_ataque",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:iron_sword",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_base",
+  "resultado": "cl:base_modulo",
+  "qtd": 2,
+  "grade": [
+   "NIN",
+   "I#I",
+   "NIN"
+  ],
+  "chaves": {
+   "#": "cl:folha_pead",
+   "I": "cl:lingote_estanho",
+   "N": "cl:pepita_bronze"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_blasting_unit",
+  "resultado": "cl:modulo_explosao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "CPC",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:tnt",
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_charge_distribution_unit",
+  "resultado": "cl:modulo_distribuicao_carga",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:provedor_inducao_basico",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_dosimeter_unit",
+  "resultado": "cl:modulo_dosimetro",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:dosimetro",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_electrolytic_breathing_unit",
+  "resultado": "cl:modulo_respiracao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:nucleo_eletrolitico",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_elytra_unit",
+  "resultado": "cl:modulo_elitro",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HNH"
+  ],
+  "chaves": {
+   "#": "cl:elitro_pead",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "N": "cl:pastilha_antimateria",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_energy_unit",
+  "resultado": "cl:modulo_energia",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:celula_inducao_basico",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_excavation_escalation_unit",
+  "resultado": "cl:modulo_escavacao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:iron_pickaxe",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_farming_unit",
+  "resultado": "cl:modulo_cultivo",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:iron_hoe",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_fortune_unit",
+  "resultado": "cl:modulo_fortuna",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "DPD",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:bloco_glowstone_refinado",
+   "A": "cl:liga_reforcada",
+   "D": "minecraft:diamond_block",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_geiger_unit",
+  "resultado": "cl:modulo_geiger",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:contador_geiger",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_gravitational_modulating_unit",
+  "resultado": "cl:modulo_gravitacional",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "EPE",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:nether_star",
+   "A": "cl:liga_atomica",
+   "E": "cl:provedor_inducao_definitivo",
+   "H": "cl:pastilha_antimateria",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_gyroscopic_stabilization_unit",
+  "resultado": "cl:modulo_giroscopio",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "#P#",
+   "H#H"
+  ],
+  "chaves": {
+   "#": "minecraft:obsidian",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_hydraulic_propulsion_unit",
+  "resultado": "cl:modulo_propulsao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "EPE",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:corredores_livres",
+   "A": "cl:liga_reforcada",
+   "E": "cl:tablet_energia",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_hydrostatic_repulsor_unit",
+  "resultado": "cl:modulo_hidrostatico",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:lightning_rod",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_inhalation_purification_unit",
+  "resultado": "cl:modulo_purificacao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HoH"
+  ],
+  "chaves": {
+   "#": "cl:mascara_hazmat",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo",
+   "o": "cl:mascara_mergulho"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_jetpack_unit",
+  "resultado": "cl:modulo_jetpack",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:jetpack",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_laser_dissipation_unit",
+  "resultado": "cl:modulo_dissipacao_laser",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:amplificador_laser",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_locomotive_boosting_unit",
+  "resultado": "cl:modulo_locomocao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "EPE",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:diamond_leggings",
+   "A": "cl:liga_reforcada",
+   "E": "cl:tablet_energia",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_magnetic_attraction_unit",
+  "resultado": "cl:modulo_magnetico",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "CPC",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:iron_bars",
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_motorized_servo_unit",
+  "resultado": "cl:modulo_servo",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "#P#",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:blue_ice",
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_nutritional_injection_unit",
+  "resultado": "cl:modulo_nutricao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:cantil",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_radiation_shielding_unit",
+  "resultado": "cl:modulo_blindagem_radiacao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:bloco_chumbo",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_shearing_unit",
+  "resultado": "cl:modulo_tosquia",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:shears",
+   "A": "cl:liga_enriquecida",
+   "H": "cl:folha_pead",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_silk_touch_unit",
+  "resultado": "cl:modulo_toque_suave",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "DPD",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:bloco_glowstone_refinado",
+   "A": "cl:liga_reforcada",
+   "D": "minecraft:diamond_pickaxe",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_teleportation_unit",
+  "resultado": "cl:modulo_teletransporte",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "cl:nucleo_teletransporte",
+   "A": "cl:liga_atomica",
+   "H": "cl:pastilha_antimateria",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_vein_mining_unit",
+  "resultado": "cl:modulo_veio",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "xPs",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:diamond_pickaxe",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo",
+   "s": "minecraft:diamond_shovel",
+   "x": "minecraft:diamond_axe"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_module_vision_enhancement_unit",
+  "resultado": "cl:modulo_visao",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "APA",
+   "HHH"
+  ],
+  "chaves": {
+   "#": "minecraft:emerald",
+   "A": "cl:liga_reforcada",
+   "H": "cl:pastilha_polonio",
+   "P": "cl:base_modulo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_network_reader",
+  "resultado": "cl:leitor_rede",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "AEA",
+   " S "
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "E": "cl:tablet_energia",
+   "G": "minecraft:glass",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_nuggets_bronze",
+  "resultado": "cl:pepita_bronze",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_bronze",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_nuggets_refined_glowstone",
+  "resultado": "cl:pepita_glowstone_refinado",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_glowstone_refinado",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_nuggets_refined_obsidian",
+  "resultado": "cl:pepita_obsidiana_refinada",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_obsidiana_refinada",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_nuggets_steel",
+  "resultado": "cl:pepita_aco",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_aco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_nutritional_liquifier",
+  "resultado": "cl:liquidificador_nutricional",
+  "qtd": 1,
+  "grade": [
+   "RCR",
+   "#X#",
+   "RCR"
+  ],
+  "chaves": {
+   "#": "minecraft:bowl",
+   "C": "cl:circuito_controle_basico",
+   "R": "minecraft:redstone",
+   "X": "cl:revestimento_aco"
   },
   "estacoes": [
    "crafting_table"
@@ -37953,6 +40657,45 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_personal_chest",
+  "resultado": "cl:bau_pessoal",
+  "qtd": 1,
+  "grade": [
+   "SGS",
+   "PCP",
+   "SSS"
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_basico",
+   "G": "minecraft:glass",
+   "P": "minecraft:chest",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_portable_qio_dashboard",
+  "resultado": "cl:painel_qio_portatil",
+  "qtd": 1,
+  "grade": [
+   "AAA",
+   "A#A",
+   "ATA"
+  ],
+  "chaves": {
+   "#": "cl:painel_qio",
+   "A": "cl:pastilha_polonio",
+   "T": "cl:nucleo_teletransporte"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_portable_teleporter",
   "resultado": "cl:teletransportador_portatil",
   "qtd": 1,
@@ -37965,6 +40708,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:circuito_controle_basico",
    "E": "cl:tablet_energia",
    "T": "cl:nucleo_teletransporte"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_pressure_disperser",
+  "resultado": "cl:dispersor_pressao",
+  "qtd": 1,
+  "grade": [
+   "S#S",
+   "#A#",
+   "S#S"
+  ],
+  "chaves": {
+   "#": "minecraft:iron_bars",
+   "A": "cl:liga_enriquecida",
+   "S": "cl:lingote_aco"
   },
   "estacoes": [
    "crafting_table"
@@ -38107,6 +40869,399 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_osmium_nugget_from_ingot",
+  "resultado": "cl:pepita_osmio",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_osmio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_osmium_raw_from_raw_block",
+  "resultado": "cl:osmio_bruto",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_osmio_bruto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_processing_osmium_raw_storage_blocks_from_raw",
+  "resultado": "cl:bloco_osmio_bruto",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:osmio_bruto",
+   "P": "cl:osmio_bruto"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_processing_osmium_storage_blocks_from_ingots",
+  "resultado": "cl:bloco_osmio",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:lingote_osmio",
+   "P": "cl:lingote_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_tin_nugget_from_ingot",
+  "resultado": "cl:pepita_estanho",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_estanho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_tin_raw_from_raw_block",
+  "resultado": "cl:estanho_bruto",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_estanho_bruto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_processing_tin_raw_storage_blocks_from_raw",
+  "resultado": "cl:bloco_estanho_bruto",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:estanho_bruto",
+   "P": "cl:estanho_bruto"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_uranium_ingot_from_block",
+  "resultado": "cl:lingote_uranio",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_uranio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_processing_uranium_ingot_from_nuggets",
+  "resultado": "cl:lingote_uranio",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:pepita_uranio",
+   "P": "cl:pepita_uranio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_uranium_nugget_from_ingot",
+  "resultado": "cl:pepita_uranio",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_uranio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_uranium_raw_from_raw_block",
+  "resultado": "cl:uranio_bruto",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_uranio_bruto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_processing_uranium_raw_storage_blocks_from_raw",
+  "resultado": "cl:bloco_uranio_bruto",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:uranio_bruto",
+   "P": "cl:uranio_bruto"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_processing_uranium_storage_blocks_from_ingots",
+  "resultado": "cl:bloco_uranio",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:lingote_uranio",
+   "P": "cl:lingote_uranio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_dashboard",
+  "resultado": "cl:painel_qio",
+  "qtd": 1,
+  "grade": [
+   "IAI",
+   "AGA",
+   "ITI"
+  ],
+  "chaves": {
+   "A": "minecraft:ender_pearl",
+   "G": "minecraft:glass_pane",
+   "I": "cl:lingote_chumbo",
+   "T": "cl:nucleo_teletransporte"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_drive_array",
+  "resultado": "cl:matriz_unidades_qio",
+  "qtd": 1,
+  "grade": [
+   "TGT",
+   "C#C",
+   "TIT"
+  ],
+  "chaves": {
+   "#": "cl:barril_pessoal",
+   "C": "cl:circuito_controle_supremo",
+   "G": "minecraft:glass_pane",
+   "I": "minecraft:ender_pearl",
+   "T": "cl:nucleo_teletransporte"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_drive_base",
+  "resultado": "cl:unidade_qio_base",
+  "qtd": 1,
+  "grade": [
+   "ICI",
+   "C#C",
+   "ICI"
+  ],
+  "chaves": {
+   "#": "minecraft:ender_pearl",
+   "C": "cl:circuito_controle_supremo",
+   "I": "cl:lingote_chumbo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_drive_hyper_dense",
+  "resultado": "cl:unidade_qio_hiperdensa",
+  "qtd": 1,
+  "grade": [
+   "IPI",
+   "P#P",
+   "IPI"
+  ],
+  "chaves": {
+   "#": "cl:nucleo_teletransporte",
+   "I": "cl:pastilha_plutonio",
+   "P": "cl:unidade_qio_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_drive_supermassive",
+  "resultado": "cl:unidade_qio_supermassiva",
+  "qtd": 1,
+  "grade": [
+   "IPI",
+   "P#P",
+   "IPI"
+  ],
+  "chaves": {
+   "#": "cl:pastilha_antimateria",
+   "I": "cl:pastilha_polonio",
+   "P": "cl:unidade_qio_dilatacao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_drive_time_dilating",
+  "resultado": "cl:unidade_qio_dilatacao",
+  "qtd": 1,
+  "grade": [
+   "IPI",
+   "P#P",
+   "IPI"
+  ],
+  "chaves": {
+   "#": "cl:pastilha_polonio",
+   "I": "cl:pastilha_plutonio",
+   "P": "cl:unidade_qio_hiperdensa"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_exporter",
+  "resultado": "cl:exportador_qio",
+  "qtd": 1,
+  "grade": [
+   "ITI",
+   "ACA",
+   " # "
+  ],
+  "chaves": {
+   "#": "minecraft:piston",
+   "A": "minecraft:ender_pearl",
+   "C": "cl:circuito_controle_supremo",
+   "I": "cl:lingote_chumbo",
+   "T": "cl:nucleo_teletransporte"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_importer",
+  "resultado": "cl:importador_qio",
+  "qtd": 1,
+  "grade": [
+   "ITI",
+   "ACA",
+   " # "
+  ],
+  "chaves": {
+   "#": "minecraft:sticky_piston",
+   "A": "minecraft:ender_pearl",
+   "C": "cl:circuito_controle_supremo",
+   "I": "cl:lingote_chumbo",
+   "T": "cl:nucleo_teletransporte"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_qio_redstone_adapter",
+  "resultado": "cl:adaptador_redstone_qio",
+  "qtd": 1,
+  "grade": [
+   "IWI",
+   "CRC",
+   "ITI"
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:ender_pearl",
+   "R": "minecraft:redstone",
+   "T": "cl:nucleo_teletransporte",
+   "W": "minecraft:redstone_torch"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_mkc_quantum_entangloporter",
   "resultado": "cl:entrelacador_quantico",
@@ -38121,6 +41276,44 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:circuito_controle_supremo",
    "I": "cl:lingote_obsidiana_refinada",
    "T": "cl:nucleo_teletransporte"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_radioactive_waste_barrel",
+  "resultado": "cl:barril_residuos_radioativos",
+  "qtd": 1,
+  "grade": [
+   "SIS",
+   "I I",
+   "SIS"
+  ],
+  "chaves": {
+   "I": "cl:lingote_chumbo",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_resistive_heater",
+  "resultado": "cl:aquecedor_resistivo",
+  "qtd": 1,
+  "grade": [
+   "IRI",
+   "RXR",
+   "IEI"
+  ],
+  "chaves": {
+   "E": "cl:tablet_energia",
+   "I": "cl:lingote_estanho",
+   "R": "minecraft:redstone",
+   "X": "cl:revestimento_aco"
   },
   "estacoes": [
    "crafting_table"
@@ -38170,6 +41363,45 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_scuba_mask",
+  "resultado": "cl:mascara_mergulho",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "GCG",
+   "S S"
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_basico",
+   "G": "minecraft:glass",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_scuba_tank",
+  "resultado": "cl:tanque_mergulho",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "ATA",
+   "SSS"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico",
+   "S": "cl:lingote_aco",
+   "T": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_seismic_reader",
   "resultado": "cl:leitor_sismico",
   "qtd": 1,
@@ -38209,6 +41441,82 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_solar_neutron_activator",
+  "resultado": "cl:ativador_neutrons_solar",
+  "qtd": 1,
+  "grade": [
+   "A#A",
+   "CXC",
+   "III"
+  ],
+  "chaves": {
+   "#": "cl:folha_pead",
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "cl:lingote_bronze",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_sps_casing",
+  "resultado": "cl:revestimento_sps",
+  "qtd": 1,
+  "grade": [
+   "PAP",
+   "A#A",
+   "PAP"
+  ],
+  "chaves": {
+   "#": "cl:pastilha_plutonio",
+   "A": "cl:pastilha_polonio",
+   "P": "cl:folha_pead"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_sps_port",
+  "resultado": "cl:porta_sps",
+  "qtd": 1,
+  "grade": [
+   " # ",
+   "#C#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:revestimento_sps",
+   "C": "cl:circuito_controle_supremo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_storage_blocks_bio_fuel",
+  "resultado": "cl:bloco_biocombustivel",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:biocombustivel",
+   "P": "cl:biocombustivel"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_storage_blocks_fluorite",
   "resultado": "cl:bloco_fluorita",
   "qtd": 1,
@@ -38220,6 +41528,115 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "#": "cl:fluorita",
    "P": "cl:fluorita"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_storage_blocks_refined_glowstone",
+  "resultado": "cl:bloco_glowstone_refinado",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:lingote_glowstone_refinado",
+   "P": "cl:lingote_glowstone_refinado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_storage_blocks_refined_obsidian",
+  "resultado": "cl:bloco_obsidiana_refinada",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:lingote_obsidiana_refinada",
+   "P": "cl:lingote_obsidiana_refinada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_storage_blocks_salt",
+  "resultado": "cl:bloco_sal",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:sal"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_structural_glass",
+  "resultado": "cl:vidro_estrutural",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SGS",
+   " S "
+  ],
+  "chaves": {
+   "G": "minecraft:glass",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_supercharged_coil",
+  "resultado": "cl:bobina_supercarregada",
+  "qtd": 1,
+  "grade": [
+   "ccc",
+   "C#C",
+   "AAA"
+  ],
+  "chaves": {
+   "#": "cl:laser_mk",
+   "A": "cl:pastilha_polonio",
+   "C": "cl:circuito_controle_supremo",
+   "c": "minecraft:copper_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_superheating_element",
+  "resultado": "cl:elemento_superaquecimento",
+  "qtd": 1,
+  "grade": [
+   "AIA",
+   "IXI",
+   "AIA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "I": "minecraft:copper_ingot",
+   "X": "cl:revestimento_aco"
   },
   "estacoes": [
    "crafting_table"
@@ -38277,6 +41694,62 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "G": "cl:lingote_glowstone_refinado",
    "I": "cl:lingote_obsidiana_refinada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_thermal_evaporation_block",
+  "resultado": "cl:bloco_evaporacao",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SIS",
+   " S "
+  ],
+  "chaves": {
+   "I": "minecraft:copper_ingot",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_thermal_evaporation_controller",
+  "resultado": "cl:controlador_evaporacao",
+  "qtd": 1,
+  "grade": [
+   "CGC",
+   "#B#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:bloco_evaporacao",
+   "B": "minecraft:bucket",
+   "C": "cl:circuito_controle_avancado",
+   "G": "minecraft:glass_pane"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_thermal_evaporation_valve",
+  "resultado": "cl:valvula_evaporacao",
+  "qtd": 1,
+  "grade": [
+   " # ",
+   "#C#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:bloco_evaporacao",
+   "C": "cl:circuito_controle_avancado"
   },
   "estacoes": [
    "crafting_table"
@@ -38567,6 +42040,76 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "A": "cl:liga_atomica",
    "P": "cl:tubo_pressurizado_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_transmitter_thermodynamic_conductor_advanced",
+  "resultado": "cl:condutor_termico_avancado",
+  "qtd": 8,
+  "grade": [
+   "PPP",
+   "PAP",
+   "PPP"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "P": "cl:condutor_termico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_transmitter_thermodynamic_conductor_basic",
+  "resultado": "cl:condutor_termico_basico",
+  "qtd": 8,
+  "grade": [
+   "S#S"
+  ],
+  "chaves": {
+   "#": "minecraft:copper_ingot",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_transmitter_thermodynamic_conductor_elite",
+  "resultado": "cl:condutor_termico_elite",
+  "qtd": 8,
+  "grade": [
+   "PPP",
+   "PAP",
+   "PPP"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "P": "cl:condutor_termico_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_transmitter_thermodynamic_conductor_ultimate",
+  "resultado": "cl:condutor_termico_definitivo",
+  "qtd": 8,
+  "grade": [
+   "PPP",
+   "PAP",
+   "PPP"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "P": "cl:condutor_termico_elite"
   },
   "estacoes": [
    "crafting_table"

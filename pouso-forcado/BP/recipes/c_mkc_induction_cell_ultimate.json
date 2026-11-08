@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_induction_cell_ultimate"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "EPE",
+      "P#P",
+      "EPE"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:cubo_energia_definitivo"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "P": {
+        "item": "cl:celula_inducao_elite"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:celula_inducao_definitivo"
+    }
+  }
+}

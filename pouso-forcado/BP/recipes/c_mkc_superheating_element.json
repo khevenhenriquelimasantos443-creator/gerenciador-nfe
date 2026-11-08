@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_superheating_element"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AIA",
+      "IXI",
+      "AIA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:redstone"
+      },
+      "I": {
+        "item": "minecraft:copper_ingot"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:elemento_superaquecimento"
+    }
+  }
+}

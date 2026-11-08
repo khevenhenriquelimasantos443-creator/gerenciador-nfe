@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_blasting_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "CPC",
+      "HHH"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:tnt"
+      },
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "H": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_explosao"
+    }
+  }
+}

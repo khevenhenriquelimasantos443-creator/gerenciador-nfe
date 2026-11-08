@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_laser_tractor_beam"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P",
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:amplificador_laser"
+      },
+      "P": {
+        "item": "cl:barril_pessoal"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:feixe_trator_laser"
+    }
+  }
+}

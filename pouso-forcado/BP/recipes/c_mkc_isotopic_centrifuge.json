@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_isotopic_centrifuge"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "III",
+      "CTC",
+      "III"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "I": {
+        "item": "cl:lingote_chumbo"
+      },
+      "T": {
+        "item": "cl:tanque_quimico_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:centrifuga_isotopica"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_jetpack_armored"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "# #",
+      "ISI",
+      " P "
+    ],
+    "key": {
+      "#": {
+        "item": "cl:po_diamante"
+      },
+      "I": {
+        "item": "cl:lingote_bronze"
+      },
+      "P": {
+        "item": "cl:jetpack"
+      },
+      "S": {
+        "item": "cl:bloco_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack_blindado"
+    }
+  }
+}

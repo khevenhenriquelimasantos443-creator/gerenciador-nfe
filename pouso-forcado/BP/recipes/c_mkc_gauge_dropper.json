@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_gauge_dropper"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " O ",
+      "G G",
+      "GGG"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass_pane"
+      },
+      "O": {
+        "item": "cl:lingote_osmio"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:conta_gotas"
+    }
+  }
+}

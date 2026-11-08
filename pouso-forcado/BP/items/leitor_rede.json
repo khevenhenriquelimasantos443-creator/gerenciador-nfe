@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:leitor_rede",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_leitor_rede",
+      "minecraft:display_name": {
+        "value": "item.cl:leitor_rede.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

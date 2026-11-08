@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_electric_bow"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#A ",
+      "# E",
+      "#A "
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:string"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:arco_eletrico"
+    }
+  }
+}

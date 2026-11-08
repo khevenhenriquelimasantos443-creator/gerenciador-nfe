@@ -1,0 +1,713 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_conjunto_combustivel_fissao",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -6,
+        3,
+        -6
+       ],
+       "size": [
+        12,
+        10,
+        12
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          2,
+          3
+         ],
+         "uv_size": [
+          12,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          2,
+          3
+         ],
+         "uv_size": [
+          12,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          2,
+          3
+         ],
+         "uv_size": [
+          12,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          2,
+          3
+         ],
+         "uv_size": [
+          12,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        5,
+        1,
+        -7
+       ],
+       "size": [
+        2,
+        14,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          13,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        1,
+        1,
+        -7
+       ],
+       "size": [
+        2,
+        14,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          5,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          9,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          5,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3,
+        1,
+        -7
+       ],
+       "size": [
+        2,
+        14,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          9,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          5,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          5,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          9,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        -7
+       ],
+       "size": [
+        2,
+        14,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          13,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        -3
+       ],
+       "size": [
+        14,
+        14,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          5,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          9,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          5,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        1
+       ],
+       "size": [
+        14,
+        14,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          9,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          5,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          9,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        5
+       ],
+       "size": [
+        2,
+        14,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          13,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        5,
+        1,
+        5
+       ],
+       "size": [
+        2,
+        14,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          13,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          2,
+          10
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        13,
+        -8
+       ],
+       "size": [
+        16,
+        3,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_fuel_rod_assembly_rods_top"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_fuel_rod_assembly_rods_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        3,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "east": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "west": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          16,
+          3
+         ],
+         "material_instance": "m_fuel_rod_assembly_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_fuel_rod_assembly_rods_top"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_fuel_rod_assembly_base"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

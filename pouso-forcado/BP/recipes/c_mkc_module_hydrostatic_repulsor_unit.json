@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_hydrostatic_repulsor_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "APA",
+      "HHH"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:lightning_rod"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "H": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_hidrostatico"
+    }
+  }
+}

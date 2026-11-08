@@ -3031,3 +3031,244 @@ teste("mkl_qe", 300, (t) => {
     t.succeed();
   });
 });
+
+// ---------- 1.52.0: Mekanism completo, parte 4 ----------
+/** Caixa oca de `parede` de a até b (relativo), com `dentro` por (x,y,z) e trocas pontuais. */
+const caixaOca = (t, a, b, parede, trocas = {}) => {
+  for (let x = a.x; x <= b.x; x++)
+    for (let y = a.y; y <= b.y; y++)
+      for (let z = a.z; z <= b.z; z++) {
+        const borda = x === a.x || x === b.x || y === a.y || y === b.y || z === a.z || z === b.z;
+        const k = `${x},${y},${z}`;
+        if (trocas[k]) t.setBlockType(trocas[k], { x, y, z });
+        else if (borda) t.setBlockType(parede, { x, y, z });
+      }
+};
+const cargaBat = (t, p) => t.getBlock(p).permutation.getState("cl:carga");
+
+// Tanque Dinâmico 3×3×3: forma, guarda água e o Cano tira para um Tanque de Fluido.
+teste("mkm_tanque", 300, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkm_tanque");
+  caixaOca(t, { x: 0, y: 1, z: 0 }, { x: 2, y: 3, z: 2 }, "cl:tanque_dinamico", { "2,2,1": "cl:valvula_dinamica" });
+  t.setBlockType("cl:cano_mecanico_basico", { x: 3, y: 2, z: 1 });
+  t.setBlockType("cl:tanque_fluido_basico", { x: 4, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 3, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 1, z: 1 });
+  bau(t, { x: 4, y: 3, z: 1 }).addItem(new ItemStack("minecraft:bucket", 2));
+  t.runAfterDelay(5, () => cmd(`scriptevent cl:teste_mb formar ${emMundo(t, { x: 2, y: 2, z: 1 })}`));
+  t.runAfterDelay(10, () => {
+    cmd(`scriptevent cl:teste_mb por mb 5000 water ${emMundo(t, { x: 2, y: 2, z: 1 })}`);
+    cmd(`scriptevent cl:teste_mkl modo ${emMundo(t, { x: 3, y: 2, z: 1 })}`);
+  });
+  t.runAfterDelay(120, () => {
+    const agua = noBau(bau(t, { x: 4, y: 1, z: 1 }), "minecraft:water_bucket");
+    log(`mkm_tanque: ${agua} baldes`);
+    t.assert(agua >= 1, "o Tanque Dinâmico não formou ou não deu a água pelo Cano");
+    t.succeed();
+  });
+});
+
+// Reator de Fissão 3×4×3 (1 conjunto + barra) e Turbina Industrial 5×5×5 ligada a uma bateria.
+teste("mkm_fissao", 400, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkm_fissao");
+  caixaOca(t, { x: 0, y: 1, z: 0 }, { x: 2, y: 4, z: 2 }, "cl:revestimento_fissao",
+    { "1,2,1": "cl:conjunto_combustivel_fissao", "1,3,1": "cl:conjunto_barras_controle", "2,2,1": "cl:porta_fissao" });
+  // Tubo (tira) da porta para um Tanque de Químico com cilindro vazio: o primeiro que sai é o vapor.
+  t.setBlockType("cl:tubo_pressurizado_basico", { x: 3, y: 2, z: 1 });
+  t.setBlockType("cl:tanque_quimico_basico", { x: 4, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 3, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 1, z: 1 });
+  bau(t, { x: 4, y: 3, z: 1 }).addItem(new ItemStack("cl:cilindro_vazio", 2));
+  const porta = () => emMundo(t, { x: 2, y: 2, z: 1 });
+  t.runAfterDelay(5, () => cmd(`scriptevent cl:teste_mb formar ${porta()}`));
+  t.runAfterDelay(10, () => {
+    cmd(`scriptevent cl:teste_mb por comb 1000 ${porta()}`);
+    cmd(`scriptevent cl:teste_mb por agua 100000 ${porta()}`);
+    cmd(`scriptevent cl:teste_mb ligar 0.1 ${porta()}`);
+    cmd(`scriptevent cl:teste_mkl modo ${emMundo(t, { x: 3, y: 2, z: 1 })}`);
+  });
+  t.runAfterDelay(150, () => cmd(`scriptevent cl:teste_mb ver ${porta()}`));
+  t.runAfterDelay(160, () => {
+    const vapor = noBau(bau(t, { x: 4, y: 1, z: 1 }), "cl:cilindro_vapor");
+    log(`mkm_fissao: ${vapor} cilindros de vapor`);
+    t.assert(vapor >= 1, "o Reator de Fissão não fez vapor");
+    t.succeed();
+  });
+});
+teste("mkm_turbina", 300, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkm_turbina");
+  const tr = { "3,2,3": "cl:rotor_turbina", "3,3,3": "cl:complexo_rotacional", "3,4,3": "cl:bobina_eletromagnetica", "1,2,3": "cl:valvula_turbina_mk", "3,5,3": "cl:ventilacao_turbina" };
+  for (let x = 2; x <= 4; x++) for (let z = 2; z <= 4; z++) if (x !== 3 || z !== 3) tr[`${x},3,${z}`] = "cl:dispersor_pressao";
+  caixaOca(t, { x: 1, y: 1, z: 1 }, { x: 5, y: 5, z: 5 }, "cl:revestimento_turbina_mk", tr);
+  t.setBlockType("cl:bateria", { x: 0, y: 2, z: 3 });
+  const valvula = () => emMundo(t, { x: 1, y: 2, z: 3 });
+  t.runAfterDelay(5, () => cmd(`scriptevent cl:teste_mb pas 2 ${emMundo(t, { x: 3, y: 2, z: 3 })}`));
+  t.runAfterDelay(8, () => cmd(`scriptevent cl:teste_mb formar ${valvula()}`));
+  t.runAfterDelay(12, () => cmd(`scriptevent cl:teste_mb por vapor 200000 ${valvula()}`));
+  t.runAfterDelay(80, () => cmd(`scriptevent cl:teste_mb ver ${valvula()}`));
+  t.runAfterDelay(90, () => {
+    const c = cargaBat(t, { x: 0, y: 2, z: 3 });
+    log(`mkm_turbina: bateria ${c}`);
+    t.assert(c > 0, "a Turbina Industrial não gerou energia");
+    t.succeed();
+  });
+});
+
+// Matriz de Indução 4×3×3 (célula + provedor) alimentando uma Câmara de Enriquecimento.
+teste("mkm_inducao", 300, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkm_inducao");
+  caixaOca(t, { x: 0, y: 1, z: 0 }, { x: 3, y: 3, z: 2 }, "cl:revestimento_inducao",
+    { "1,2,1": "cl:celula_inducao_basico", "2,2,1": "cl:provedor_inducao_basico", "3,2,1": "cl:porta_inducao" });
+  t.setBlockType("minecraft:chest", { x: 4, y: 1, z: 1 });
+  t.setBlockType("cl:camara_enriquecimento", { x: 4, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 3, z: 1 });
+  bau(t, { x: 4, y: 3, z: 1 }).addItem(new ItemStack("minecraft:iron_ore", 4));
+  const porta = () => emMundo(t, { x: 3, y: 2, z: 1 });
+  t.runAfterDelay(5, () => cmd(`scriptevent cl:teste_mb formar ${porta()}`));
+  t.runAfterDelay(10, () => cmd(`scriptevent cl:teste_mb por e 100 ${porta()}`));
+  t.runAfterDelay(160, () => {
+    const po = noBau(bau(t, { x: 4, y: 1, z: 1 }), "cl:po_ferro");
+    log(`mkm_inducao: ${po} pós`);
+    t.assert(po >= 2, "a Matriz de Indução não deu energia à máquina");
+    t.succeed();
+  });
+});
+
+// Caldeira Térmica 3×5×3 com Aquecedor Resistivo: água vira vapor (Tubo tira para um tanque).
+teste("mkm_caldeira", 400, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkm_caldeira");
+  caixaOca(t, { x: 0, y: 1, z: 0 }, { x: 2, y: 5, z: 2 }, "cl:revestimento_caldeira",
+    { "1,2,1": "cl:elemento_superaquecimento", "1,3,1": "cl:dispersor_pressao", "2,4,1": "cl:valvula_caldeira" });
+  t.setBlockType("cl:aquecedor_resistivo", { x: 1, y: 2, z: 3 });
+  bateriasEm(t, { x: 1, y: 1, z: 3 }, { x: 2, y: 2, z: 3 });
+  t.setBlockType("cl:tubo_pressurizado_basico", { x: 3, y: 4, z: 1 });
+  t.setBlockType("cl:tanque_quimico_basico", { x: 4, y: 4, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 5, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 3, z: 1 });
+  bau(t, { x: 4, y: 5, z: 1 }).addItem(new ItemStack("cl:cilindro_vazio", 2));
+  const valvula = () => emMundo(t, { x: 2, y: 4, z: 1 });
+  t.runAfterDelay(5, () => cmd(`scriptevent cl:teste_mb formar ${valvula()}`));
+  t.runAfterDelay(10, () => {
+    cmd(`scriptevent cl:teste_mb por agua 16000 ${valvula()}`);
+    cmd(`scriptevent cl:teste_nuc calor 1000 ${emMundo(t, { x: 1, y: 2, z: 3 })}`);
+    cmd(`scriptevent cl:teste_mkl modo ${emMundo(t, { x: 3, y: 4, z: 1 })}`);
+  });
+  t.runAfterDelay(60, () => cmd(`scriptevent cl:teste_nuc aquecer ${emMundo(t, { x: 1, y: 2, z: 3 })}`));
+  t.runAfterDelay(200, () => cmd(`scriptevent cl:teste_mb ver ${valvula()}`));
+  t.runAfterDelay(210, () => {
+    const vapor = noBau(bau(t, { x: 4, y: 3, z: 1 }), "cl:cilindro_vapor");
+    log(`mkm_caldeira: ${vapor} cilindros de vapor`);
+    t.assert(vapor >= 1, "a Caldeira Térmica não fez vapor com o aquecedor");
+    t.succeed();
+  });
+});
+
+// Centrífuga Isotópica (hexafluoreto → combustível físsil) e Liquidificador Nutricional (pão → pasta).
+teste("mkm_maquinas", 1300, (t) => {
+  robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const maq = (x, id, itens) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z: 0 });
+    t.setBlockType(id, { x, y: 2, z: 0 });
+    t.setBlockType("minecraft:chest", { x, y: 3, z: 0 });
+    for (const [i, n] of itens) bau(t, { x, y: 3, z: 0 }).addItem(new ItemStack(i, n));
+    bateriasEm(t, { x, y: 2, z: 1 }, { x, y: 1, z: 1 });
+  };
+  maq(0, "cl:centrifuga_isotopica", [["cl:cilindro_hexafluoreto_uranio", 2], ["cl:cilindro_vazio", 2]]);
+  maq(3, "cl:liquidificador_nutricional", [["minecraft:bread", 8], ["minecraft:bucket", 1]]);
+  t.runAfterDelay(1150, () => {
+    const r = { fissil: noBau(bau(t, { x: 0, y: 1, z: 0 }), "cl:cilindro_combustivel_fissil"), pasta: noBau(bau(t, { x: 3, y: 1, z: 0 }), "cl:balde_pasta_nutritiva") };
+    log(`mkm_maquinas: ${JSON.stringify(r)}`);
+    t.assert(r.fissil >= 1, "a Centrífuga Isotópica não fez combustível físsil");
+    t.assert(r.pasta >= 1, "o Liquidificador Nutricional não fez pasta");
+    t.succeed();
+  });
+});
+
+// Radiação: sem proteção dá fome; com a roupa Hazmat completa, nada.
+teste("mkm_radiacao", 300, (t) => {
+  const j = robo(t, { x: 2.5, y: 1, z: 2.5 });
+  const h = robo(t, { x: 5.5, y: 1, z: 2.5 });
+  const eq = h.getComponent("minecraft:equippable");
+  eq.setEquipment(EquipmentSlot.Head, new ItemStack("cl:mascara_hazmat", 1));
+  eq.setEquipment(EquipmentSlot.Chest, new ItemStack("cl:jaleco_hazmat", 1));
+  eq.setEquipment(EquipmentSlot.Legs, new ItemStack("cl:calca_hazmat", 1));
+  eq.setEquipment(EquipmentSlot.Feet, new ItemStack("cl:botas_hazmat", 1));
+  t.runAfterDelay(5, () => comando(j, "mkm_radiacao")("scriptevent cl:teste_rad 20000"));
+  t.runAfterDelay(140, () => {
+    const r = { semRoupa: !!j.getEffect("hunger"), comRoupa: !!h.getEffect("hunger") };
+    log(`mkm_radiacao: ${JSON.stringify(r)}`);
+    t.assert(r.semRoupa, "a radiação não fez efeito sem proteção");
+    t.assert(!r.comRoupa, "a roupa Hazmat não protegeu");
+    t.succeed();
+  });
+});
+
+// ---------- 1.53.0: Mekanism completo, parte 5 ----------
+// Meka-Tool: a Unidade de Energia dobra a capacidade (16 MJ → 32 MJ = 12.800.000 RF).
+teste("mkp_meka", 200, (t) => {
+  const j = robo(t, { x: 3.5, y: 1, z: 3.5 });
+  const cmd = comando(j, "mkp_meka");
+  j.getComponent("minecraft:inventory").container.setItem(j.selectedSlotIndex, new ItemStack("cl:ferramenta_meka", 1));
+  t.runAfterDelay(5, () => cmd("scriptevent cl:teste_equip mod cl:modulo_energia"));
+  t.runAfterDelay(10, () => cmd("scriptevent cl:teste_equip carregar"));
+  t.runAfterDelay(20, () => {
+    const i = j.getComponent("minecraft:inventory").container.getItem(j.selectedSlotIndex);
+    const lore = i?.getLore()[0] ?? "";
+    log(`mkp_meka: ${lore}`);
+    t.assert(lore.replace(/[.,\s]/g, "").includes("/12800000"), "a Unidade de Energia não dobrou a capacidade da Meka-Tool");
+    t.succeed();
+  });
+});
+
+// QIO: o Importador puxa o baú de trás para a frequência; o Exportador põe os diamantes no outro baú.
+teste("mkp_qio", 300, (t) => {
+  const j = robo(t, { x: 7.5, y: 1, z: 7.5 });
+  const cmd = comando(j, "mkp_qio");
+  const norte = (id, p) => t.setBlockPermutation(BlockPermutation.resolve(id, { "minecraft:cardinal_direction": "north" }), p);
+  t.setBlockType("cl:matriz_unidades_qio", { x: 6, y: 1, z: 0 });
+  norte("cl:importador_qio", { x: 1, y: 1, z: 0 });
+  t.setBlockType("minecraft:chest", { x: 1, y: 1, z: 1 });
+  bau(t, { x: 1, y: 1, z: 1 }).addItem(new ItemStack("minecraft:diamond", 10));
+  bau(t, { x: 1, y: 1, z: 1 }).addItem(new ItemStack("minecraft:cobblestone", 10));
+  norte("cl:exportador_qio", { x: 4, y: 1, z: 0 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 1, z: 1 });
+  t.runAfterDelay(5, () => {
+    cmd(`scriptevent cl:teste_qio freq teste ${emMundo(t, { x: 6, y: 1, z: 0 })}`);
+    cmd(`scriptevent cl:teste_qio disco cl:unidade_qio_base ${emMundo(t, { x: 6, y: 1, z: 0 })}`);
+    cmd(`scriptevent cl:teste_qio freq teste ${emMundo(t, { x: 1, y: 1, z: 0 })}`);
+    cmd(`scriptevent cl:teste_qio freq teste ${emMundo(t, { x: 4, y: 1, z: 0 })}`);
+    cmd(`scriptevent cl:teste_qio filtro minecraft:diamond ${emMundo(t, { x: 4, y: 1, z: 0 })}`);
+  });
+  t.runAfterDelay(200, () => {
+    const r = { diamantes: noBau(bau(t, { x: 4, y: 1, z: 1 }), "minecraft:diamond"), pedra: noBau(bau(t, { x: 4, y: 1, z: 1 }), "minecraft:cobblestone"),
+      sobrou: noBau(bau(t, { x: 1, y: 1, z: 1 }), "minecraft:diamond") + noBau(bau(t, { x: 1, y: 1, z: 1 }), "minecraft:cobblestone") };
+    log(`mkp_qio: ${JSON.stringify(r)}`);
+    t.assert(r.sobrou === 0, "o Importador não puxou tudo para a QIO");
+    t.assert(r.diamantes === 10 && r.pedra === 0, "o Exportador não pôs só os diamantes do filtro");
+    t.succeed();
+  });
+});
+
+// Robit: nasce no Carregador de Chão (item usado nele) e pega o item que cai perto.
+teste("mkp_robit", 300, (t) => {
+  t.setBlockType("cl:carregador_chao", { x: 3, y: 1, z: 3 });
+  bateriasEm(t, { x: 4, y: 1, z: 3 });
+  const j = robo(t, { x: 2.5, y: 1, z: 3.5 });
+  j.getComponent("minecraft:inventory").container.setItem(j.selectedSlotIndex, new ItemStack("cl:robit", 1));
+  t.runAfterDelay(10, () => comando(j, "mkp_robit")(`scriptevent cl:teste_robit nascer ${emMundo(t, { x: 3, y: 1, z: 3 })}`));
+  t.runAfterDelay(30, () => t.spawnItem(new ItemStack("minecraft:emerald", 3), { x: 3.5, y: 2.5, z: 4.5 }));
+  t.runAfterDelay(120, () => {
+    const robits = t.getDimension().getEntities({ type: "cl:robit", location: t.worldLocation({ x: 3, y: 2, z: 3 }), maxDistance: 10 });
+    const soltos = t.getDimension().getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3, y: 2, z: 4 }), maxDistance: 4 });
+    log(`mkp_robit: robits=${robits.length} itens_no_chao=${soltos.length}`);
+    t.assert(robits.length === 1, "o Robit não nasceu no Carregador");
+    t.assert(soltos.length === 0, "o Robit não pegou o item do chão");
+    for (const r of robits) r.remove();
+    t.succeed();
+  });
+});

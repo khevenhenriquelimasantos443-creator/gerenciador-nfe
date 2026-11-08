@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_dimensional_stabilizer"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ICI",
+      "ADA",
+      "ICI"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "D": {
+        "item": "minecraft:diamond_block"
+      },
+      "I": {
+        "item": "cl:lingote_obsidiana_refinada"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:estabilizador_dimensional"
+    }
+  }
+}

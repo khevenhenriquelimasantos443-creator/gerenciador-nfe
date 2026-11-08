@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_induction_port"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " # ",
+      "#C#",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "cl:revestimento_inducao"
+      },
+      "C": {
+        "item": "cl:circuito_controle_elite"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:porta_inducao",
+      "count": 2
+    }
+  }
+}

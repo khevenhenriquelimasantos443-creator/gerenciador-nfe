@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_pressure_disperser"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S#S",
+      "#A#",
+      "S#S"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:iron_bars"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:dispersor_pressao"
+    }
+  }
+}

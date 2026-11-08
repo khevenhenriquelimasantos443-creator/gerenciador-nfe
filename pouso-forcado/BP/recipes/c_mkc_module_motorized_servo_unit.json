@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_motorized_servo_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "#P#",
+      "HHH"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:blue_ice"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "C": {
+        "item": "cl:circuito_controle_elite"
+      },
+      "H": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_servo"
+    }
+  }
+}

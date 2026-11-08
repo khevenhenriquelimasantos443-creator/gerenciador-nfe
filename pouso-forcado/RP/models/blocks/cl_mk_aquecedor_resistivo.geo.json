@@ -1,0 +1,935 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_aquecedor_resistivo",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8.008,
+        4,
+        -4
+       ],
+       "size": [
+        1.006,
+        8,
+        8
+       ],
+       "uv": {
+        "west": {
+         "uv": [
+          8,
+          0
+         ],
+         "uv_size": [
+          -8,
+          8
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.007999999999999,
+        4,
+        -4
+       ],
+       "size": [
+        1.0,
+        8,
+        8
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8.008,
+        4,
+        -4
+       ],
+       "size": [
+        0.0,
+        8,
+        8
+       ],
+       "uv": {
+        "west": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        8.008,
+        4,
+        -4
+       ],
+       "size": [
+        0.0,
+        8,
+        8
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        13,
+        -6.5
+       ],
+       "size": [
+        1,
+        1,
+        13.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "up": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "down": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        -2,
+        13,
+        -6.5
+       ],
+       "size": [
+        1,
+        1,
+        13.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "up": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "down": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        1,
+        13,
+        -6.5
+       ],
+       "size": [
+        1,
+        1,
+        13.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "up": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "down": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        3,
+        13,
+        -6.5
+       ],
+       "size": [
+        1,
+        1,
+        13.0
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          1,
+          14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "up": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "down": {
+         "uv": [
+          2,
+          15
+         ],
+         "uv_size": [
+          -1,
+          -14
+         ],
+         "material_instance": "m_resistive_heater_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        7,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          16,
+          7
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "east": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          16,
+          7
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "south": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          16,
+          7
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "west": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          16,
+          7
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_resistive_heater_top"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_resistive_heater_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        5,
+        7,
+        -8
+       ],
+       "size": [
+        3,
+        9,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          3,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          3,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides_2"
+        },
+        "up": {
+         "uv": [
+          3,
+          16
+         ],
+         "uv_size": [
+          -3,
+          -16
+         ],
+         "material_instance": "m_resistive_heater_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        7,
+        -8
+       ],
+       "size": [
+        3,
+        9,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          3,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          3,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides_2"
+        },
+        "up": {
+         "uv": [
+          3,
+          16
+         ],
+         "uv_size": [
+          -3,
+          -16
+         ],
+         "material_instance": "m_resistive_heater_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        -7
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "south": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        -5
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "south": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        -3
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "south": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        -1
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        0
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "south": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        2
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "south": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        4
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "south": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        6,
+        6
+       ],
+       "size": [
+        10,
+        9,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "south": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          10,
+          9
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        },
+        "up": {
+         "uv": [
+          13,
+          1
+         ],
+         "uv_size": [
+          -10,
+          -1
+         ],
+         "material_instance": "m_resistive_heater_sides"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

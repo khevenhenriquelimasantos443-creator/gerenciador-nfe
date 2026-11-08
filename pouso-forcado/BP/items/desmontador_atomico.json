@@ -1,0 +1,47 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:desmontador_atomico",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_desmontador_atomico",
+      "minecraft:display_name": {
+        "value": "item.cl:desmontador_atomico.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:damage": {
+        "value": 4
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "query.any_tag('stone', 'metal', 'rail', 'minecraft:is_pickaxe_item_destructible', 'wood', 'log', 'pumpkin', 'plant', 'minecraft:is_axe_item_destructible', 'dirt', 'sand', 'gravel', 'grass', 'snow', 'minecraft:is_shovel_item_destructible', 'minecraft:is_hoe_item_destructible', 'crop')"
+            },
+            "speed": 12
+          }
+        ]
+      },
+      "minecraft:enchantable": {
+        "slot": "pickaxe",
+        "value": 0
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_pickaxe",
+          "minecraft:is_axe",
+          "minecraft:is_shovel",
+          "minecraft:is_tool",
+          "minecraft:netherite_tier",
+          "cl:mk_ferramenta"
+        ]
+      }
+    }
+  }
+}

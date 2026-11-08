@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_qio_exporter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ITI",
+      "ACA",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:piston"
+      },
+      "A": {
+        "item": "minecraft:ender_pearl"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "I": {
+        "item": "cl:lingote_chumbo"
+      },
+      "T": {
+        "item": "cl:nucleo_teletransporte"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:exportador_qio"
+    }
+  }
+}

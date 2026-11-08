@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:jaleco_hazmat",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_jaleco_hazmat",
+      "minecraft:display_name": {
+        "value": "item.cl:jaleco_hazmat.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:wearable": {
+        "slot": "slot.armor.chest",
+        "protection": 1
+      },
+      "minecraft:enchantable": {
+        "slot": "armor_torso",
+        "value": 5
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "cl:hazmat"
+        ]
+      }
+    }
+  }
+}

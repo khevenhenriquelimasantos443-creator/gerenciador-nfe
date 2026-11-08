@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_induction_cell_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "LEL",
+      "E#E",
+      "LEL"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:cubo_energia_basico"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "L": {
+        "item": "cl:po_litio"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:celula_inducao_basico"
+    }
+  }
+}

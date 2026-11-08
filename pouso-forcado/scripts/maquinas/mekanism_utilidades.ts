@@ -9,9 +9,9 @@ import { entrada, gastarCE, inv, saida, tirar } from "../util/maquina.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { registrarArmazem } from "../util/rede.js";
 import { destinosDaRede, moverItens, porNosDestinos, redeDe, registrarLigacao } from "./condutos.js";
-import { capacidadeItem, cargaItem, definirCarga, registrarItemComEnergia } from "./enderio9.js";
+import { capacidadeDaPilha, cargaItem, definirCarga, registrarItemComEnergia } from "./enderio9.js";
 import { ehLiquidoMk, ehPonta, MB_CILINDRO, nomeQuimico, Ponta, pontaDe, registrarPonta } from "./mekanism_quimica.js";
-import { aceitarMelhorias, gastarMk, rodarMk } from "./mekanism_upgrades.js";
+import { aceitarMelhorias, gastarMk, melhorias, rodarMk } from "./mekanism_upgrades.js";
 
 /*
  * Mekanism completo, parte 3 (1.51.0), com os números do Mekanism 10.7.19 (DADOS_F68, de tools/importar-mekanism-completo.py).
@@ -67,14 +67,19 @@ const serveQ = (tipo: string, q: string) => (tipo === "cano_mecanico") === ehLiq
 /** Canos e tubos: puxa das pontas encostadas e entrega nas pontas encostadas aos outros da rede. */
 function moverFluido(b: Block, tipo: string, porTique: number): number {
   const ehRede = mesmaRede(tipo);
+  // Fontes: o que está encostado neste e tem o que o cano leva; o resto encostado nele também recebe (um cano só já liga
+  // a válvula a um tanque, como no mod).
   const fontes: Array<{ k: string; p: Ponta }> = [];
+  const destinos: Ponta[] = [];
+  const vistos = new Set<string>();
   for (const v of vizinhos(b)) {
     const p = !ehRede(v.typeId) ? pontaDe(v) : undefined;
-    if (p) fontes.push({ k: chaveB(v), p });
+    if (!p) continue;
+    vistos.add(chaveB(v));
+    if (p.oferece().some(([q]) => serveQ(tipo, q))) fontes.push({ k: chaveB(v), p });
+    else destinos.push(p);
   }
   if (!fontes.length) return 0;
-  const vistos = new Set(fontes.map((f) => f.k));
-  const destinos: Ponta[] = [];
   for (const c of redeDe(b, ehRede)) {
     if (extrai(c)) continue;
     for (const v of vizinhos(c)) {
@@ -134,7 +139,7 @@ type Fl = { q?: string; mb: number; fim?: boolean };
 const CAP_FL = 10000, ALCANCE = 80, MAX_BUSCA = 512;
 const FONTE: Readonly<Record<string, string>> = { "minecraft:water": "water", "minecraft:lava": "lava", "minecraft:flowing_water": "water", "minecraft:flowing_lava": "lava" };
 const BLOCO_DE: Readonly<Record<string, string>> = { water: "minecraft:water", lava: "minecraft:lava" };
-const BALDE_DE: Readonly<Record<string, string>> = { water: "minecraft:water_bucket", lava: "minecraft:lava_bucket" };
+const BALDE_DE: Readonly<Record<string, string>> = { water: "minecraft:water_bucket", lava: "minecraft:lava_bucket", heavy_water: "cl:balde_agua_pesada" };
 const DO_BALDE: Readonly<Record<string, string>> = { "minecraft:water_bucket": "water", "minecraft:lava_bucket": "lava" };
 const fluidoDe = (b: Block): string | undefined => FONTE[b.typeId];
 const ehFonte = (b: Block): boolean => {
@@ -186,13 +191,17 @@ function bomba(b: Block): void {
   const f = ler<Fl>("mkb", b, { mb: 0 });
   rodarMk(b, (x) => {
     if (f.mb + MB_CILINDRO > CAP_FL) return "parada";
-    const fonte = acharFonte(x, f.q);
+    // 1.52.0: com a Melhoria de Filtro, a água vira 10 mB de água pesada por bloco (pumpHeavyWaterAmount do mod).
+    const filtro = (melhorias(x).filtro ?? 0) > 0;
+    const fonte = acharFonte(x, filtro && f.q === "heavy_water" ? "water" : f.q);
     if (!fonte) return "parada";
     if (!gastarMk(x, ce(D.energia.bomba * 19))) return "sem_energia";
-    const q = fluidoDe(fonte)!;
-    if (!infinita(q)) fonte.setType("minecraft:air");
+    const q0 = fluidoDe(fonte)!;
+    if (!infinita(q0)) fonte.setType("minecraft:air");
+    const q = filtro && q0 === "water" ? "heavy_water" : q0;
+    if (f.mb > 0 && f.q && f.q !== q) return "parada";
     f.q = q;
-    f.mb += MB_CILINDRO;
+    f.mb += q === "heavy_water" ? 10 : MB_CILINDRO;
     return "ok";
   }, 20 / 19, "bucket.fill_water");
   encherBaldes(b, f);
@@ -396,15 +405,15 @@ function carregador(b: Block): void {
     if (c)
       for (let s = 0; s < c.size; s++) {
         const it = c.getItem(s);
-        if (it && capacidadeItem(it.typeId)) pilhas.push({ it, por: (i) => c.setItem(s, i) });
+        if (it && capacidadeDaPilha(it)) pilhas.push({ it, por: (i) => c.setItem(s, i) });
       }
     const eq = j.getComponent("minecraft:equippable");
     for (const slot of [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand]) {
       const it = eq?.getEquipment(slot);
-      if (it && capacidadeItem(it.typeId)) pilhas.push({ it, por: (i) => eq!.setEquipment(slot, i) });
+      if (it && capacidadeDaPilha(it)) pilhas.push({ it, por: (i) => eq!.setEquipment(slot, i) });
     }
     for (const { it, por } of pilhas) {
-      const cap = capacidadeItem(it.typeId)!;
+      const cap = capacidadeDaPilha(it)!;
       const n = Math.min(cap - cargaItem(it), RF_POR_TIQUE_ITEM * 10);
       if (n <= 0) continue;
       if (!gastarCE(b, Math.max(1, Math.round(n / 40)))) return;
@@ -814,6 +823,7 @@ export const utilComp: BlockCustomComponent = {
 
 export function registrarMekanismUtilidades(): void {
   aceitarMelhorias(["cl:bomba_eletrica", "cl:plenificador_fluidico", "cl:minerador_digital"]);
+  aceitarMelhorias(["cl:bomba_eletrica"], ["filtro"]);
   registrarItemComEnergia(PORTATIL, CAP_PORTATIL);
   registrarItemComEnergia(LEITOR, CAP_LEITOR);
   // Energia do Entrelaçador: a da frequência (como a rede Ender do Powah!).

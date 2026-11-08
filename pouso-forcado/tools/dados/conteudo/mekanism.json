@@ -37,6 +37,12 @@
    "mek": "clump_lead"
   },
   {
+   "id": "torrao_uranio",
+   "pt": "Aglomerado de urânio",
+   "en": "Uranium Clump",
+   "mek": "clump_uranium"
+  },
+  {
    "id": "fragmento_ferro",
    "pt": "Estilhaço de ferro",
    "en": "Iron Shard",
@@ -73,6 +79,12 @@
    "mek": "shard_lead"
   },
   {
+   "id": "fragmento_uranio",
+   "pt": "Estilhaço de urânio",
+   "en": "Uranium Shard",
+   "mek": "shard_uranium"
+  },
+  {
    "id": "po_sujo_ferro",
    "pt": "Pó de Ferro Sujo",
    "en": "Dirty Iron Dust",
@@ -107,6 +119,12 @@
    "pt": "Pó de Chumbo Sujo",
    "en": "Dirty Lead Dust",
    "mek": "dirty_dust_lead"
+  },
+  {
+   "id": "po_sujo_uranio",
+   "pt": "Pó de urânio sujo",
+   "en": "Dirty Uranium Dust",
+   "mek": "dirty_dust_uranium"
   },
   {
    "id": "ferro_enriquecido",
@@ -288,6 +306,15 @@
   ]
  },
  "receitas": [
+  {
+   "id": "mk10_bio_fuel",
+   "resultado": "cl:biocombustivel",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_biocombustivel"
+   ]
+  },
   {
    "id": "mk10_chemical_infuser",
    "resultado": "cl:infusor_quimico",
@@ -766,12 +793,34 @@
    },
    {
     "entra": [
+     "cl:minerio_estanho",
+     "cl:minerio_estanho_profundo",
      "cl:minerio_estanho_lunar"
     ],
     "qtd": 1,
     "sai": [
      "cl:po_estanho",
      2
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_estanho_bruto"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_estanho",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "cl:estanho_bruto"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:po_estanho",
+     4
     ]
    },
    {
@@ -824,6 +873,67 @@
     "sai": [
      "cl:po_cobre",
      4
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_uranio"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:bolo_amarelo_uranio",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_sujo_uranio"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_uranio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_uranio",
+     "cl:minerio_uranio_profundo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_uranio",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_uranio_bruto"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_uranio",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "cl:uranio_bruto"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:po_uranio",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_esmeralda"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:emerald",
+     1
     ]
    },
    {
@@ -890,6 +1000,37 @@
    },
    {
     "entra": [
+     "cl:minerio_osmio",
+     "cl:minerio_osmio_profundo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_osmio",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_osmio_bruto"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_osmio",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "cl:osmio_bruto"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:po_osmio",
+     4
+    ]
+   },
+   {
+    "entra": [
      "cl:po_lapis"
     ],
     "qtd": 1,
@@ -917,6 +1058,16 @@
     "sai": [
      "minecraft:netherite_scrap",
      2
+    ]
+   },
+   {
+    "entra": [
+     "cl:sucata_netherita_suja"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:netherite_scrap",
+     1
     ]
    },
    {
@@ -998,6 +1149,16 @@
     "sai": [
      "cl:folha_pead",
      1
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_sal"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:sal",
+     4
     ]
    },
    {
@@ -2224,6 +2385,36 @@
    },
    {
     "entra": [
+     "cl:lingote_uranio"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_uranio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:torrao_uranio"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_sujo_uranio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:emerald"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_esmeralda",
+     1
+    ]
+   },
+   {
+    "entra": [
      "cl:fluorita"
     ],
     "qtd": 1,
@@ -2239,6 +2430,16 @@
     "qtd": 1,
     "sai": [
      "cl:po_quartzo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_bronze"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_bronze",
      1
     ]
    },
@@ -2279,6 +2480,26 @@
     "qtd": 1,
     "sai": [
      "cl:po_lapis",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:ancient_debris"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:sucata_netherita_suja",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:netherite_ingot"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_netherita",
      1
     ]
    },
@@ -3544,6 +3765,16 @@
    },
    {
     "entra": [
+     "minecraft:nether_wart_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:bloco_biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
      "minecraft:pink_petals"
     ],
     "qtd": 1,
@@ -3932,6 +4163,34 @@
    },
    {
     "entra": [
+     "cl:estanho_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_estanho_profundo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:estanho_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_estanho",
+     1
+    ]
+   },
+   {
+    "entra": [
      "minecraft:redstone"
     ],
     "qtd": 16,
@@ -3988,6 +4247,62 @@
    },
    {
     "entra": [
+     "cl:uranio_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_uranio_profundo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:uranio_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_uranio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_esmeralda"
+    ],
+    "qtd": 5,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_emerald_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_esmeralda"
+    ],
+    "qtd": 5,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:emerald_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
      "cl:po_fluorita"
     ],
     "qtd": 14,
@@ -4030,6 +4345,34 @@
    },
    {
     "entra": [
+     "cl:osmio_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_osmio_profundo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:osmio_bruto"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_osmio",
+     1
+    ]
+   },
+   {
+    "entra": [
      "cl:po_lapis"
     ],
     "qtd": 27,
@@ -4053,6 +4396,20 @@
     "qtdExtra": 1,
     "sai": [
      "minecraft:lapis_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_netherita"
+    ],
+    "qtd": 2,
+    "extra": [
+     "minecraft:basalt"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:ancient_debris",
      1
     ]
    },
@@ -4642,6 +4999,48 @@
     "sai": [
      "minecraft:waxed_weathered_cut_copper_stairs",
      1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:black_dye"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:white_dye"
+    ],
+    "qtdExtra": 2,
+    "sai": [
+     "minecraft:light_gray_dye",
+     6
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:red_dye"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:yellow_dye"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:orange_dye",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:red_dye"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:white_dye"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:pink_dye",
+     4
     ]
    },
    {
@@ -6443,6 +6842,8 @@
    },
    {
     "entra": [
+     "cl:minerio_estanho",
+     "cl:minerio_estanho_profundo",
      "cl:minerio_estanho_lunar"
     ],
     "qtd": 1,
@@ -6452,6 +6853,32 @@
     "sai": [
      "cl:torrao_estanho",
      3
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_estanho_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_estanho",
+     18
+    ]
+   },
+   {
+    "entra": [
+     "cl:estanho_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_estanho",
+     2
     ]
    },
    {
@@ -6518,6 +6945,99 @@
     "sai": [
      "cl:torrao_cobre",
      1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_uranio",
+     "cl:minerio_uranio_profundo"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_uranio",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_uranio_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_uranio",
+     18
+    ]
+   },
+   {
+    "entra": [
+     "cl:uranio_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_uranio",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_uranio"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_uranio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_osmio",
+     "cl:minerio_osmio_profundo"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_osmio",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_osmio_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_osmio",
+     18
+    ]
+   },
+   {
+    "entra": [
+     "cl:osmio_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_osmio",
+     2
     ]
    },
    {
@@ -7503,6 +8023,8 @@
    },
    {
     "entra": [
+     "cl:minerio_estanho",
+     "cl:minerio_estanho_profundo",
      "cl:minerio_estanho_lunar"
     ],
     "qtd": 1,
@@ -7512,6 +8034,32 @@
     "sai": [
      "cl:fragmento_estanho",
      4
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_estanho_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_estanho",
+     24
+    ]
+   },
+   {
+    "entra": [
+     "cl:estanho_bruto"
+    ],
+    "qtd": 3,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_estanho",
+     8
     ]
    },
    {
@@ -7569,6 +8117,72 @@
    },
    {
     "entra": [
+     "cl:pastilha_plutonio"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_fissil_reprocessado",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:cristal_uranio"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_uranio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_uranio",
+     "cl:minerio_uranio_profundo"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_uranio",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_uranio_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_uranio",
+     24
+    ]
+   },
+   {
+    "entra": [
+     "cl:uranio_bruto"
+    ],
+    "qtd": 3,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_uranio",
+     8
+    ]
+   },
+   {
+    "entra": [
      "cl:cristal_osmio"
     ],
     "qtd": 1,
@@ -7578,6 +8192,46 @@
     "sai": [
      "cl:fragmento_osmio",
      1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_osmio",
+     "cl:minerio_osmio_profundo"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_osmio",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_osmio_bruto"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_osmio",
+     24
+    ]
+   },
+   {
+    "entra": [
+     "cl:osmio_bruto"
+    ],
+    "qtd": 3,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_osmio",
+     8
     ]
    },
    {
@@ -7990,6 +8644,19 @@
    },
    {
     "entra": [
+     "cl:po_cobre"
+    ],
+    "qtd": 3,
+    "quimico": "tin",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "cl:po_bronze",
+     4
+    ]
+   },
+   {
+    "entra": [
      "minecraft:copper_ingot"
     ],
     "qtd": 3,
@@ -7999,6 +8666,19 @@
     "sai": [
      "cl:lingote_bronze",
      4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:netherite_scrap"
+    ],
+    "qtd": 4,
+    "quimico": "gold",
+    "quantidade": 40,
+    "porTick": false,
+    "sai": [
+     "cl:po_netherita",
+     1
     ]
    },
    {
@@ -8034,6 +8714,7 @@
    "minecraft:flint": 10
   },
   "osmium": {
+   "cl:bloco_osmio": 1800,
    "cl:lingote_osmio": 200
   },
   "hydrogen_chloride": {
@@ -8043,7 +8724,8 @@
    "cl:po_enxofre": 2
   },
   "bio": {
-   "cl:biocombustivel": 5
+   "cl:biocombustivel": 5,
+   "cl:bloco_biocombustivel": 45
   },
   "diamond": {
    "cl:po_diamante": 10,

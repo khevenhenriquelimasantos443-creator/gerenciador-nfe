@@ -606,6 +606,11 @@
   "en": "Block of Diamond",
   "icone": "textures/blocks/diamond_block"
  },
+ "minecraft:diamond_leggings": {
+  "pt": "Calças de Diamante",
+  "en": "Diamond Leggings",
+  "icone": "textures/items/diamond_leggings"
+ },
  "minecraft:diamond_ore": {
   "pt": "Minério de Diamante",
   "en": "Diamond Ore",
@@ -665,6 +670,11 @@
   "pt": "Ovo",
   "en": "Egg",
   "icone": "textures/items/egg"
+ },
+ "minecraft:elytra": {
+  "pt": "Élitros",
+  "en": "Elytra",
+  "icone": "textures/items/elytra"
  },
  "minecraft:emerald": {
   "pt": "Esmeralda",
@@ -946,6 +956,11 @@
   "pt": "Capacete de Ferro",
   "en": "Iron Helmet",
   "icone": "textures/items/iron_helmet"
+ },
+ "minecraft:iron_hoe": {
+  "pt": "Enxada de Ferro",
+  "en": "Iron Hoe",
+  "icone": "textures/items/iron_hoe"
  },
  "minecraft:iron_ingot": {
   "pt": "Barra de Ferro",
@@ -1239,10 +1254,30 @@
   "en": "Block of Netherite",
   "icone": "textures/blocks/netherite_block"
  },
+ "minecraft:netherite_boots": {
+  "pt": "Botas de Netherita",
+  "en": "Netherite Boots",
+  "icone": "textures/items/netherite_boots"
+ },
+ "minecraft:netherite_chestplate": {
+  "pt": "Peitoral de Netherita",
+  "en": "Netherite Chestplate",
+  "icone": "textures/items/netherite_chestplate"
+ },
+ "minecraft:netherite_helmet": {
+  "pt": "Capacete de Netherita",
+  "en": "Netherite Helmet",
+  "icone": "textures/items/netherite_helmet"
+ },
  "minecraft:netherite_ingot": {
   "pt": "Barra de Netherita",
   "en": "Netherite Ingot",
   "icone": "textures/items/netherite_ingot"
+ },
+ "minecraft:netherite_leggings": {
+  "pt": "Calças de Netherita",
+  "en": "Netherite Leggings",
+  "icone": "textures/items/netherite_leggings"
  },
  "minecraft:netherite_scrap": {
   "pt": "Fragmentos de Netherita",

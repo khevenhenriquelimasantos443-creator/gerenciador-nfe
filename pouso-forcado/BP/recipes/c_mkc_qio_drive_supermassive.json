@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_qio_drive_supermassive"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IPI",
+      "P#P",
+      "IPI"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:pastilha_antimateria"
+      },
+      "I": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:unidade_qio_dilatacao"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:unidade_qio_supermassiva"
+    }
+  }
+}

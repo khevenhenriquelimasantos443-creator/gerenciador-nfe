@@ -1,0 +1,329 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_caixa_papelao",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        0,
+        16,
+        -8
+       ],
+       "size": [
+        8,
+        0,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        16,
+        -8
+       ],
+       "size": [
+        8,
+        0,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          1
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        16,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_cardboard_box_side_storage"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_cardboard_box_side_plain"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_cardboard_box_side_storage"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        8,
+        16,
+        8
+       ],
+       "size": [
+        0,
+        0,
+        0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          16
+         ],
+         "uv_size": [
+          16,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_inside"
+        },
+        "east": {
+         "uv": [
+          0,
+          16
+         ],
+         "uv_size": [
+          16,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_inside"
+        },
+        "south": {
+         "uv": [
+          0,
+          16
+         ],
+         "uv_size": [
+          16,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_inside"
+        },
+        "west": {
+         "uv": [
+          0,
+          16
+         ],
+         "uv_size": [
+          16,
+          -16
+         ],
+         "material_instance": "m_cardboard_box_inside"
+        },
+        "up": {
+         "uv": [
+          16,
+          0
+         ],
+         "uv_size": [
+          -16,
+          16
+         ],
+         "material_instance": "m_cardboard_box_bottom"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

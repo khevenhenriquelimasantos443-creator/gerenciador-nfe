@@ -8685,6 +8685,552 @@
     },
     "clc_mkt_tubo_pressurizado_elite_lado": {
       "textures": "textures/blocks/cl/arte/mkt_tubo_pressurizado_elite_lado"
+    },
+    "clc_bloco_uranio": {
+      "textures": "textures/blocks/cl/arte/bloco_uranio"
+    },
+    "clc_bloco_uranio_bruto": {
+      "textures": "textures/blocks/cl/arte/bloco_uranio_bruto"
+    },
+    "clc_minerio_uranio": {
+      "textures": "textures/blocks/cl/arte/minerio_uranio"
+    },
+    "clc_minerio_uranio_profundo": {
+      "textures": "textures/blocks/cl/arte/minerio_uranio_profundo"
+    },
+    "clc_minerio_osmio": {
+      "textures": "textures/blocks/cl/arte/minerio_osmio"
+    },
+    "clc_minerio_osmio_profundo": {
+      "textures": "textures/blocks/cl/arte/minerio_osmio_profundo"
+    },
+    "clc_bloco_osmio": {
+      "textures": "textures/blocks/cl/arte/bloco_osmio"
+    },
+    "clc_bloco_osmio_bruto": {
+      "textures": "textures/blocks/cl/arte/bloco_osmio_bruto"
+    },
+    "clc_minerio_estanho": {
+      "textures": "textures/blocks/cl/arte/minerio_estanho"
+    },
+    "clc_minerio_estanho_profundo": {
+      "textures": "textures/blocks/cl/arte/minerio_estanho_profundo"
+    },
+    "clc_bloco_estanho_bruto": {
+      "textures": "textures/blocks/cl/arte/bloco_estanho_bruto"
+    },
+    "clc_bloco_obsidiana_refinada": {
+      "textures": "textures/blocks/cl/arte/bloco_obsidiana_refinada"
+    },
+    "clc_bloco_glowstone_refinado": {
+      "textures": "textures/blocks/cl/arte/bloco_glowstone_refinado"
+    },
+    "clc_bloco_sal": {
+      "textures": "textures/blocks/cl/arte/bloco_sal"
+    },
+    "clc_bloco_biocombustivel": {
+      "textures": "textures/blocks/cl/c/bloco_biocombustivel"
+    },
+    "clc_revestimento_caldeira": {
+      "textures": "textures/blocks/cl/arte/revestimento_caldeira"
+    },
+    "clc_valvula_caldeira": {
+      "textures": "textures/blocks/cl/arte/valvula_caldeira"
+    },
+    "clc_elemento_superaquecimento": {
+      "textures": "textures/blocks/cl/arte/elemento_superaquecimento"
+    },
+    "clc_valvula_dinamica": {
+      "textures": "textures/blocks/cl/arte/valvula_dinamica"
+    },
+    "clc_vidro_estrutural": {
+      "textures": "textures/blocks/cl/arte/vidro_estrutural"
+    },
+    "clc_bloco_evaporacao": {
+      "textures": "textures/blocks/cl/arte/bloco_evaporacao"
+    },
+    "clc_controlador_evaporacao": {
+      "textures": "textures/blocks/cl/arte/controlador_evaporacao"
+    },
+    "clc_valvula_evaporacao": {
+      "textures": "textures/blocks/cl/arte/valvula_evaporacao"
+    },
+    "clc_revestimento_inducao": {
+      "textures": "textures/blocks/cl/arte/revestimento_inducao"
+    },
+    "clc_porta_inducao": {
+      "textures": "textures/blocks/cl/arte/porta_inducao"
+    },
+    "clc_revestimento_sps": {
+      "textures": "textures/blocks/cl/arte/revestimento_sps"
+    },
+    "clc_porta_sps": {
+      "textures": "textures/blocks/cl/arte/porta_sps"
+    },
+    "clc_celula_inducao_basico": {
+      "textures": "textures/blocks/cl/arte/celula_inducao_basico"
+    },
+    "clc_celula_inducao_avancado": {
+      "textures": "textures/blocks/cl/arte/celula_inducao_avancado"
+    },
+    "clc_celula_inducao_elite": {
+      "textures": "textures/blocks/cl/arte/celula_inducao_elite"
+    },
+    "clc_celula_inducao_definitivo": {
+      "textures": "textures/blocks/cl/arte/celula_inducao_definitivo"
+    },
+    "clc_provedor_inducao_basico": {
+      "textures": "textures/blocks/cl/arte/provedor_inducao_basico"
+    },
+    "clc_provedor_inducao_avancado": {
+      "textures": "textures/blocks/cl/arte/provedor_inducao_avancado"
+    },
+    "clc_provedor_inducao_elite": {
+      "textures": "textures/blocks/cl/arte/provedor_inducao_elite"
+    },
+    "clc_provedor_inducao_definitivo": {
+      "textures": "textures/blocks/cl/arte/provedor_inducao_definitivo"
+    },
+    "clc_revestimento_fissao": {
+      "textures": "textures/blocks/cl/arte/revestimento_fissao"
+    },
+    "clc_porta_fissao": {
+      "textures": "textures/blocks/cl/arte/porta_fissao"
+    },
+    "clc_adaptador_logico_fissao": {
+      "textures": "textures/blocks/cl/arte/adaptador_logico_fissao"
+    },
+    "clc_vidro_reator_mk": {
+      "textures": "textures/blocks/cl/arte/vidro_reator_mk"
+    },
+    "clc_revestimento_turbina_mk": {
+      "textures": "textures/blocks/cl/arte/revestimento_turbina_mk"
+    },
+    "clc_valvula_turbina_mk": {
+      "textures": "textures/blocks/cl/arte/valvula_turbina_mk"
+    },
+    "clc_ventilacao_turbina": {
+      "textures": "textures/blocks/cl/arte/ventilacao_turbina"
+    },
+    "clc_rotor_turbina": {
+      "textures": "textures/blocks/cl/arte/rotor_turbina"
+    },
+    "clc_controlador_fusao": {
+      "textures": "textures/blocks/cl/arte/controlador_fusao"
+    },
+    "clc_moldura_fusao": {
+      "textures": "textures/blocks/cl/arte/moldura_fusao"
+    },
+    "clc_porta_fusao": {
+      "textures": "textures/blocks/cl/arte/porta_fusao"
+    },
+    "clc_adaptador_logico_fusao": {
+      "textures": "textures/blocks/cl/arte/adaptador_logico_fusao"
+    },
+    "clc_matriz_foco_laser": {
+      "textures": "textures/blocks/cl/arte/matriz_foco_laser"
+    },
+    "clc_dispersor_pressao": {
+      "textures": "textures/blocks/cl/arte/dispersor_pressao"
+    },
+    "clc_bobina_supercarregada": {
+      "textures": "textures/blocks/cl/c/bobina_supercarregada"
+    },
+    "clc_conjunto_combustivel_fissao": {
+      "textures": "textures/blocks/cl/c/conjunto_combustivel_fissao"
+    },
+    "clc_conjunto_barras_controle": {
+      "textures": "textures/blocks/cl/c/conjunto_barras_controle"
+    },
+    "clc_complexo_rotacional": {
+      "textures": "textures/blocks/cl/c/complexo_rotacional"
+    },
+    "clc_bobina_eletromagnetica": {
+      "textures": "textures/blocks/cl/arte/bobina_eletromagnetica"
+    },
+    "clc_condensador_saturante": {
+      "textures": "textures/blocks/cl/arte/condensador_saturante"
+    },
+    "clc_centrifuga_isotopica_frente": {
+      "textures": "textures/blocks/cl/c/centrifuga_isotopica_frente"
+    },
+    "clc_centrifuga_isotopica_lado": {
+      "textures": "textures/blocks/cl/c/centrifuga_isotopica_lado"
+    },
+    "clc_centrifuga_isotopica_topo": {
+      "textures": "textures/blocks/cl/c/centrifuga_isotopica_topo"
+    },
+    "clc_centrifuga_isotopica_baixo": {
+      "textures": "textures/blocks/cl/c/centrifuga_isotopica_baixo"
+    },
+    "clc_ativador_neutrons_solar_frente": {
+      "textures": "textures/blocks/cl/c/ativador_neutrons_solar_frente"
+    },
+    "clc_ativador_neutrons_solar_lado": {
+      "textures": "textures/blocks/cl/c/ativador_neutrons_solar_lado"
+    },
+    "clc_ativador_neutrons_solar_topo": {
+      "textures": "textures/blocks/cl/c/ativador_neutrons_solar_topo"
+    },
+    "clc_ativador_neutrons_solar_baixo": {
+      "textures": "textures/blocks/cl/c/ativador_neutrons_solar_baixo"
+    },
+    "clc_nucleossintetizador_frente": {
+      "textures": "textures/blocks/cl/c/nucleossintetizador_frente"
+    },
+    "clc_nucleossintetizador_lado": {
+      "textures": "textures/blocks/cl/c/nucleossintetizador_lado"
+    },
+    "clc_nucleossintetizador_topo": {
+      "textures": "textures/blocks/cl/c/nucleossintetizador_topo"
+    },
+    "clc_nucleossintetizador_baixo": {
+      "textures": "textures/blocks/cl/c/nucleossintetizador_baixo"
+    },
+    "clc_liquidificador_nutricional_frente": {
+      "textures": "textures/blocks/cl/c/liquidificador_nutricional_frente"
+    },
+    "clc_liquidificador_nutricional_lado": {
+      "textures": "textures/blocks/cl/c/liquidificador_nutricional_lado"
+    },
+    "clc_liquidificador_nutricional_topo": {
+      "textures": "textures/blocks/cl/c/liquidificador_nutricional_topo"
+    },
+    "clc_liquidificador_nutricional_baixo": {
+      "textures": "textures/blocks/cl/c/liquidificador_nutricional_baixo"
+    },
+    "clc_aquecedor_resistivo_frente": {
+      "textures": "textures/blocks/cl/c/aquecedor_resistivo_frente"
+    },
+    "clc_aquecedor_resistivo_lado": {
+      "textures": "textures/blocks/cl/c/aquecedor_resistivo_lado"
+    },
+    "clc_aquecedor_resistivo_topo": {
+      "textures": "textures/blocks/cl/c/aquecedor_resistivo_topo"
+    },
+    "clc_aquecedor_resistivo_baixo": {
+      "textures": "textures/blocks/cl/c/aquecedor_resistivo_baixo"
+    },
+    "clc_aquecedor_lenha_frente": {
+      "textures": "textures/blocks/cl/c/aquecedor_lenha_frente"
+    },
+    "clc_aquecedor_lenha_lado": {
+      "textures": "textures/blocks/cl/c/aquecedor_lenha_lado"
+    },
+    "clc_aquecedor_lenha_topo": {
+      "textures": "textures/blocks/cl/c/aquecedor_lenha_topo"
+    },
+    "clc_aquecedor_lenha_baixo": {
+      "textures": "textures/blocks/cl/c/aquecedor_lenha_baixo"
+    },
+    "clc_laser_mk_frente": {
+      "textures": "textures/blocks/cl/c/laser_mk_frente"
+    },
+    "clc_laser_mk_lado": {
+      "textures": "textures/blocks/cl/c/laser_mk_lado"
+    },
+    "clc_laser_mk_topo": {
+      "textures": "textures/blocks/cl/c/laser_mk_topo"
+    },
+    "clc_laser_mk_baixo": {
+      "textures": "textures/blocks/cl/c/laser_mk_baixo"
+    },
+    "clc_amplificador_laser_frente": {
+      "textures": "textures/blocks/cl/c/amplificador_laser_frente"
+    },
+    "clc_amplificador_laser_lado": {
+      "textures": "textures/blocks/cl/c/amplificador_laser_lado"
+    },
+    "clc_amplificador_laser_topo": {
+      "textures": "textures/blocks/cl/c/amplificador_laser_topo"
+    },
+    "clc_amplificador_laser_baixo": {
+      "textures": "textures/blocks/cl/c/amplificador_laser_baixo"
+    },
+    "clc_feixe_trator_laser_frente": {
+      "textures": "textures/blocks/cl/c/feixe_trator_laser_frente"
+    },
+    "clc_feixe_trator_laser_lado": {
+      "textures": "textures/blocks/cl/c/feixe_trator_laser_lado"
+    },
+    "clc_feixe_trator_laser_topo": {
+      "textures": "textures/blocks/cl/c/feixe_trator_laser_topo"
+    },
+    "clc_feixe_trator_laser_baixo": {
+      "textures": "textures/blocks/cl/c/feixe_trator_laser_baixo"
+    },
+    "clc_estabilizador_dimensional_frente": {
+      "textures": "textures/blocks/cl/c/estabilizador_dimensional_frente"
+    },
+    "clc_estabilizador_dimensional_lado": {
+      "textures": "textures/blocks/cl/c/estabilizador_dimensional_lado"
+    },
+    "clc_estabilizador_dimensional_topo": {
+      "textures": "textures/blocks/cl/c/estabilizador_dimensional_topo"
+    },
+    "clc_estabilizador_dimensional_baixo": {
+      "textures": "textures/blocks/cl/c/estabilizador_dimensional_baixo"
+    },
+    "clc_barril_residuos_radioativos_frente": {
+      "textures": "textures/blocks/cl/c/barril_residuos_radioativos_frente"
+    },
+    "clc_barril_residuos_radioativos_lado": {
+      "textures": "textures/blocks/cl/c/barril_residuos_radioativos_lado"
+    },
+    "clc_barril_residuos_radioativos_topo": {
+      "textures": "textures/blocks/cl/c/barril_residuos_radioativos_topo"
+    },
+    "clc_barril_residuos_radioativos_baixo": {
+      "textures": "textures/blocks/cl/c/barril_residuos_radioativos_baixo"
+    },
+    "clc_condutor_termico_basico": {
+      "textures": "textures/blocks/cl/c/condutor_termico_basico"
+    },
+    "clc_condutor_termico_avancado": {
+      "textures": "textures/blocks/cl/c/condutor_termico_avancado"
+    },
+    "clc_condutor_termico_elite": {
+      "textures": "textures/blocks/cl/c/condutor_termico_elite"
+    },
+    "clc_condutor_termico_definitivo": {
+      "textures": "textures/blocks/cl/c/condutor_termico_definitivo"
+    },
+    "clc_mkm_antiprotonic_nucleosynthesizer_back": {
+      "textures": "textures/blocks/cl/arte/mkm_antiprotonic_nucleosynthesizer_back"
+    },
+    "clc_mkm_antiprotonic_nucleosynthesizer_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_antiprotonic_nucleosynthesizer_bottom"
+    },
+    "clc_mkm_antiprotonic_nucleosynthesizer_elements": {
+      "textures": "textures/blocks/cl/arte/mkm_antiprotonic_nucleosynthesizer_elements"
+    },
+    "clc_mkm_antiprotonic_nucleosynthesizer_front": {
+      "textures": "textures/blocks/cl/arte/mkm_antiprotonic_nucleosynthesizer_front"
+    },
+    "clc_mkm_antiprotonic_nucleosynthesizer_side": {
+      "textures": "textures/blocks/cl/arte/mkm_antiprotonic_nucleosynthesizer_side"
+    },
+    "clc_mkm_antiprotonic_nucleosynthesizer_top": {
+      "textures": "textures/blocks/cl/arte/mkm_antiprotonic_nucleosynthesizer_top"
+    },
+    "clc_mkm_back": {
+      "textures": "textures/blocks/cl/arte/mkm_back"
+    },
+    "clc_mkm_control_rod_assembly": {
+      "textures": "textures/blocks/cl/arte/mkm_control_rod_assembly"
+    },
+    "clc_mkm_control_rod_assembly_components": {
+      "textures": "textures/blocks/cl/arte/mkm_control_rod_assembly_components"
+    },
+    "clc_mkm_front": {
+      "textures": "textures/blocks/cl/arte/mkm_front"
+    },
+    "clc_mkm_fuel_rod_assembly_base": {
+      "textures": "textures/blocks/cl/arte/mkm_fuel_rod_assembly_base"
+    },
+    "clc_mkm_fuel_rod_assembly_rods_top": {
+      "textures": "textures/blocks/cl/arte/mkm_fuel_rod_assembly_rods_top"
+    },
+    "clc_mkm_fuel_rod_assembly_side": {
+      "textures": "textures/blocks/cl/arte/mkm_fuel_rod_assembly_side"
+    },
+    "clc_mkm_isotopic_centrifuge": {
+      "textures": "textures/blocks/cl/arte/mkm_isotopic_centrifuge"
+    },
+    "clc_mkm_laser": {
+      "textures": "textures/blocks/cl/arte/mkm_laser"
+    },
+    "clc_mkm_laser_amplifier_side_empty": {
+      "textures": "textures/blocks/cl/arte/mkm_laser_amplifier_side_empty"
+    },
+    "clc_mkm_laser_amplifier_side_full": {
+      "textures": "textures/blocks/cl/arte/mkm_laser_amplifier_side_full"
+    },
+    "clc_mkm_laser_device_frame": {
+      "textures": "textures/blocks/cl/arte/mkm_laser_device_frame"
+    },
+    "clc_mkm_laser_tractor_beam_side_empty": {
+      "textures": "textures/blocks/cl/arte/mkm_laser_tractor_beam_side_empty"
+    },
+    "clc_mkm_laser_tractor_beam_side_full": {
+      "textures": "textures/blocks/cl/arte/mkm_laser_tractor_beam_side_full"
+    },
+    "clc_mkm_left": {
+      "textures": "textures/blocks/cl/arte/mkm_left"
+    },
+    "clc_mkm_nutritional_liquifier": {
+      "textures": "textures/blocks/cl/arte/mkm_nutritional_liquifier"
+    },
+    "clc_mkm_radioactive_waste_barrel": {
+      "textures": "textures/blocks/cl/arte/mkm_radioactive_waste_barrel"
+    },
+    "clc_mkm_resistive_heater_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_resistive_heater_bottom"
+    },
+    "clc_mkm_resistive_heater_sides": {
+      "textures": "textures/blocks/cl/arte/mkm_resistive_heater_sides"
+    },
+    "clc_mkm_resistive_heater_sides_2": {
+      "textures": "textures/blocks/cl/arte/mkm_resistive_heater_sides_2"
+    },
+    "clc_mkm_resistive_heater_top": {
+      "textures": "textures/blocks/cl/arte/mkm_resistive_heater_top"
+    },
+    "clc_mkm_right": {
+      "textures": "textures/blocks/cl/arte/mkm_right"
+    },
+    "clc_mkm_rotational_complex_side": {
+      "textures": "textures/blocks/cl/arte/mkm_rotational_complex_side"
+    },
+    "clc_mkm_rotational_complex_top": {
+      "textures": "textures/blocks/cl/arte/mkm_rotational_complex_top"
+    },
+    "clc_mkm_solar_neutron_activator1": {
+      "textures": "textures/blocks/cl/arte/mkm_solar_neutron_activator1"
+    },
+    "clc_mkm_solar_neutron_activator2": {
+      "textures": "textures/blocks/cl/arte/mkm_solar_neutron_activator2"
+    },
+    "clc_mkm_supercharged_coil": {
+      "textures": "textures/blocks/cl/arte/mkm_supercharged_coil"
+    },
+    "clc_mkm_top": {
+      "textures": "textures/blocks/cl/arte/mkm_top"
+    },
+    "clc_mkt_condutor_termico_avancado_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_avancado_centro"
+    },
+    "clc_mkt_condutor_termico_avancado_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_avancado_lado"
+    },
+    "clc_mkt_condutor_termico_basico_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_basico_centro"
+    },
+    "clc_mkt_condutor_termico_basico_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_basico_lado"
+    },
+    "clc_mkt_condutor_termico_definitivo_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_definitivo_centro"
+    },
+    "clc_mkt_condutor_termico_definitivo_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_definitivo_lado"
+    },
+    "clc_mkt_condutor_termico_elite_centro": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_elite_centro"
+    },
+    "clc_mkt_condutor_termico_elite_lado": {
+      "textures": "textures/blocks/cl/arte/mkt_condutor_termico_elite_lado"
+    },
+    "clc_estacao_modificacao_frente": {
+      "textures": "textures/blocks/cl/c/estacao_modificacao_frente"
+    },
+    "clc_estacao_modificacao_lado": {
+      "textures": "textures/blocks/cl/c/estacao_modificacao_lado"
+    },
+    "clc_estacao_modificacao_topo": {
+      "textures": "textures/blocks/cl/c/estacao_modificacao_topo"
+    },
+    "clc_estacao_modificacao_baixo": {
+      "textures": "textures/blocks/cl/c/estacao_modificacao_baixo"
+    },
+    "clc_matriz_unidades_qio_frente": {
+      "textures": "textures/blocks/cl/c/matriz_unidades_qio_frente"
+    },
+    "clc_matriz_unidades_qio_lado": {
+      "textures": "textures/blocks/cl/c/matriz_unidades_qio_lado"
+    },
+    "clc_matriz_unidades_qio_topo": {
+      "textures": "textures/blocks/cl/c/matriz_unidades_qio_topo"
+    },
+    "clc_matriz_unidades_qio_baixo": {
+      "textures": "textures/blocks/cl/c/matriz_unidades_qio_baixo"
+    },
+    "clc_painel_qio_frente": {
+      "textures": "textures/blocks/cl/c/painel_qio_frente"
+    },
+    "clc_painel_qio_lado": {
+      "textures": "textures/blocks/cl/c/painel_qio_lado"
+    },
+    "clc_painel_qio_topo": {
+      "textures": "textures/blocks/cl/c/painel_qio_topo"
+    },
+    "clc_painel_qio_baixo": {
+      "textures": "textures/blocks/cl/c/painel_qio_baixo"
+    },
+    "clc_importador_qio_frente": {
+      "textures": "textures/blocks/cl/c/importador_qio_frente"
+    },
+    "clc_importador_qio_lado": {
+      "textures": "textures/blocks/cl/c/importador_qio_lado"
+    },
+    "clc_importador_qio_topo": {
+      "textures": "textures/blocks/cl/c/importador_qio_topo"
+    },
+    "clc_importador_qio_baixo": {
+      "textures": "textures/blocks/cl/c/importador_qio_baixo"
+    },
+    "clc_exportador_qio_frente": {
+      "textures": "textures/blocks/cl/c/exportador_qio_frente"
+    },
+    "clc_exportador_qio_lado": {
+      "textures": "textures/blocks/cl/c/exportador_qio_lado"
+    },
+    "clc_exportador_qio_topo": {
+      "textures": "textures/blocks/cl/c/exportador_qio_topo"
+    },
+    "clc_exportador_qio_baixo": {
+      "textures": "textures/blocks/cl/c/exportador_qio_baixo"
+    },
+    "clc_adaptador_redstone_qio_frente": {
+      "textures": "textures/blocks/cl/c/adaptador_redstone_qio_frente"
+    },
+    "clc_adaptador_redstone_qio_lado": {
+      "textures": "textures/blocks/cl/c/adaptador_redstone_qio_lado"
+    },
+    "clc_adaptador_redstone_qio_topo": {
+      "textures": "textures/blocks/cl/c/adaptador_redstone_qio_topo"
+    },
+    "clc_adaptador_redstone_qio_baixo": {
+      "textures": "textures/blocks/cl/c/adaptador_redstone_qio_baixo"
+    },
+    "clc_bau_pessoal": {
+      "textures": "textures/blocks/cl/c/bau_pessoal"
+    },
+    "clc_caixa_papelao": {
+      "textures": "textures/blocks/cl/c/caixa_papelao"
+    },
+    "clc_mkm_cardboard_box_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_cardboard_box_bottom"
+    },
+    "clc_mkm_cardboard_box_inside": {
+      "textures": "textures/blocks/cl/arte/mkm_cardboard_box_inside"
+    },
+    "clc_mkm_cardboard_box_side_plain": {
+      "textures": "textures/blocks/cl/arte/mkm_cardboard_box_side_plain"
+    },
+    "clc_mkm_cardboard_box_side_storage": {
+      "textures": "textures/blocks/cl/arte/mkm_cardboard_box_side_storage"
+    },
+    "clc_mkm_drive_led": {
+      "textures": "textures/blocks/cl/arte/mkm_drive_led"
+    },
+    "clc_mkm_modification_station": {
+      "textures": "textures/blocks/cl/arte/mkm_modification_station"
+    },
+    "clc_mkm_qio_bus": {
+      "textures": "textures/blocks/cl/arte/mkm_qio_bus"
+    },
+    "clc_mkm_qio_dashboard": {
+      "textures": "textures/blocks/cl/arte/mkm_qio_dashboard"
+    },
+    "clc_mkm_qio_dashboard_screen_led": {
+      "textures": "textures/blocks/cl/arte/mkm_qio_dashboard_screen_led"
+    },
+    "clc_mkm_rack_glass": {
+      "textures": "textures/blocks/cl/arte/mkm_rack_glass"
+    },
+    "clc_mkm_side": {
+      "textures": "textures/blocks/cl/arte/mkm_side"
     }
   }
 }

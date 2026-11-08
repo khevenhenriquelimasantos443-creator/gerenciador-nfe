@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_electrolytic_breathing_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "APA",
+      "HHH"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:nucleo_eletrolitico"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "H": {
+        "item": "cl:folha_pead"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_respiracao"
+    }
+  }
+}

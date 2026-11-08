@@ -1,0 +1,136 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_painel_qio",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -7,
+        0,
+        -7
+       ],
+       "size": [
+        14,
+        1,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          13
+         ],
+         "uv_size": [
+          14,
+          1
+         ],
+         "material_instance": "m_qio_dashboard"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          1,
+          12
+         ],
+         "material_instance": "m_qio_dashboard"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          14,
+          1
+         ],
+         "material_instance": "m_qio_dashboard"
+        },
+        "west": {
+         "uv": [
+          13,
+          0
+         ],
+         "uv_size": [
+          1,
+          12
+         ],
+         "material_instance": "m_qio_dashboard"
+        },
+        "up": {
+         "uv": [
+          14,
+          14
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_qio_dashboard"
+        },
+        "down": {
+         "uv": [
+          15,
+          2
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_qio_dashboard"
+        }
+       }
+      },
+      {
+       "origin": [
+        -6,
+        1.008,
+        -6
+       ],
+       "size": [
+        12,
+        0.0,
+        12
+       ],
+       "uv": {
+        "up": {
+         "uv": [
+          13,
+          13
+         ],
+         "uv_size": [
+          -12,
+          -12
+         ],
+         "material_instance": "m_qio_dashboard_screen_led"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

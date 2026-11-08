@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_resistive_heater"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IRI",
+      "RXR",
+      "IEI"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "I": {
+        "item": "cl:lingote_estanho"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:aquecedor_resistivo"
+    }
+  }
+}

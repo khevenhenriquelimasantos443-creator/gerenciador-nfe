@@ -132,6 +132,16 @@ export type Acao =
   | "mk_minerador"
   | "mk_teletransporte"
   | "mk_sismico"
+  | "mk_multibloco"
+  | "mk_inducao"
+  | "mk_fissao"
+  | "mk_turbina"
+  | "mk_fusao"
+  | "mk_hazmat"
+  | "mk_modulo"
+  | "mk_mekasuit"
+  | "mk_qio"
+  | "mk_robit"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -494,6 +504,22 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "mk_minerador", requer: ["mk_transportador", "mk_chumbo"], objetivo: { tipo: "acao", acao: "mk_minerador", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 4 }] },
       { id: "mk_teletransporte", requer: ["mk_minerador"], objetivo: { tipo: "acao", acao: "mk_teletransporte", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
       { id: "mk_entrelacador", requer: ["mk_teletransporte"], objetivo: { tipo: "colocar", bloco: "cl:entrelacador_quantico", qtd: 1 }, recompensa: [{ item: "cl:liga_atomica", quantidade: 2 }] },
+      // 1.52.0: Mekanism completo, parte 4 (urânio, multiblocos e reatores)
+      { id: "mk_uranio", requer: ["mk_chumbo"], objetivo: { tipo: "ter", item: "cl:lingote_uranio", qtd: 8 }, recompensa: [{ item: "cl:fluorita", quantidade: 8 }] },
+      { id: "mk_multibloco", requer: ["mk_cano"], objetivo: { tipo: "acao", acao: "mk_multibloco", qtd: 1 }, recompensa: [{ item: "cl:vidro_estrutural", quantidade: 8 }] },
+      { id: "mk_inducao", requer: ["mk_multibloco"], objetivo: { tipo: "acao", acao: "mk_inducao", qtd: 1 }, recompensa: [{ item: "cl:liga_atomica", quantidade: 4 }] },
+      { id: "mk_fissil", requer: ["mk_uranio", "mkq_acido"], objetivo: { tipo: "ter", item: "cl:cilindro_combustivel_fissil", qtd: 1 }, recompensa: [{ item: "cl:cilindro_vazio", quantidade: 8 }] },
+      { id: "mk_hazmat", requer: ["mk_uranio"], objetivo: { tipo: "acao", acao: "mk_hazmat", qtd: 1 }, recompensa: [{ item: "cl:dosimetro", quantidade: 1 }] },
+      { id: "mk_fissao", requer: ["mk_fissil", "mk_multibloco"], objetivo: { tipo: "acao", acao: "mk_fissao", qtd: 1 }, recompensa: [{ item: "cl:contador_geiger", quantidade: 1 }] },
+      { id: "mk_turbina", requer: ["mk_fissao"], objetivo: { tipo: "acao", acao: "mk_turbina", qtd: 1 }, recompensa: [{ item: "cl:bobina_eletromagnetica", quantidade: 4 }] },
+      { id: "mk_antimateria", requer: ["mk_fissao"], objetivo: { tipo: "ter", item: "cl:pastilha_antimateria", qtd: 1 }, recompensa: [{ item: "minecraft:nether_star", quantidade: 1 }] },
+      { id: "mk_fusao", requer: ["mk_turbina"], objetivo: { tipo: "acao", acao: "mk_fusao", qtd: 1 }, recompensa: [{ item: "cl:liga_atomica", quantidade: 8 }] },
+      // 1.53.0: Mekanism completo, parte 5 (equipamentos, QIO e Robit)
+      { id: "mk_robit", requer: ["mk_teletransporte"], objetivo: { tipo: "acao", acao: "mk_robit", qtd: 1 }, recompensa: [{ item: "cl:lingote_aco", quantidade: 8 }] },
+      { id: "mk_qio", requer: ["mk_inducao"], objetivo: { tipo: "acao", acao: "mk_qio", qtd: 1 }, recompensa: [{ item: "cl:unidade_qio_base", quantidade: 1 }] },
+      { id: "mk_meka", requer: ["mk_antimateria"], objetivo: { tipo: "ter", item: "cl:ferramenta_meka", qtd: 1 }, recompensa: [{ item: "cl:base_modulo", quantidade: 4 }] },
+      { id: "mk_modulo", requer: ["mk_meka"], objetivo: { tipo: "acao", acao: "mk_modulo", qtd: 1 }, recompensa: [{ item: "cl:pastilha_polonio", quantidade: 2 }] },
+      { id: "mk_mekasuit", requer: ["mk_modulo"], objetivo: { tipo: "acao", acao: "mk_mekasuit", qtd: 1 }, recompensa: [{ item: "cl:liga_atomica", quantidade: 16 }] },
       { id: "mk_sismico", requer: ["mk_chumbo"], objetivo: { tipo: "acao", acao: "mk_sismico", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 16 }] },
     ],
   },

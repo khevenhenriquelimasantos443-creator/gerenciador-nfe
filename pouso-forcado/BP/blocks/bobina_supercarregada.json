@@ -1,0 +1,64 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:bobina_supercarregada",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.mk_bobina_supercarregada",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_mkm_supercharged_coil",
+          "render_method": "alpha_test"
+        },
+        "m_supercharged_coil": {
+          "texture": "clc_mkm_supercharged_coil",
+          "render_method": "alpha_test"
+        },
+        "m_ports": {
+          "texture": "clc_mkm_ports",
+          "render_method": "alpha_test"
+        },
+        "m_ports_led": {
+          "texture": "clc_mkm_ports_led",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#5a6470",
+      "minecraft:collision_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:light_dampening": 0
+    }
+  }
+}

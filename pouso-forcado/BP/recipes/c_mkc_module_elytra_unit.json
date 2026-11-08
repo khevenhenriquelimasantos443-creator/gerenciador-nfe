@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_elytra_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "APA",
+      "HNH"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:elitro_pead"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "H": {
+        "item": "cl:pastilha_polonio"
+      },
+      "N": {
+        "item": "cl:pastilha_antimateria"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_elitro"
+    }
+  }
+}

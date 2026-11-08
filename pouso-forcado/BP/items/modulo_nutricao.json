@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:modulo_nutricao",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_modulo_nutricao",
+      "minecraft:display_name": {
+        "value": "item.cl:modulo_nutricao.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

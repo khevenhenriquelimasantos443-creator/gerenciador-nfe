@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_mk_p4_forno_8"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:minerio_osmio_profundo",
+    "output": "cl:lingote_osmio"
+  }
+}

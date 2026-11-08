@@ -1,0 +1,1662 @@
+{
+ "itens": [
+  {
+   "id": "base_modulo",
+   "pt": "Base de Módulos",
+   "en": "Module Base",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "modulo_energia",
+   "pt": "Unidade de Energia",
+   "en": "Energy Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_escavacao",
+   "pt": "Unidade de Intensificação de Escavação",
+   "en": "Excavation Escalation Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_ataque",
+   "pt": "Unidade de Amplificação de Ataque",
+   "en": "Attack Amplification Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_cultivo",
+   "pt": "Unidade de Agricultura",
+   "en": "Farming Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_tosquia",
+   "pt": "Unidade Esmagadora",
+   "en": "Shearing Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_toque_suave",
+   "pt": "Unidade de Toque suave",
+   "en": "Silk Touch Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_fortuna",
+   "pt": "Unidade de Refinação de Minério",
+   "en": "Ore Refinement Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_explosao",
+   "pt": "Unidade de Explosão",
+   "en": "Blasting Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_veio",
+   "pt": "Unidade de Mineração de Veios",
+   "en": "Vein Mining Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_teletransporte",
+   "pt": "Unidade de Teleporte",
+   "en": "Teleportation Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_respiracao",
+   "pt": "Unidade de Respiração Eletrolítica",
+   "en": "Electrolytic Breathing Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_purificacao",
+   "pt": "Unidade de Purificação Inalatória",
+   "en": "Inhalation Purification Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_visao",
+   "pt": "Unidade de Aprimoramento de Visão",
+   "en": "Vision Enhancement Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_nutricao",
+   "pt": "Unidade de Injeção nutricional",
+   "en": "Nutritional Injection Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_blindagem_radiacao",
+   "pt": "Unidade de Escudo de Radiação",
+   "en": "Radiation Shielding Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_dosimetro",
+   "pt": "Unidade de Dosímetro",
+   "en": "Dosimeter Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_geiger",
+   "pt": "Unidade Geiger",
+   "en": "Geiger Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_jetpack",
+   "pt": "Unidade de Jetpack",
+   "en": "Jetpack Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_distribuicao_carga",
+   "pt": "Unidade de Distribuição de Energia",
+   "en": "Charge Distribution Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_gravitacional",
+   "pt": "Unidade de Modulação Gravitacional",
+   "en": "Gravitational Modulating Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_elitro",
+   "pt": "Unidade de Élitros",
+   "en": "Elytra Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_locomocao",
+   "pt": "Unidade de Propulsão Locomotiva",
+   "en": "Locomotive Boosting Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_giroscopio",
+   "pt": "Unidade de Estabilização Giroscópica",
+   "en": "Gyroscopic Stabilization Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_propulsao",
+   "pt": "Unidade de Propulsão Hidráulica",
+   "en": "Hydraulic Propulsion Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_magnetico",
+   "pt": "Unidade de Atração Magnética",
+   "en": "Magnetic Attraction Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_gelo",
+   "pt": "Unidade de Passos Gelados",
+   "en": "Frost Walker Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_hidrostatico",
+   "pt": "Unidade de Repulsão Hidrostática",
+   "en": "Hydrostatic Repulsor Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_servo",
+   "pt": "Unidade de Servo Motorizada",
+   "en": "Motorized Servo Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_almas",
+   "pt": "Unidade Surfista da Alma",
+   "en": "Soul Surfer Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_dissipacao_laser",
+   "pt": "Unidade de Dissipação de Laser",
+   "en": "Laser Dissipation Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_cor",
+   "pt": "Unidade de Modulação de Cor",
+   "en": "Color Modulation Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_solar",
+   "pt": "Unidade de Recargamento Solar",
+   "en": "Solar Recharging Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "modulo_geotermico",
+   "pt": "Unidade Geradora Geotérmica",
+   "en": "Geothermal Generator Unit",
+   "arte": true,
+   "modulo": true
+  },
+  {
+   "id": "desmontador_atomico",
+   "pt": "Desintegrador Atômico",
+   "en": "Atomic Disassembler",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "ferramenta_meka",
+   "pt": "Mekatool",
+   "en": "Meka-Tool",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "capacete_mekasuit",
+   "pt": "Capacete MekaSuit",
+   "en": "MekaSuit Helmet",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "peitoral_mekasuit",
+   "pt": "Armadura Corporal MekaSuit",
+   "en": "MekaSuit Bodyarmor",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "calcas_mekasuit",
+   "pt": "Calça MekaSuit",
+   "en": "MekaSuit Pants",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "botas_mekasuit",
+   "pt": "Botas MekaSuit",
+   "en": "MekaSuit Boots",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "arco_eletrico",
+   "pt": "Arco Elétrico",
+   "en": "Electric Bow",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "lanca_chamas",
+   "pt": "Lança-Chamas",
+   "en": "Flamethrower",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "corredores_livres",
+   "pt": "Corredores",
+   "en": "Free Runners",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "corredores_livres_blindados",
+   "pt": "Corredores Blindados",
+   "en": "Armored Free Runners",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "jetpack_blindado",
+   "pt": "Jetpack Blindado",
+   "en": "Armored Jetpack",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "mascara_mergulho",
+   "pt": "Máscara de Mergulho",
+   "en": "Scuba Mask",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "tanque_mergulho",
+   "pt": "Tanque de Mergulho",
+   "en": "Scuba Tank",
+   "arte": false,
+   "modulo": false
+  },
+  {
+   "id": "configurador",
+   "pt": "Configurador",
+   "en": "Configurator",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "leitor_rede",
+   "pt": "Leitor de Rede",
+   "en": "Network Reader",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "dicionario",
+   "pt": "Dicionário",
+   "en": "Dictionary",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "conta_gotas",
+   "pt": "Medidor Conta-Gotas",
+   "en": "Gauge Dropper",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "cantil",
+   "pt": "Cantil",
+   "en": "Canteen",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "cartao_configuracao",
+   "pt": "Cartão de Configuração",
+   "en": "Configuration Card",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "elitro_pead",
+   "pt": "Élitros Reforçado com PEAD",
+   "en": "HDPE Reinforced Elytra",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "base_tinta",
+   "pt": "Base de Tinturas",
+   "en": "Dye Base",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "unidade_qio_base",
+   "pt": "Disco do OIQ",
+   "en": "QIO Drive",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "unidade_qio_hiperdensa",
+   "pt": "Disco Hiper-Denso do OIQ",
+   "en": "Hyper-Dense QIO Drive",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "unidade_qio_dilatacao",
+   "pt": "Disco Dilatador de Tempo do OIQ",
+   "en": "Time-Dilating QIO Drive",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "unidade_qio_supermassiva",
+   "pt": "Disco Supermassivo do OIQ",
+   "en": "Supermassive QIO Drive",
+   "arte": true,
+   "modulo": false
+  },
+  {
+   "id": "painel_qio_portatil",
+   "pt": "Painel Portátil do OIQ",
+   "en": "Portable QIO Dashboard",
+   "arte": true,
+   "modulo": false
+  }
+ ],
+ "blocos": [
+  {
+   "id": "estacao_modificacao",
+   "pt": "Estação de Modificação",
+   "en": "Modification Station",
+   "modelo": {
+    "geometria": "geometry.cl.mk_estacao_modificacao",
+    "materiais": {
+     "m_modification_station": "clc_mkm_modification_station",
+     "m_leds": "clc_mkm_leds",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      15,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "matriz_unidades_qio",
+   "pt": "Matriz de Disco do OIQ",
+   "en": "QIO Drive Array",
+   "modelo": {
+    "geometria": "geometry.cl.mk_matriz_unidades_qio",
+    "materiais": {
+     "m_back": "clc_mkm_back",
+     "m_side": "clc_mkm_side",
+     "m_top": "clc_mkm_top",
+     "m_bottom": "clc_mkm_bottom",
+     "m_drive_led": "clc_mkm_drive_led",
+     "m_front": "clc_mkm_front",
+     "m_rack_glass": "clc_mkm_rack_glass"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "painel_qio",
+   "pt": "Painel do OIQ",
+   "en": "QIO Dashboard",
+   "modelo": {
+    "geometria": "geometry.cl.mk_painel_qio",
+    "materiais": {
+     "m_qio_dashboard": "clc_mkm_qio_dashboard",
+     "m_qio_dashboard_screen_led": "clc_mkm_qio_dashboard_screen_led"
+    },
+    "caixa": {
+     "origin": [
+      -7,
+      0,
+      -7
+     ],
+     "size": [
+      14,
+      1,
+      14
+     ]
+    }
+   }
+  },
+  {
+   "id": "importador_qio",
+   "pt": "Importador OIQ",
+   "en": "QIO Importer",
+   "modelo": {
+    "geometria": "geometry.cl.mk_importador_qio",
+    "materiais": {
+     "m_qio_bus": "clc_mkm_qio_bus",
+     "m_leds": "clc_mkm_leds"
+    },
+    "caixa": {
+     "origin": [
+      -4,
+      0,
+      -4
+     ],
+     "size": [
+      8,
+      10,
+      8
+     ]
+    }
+   }
+  },
+  {
+   "id": "exportador_qio",
+   "pt": "Exportador do OIQ",
+   "en": "QIO Exporter",
+   "modelo": {
+    "geometria": "geometry.cl.mk_exportador_qio",
+    "materiais": {
+     "m_qio_bus": "clc_mkm_qio_bus",
+     "m_leds": "clc_mkm_leds"
+    },
+    "caixa": {
+     "origin": [
+      -4,
+      0,
+      -4
+     ],
+     "size": [
+      8,
+      10,
+      8
+     ]
+    }
+   }
+  },
+  {
+   "id": "adaptador_redstone_qio",
+   "pt": "Adaptador de Redstone do OIQ",
+   "en": "QIO Redstone Adapter"
+  },
+  {
+   "id": "bau_pessoal",
+   "pt": "Baú Pessoal",
+   "en": "Personal Chest"
+  },
+  {
+   "id": "caixa_papelao",
+   "pt": "Caixa de papelão",
+   "en": "Cardboard Box",
+   "modelo": {
+    "geometria": "geometry.cl.mk_caixa_papelao",
+    "materiais": {
+     "m_cardboard_box_side_plain": "clc_mkm_cardboard_box_side_plain",
+     "m_cardboard_box_side_storage": "clc_mkm_cardboard_box_side_storage",
+     "m_cardboard_box_bottom": "clc_mkm_cardboard_box_bottom",
+     "m_cardboard_box_inside": "clc_mkm_cardboard_box_inside"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ],
+ "receitas": [
+  {
+   "id": "mkc_atomic_disassembler",
+   "resultado": "cl:desmontador_atomico",
+   "tipo": "shaped",
+   "padrao": [
+    "AEA",
+    "A#A",
+    " I "
+   ],
+   "chave": {
+    "#": "cl:liga_atomica",
+    "A": "cl:liga_enriquecida",
+    "E": "cl:tablet_energia",
+    "I": "cl:lingote_obsidiana_refinada"
+   }
+  },
+  {
+   "id": "mkc_canteen",
+   "resultado": "cl:cantil",
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "I#I",
+    " I "
+   ],
+   "chave": {
+    "#": "minecraft:bowl",
+    "I": "cl:lingote_estanho"
+   }
+  },
+  {
+   "id": "mkc_cardboard_box",
+   "resultado": "cl:caixa_papelao",
+   "tipo": "shaped",
+   "padrao": [
+    "##",
+    "##"
+   ],
+   "chave": {
+    "#": "cl:serragem"
+   }
+  },
+  {
+   "id": "mkc_configuration_card",
+   "resultado": "cl:cartao_configuracao",
+   "tipo": "shaped",
+   "padrao": [
+    " A ",
+    "ACA",
+    " A "
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico"
+   }
+  },
+  {
+   "id": "mkc_configurator",
+   "resultado": "cl:configurador",
+   "tipo": "shaped",
+   "padrao": [
+    "II",
+    " A",
+    " S"
+   ],
+   "chave": {
+    "A": "cl:lingote_osmio",
+    "I": "minecraft:iron_ingot",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_dictionary",
+   "resultado": "cl:dicionario",
+   "tipo": "shaped",
+   "padrao": [
+    "C",
+    "#"
+   ],
+   "chave": {
+    "#": "minecraft:book",
+    "C": "cl:circuito_controle_basico"
+   }
+  },
+  {
+   "id": "mkc_dye_base",
+   "resultado": "cl:base_tinta",
+   "qtd": 3,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:serragem",
+    "cl:serragem",
+    "minecraft:clay_ball"
+   ]
+  },
+  {
+   "id": "mkc_electric_bow",
+   "resultado": "cl:arco_eletrico",
+   "tipo": "shaped",
+   "padrao": [
+    "#A ",
+    "# E",
+    "#A "
+   ],
+   "chave": {
+    "#": "minecraft:string",
+    "A": "cl:liga_enriquecida",
+    "E": "cl:tablet_energia"
+   }
+  },
+  {
+   "id": "mkc_flamethrower",
+   "resultado": "cl:lanca_chamas",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "ITS",
+    "#C#"
+   ],
+   "chave": {
+    "#": "cl:lingote_bronze",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_estanho",
+    "S": "minecraft:flint_and_steel",
+    "T": "cl:tanque_quimico_basico"
+   }
+  },
+  {
+   "id": "mkc_free_runners",
+   "resultado": "cl:corredores_livres",
+   "tipo": "shaped",
+   "padrao": [
+    "C C",
+    "A A",
+    "E E"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico",
+    "E": "cl:tablet_energia"
+   }
+  },
+  {
+   "id": "mkc_free_runners_armored",
+   "resultado": "cl:corredores_livres_blindados",
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "#P#",
+    "I I"
+   ],
+   "chave": {
+    "#": "cl:po_diamante",
+    "I": "cl:lingote_bronze",
+    "P": "cl:corredores_livres",
+    "S": "cl:bloco_aco"
+   }
+  },
+  {
+   "id": "mkc_gauge_dropper",
+   "resultado": "cl:conta_gotas",
+   "tipo": "shaped",
+   "padrao": [
+    " O ",
+    "G G",
+    "GGG"
+   ],
+   "chave": {
+    "G": "minecraft:glass_pane",
+    "O": "cl:lingote_osmio"
+   }
+  },
+  {
+   "id": "mkc_hdpe_elytra",
+   "resultado": "cl:elitro_pead",
+   "tipo": "shaped",
+   "padrao": [
+    "AHA",
+    "HPH",
+    "H H"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "H": "cl:folha_pead",
+    "P": "minecraft:elytra"
+   }
+  },
+  {
+   "id": "mkc_jetpack_armored",
+   "resultado": "cl:jetpack_blindado",
+   "tipo": "shaped",
+   "padrao": [
+    "# #",
+    "ISI",
+    " P "
+   ],
+   "chave": {
+    "#": "cl:po_diamante",
+    "I": "cl:lingote_bronze",
+    "P": "cl:jetpack",
+    "S": "cl:bloco_aco"
+   }
+  },
+  {
+   "id": "mkc_meka_tool",
+   "resultado": "cl:ferramenta_meka",
+   "tipo": "shaped",
+   "padrao": [
+    "CoC",
+    "P#P",
+    "AEA"
+   ],
+   "chave": {
+    "#": "cl:desmontador_atomico",
+    "A": "cl:pastilha_polonio",
+    "C": "cl:circuito_controle_supremo",
+    "E": "cl:celula_inducao_basico",
+    "P": "cl:folha_pead",
+    "o": "cl:configurador"
+   }
+  },
+  {
+   "id": "mkc_mekasuit_bodyarmor",
+   "resultado": "cl:peitoral_mekasuit",
+   "tipo": "shaped",
+   "padrao": [
+    "PCP",
+    "P#P",
+    "AEA"
+   ],
+   "chave": {
+    "#": "minecraft:netherite_chestplate",
+    "A": "cl:pastilha_polonio",
+    "C": "cl:circuito_controle_supremo",
+    "E": "cl:celula_inducao_basico",
+    "P": "cl:folha_pead"
+   }
+  },
+  {
+   "id": "mkc_mekasuit_boots",
+   "resultado": "cl:botas_mekasuit",
+   "tipo": "shaped",
+   "padrao": [
+    "PCP",
+    "P#P",
+    "AEA"
+   ],
+   "chave": {
+    "#": "minecraft:netherite_boots",
+    "A": "cl:pastilha_polonio",
+    "C": "cl:circuito_controle_supremo",
+    "E": "cl:celula_inducao_basico",
+    "P": "cl:folha_pead"
+   }
+  },
+  {
+   "id": "mkc_mekasuit_helmet",
+   "resultado": "cl:capacete_mekasuit",
+   "tipo": "shaped",
+   "padrao": [
+    "PCP",
+    "P#P",
+    "AEA"
+   ],
+   "chave": {
+    "#": "minecraft:netherite_helmet",
+    "A": "cl:pastilha_polonio",
+    "C": "cl:circuito_controle_supremo",
+    "E": "cl:celula_inducao_basico",
+    "P": "cl:folha_pead"
+   }
+  },
+  {
+   "id": "mkc_mekasuit_pants",
+   "resultado": "cl:calcas_mekasuit",
+   "tipo": "shaped",
+   "padrao": [
+    "PCP",
+    "P#P",
+    "AEA"
+   ],
+   "chave": {
+    "#": "minecraft:netherite_leggings",
+    "A": "cl:pastilha_polonio",
+    "C": "cl:circuito_controle_supremo",
+    "E": "cl:celula_inducao_basico",
+    "P": "cl:folha_pead"
+   }
+  },
+  {
+   "id": "mkc_modification_station",
+   "resultado": "cl:estacao_modificacao",
+   "tipo": "shaped",
+   "padrao": [
+    "PWP",
+    "CXC",
+    "PAP"
+   ],
+   "chave": {
+    "A": "cl:pastilha_polonio",
+    "C": "cl:circuito_controle_supremo",
+    "P": "cl:folha_pead",
+    "W": "minecraft:chest",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_module_attack_amplification_unit",
+   "resultado": "cl:modulo_ataque",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:iron_sword",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_base",
+   "resultado": "cl:base_modulo",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "NIN",
+    "I#I",
+    "NIN"
+   ],
+   "chave": {
+    "#": "cl:folha_pead",
+    "I": "cl:lingote_estanho",
+    "N": "cl:pepita_bronze"
+   }
+  },
+  {
+   "id": "mkc_module_blasting_unit",
+   "resultado": "cl:modulo_explosao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "CPC",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:tnt",
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_charge_distribution_unit",
+   "resultado": "cl:modulo_distribuicao_carga",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:provedor_inducao_basico",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_dosimeter_unit",
+   "resultado": "cl:modulo_dosimetro",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:dosimetro",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_electrolytic_breathing_unit",
+   "resultado": "cl:modulo_respiracao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:nucleo_eletrolitico",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_elytra_unit",
+   "resultado": "cl:modulo_elitro",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HNH"
+   ],
+   "chave": {
+    "#": "cl:elitro_pead",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "N": "cl:pastilha_antimateria",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_energy_unit",
+   "resultado": "cl:modulo_energia",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:celula_inducao_basico",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_excavation_escalation_unit",
+   "resultado": "cl:modulo_escavacao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:iron_pickaxe",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_farming_unit",
+   "resultado": "cl:modulo_cultivo",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:iron_hoe",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_fortune_unit",
+   "resultado": "cl:modulo_fortuna",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "DPD",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:bloco_glowstone_refinado",
+    "A": "cl:liga_reforcada",
+    "D": "minecraft:diamond_block",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_geiger_unit",
+   "resultado": "cl:modulo_geiger",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:contador_geiger",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_gravitational_modulating_unit",
+   "resultado": "cl:modulo_gravitacional",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "EPE",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:nether_star",
+    "A": "cl:liga_atomica",
+    "E": "cl:provedor_inducao_definitivo",
+    "H": "cl:pastilha_antimateria",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_gyroscopic_stabilization_unit",
+   "resultado": "cl:modulo_giroscopio",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "#P#",
+    "H#H"
+   ],
+   "chave": {
+    "#": "minecraft:obsidian",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_hydraulic_propulsion_unit",
+   "resultado": "cl:modulo_propulsao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "EPE",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:corredores_livres",
+    "A": "cl:liga_reforcada",
+    "E": "cl:tablet_energia",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_hydrostatic_repulsor_unit",
+   "resultado": "cl:modulo_hidrostatico",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:lightning_rod",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_inhalation_purification_unit",
+   "resultado": "cl:modulo_purificacao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HoH"
+   ],
+   "chave": {
+    "#": "cl:mascara_hazmat",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo",
+    "o": "cl:mascara_mergulho"
+   }
+  },
+  {
+   "id": "mkc_module_jetpack_unit",
+   "resultado": "cl:modulo_jetpack",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:jetpack",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_laser_dissipation_unit",
+   "resultado": "cl:modulo_dissipacao_laser",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:amplificador_laser",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_locomotive_boosting_unit",
+   "resultado": "cl:modulo_locomocao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "EPE",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:diamond_leggings",
+    "A": "cl:liga_reforcada",
+    "E": "cl:tablet_energia",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_magnetic_attraction_unit",
+   "resultado": "cl:modulo_magnetico",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "CPC",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:iron_bars",
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_motorized_servo_unit",
+   "resultado": "cl:modulo_servo",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "#P#",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:blue_ice",
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_nutritional_injection_unit",
+   "resultado": "cl:modulo_nutricao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:cantil",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_radiation_shielding_unit",
+   "resultado": "cl:modulo_blindagem_radiacao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:bloco_chumbo",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_shearing_unit",
+   "resultado": "cl:modulo_tosquia",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:shears",
+    "A": "cl:liga_enriquecida",
+    "H": "cl:folha_pead",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_silk_touch_unit",
+   "resultado": "cl:modulo_toque_suave",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "DPD",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:bloco_glowstone_refinado",
+    "A": "cl:liga_reforcada",
+    "D": "minecraft:diamond_pickaxe",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_teleportation_unit",
+   "resultado": "cl:modulo_teletransporte",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "cl:nucleo_teletransporte",
+    "A": "cl:liga_atomica",
+    "H": "cl:pastilha_antimateria",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_module_vein_mining_unit",
+   "resultado": "cl:modulo_veio",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "xPs",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:diamond_pickaxe",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo",
+    "s": "minecraft:diamond_shovel",
+    "x": "minecraft:diamond_axe"
+   }
+  },
+  {
+   "id": "mkc_module_vision_enhancement_unit",
+   "resultado": "cl:modulo_visao",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "APA",
+    "HHH"
+   ],
+   "chave": {
+    "#": "minecraft:emerald",
+    "A": "cl:liga_reforcada",
+    "H": "cl:pastilha_polonio",
+    "P": "cl:base_modulo"
+   }
+  },
+  {
+   "id": "mkc_network_reader",
+   "resultado": "cl:leitor_rede",
+   "tipo": "shaped",
+   "padrao": [
+    " G ",
+    "AEA",
+    " S "
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "E": "cl:tablet_energia",
+    "G": "minecraft:glass",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_personal_chest",
+   "resultado": "cl:bau_pessoal",
+   "tipo": "shaped",
+   "padrao": [
+    "SGS",
+    "PCP",
+    "SSS"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "G": "minecraft:glass",
+    "P": "minecraft:chest",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_portable_qio_dashboard",
+   "resultado": "cl:painel_qio_portatil",
+   "tipo": "shaped",
+   "padrao": [
+    "AAA",
+    "A#A",
+    "ATA"
+   ],
+   "chave": {
+    "#": "cl:painel_qio",
+    "A": "cl:pastilha_polonio",
+    "T": "cl:nucleo_teletransporte"
+   }
+  },
+  {
+   "id": "mkc_qio_dashboard",
+   "resultado": "cl:painel_qio",
+   "tipo": "shaped",
+   "padrao": [
+    "IAI",
+    "AGA",
+    "ITI"
+   ],
+   "chave": {
+    "A": "minecraft:ender_pearl",
+    "G": "minecraft:glass_pane",
+    "I": "cl:lingote_chumbo",
+    "T": "cl:nucleo_teletransporte"
+   }
+  },
+  {
+   "id": "mkc_qio_drive_array",
+   "resultado": "cl:matriz_unidades_qio",
+   "tipo": "shaped",
+   "padrao": [
+    "TGT",
+    "C#C",
+    "TIT"
+   ],
+   "chave": {
+    "#": "cl:barril_pessoal",
+    "C": "cl:circuito_controle_supremo",
+    "G": "minecraft:glass_pane",
+    "I": "minecraft:ender_pearl",
+    "T": "cl:nucleo_teletransporte"
+   }
+  },
+  {
+   "id": "mkc_qio_drive_base",
+   "resultado": "cl:unidade_qio_base",
+   "tipo": "shaped",
+   "padrao": [
+    "ICI",
+    "C#C",
+    "ICI"
+   ],
+   "chave": {
+    "#": "minecraft:ender_pearl",
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_qio_drive_hyper_dense",
+   "resultado": "cl:unidade_qio_hiperdensa",
+   "tipo": "shaped",
+   "padrao": [
+    "IPI",
+    "P#P",
+    "IPI"
+   ],
+   "chave": {
+    "#": "cl:nucleo_teletransporte",
+    "I": "cl:pastilha_plutonio",
+    "P": "cl:unidade_qio_base"
+   }
+  },
+  {
+   "id": "mkc_qio_drive_supermassive",
+   "resultado": "cl:unidade_qio_supermassiva",
+   "tipo": "shaped",
+   "padrao": [
+    "IPI",
+    "P#P",
+    "IPI"
+   ],
+   "chave": {
+    "#": "cl:pastilha_antimateria",
+    "I": "cl:pastilha_polonio",
+    "P": "cl:unidade_qio_dilatacao"
+   }
+  },
+  {
+   "id": "mkc_qio_drive_time_dilating",
+   "resultado": "cl:unidade_qio_dilatacao",
+   "tipo": "shaped",
+   "padrao": [
+    "IPI",
+    "P#P",
+    "IPI"
+   ],
+   "chave": {
+    "#": "cl:pastilha_polonio",
+    "I": "cl:pastilha_plutonio",
+    "P": "cl:unidade_qio_hiperdensa"
+   }
+  },
+  {
+   "id": "mkc_qio_exporter",
+   "resultado": "cl:exportador_qio",
+   "tipo": "shaped",
+   "padrao": [
+    "ITI",
+    "ACA",
+    " # "
+   ],
+   "chave": {
+    "#": "minecraft:piston",
+    "A": "minecraft:ender_pearl",
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_chumbo",
+    "T": "cl:nucleo_teletransporte"
+   }
+  },
+  {
+   "id": "mkc_qio_importer",
+   "resultado": "cl:importador_qio",
+   "tipo": "shaped",
+   "padrao": [
+    "ITI",
+    "ACA",
+    " # "
+   ],
+   "chave": {
+    "#": "minecraft:sticky_piston",
+    "A": "minecraft:ender_pearl",
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_chumbo",
+    "T": "cl:nucleo_teletransporte"
+   }
+  },
+  {
+   "id": "mkc_qio_redstone_adapter",
+   "resultado": "cl:adaptador_redstone_qio",
+   "tipo": "shaped",
+   "padrao": [
+    "IWI",
+    "CRC",
+    "ITI"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:ender_pearl",
+    "R": "minecraft:redstone",
+    "T": "cl:nucleo_teletransporte",
+    "W": "minecraft:redstone_torch"
+   }
+  },
+  {
+   "id": "mkc_scuba_mask",
+   "resultado": "cl:mascara_mergulho",
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "GCG",
+    "S S"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "G": "minecraft:glass",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_scuba_tank",
+   "resultado": "cl:tanque_mergulho",
+   "tipo": "shaped",
+   "padrao": [
+    " C ",
+    "ATA",
+    "SSS"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico",
+    "S": "cl:lingote_aco",
+    "T": "cl:tanque_quimico_basico"
+   }
+  }
+ ],
+ "qio": {
+  "base": [
+   16000,
+   128
+  ],
+  "hyper_dense": [
+   128000,
+   256
+  ],
+  "time_dilating": [
+   1048000,
+   1024
+  ],
+  "supermassive": [
+   16000000000,
+   8192
+  ]
+ },
+ "gear": {
+  "DISASSEMBLER_MAX_ENERGY": 1000000,
+  "DISASSEMBLER_CHARGE_RATE": 5000,
+  "DISASSEMBLER_ENERGY_USAGE": 10,
+  "DISASSEMBLER_ENERGY_USAGE_WEAPON": 2000,
+  "BOW_MAX_ENERGY": 120000,
+  "BOW_CHARGE_RATE": 600,
+  "BOW_ENERGY_USAGE": 120,
+  "BOW_ENERGY_USAGE_FLAME": 1200,
+  "ENERGY_TABLET_MAX_ENERGY": 1000000,
+  "ENERGY_TABLET_CHARGE_RATE": 5000,
+  "FREE_RUNNERS_MAX_ENERGY": 64000,
+  "FREE_RUNNERS_CHARGE_RATE": 320,
+  "FREE_RUNNERS_FALL_COST": 50,
+  "NETWORK_READER_MAX_ENERGY": 60000,
+  "NETWORK_READER_CHARGE_RATE": 300,
+  "NETWORK_READER_ENERGY_USAGE": 400,
+  "PORTABLE_TELEPORTER_MAX_ENERGY": 1000000,
+  "PORTABLE_TELEPORTER_CHARGE_RATE": 5000,
+  "SEISMIC_READER_MAX_ENERGY": 12000,
+  "SEISMIC_READER_CHARGE_RATE": 60,
+  "SEISMIC_READER_ENERGY_USAGE": 250,
+  "MEKA_TOOL_CAPACITY": 16000000,
+  "MEKA_TOOL_CHARGE_RATE": 100000,
+  "MEKA_TOOL_ENERGY_USAGE_BASE": 10,
+  "MEKA_TOOL_ENERGY_USAGE_SILK": 100,
+  "MEKA_TOOL_ENERGY_USAGE_WEAPON": 2000,
+  "MEKA_TOOL_HOE": 10,
+  "MEKA_TOOL_SHOVEL": 10,
+  "MEKA_TOOL_AXE": 10,
+  "MEKA_TOOL_SHEAR_ENTITY": 10,
+  "MEKA_TOOL_SHEAR_BLOCK": 10,
+  "MEKA_TOOL_ENERGY_USAGE_TELEPORT": 1000,
+  "MEKA_SUIT_CAPACITY": 16000000,
+  "MEKA_SUIT_CHARGE_RATE": 100000,
+  "MEKA_SUIT_CHARGE_RATE_INVENTORY": 10000,
+  "MEKA_SUIT_CHARGE_RATE_SOLAR": 500,
+  "MEKA_SUIT_ENERGY_USAGE_DAMAGE": 100000,
+  "MEKA_SUIT_ENERGY_USAGE_MAGIC": 1000,
+  "MEKA_SUIT_ENERGY_USAGE_FALL": 50,
+  "MEKA_SUIT_ENERGY_USAGE_JUMP": 1000,
+  "MEKA_SUIT_ENERGY_USAGE_ELYTRA": 32000,
+  "MEKA_SUIT_ENERGY_USAGE_POTION": 40000,
+  "MEKA_SUIT_ENERGY_USAGE_SPRINT": 100,
+  "MEKA_SUIT_ENERGY_USAGE_VISION": 500,
+  "MEKA_SUIT_ENERGY_USAGE_SWIM": 500,
+  "MEKA_SUIT_ENERGY_USAGE_FOOD": 20000,
+  "MEKA_SUIT_ENERGY_USAGE_MAGNET": 250
+ }
+}

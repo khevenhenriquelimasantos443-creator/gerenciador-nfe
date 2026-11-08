@@ -732,6 +732,18 @@
  ],
  "receitas": [
   {
+   "id": "mkc_cardboard_box",
+   "resultado": "cl:caixa_papelao",
+   "tipo": "shaped",
+   "padrao": [
+    "##",
+    "##"
+   ],
+   "chave": {
+    "#": "cl:serragem"
+   }
+  },
+  {
    "id": "mkc_chargepad",
    "resultado": "cl:carregador_chao",
    "tipo": "shaped",

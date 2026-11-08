@@ -59,6 +59,12 @@ import { evaporador, registrarMekanism, separador } from "./maquinas/mekanism.js
 import { COMPONENTES_MK10, fabricaComp, infusor10, injecao10, purificacao10, registrarMekanism10, triturador10 } from "./maquinas/mekanism10.js";
 import { registrarMelhorias } from "./maquinas/mekanism_upgrades.js";
 import { registrarMekanismUtilidades, transmissorComp, utilComp } from "./maquinas/mekanism_utilidades.js";
+import { registrarMultiblocos } from "./maquinas/mekanism_multiblocos.js";
+import { nuclearComp, registrarNuclear } from "./maquinas/mekanism_nuclear.js";
+import { registrarRadiacao } from "./maquinas/mekanism_radiacao.js";
+import { estacaoComp, registrarEquipamentos } from "./maquinas/mekanism_equipamentos.js";
+import { qioComp, registrarQio } from "./maquinas/mekanism_qio.js";
+import { registrarRobit } from "./maquinas/mekanism_robit.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
@@ -222,6 +228,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:mk_fabrica", fabricaComp);
   blockComponentRegistry.registerCustomComponent("cl:mk_transmissor", transmissorComp);
   blockComponentRegistry.registerCustomComponent("cl:mk_util", utilComp);
+  blockComponentRegistry.registerCustomComponent("cl:mk_nuclear", nuclearComp);
+  blockComponentRegistry.registerCustomComponent("cl:mk_equip", estacaoComp);
+  blockComponentRegistry.registerCustomComponent("cl:mk_qio", qioComp);
   blockComponentRegistry.registerCustomComponent("cl:caixa_entrega", caixaEntrega);
   for (const [id, comp] of Object.entries({
     "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador,
@@ -352,6 +361,12 @@ registrarTamareira();
 registrarHc2();
 registrarMekanismQuimica();
 registrarMekanismUtilidades();
+registrarMultiblocos();
+registrarNuclear();
+registrarRadiacao();
+registrarEquipamentos();
+registrarQio();
+registrarRobit();
 registrarMelhorias();
 registrarEntrega();
 registrarVariedade();

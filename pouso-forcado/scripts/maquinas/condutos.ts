@@ -29,6 +29,8 @@ const LIGA_ENERGIA = new Set<string>([
   ...CABOS_ENERGIA, ...POWAH, IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, IDS.peneiraAutomatica, IDS.montadora, IDS.terminal,
   IDS.estufa, IDS.condensadorAvancado, ...ARMAZENAMENTO.conteineres, ...Object.keys(CELULAS), ...MAQUINAS_CONTEUDO, "cl:dinamo_redstone", "cl:tesseract",
   "cl:carregador_chao", "cl:teletransportador", "cl:entrelacador_quantico",
+  // 1.52.0: as portas de energia dos multiblocos.
+  "cl:porta_inducao", "cl:valvula_turbina_mk", "cl:porta_fusao", "cl:bobina_supercarregada",
 ]);
 // Outros transmissores (1.51.0: canos, tubos e transportadores do Mekanism) dizem com o que ligam.
 const OUTRAS = new Map<string, (b: Block, v: Block) => boolean>();

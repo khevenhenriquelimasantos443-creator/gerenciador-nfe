@@ -1,0 +1,1833 @@
+{
+ "itens": [
+  {
+   "id": "lingote_uranio",
+   "pt": "Barra de Urânio",
+   "en": "Uranium Ingot"
+  },
+  {
+   "id": "uranio_bruto",
+   "pt": "Urânio bruto",
+   "en": "Raw Uranium"
+  },
+  {
+   "id": "pepita_uranio",
+   "pt": "Pepita de Urânio",
+   "en": "Uranium Nugget"
+  },
+  {
+   "id": "po_uranio",
+   "pt": "Pó de Urânio",
+   "en": "Uranium Dust"
+  },
+  {
+   "id": "osmio_bruto",
+   "pt": "Ósmio bruto",
+   "en": "Raw Osmium"
+  },
+  {
+   "id": "pepita_osmio",
+   "pt": "Pepita de Ósmio",
+   "en": "Osmium Nugget"
+  },
+  {
+   "id": "estanho_bruto",
+   "pt": "Estanho bruto",
+   "en": "Raw Tin"
+  },
+  {
+   "id": "pepita_estanho",
+   "pt": "Pepita de Estanho",
+   "en": "Tin Nugget"
+  },
+  {
+   "id": "pepita_aco",
+   "pt": "Pepita de Aço",
+   "en": "Steel Nugget"
+  },
+  {
+   "id": "pepita_bronze",
+   "pt": "Pepita de Bronze",
+   "en": "Bronze Nugget"
+  },
+  {
+   "id": "pepita_obsidiana_refinada",
+   "pt": "Pepita de Obsidiana Refinada",
+   "en": "Refined Obsidian Nugget"
+  },
+  {
+   "id": "pepita_glowstone_refinado",
+   "pt": "Pepita de Pedra Luminosa Refinada",
+   "en": "Refined Glowstone Nugget"
+  },
+  {
+   "id": "po_bronze",
+   "pt": "Pó de Bronze",
+   "en": "Bronze Dust"
+  },
+  {
+   "id": "po_esmeralda",
+   "pt": "Pó de Esmeralda",
+   "en": "Emerald Dust"
+  },
+  {
+   "id": "po_netherita",
+   "pt": "Pó de Netherita",
+   "en": "Netherite Dust"
+  },
+  {
+   "id": "sucata_netherita_suja",
+   "pt": "Pó de Netherita sujo",
+   "en": "Dirty Netherite Scrap"
+  },
+  {
+   "id": "bolo_amarelo_uranio",
+   "pt": "Bolo Amarelo de Urânio",
+   "en": "Yellow Cake Uranium"
+  },
+  {
+   "id": "pastilha_plutonio",
+   "pt": "Pastilha de Plutônio",
+   "en": "Plutonium Pellet"
+  },
+  {
+   "id": "pastilha_polonio",
+   "pt": "Pastilha de Polônio",
+   "en": "Polonium Pellet"
+  },
+  {
+   "id": "pastilha_antimateria",
+   "pt": "Pastilha de Antimatéria",
+   "en": "Antimatter Pellet"
+  },
+  {
+   "id": "fragmento_fissil_reprocessado",
+   "pt": "Fragmento Fissil Reprocessado",
+   "en": "Reprocessed Fissile Fragment"
+  },
+  {
+   "id": "dosimetro",
+   "pt": "Dosímetro",
+   "en": "Dosimeter"
+  },
+  {
+   "id": "contador_geiger",
+   "pt": "Contador Geiger",
+   "en": "Geiger Counter"
+  },
+  {
+   "id": "mascara_hazmat",
+   "pt": "Máscara Anti-Radiação",
+   "en": "Hazmat Mask"
+  },
+  {
+   "id": "jaleco_hazmat",
+   "pt": "Veste Anti-Radiação",
+   "en": "Hazmat Gown"
+  },
+  {
+   "id": "calca_hazmat",
+   "pt": "Calça Anti-Radiação",
+   "en": "Hazmat Pants"
+  },
+  {
+   "id": "botas_hazmat",
+   "pt": "Botas Anti-Radiação",
+   "en": "Hazmat Boots"
+  },
+  {
+   "id": "hohlraum",
+   "pt": "Hohlraum",
+   "en": "Hohlraum"
+  },
+  {
+   "id": "pa_turbina_mk",
+   "pt": "Hélice de Turbina",
+   "en": "Turbine Blade"
+  }
+ ],
+ "cubos": [
+  {
+   "id": "bloco_uranio",
+   "pt": "Bloco de Urânio",
+   "en": "Block of Uranium",
+   "vidro": false
+  },
+  {
+   "id": "bloco_uranio_bruto",
+   "pt": "Bloco de Urânio Bruto",
+   "en": "Block of Raw Uranium",
+   "vidro": false
+  },
+  {
+   "id": "minerio_uranio",
+   "pt": "Minério de urânio",
+   "en": "Uranium Ore",
+   "vidro": false
+  },
+  {
+   "id": "minerio_uranio_profundo",
+   "pt": "Minério de urânio de ardósia",
+   "en": "Deepslate Uranium Ore",
+   "vidro": false
+  },
+  {
+   "id": "minerio_osmio",
+   "pt": "Minério de ósmio",
+   "en": "Osmium Ore",
+   "vidro": false
+  },
+  {
+   "id": "minerio_osmio_profundo",
+   "pt": "Minério de Ósmio de Ardósia",
+   "en": "Deepslate Osmium Ore",
+   "vidro": false
+  },
+  {
+   "id": "bloco_osmio",
+   "pt": "Bloco de Ósmio",
+   "en": "Block of Osmium",
+   "vidro": false
+  },
+  {
+   "id": "bloco_osmio_bruto",
+   "pt": "Bloco de Ósmio Bruto",
+   "en": "Block of Raw Osmium",
+   "vidro": false
+  },
+  {
+   "id": "minerio_estanho",
+   "pt": "Minério de estanho",
+   "en": "Tin Ore",
+   "vidro": false
+  },
+  {
+   "id": "minerio_estanho_profundo",
+   "pt": "Minério de estanho de ardósia",
+   "en": "Deepslate Tin Ore",
+   "vidro": false
+  },
+  {
+   "id": "bloco_estanho_bruto",
+   "pt": "Bloco de Estanho Bruto",
+   "en": "Block of Raw Tin",
+   "vidro": false
+  },
+  {
+   "id": "bloco_obsidiana_refinada",
+   "pt": "Obsidiana refinada",
+   "en": "Refined Obsidian",
+   "vidro": false
+  },
+  {
+   "id": "bloco_glowstone_refinado",
+   "pt": "Pedra luminosa refinada",
+   "en": "Refined Glowstone",
+   "vidro": false
+  },
+  {
+   "id": "bloco_sal",
+   "pt": "Bloco de sal",
+   "en": "Salt Block",
+   "vidro": false
+  },
+  {
+   "id": "bloco_biocombustivel",
+   "pt": "Bloco de Biocombustível",
+   "en": "Block of Bio Fuel",
+   "vidro": false
+  },
+  {
+   "id": "revestimento_caldeira",
+   "pt": "Revestimento da Caldeira",
+   "en": "Boiler Casing",
+   "vidro": false
+  },
+  {
+   "id": "valvula_caldeira",
+   "pt": "Válvula da Caldeira",
+   "en": "Boiler Valve",
+   "vidro": false
+  },
+  {
+   "id": "dispersor_pressao",
+   "pt": "Dispersor de Pressão",
+   "en": "Pressure Disperser",
+   "vidro": false
+  },
+  {
+   "id": "elemento_superaquecimento",
+   "pt": "Elemento de Superaquecimento",
+   "en": "Superheating Element",
+   "vidro": false
+  },
+  {
+   "id": "valvula_dinamica",
+   "pt": "Válvula Dinâmica",
+   "en": "Dynamic Valve",
+   "vidro": false
+  },
+  {
+   "id": "vidro_estrutural",
+   "pt": "Vidro estrutural",
+   "en": "Structural Glass",
+   "vidro": true
+  },
+  {
+   "id": "bloco_evaporacao",
+   "pt": "Bloco de Evaporação Térmica",
+   "en": "Thermal Evaporation Block",
+   "vidro": false
+  },
+  {
+   "id": "controlador_evaporacao",
+   "pt": "Controlador de Evaporação Térmica",
+   "en": "Thermal Evaporation Controller",
+   "vidro": false
+  },
+  {
+   "id": "valvula_evaporacao",
+   "pt": "Válvula de Evaporação Térmica",
+   "en": "Thermal Evaporation Valve",
+   "vidro": false
+  },
+  {
+   "id": "revestimento_inducao",
+   "pt": "Revestimento de Indução",
+   "en": "Induction Casing",
+   "vidro": false
+  },
+  {
+   "id": "porta_inducao",
+   "pt": "Porta de Indução",
+   "en": "Induction Port",
+   "vidro": false
+  },
+  {
+   "id": "revestimento_sps",
+   "pt": "Revestimento do AFS",
+   "en": "SPS Casing",
+   "vidro": false
+  },
+  {
+   "id": "porta_sps",
+   "pt": "Porta do AFS",
+   "en": "SPS Port",
+   "vidro": false
+  },
+  {
+   "id": "celula_inducao_basico",
+   "pt": "Célula de Indução Básica",
+   "en": "Basic Induction Cell",
+   "vidro": false
+  },
+  {
+   "id": "celula_inducao_avancado",
+   "pt": "Célula de Indução Avançada",
+   "en": "Advanced Induction Cell",
+   "vidro": false
+  },
+  {
+   "id": "celula_inducao_elite",
+   "pt": "Célula de Indução Elite",
+   "en": "Elite Induction Cell",
+   "vidro": false
+  },
+  {
+   "id": "celula_inducao_definitivo",
+   "pt": "Célula de Indução Ultimate",
+   "en": "Ultimate Induction Cell",
+   "vidro": false
+  },
+  {
+   "id": "provedor_inducao_basico",
+   "pt": "Provedor de Indução Básico",
+   "en": "Basic Induction Provider",
+   "vidro": false
+  },
+  {
+   "id": "provedor_inducao_avancado",
+   "pt": "Provedor de Indução Avançado",
+   "en": "Advanced Induction Provider",
+   "vidro": false
+  },
+  {
+   "id": "provedor_inducao_elite",
+   "pt": "Provedor de Indução Elite",
+   "en": "Elite Induction Provider",
+   "vidro": false
+  },
+  {
+   "id": "provedor_inducao_definitivo",
+   "pt": "Provedor de Indução Ultimate",
+   "en": "Ultimate Induction Provider",
+   "vidro": false
+  },
+  {
+   "id": "revestimento_fissao",
+   "pt": "Revestimento do Reator de Fissão",
+   "en": "Fission Reactor Casing",
+   "vidro": false
+  },
+  {
+   "id": "porta_fissao",
+   "pt": "Porta do Reator de Fissão",
+   "en": "Fission Reactor Port",
+   "vidro": false
+  },
+  {
+   "id": "adaptador_logico_fissao",
+   "pt": "Adaptador Lógico do Reator de Fissão",
+   "en": "Fission Reactor Logic Adapter",
+   "vidro": false
+  },
+  {
+   "id": "vidro_reator_mk",
+   "pt": "Vidro do Reator",
+   "en": "Reactor Glass",
+   "vidro": true
+  },
+  {
+   "id": "revestimento_turbina_mk",
+   "pt": "Revestimento de Turbina",
+   "en": "Turbine Casing",
+   "vidro": false
+  },
+  {
+   "id": "valvula_turbina_mk",
+   "pt": "Válvula de Turbina",
+   "en": "Turbine Valve",
+   "vidro": false
+  },
+  {
+   "id": "ventilacao_turbina",
+   "pt": "Ventilador de Turbina",
+   "en": "Turbine Vent",
+   "vidro": false
+  },
+  {
+   "id": "rotor_turbina",
+   "pt": "Rotor de Turbina",
+   "en": "Turbine Rotor",
+   "vidro": false
+  },
+  {
+   "id": "bobina_eletromagnetica",
+   "pt": "Bobina Eletromagnética",
+   "en": "Electromagnetic Coil",
+   "vidro": false
+  },
+  {
+   "id": "condensador_saturante",
+   "pt": "Saturando Condensador",
+   "en": "Saturating Condenser",
+   "vidro": false
+  },
+  {
+   "id": "controlador_fusao",
+   "pt": "Controlador do Reator de Fusão",
+   "en": "Fusion Reactor Controller",
+   "vidro": false
+  },
+  {
+   "id": "moldura_fusao",
+   "pt": "Armação do Reator de Fusão",
+   "en": "Fusion Reactor Frame",
+   "vidro": false
+  },
+  {
+   "id": "porta_fusao",
+   "pt": "Porta do Reator de Fusão",
+   "en": "Fusion Reactor Port",
+   "vidro": false
+  },
+  {
+   "id": "adaptador_logico_fusao",
+   "pt": "Adaptador Lógico do Reator de Fusão",
+   "en": "Fusion Reactor Logic Adapter",
+   "vidro": false
+  },
+  {
+   "id": "matriz_foco_laser",
+   "pt": "Matriz Focal do Laser",
+   "en": "Laser Focus Matrix",
+   "vidro": false
+  }
+ ],
+ "modelos": [
+  {
+   "id": "bobina_supercarregada",
+   "pt": "Bobina supercarregada",
+   "en": "Supercharged Coil",
+   "modelo": {
+    "geometria": "geometry.cl.mk_bobina_supercarregada",
+    "materiais": {
+     "m_supercharged_coil": "clc_mkm_supercharged_coil",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -4,
+      0,
+      -4
+     ],
+     "size": [
+      8,
+      16,
+      8
+     ]
+    }
+   }
+  },
+  {
+   "id": "conjunto_combustivel_fissao",
+   "pt": "Montagem de Combustível de Fissão",
+   "en": "Fission Fuel Assembly",
+   "modelo": {
+    "geometria": "geometry.cl.mk_conjunto_combustivel_fissao",
+    "materiais": {
+     "m_fuel_rod_assembly_side": "clc_mkm_fuel_rod_assembly_side",
+     "m_fuel_rod_assembly_rods_top": "clc_mkm_fuel_rod_assembly_rods_top",
+     "m_fuel_rod_assembly_base": "clc_mkm_fuel_rod_assembly_base"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "conjunto_barras_controle",
+   "pt": "Montagem de Hastes de Controle",
+   "en": "Control Rod Assembly",
+   "modelo": {
+    "geometria": "geometry.cl.mk_conjunto_barras_controle",
+    "materiais": {
+     "m_control_rod_assembly_components": "clc_mkm_control_rod_assembly_components",
+     "m_fuel_rod_assembly_side": "clc_mkm_fuel_rod_assembly_side",
+     "m_fuel_rod_assembly_rods_top": "clc_mkm_fuel_rod_assembly_rods_top",
+     "m_control_rod_assembly": "clc_mkm_control_rod_assembly"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "complexo_rotacional",
+   "pt": "Complexo Rotacional",
+   "en": "Rotational Complex",
+   "modelo": {
+    "geometria": "geometry.cl.mk_complexo_rotacional",
+    "materiais": {
+     "m_rotational_complex_top": "clc_mkm_rotational_complex_top",
+     "m_rotational_complex_side": "clc_mkm_rotational_complex_side"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ],
+ "maquinas": [
+  {
+   "id": "centrifuga_isotopica",
+   "pt": "Centrífuga Isotópica",
+   "en": "Isotopic Centrifuge",
+   "modelo": {
+    "geometria": "geometry.cl.mk_centrifuga_isotopica",
+    "materiais": {
+     "m_isotopic_centrifuge": "clc_mkm_isotopic_centrifuge",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "ativador_neutrons_solar",
+   "pt": "Ativador Neutrônico Solar",
+   "en": "Solar Neutron Activator",
+   "modelo": {
+    "geometria": "geometry.cl.mk_ativador_neutrons_solar",
+    "materiais": {
+     "m_solar_neutron_activator2": "clc_mkm_solar_neutron_activator2",
+     "m_solar_neutron_activator1": "clc_mkm_solar_neutron_activator1",
+     "m_bottom": "clc_mkm_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "nucleossintetizador",
+   "pt": "Nucleossintetizador Antiprotônico",
+   "en": "Antiprotonic Nucleosynthesizer",
+   "modelo": {
+    "geometria": "geometry.cl.mk_nucleossintetizador",
+    "materiais": {
+     "m_antiprotonic_nucleosynthesizer_front": "clc_mkm_antiprotonic_nucleosynthesizer_front",
+     "m_antiprotonic_nucleosynthesizer_side": "clc_mkm_antiprotonic_nucleosynthesizer_side",
+     "m_antiprotonic_nucleosynthesizer_back": "clc_mkm_antiprotonic_nucleosynthesizer_back",
+     "m_antiprotonic_nucleosynthesizer_top": "clc_mkm_antiprotonic_nucleosynthesizer_top",
+     "m_antiprotonic_nucleosynthesizer_bottom": "clc_mkm_antiprotonic_nucleosynthesizer_bottom",
+     "m_antiprotonic_nucleosynthesizer_elements": "clc_mkm_antiprotonic_nucleosynthesizer_elements",
+     "m_leds": "clc_mkm_leds",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_glass": "clc_mkm_glass"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "liquidificador_nutricional",
+   "pt": "Liquidificador Nutricional",
+   "en": "Nutritional Liquifier",
+   "modelo": {
+    "geometria": "geometry.cl.mk_liquidificador_nutricional",
+    "materiais": {
+     "m_nutritional_liquifier": "clc_mkm_nutritional_liquifier"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "aquecedor_resistivo",
+   "pt": "Aquecedor Resistivo",
+   "en": "Resistive Heater",
+   "modelo": {
+    "geometria": "geometry.cl.mk_aquecedor_resistivo",
+    "materiais": {
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_resistive_heater_top": "clc_mkm_resistive_heater_top",
+     "m_resistive_heater_sides": "clc_mkm_resistive_heater_sides",
+     "m_resistive_heater_bottom": "clc_mkm_resistive_heater_bottom",
+     "m_resistive_heater_sides_2": "clc_mkm_resistive_heater_sides_2"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "aquecedor_lenha",
+   "pt": "Aquecedor a Lenha",
+   "en": "Fuelwood Heater",
+   "modelo": {
+    "geometria": "geometry.cl.mk_aquecedor_lenha",
+    "materiais": {
+     "m_bottom": "clc_mkm_bottom",
+     "m_top": "clc_mkm_top",
+     "m_front": "clc_mkm_front",
+     "m_back": "clc_mkm_back",
+     "m_right": "clc_mkm_right",
+     "m_left": "clc_mkm_left"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "laser_mk",
+   "pt": "Laser",
+   "en": "Laser",
+   "modelo": {
+    "geometria": "geometry.cl.mk_laser_mk",
+    "materiais": {
+     "m_laser": "clc_mkm_laser",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -4,
+      0,
+      -4
+     ],
+     "size": [
+      8,
+      16,
+      8
+     ]
+    }
+   }
+  },
+  {
+   "id": "amplificador_laser",
+   "pt": "Amplificador de Laser",
+   "en": "Laser Amplifier",
+   "modelo": {
+    "geometria": "geometry.cl.mk_amplificador_laser",
+    "materiais": {
+     "m_laser_amplifier_side_empty": "clc_mkm_laser_amplifier_side_empty",
+     "m_laser_device_frame": "clc_mkm_laser_device_frame",
+     "m_laser_amplifier_side_full": "clc_mkm_laser_amplifier_side_full"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "feixe_trator_laser",
+   "pt": "Raio Trator a Laser",
+   "en": "Laser Tractor Beam",
+   "modelo": {
+    "geometria": "geometry.cl.mk_feixe_trator_laser",
+    "materiais": {
+     "m_laser_tractor_beam_side_empty": "clc_mkm_laser_tractor_beam_side_empty",
+     "m_laser_device_frame": "clc_mkm_laser_device_frame",
+     "m_laser_tractor_beam_side_full": "clc_mkm_laser_tractor_beam_side_full"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "estabilizador_dimensional",
+   "pt": "Estabilizador Dimensional",
+   "en": "Dimensional Stabilizer"
+  },
+  {
+   "id": "barril_residuos_radioativos",
+   "pt": "Barril de resíduos radioativos",
+   "en": "Radioactive Waste Barrel",
+   "modelo": {
+    "geometria": "geometry.cl.mk_barril_residuos_radioativos",
+    "materiais": {
+     "m_radioactive_waste_barrel": "clc_mkm_radioactive_waste_barrel"
+    },
+    "caixa": {
+     "origin": [
+      -6,
+      0,
+      -6
+     ],
+     "size": [
+      12,
+      16,
+      12
+     ]
+    }
+   }
+  }
+ ],
+ "condutores": [
+  {
+   "id": "condutor_termico_basico",
+   "pt": "Condutor Termodinâmico Básico",
+   "en": "Basic Thermodynamic Conductor",
+   "nivel": "basic",
+   "conducao": 10.0,
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "condutor_termico_avancado",
+   "pt": "Condutor Termodinâmico Avançado",
+   "en": "Advanced Thermodynamic Conductor",
+   "nivel": "advanced",
+   "conducao": 400.0,
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "condutor_termico_elite",
+   "pt": "Condutor Termodinâmico Elite",
+   "en": "Elite Thermodynamic Conductor",
+   "nivel": "elite",
+   "conducao": 8000.0,
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "id": "condutor_termico_definitivo",
+   "pt": "Condutor Termodinâmico Ultimate",
+   "en": "Ultimate Thermodynamic Conductor",
+   "nivel": "ultimate",
+   "conducao": 100000.0,
+   "caixa": {
+    "origin": [
+     -3.0,
+     5.0,
+     -3.0
+    ],
+    "size": [
+     6,
+     6,
+     6
+    ]
+   }
+  }
+ ],
+ "liquidos": [
+  {
+   "q": "heavy_water",
+   "id": "balde_agua_pesada",
+   "pt": "Balde de Água Pesada",
+   "en": "Heavy Water Bucket",
+   "qpt": "Água pesada",
+   "qen": "Heavy Water"
+  },
+  {
+   "q": "nutritional_paste",
+   "id": "balde_pasta_nutritiva",
+   "pt": "Balde de pasta nutricional",
+   "en": "Nutritional Paste Bucket",
+   "qpt": "Pasta nutricional",
+   "qen": "Nutritional Paste"
+  }
+ ],
+ "receitas": [
+  {
+   "id": "mkc_antiprotonic_nucleosynthesizer",
+   "resultado": "cl:nucleossintetizador",
+   "tipo": "shaped",
+   "padrao": [
+    "#C#",
+    "AXA",
+    "#C#"
+   ],
+   "chave": {
+    "#": "cl:liga_atomica",
+    "A": "cl:pastilha_antimateria",
+    "C": "cl:circuito_controle_supremo",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_boiler_casing",
+   "resultado": "cl:revestimento_caldeira",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "SIS",
+    " S "
+   ],
+   "chave": {
+    "I": "minecraft:iron_ingot",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_boiler_valve",
+   "resultado": "cl:valvula_caldeira",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    " # ",
+    "#C#",
+    " # "
+   ],
+   "chave": {
+    "#": "cl:revestimento_caldeira",
+    "C": "cl:circuito_controle_avancado"
+   }
+  },
+  {
+   "id": "mkc_dimensional_stabilizer",
+   "resultado": "cl:estabilizador_dimensional",
+   "tipo": "shaped",
+   "padrao": [
+    "ICI",
+    "ADA",
+    "ICI"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "D": "minecraft:diamond_block",
+    "I": "cl:lingote_obsidiana_refinada"
+   }
+  },
+  {
+   "id": "mkc_dosimeter",
+   "resultado": "cl:dosimetro",
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "IRI",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:lingote_chumbo",
+    "R": "minecraft:redstone"
+   }
+  },
+  {
+   "id": "mkc_dynamic_valve",
+   "resultado": "cl:valvula_dinamica",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    " # ",
+    "#C#",
+    " # "
+   ],
+   "chave": {
+    "#": "cl:tanque_dinamico",
+    "C": "cl:circuito_controle_basico"
+   }
+  },
+  {
+   "id": "mkc_fuelwood_heater",
+   "resultado": "cl:aquecedor_lenha",
+   "tipo": "shaped",
+   "padrao": [
+    "SCS",
+    "#X#",
+    "SSS"
+   ],
+   "chave": {
+    "#": "minecraft:furnace",
+    "C": "cl:circuito_controle_basico",
+    "S": "cl:lingote_aco",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_geiger_counter",
+   "resultado": "cl:contador_geiger",
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "ICI",
+    " I "
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "I": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_hazmat_boots",
+   "resultado": "cl:botas_hazmat",
+   "tipo": "shaped",
+   "padrao": [
+    "I I",
+    "IDI"
+   ],
+   "chave": {
+    "D": "minecraft:black_dye",
+    "I": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_hazmat_gown",
+   "resultado": "cl:jaleco_hazmat",
+   "tipo": "shaped",
+   "padrao": [
+    "IDI",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "D": "minecraft:orange_dye",
+    "I": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_hazmat_mask",
+   "resultado": "cl:mascara_hazmat",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "IDI"
+   ],
+   "chave": {
+    "D": "minecraft:orange_dye",
+    "I": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_hazmat_pants",
+   "resultado": "cl:calca_hazmat",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "IDI",
+    "I I"
+   ],
+   "chave": {
+    "D": "minecraft:orange_dye",
+    "I": "cl:lingote_chumbo"
+   }
+  },
+  {
+   "id": "mkc_isotopic_centrifuge",
+   "resultado": "cl:centrifuga_isotopica",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "CTC",
+    "III"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_chumbo",
+    "T": "cl:tanque_quimico_basico"
+   }
+  },
+  {
+   "id": "mkc_laser",
+   "resultado": "cl:laser_mk",
+   "tipo": "shaped",
+   "padrao": [
+    "AE ",
+    "AX#",
+    "AE "
+   ],
+   "chave": {
+    "#": "minecraft:diamond",
+    "A": "cl:liga_reforcada",
+    "E": "cl:tablet_energia",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_laser_amplifier",
+   "resultado": "cl:amplificador_laser",
+   "tipo": "shaped",
+   "padrao": [
+    "SSS",
+    "SE#",
+    "SSS"
+   ],
+   "chave": {
+    "#": "minecraft:diamond",
+    "E": "cl:cubo_energia_basico",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_laser_tractor_beam",
+   "resultado": "cl:feixe_trator_laser",
+   "tipo": "shaped",
+   "padrao": [
+    "P",
+    "#"
+   ],
+   "chave": {
+    "#": "cl:amplificador_laser",
+    "P": "cl:barril_pessoal"
+   }
+  },
+  {
+   "id": "mkc_nutritional_liquifier",
+   "resultado": "cl:liquidificador_nutricional",
+   "tipo": "shaped",
+   "padrao": [
+    "RCR",
+    "#X#",
+    "RCR"
+   ],
+   "chave": {
+    "#": "minecraft:bowl",
+    "C": "cl:circuito_controle_basico",
+    "R": "minecraft:redstone",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_pressure_disperser",
+   "resultado": "cl:dispersor_pressao",
+   "tipo": "shaped",
+   "padrao": [
+    "S#S",
+    "#A#",
+    "S#S"
+   ],
+   "chave": {
+    "#": "minecraft:iron_bars",
+    "A": "cl:liga_enriquecida",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_radioactive_waste_barrel",
+   "resultado": "cl:barril_residuos_radioativos",
+   "tipo": "shaped",
+   "padrao": [
+    "SIS",
+    "I I",
+    "SIS"
+   ],
+   "chave": {
+    "I": "cl:lingote_chumbo",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_resistive_heater",
+   "resultado": "cl:aquecedor_resistivo",
+   "tipo": "shaped",
+   "padrao": [
+    "IRI",
+    "RXR",
+    "IEI"
+   ],
+   "chave": {
+    "E": "cl:tablet_energia",
+    "I": "cl:lingote_estanho",
+    "R": "minecraft:redstone",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_solar_neutron_activator",
+   "resultado": "cl:ativador_neutrons_solar",
+   "tipo": "shaped",
+   "padrao": [
+    "A#A",
+    "CXC",
+    "III"
+   ],
+   "chave": {
+    "#": "cl:folha_pead",
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "cl:lingote_bronze",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_sps_casing",
+   "resultado": "cl:revestimento_sps",
+   "tipo": "shaped",
+   "padrao": [
+    "PAP",
+    "A#A",
+    "PAP"
+   ],
+   "chave": {
+    "#": "cl:pastilha_plutonio",
+    "A": "cl:pastilha_polonio",
+    "P": "cl:folha_pead"
+   }
+  },
+  {
+   "id": "mkc_sps_port",
+   "resultado": "cl:porta_sps",
+   "tipo": "shaped",
+   "padrao": [
+    " # ",
+    "#C#",
+    " # "
+   ],
+   "chave": {
+    "#": "cl:revestimento_sps",
+    "C": "cl:circuito_controle_supremo"
+   }
+  },
+  {
+   "id": "mkc_structural_glass",
+   "resultado": "cl:vidro_estrutural",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "SGS",
+    " S "
+   ],
+   "chave": {
+    "G": "minecraft:glass",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_supercharged_coil",
+   "resultado": "cl:bobina_supercarregada",
+   "tipo": "shaped",
+   "padrao": [
+    "ccc",
+    "C#C",
+    "AAA"
+   ],
+   "chave": {
+    "#": "cl:laser_mk",
+    "A": "cl:pastilha_polonio",
+    "C": "cl:circuito_controle_supremo",
+    "c": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "mkc_superheating_element",
+   "resultado": "cl:elemento_superaquecimento",
+   "tipo": "shaped",
+   "padrao": [
+    "AIA",
+    "IXI",
+    "AIA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "I": "minecraft:copper_ingot",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_nuggets_bronze",
+   "resultado": "cl:pepita_bronze",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_bronze"
+   ]
+  },
+  {
+   "id": "mkc_nuggets_refined_glowstone",
+   "resultado": "cl:pepita_glowstone_refinado",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_glowstone_refinado"
+   ]
+  },
+  {
+   "id": "mkc_nuggets_refined_obsidian",
+   "resultado": "cl:pepita_obsidiana_refinada",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_obsidiana_refinada"
+   ]
+  },
+  {
+   "id": "mkc_nuggets_steel",
+   "resultado": "cl:pepita_aco",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_aco"
+   ]
+  },
+  {
+   "id": "mkc_induction_casing",
+   "resultado": "cl:revestimento_inducao",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "SES",
+    " S "
+   ],
+   "chave": {
+    "E": "cl:tablet_energia",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_induction_port",
+   "resultado": "cl:porta_inducao",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    " # ",
+    "#C#",
+    " # "
+   ],
+   "chave": {
+    "#": "cl:revestimento_inducao",
+    "C": "cl:circuito_controle_elite"
+   }
+  },
+  {
+   "id": "mkc_induction_provider_advanced",
+   "resultado": "cl:provedor_inducao_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "CPC",
+    "P#P",
+    "CPC"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_avancado",
+    "C": "cl:circuito_controle_avancado",
+    "P": "cl:provedor_inducao_basico"
+   }
+  },
+  {
+   "id": "mkc_induction_provider_basic",
+   "resultado": "cl:provedor_inducao_basico",
+   "tipo": "shaped",
+   "padrao": [
+    "LCL",
+    "C#C",
+    "LCL"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_basico",
+    "C": "cl:circuito_controle_basico",
+    "L": "cl:po_litio"
+   }
+  },
+  {
+   "id": "mkc_induction_provider_elite",
+   "resultado": "cl:provedor_inducao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "CPC",
+    "P#P",
+    "CPC"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_elite",
+    "C": "cl:circuito_controle_elite",
+    "P": "cl:provedor_inducao_avancado"
+   }
+  },
+  {
+   "id": "mkc_induction_provider_ultimate",
+   "resultado": "cl:provedor_inducao_definitivo",
+   "tipo": "shaped",
+   "padrao": [
+    "CPC",
+    "P#P",
+    "CPC"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_definitivo",
+    "C": "cl:circuito_controle_supremo",
+    "P": "cl:provedor_inducao_elite"
+   }
+  },
+  {
+   "id": "mkc_induction_cell_advanced",
+   "resultado": "cl:celula_inducao_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "EPE",
+    "P#P",
+    "EPE"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_avancado",
+    "E": "cl:tablet_energia",
+    "P": "cl:celula_inducao_basico"
+   }
+  },
+  {
+   "id": "mkc_induction_cell_basic",
+   "resultado": "cl:celula_inducao_basico",
+   "tipo": "shaped",
+   "padrao": [
+    "LEL",
+    "E#E",
+    "LEL"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_basico",
+    "E": "cl:tablet_energia",
+    "L": "cl:po_litio"
+   }
+  },
+  {
+   "id": "mkc_induction_cell_elite",
+   "resultado": "cl:celula_inducao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "EPE",
+    "P#P",
+    "EPE"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_elite",
+    "E": "cl:tablet_energia",
+    "P": "cl:celula_inducao_avancado"
+   }
+  },
+  {
+   "id": "mkc_induction_cell_ultimate",
+   "resultado": "cl:celula_inducao_definitivo",
+   "tipo": "shaped",
+   "padrao": [
+    "EPE",
+    "P#P",
+    "EPE"
+   ],
+   "chave": {
+    "#": "cl:cubo_energia_definitivo",
+    "E": "cl:tablet_energia",
+    "P": "cl:celula_inducao_elite"
+   }
+  },
+  {
+   "id": "mkc_transmitter_thermodynamic_conductor_advanced",
+   "resultado": "cl:condutor_termico_avancado",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "P": "cl:condutor_termico_basico"
+   }
+  },
+  {
+   "id": "mkc_transmitter_thermodynamic_conductor_basic",
+   "resultado": "cl:condutor_termico_basico",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "S#S"
+   ],
+   "chave": {
+    "#": "minecraft:copper_ingot",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_transmitter_thermodynamic_conductor_elite",
+   "resultado": "cl:condutor_termico_elite",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "P": "cl:condutor_termico_avancado"
+   }
+  },
+  {
+   "id": "mkc_transmitter_thermodynamic_conductor_ultimate",
+   "resultado": "cl:condutor_termico_definitivo",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PAP",
+    "PPP"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "P": "cl:condutor_termico_elite"
+   }
+  },
+  {
+   "id": "mkc_processing_tin_nugget_from_ingot",
+   "resultado": "cl:pepita_estanho",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_estanho"
+   ]
+  },
+  {
+   "id": "mkc_processing_tin_raw_storage_blocks_from_raw",
+   "resultado": "cl:bloco_estanho_bruto",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:estanho_bruto",
+    "P": "cl:estanho_bruto"
+   }
+  },
+  {
+   "id": "mkc_processing_tin_raw_from_raw_block",
+   "resultado": "cl:estanho_bruto",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_estanho_bruto"
+   ]
+  },
+  {
+   "id": "mkc_processing_uranium_nugget_from_ingot",
+   "resultado": "cl:pepita_uranio",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_uranio"
+   ]
+  },
+  {
+   "id": "mkc_processing_uranium_raw_storage_blocks_from_raw",
+   "resultado": "cl:bloco_uranio_bruto",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:uranio_bruto",
+    "P": "cl:uranio_bruto"
+   }
+  },
+  {
+   "id": "mkc_processing_uranium_storage_blocks_from_ingots",
+   "resultado": "cl:bloco_uranio",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:lingote_uranio",
+    "P": "cl:lingote_uranio"
+   }
+  },
+  {
+   "id": "mkc_processing_uranium_raw_from_raw_block",
+   "resultado": "cl:uranio_bruto",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_uranio_bruto"
+   ]
+  },
+  {
+   "id": "mkc_processing_uranium_ingot_from_block",
+   "resultado": "cl:lingote_uranio",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_uranio"
+   ]
+  },
+  {
+   "id": "mkc_processing_uranium_ingot_from_nuggets",
+   "resultado": "cl:lingote_uranio",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:pepita_uranio",
+    "P": "cl:pepita_uranio"
+   }
+  },
+  {
+   "id": "mkc_processing_osmium_nugget_from_ingot",
+   "resultado": "cl:pepita_osmio",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lingote_osmio"
+   ]
+  },
+  {
+   "id": "mkc_processing_osmium_raw_storage_blocks_from_raw",
+   "resultado": "cl:bloco_osmio_bruto",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:osmio_bruto",
+    "P": "cl:osmio_bruto"
+   }
+  },
+  {
+   "id": "mkc_processing_osmium_storage_blocks_from_ingots",
+   "resultado": "cl:bloco_osmio",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:lingote_osmio",
+    "P": "cl:lingote_osmio"
+   }
+  },
+  {
+   "id": "mkc_processing_osmium_raw_from_raw_block",
+   "resultado": "cl:osmio_bruto",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_osmio_bruto"
+   ]
+  },
+  {
+   "id": "mkc_thermal_evaporation_block",
+   "resultado": "cl:bloco_evaporacao",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "SIS",
+    " S "
+   ],
+   "chave": {
+    "I": "minecraft:copper_ingot",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_thermal_evaporation_controller",
+   "resultado": "cl:controlador_evaporacao",
+   "tipo": "shaped",
+   "padrao": [
+    "CGC",
+    "#B#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:bloco_evaporacao",
+    "B": "minecraft:bucket",
+    "C": "cl:circuito_controle_avancado",
+    "G": "minecraft:glass_pane"
+   }
+  },
+  {
+   "id": "mkc_thermal_evaporation_valve",
+   "resultado": "cl:valvula_evaporacao",
+   "tipo": "shaped",
+   "padrao": [
+    " # ",
+    "#C#",
+    " # "
+   ],
+   "chave": {
+    "#": "cl:bloco_evaporacao",
+    "C": "cl:circuito_controle_avancado"
+   }
+  },
+  {
+   "id": "mkc_storage_blocks_bio_fuel",
+   "resultado": "cl:bloco_biocombustivel",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:biocombustivel",
+    "P": "cl:biocombustivel"
+   }
+  },
+  {
+   "id": "mkc_storage_blocks_refined_glowstone",
+   "resultado": "cl:bloco_glowstone_refinado",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:lingote_glowstone_refinado",
+    "P": "cl:lingote_glowstone_refinado"
+   }
+  },
+  {
+   "id": "mkc_storage_blocks_refined_obsidian",
+   "resultado": "cl:bloco_obsidiana_refinada",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:lingote_obsidiana_refinada",
+    "P": "cl:lingote_obsidiana_refinada"
+   }
+  },
+  {
+   "id": "mkc_storage_blocks_salt",
+   "resultado": "cl:bloco_sal",
+   "tipo": "shaped",
+   "padrao": [
+    "##",
+    "##"
+   ],
+   "chave": {
+    "#": "cl:sal"
+   }
+  }
+ ],
+ "fornalha": {
+  "cl:minerio_estanho": "cl:lingote_estanho",
+  "cl:minerio_estanho_profundo": "cl:lingote_estanho",
+  "cl:estanho_bruto": "cl:lingote_estanho",
+  "cl:po_uranio": "cl:lingote_uranio",
+  "cl:minerio_uranio": "cl:lingote_uranio",
+  "cl:minerio_uranio_profundo": "cl:lingote_uranio",
+  "cl:uranio_bruto": "cl:lingote_uranio",
+  "cl:minerio_osmio": "cl:lingote_osmio",
+  "cl:minerio_osmio_profundo": "cl:lingote_osmio",
+  "cl:osmio_bruto": "cl:lingote_osmio"
+ },
+ "celulas": {
+  "basic": 8000000000,
+  "advanced": 64000000000,
+  "elite": 512000000000,
+  "ultimate": 4000000000000
+ },
+ "provedores": {
+  "basic": 256000,
+  "advanced": 2048000,
+  "elite": 16384000,
+  "ultimate": 131072000
+ },
+ "energia": {
+  "isotopicCentrifuge": 200,
+  "nutritionalLiquifier": 200,
+  "antiprotonicNucleosynthesizer": 100000,
+  "laser": 10000,
+  "dimensionalStabilizer": 5000
+ }
+}

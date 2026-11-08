@@ -1,5 +1,5 @@
 import { Block, BlockCustomComponent, BlockPermutation, Dimension, Entity, ItemStack, Player, system, Vector3, world } from "@minecraft/server";
-import { DADOS_F51, DADOS_F53, DADOS_F66 } from "../conteudo/gerado.js";
+import { DADOS_F51, DADOS_F53, DADOS_F66, DADOS_F70 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
@@ -15,7 +15,7 @@ const ENT = "cl:bau_grande";
 // 1.34.0: os armários do Farmer's Delight (27 espaços) usam a mesma tela de baú.
 // 1.49.0: o Barril Pessoal do Mekanism (54 espaços): só quem pôs abre e recolhe.
 const TAMANHO = { ...(DADOS_F51.baus as Readonly<Record<string, number>>), ...(DADOS_F53.armarios as Readonly<Record<string, number>>),
-  ...(DADOS_F66.baus as Readonly<Record<string, number>>) } as Readonly<Record<string, number>>;
+  ...(DADOS_F66.baus as Readonly<Record<string, number>>), ...(DADOS_F70.baus as Readonly<Record<string, number>>) } as Readonly<Record<string, number>>;
 const P_DONO = "cl:dono";
 /** Barril Pessoal de outro jogador? (avisa) */
 function alheio(j: Player, m: Entity): boolean {
@@ -232,7 +232,7 @@ export function registrarBausGrandes(): void {
     pendente.delete(player.id);
     const ok = p && system.currentTick - p.tick <= 3;
     const m = garantirEntidade(block, (ok ? lerCodigo<Slots>(p.cod) : undefined) ?? [], ok ? p.nome : undefined);
-    if (m && block.typeId === "cl:barril_pessoal") m.setDynamicProperty(P_DONO, player.id);
+    if (m && (block.typeId === "cl:barril_pessoal" || block.typeId === "cl:bau_pessoal")) m.setDynamicProperty(P_DONO, player.id); // 1.53.0: o Baú Pessoal
     aviso(player, "cl.bau.dica", 4);
     if (block.typeId === "cl:bau_cobre") registrarAcao(player, "ic_cobre");
   });

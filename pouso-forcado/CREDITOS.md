@@ -74,6 +74,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   instaladores de nível. 1.51.0: chumbo, Caixas, transmissores (cabos, canos, tubos e transportadores), Bomba, Plenificador,
   Minerador Digital, Teletransportador, Entrelaçador Quântico, Carregador de Chão, Classificador, Vibrador e Leitor
   Sísmico, Alarme Industrial (com o som `industrial_alarm.ogg` do mod) e o ícone do Robit desenhado do modelo do mod.
+  1.52.0: urânio, ósmio e estanho, química nuclear, multiblocos (com Mekanism Generators: Reator de Fissão, Turbina
+  Industrial, Reator de Fusão), radiação e a roupa Hazmat (textura de armadura do mod). 1.53.0: Meka-Tool, MekaSuit (a
+  textura da armadura é própria, sobre a de ferro do jogo; o mod usa um modelo 3D), módulos, equipamentos, QIO e o
+  Robit (modelo e textura do mod).
 - **Mekanism Generators** e **Mekanism Tools** (aidancbrady, MIT): geradores, ferramentas e armaduras, com os números lidos
   no código-fonte público (github.com/aidancbrady/Mekanism). Código próprio; as armaduras usam a textura da armadura de
   ferro do jogo (Mojang, `Mojang/bedrock-samples`) tingida por `tools/gerar-armaduras.mjs`.

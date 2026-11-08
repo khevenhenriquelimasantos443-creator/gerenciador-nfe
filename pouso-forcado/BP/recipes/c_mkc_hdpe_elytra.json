@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_hdpe_elytra"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AHA",
+      "HPH",
+      "H H"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "H": {
+        "item": "cl:folha_pead"
+      },
+      "P": {
+        "item": "minecraft:elytra"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:elitro_pead"
+    }
+  }
+}

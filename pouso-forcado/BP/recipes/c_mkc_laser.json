@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_laser"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AE ",
+      "AX#",
+      "AE "
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:diamond"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:laser_mk"
+    }
+  }
+}

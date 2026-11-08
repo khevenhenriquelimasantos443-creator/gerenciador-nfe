@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_thermal_evaporation_controller"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CGC",
+      "#B#",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:bloco_evaporacao"
+      },
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "C": {
+        "item": "cl:circuito_controle_avancado"
+      },
+      "G": {
+        "item": "minecraft:glass_pane"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:controlador_evaporacao"
+    }
+  }
+}

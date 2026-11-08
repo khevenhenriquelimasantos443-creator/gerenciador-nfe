@@ -1,0 +1,991 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_amplificador_laser",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        3,
+        -5
+       ],
+       "size": [
+        1,
+        10,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "east": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "west": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "up": {
+         "uv": [
+          15,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "down": {
+         "uv": [
+          16,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        -7
+       ],
+       "size": [
+        0,
+        14,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "south": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "up": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "down": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        -7
+       ],
+       "size": [
+        14,
+        0,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "south": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "up": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "down": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        -7
+       ],
+       "size": [
+        14,
+        14,
+        0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "south": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "up": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "down": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        1,
+        7
+       ],
+       "size": [
+        14,
+        14,
+        0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "south": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "up": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "down": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        }
+       }
+      },
+      {
+       "origin": [
+        7,
+        1,
+        -7
+       ],
+       "size": [
+        0,
+        14,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "south": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "up": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "down": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        15,
+        -7
+       ],
+       "size": [
+        14,
+        0,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "east": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "south": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "west": {
+         "uv": [
+          1,
+          1
+         ],
+         "uv_size": [
+          14,
+          14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "up": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        },
+        "down": {
+         "uv": [
+          15,
+          15
+         ],
+         "uv_size": [
+          -14,
+          -14
+         ],
+         "material_instance": "m_laser_device_frame"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        15,
+        -5
+       ],
+       "size": [
+        10,
+        1,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "east": {
+         "uv": [
+          15,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "west": {
+         "uv": [
+          14,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "up": {
+         "uv": [
+          13,
+          13
+         ],
+         "uv_size": [
+          -10,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_full"
+        },
+        "down": {
+         "uv": [
+          13,
+          13
+         ],
+         "uv_size": [
+          -10,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_full"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        3,
+        7
+       ],
+       "size": [
+        10,
+        10,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "east": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "south": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "west": {
+         "uv": [
+          0,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "up": {
+         "uv": [
+          15,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "down": {
+         "uv": [
+          16,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        0,
+        -5
+       ],
+       "size": [
+        10,
+        1,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "east": {
+         "uv": [
+          15,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "west": {
+         "uv": [
+          14,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "up": {
+         "uv": [
+          13,
+          13
+         ],
+         "uv_size": [
+          -10,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "down": {
+         "uv": [
+          13,
+          13
+         ],
+         "uv_size": [
+          -10,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        3,
+        -8
+       ],
+       "size": [
+        10,
+        10,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "east": {
+         "uv": [
+          14,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "south": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "west": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "up": {
+         "uv": [
+          16,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "down": {
+         "uv": [
+          1,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        }
+       }
+      },
+      {
+       "origin": [
+        7,
+        3,
+        -5
+       ],
+       "size": [
+        1,
+        10,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "east": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "south": {
+         "uv": [
+          1,
+          3
+         ],
+         "uv_size": [
+          1,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "west": {
+         "uv": [
+          3,
+          3
+         ],
+         "uv_size": [
+          10,
+          10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "up": {
+         "uv": [
+          15,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        },
+        "down": {
+         "uv": [
+          16,
+          13
+         ],
+         "uv_size": [
+          -1,
+          -10
+         ],
+         "material_instance": "m_laser_amplifier_side_empty"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

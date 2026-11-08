@@ -56,20 +56,27 @@ const BALDE = "minecraft:bucket";
 const vazioAcima = (b: Block) => entrada(b);
 
 // ---------- Itens com energia (cajados, Eletroímã): RF no item, com a carga na descrição ----------
-const CAPACIDADE: Record<string, number> = {
+const CAPACIDADE: Record<string, number | ((i: ItemStack) => number)> = {
   [`${NS}:cajado_viagem`]: D.viagem.capacidade, [`${NS}:cajado_levitacao`]: D.levitacao.capacidade, [`${NS}:eletroima`]: D.eletroima.capacidade,
 };
 /** 1.33.0: outros itens com RF (os jetpacks) carregam nos mesmos carregadores. */
-export function registrarItemComEnergia(id: string, capacidade: number): void {
+export function registrarItemComEnergia(id: string, capacidade: number | ((i: ItemStack) => number)): void {
   CAPACIDADE[id] = capacidade;
 }
-export const capacidadeItem = (id: string): number | undefined => CAPACIDADE[id];
+/** 1.53.0: a capacidade pode depender da pilha (a Unidade de Energia da Meka-Tool/MekaSuit dobra a dela). */
+export function capacidadeDaPilha(i: ItemStack): number | undefined {
+  const c = CAPACIDADE[i.typeId];
+  return typeof c === "function" ? c(i) : c;
+}
+export const capacidadeItem = (id: string): number | undefined => (CAPACIDADE[id] === undefined ? undefined : typeof CAPACIDADE[id] === "number" ? (CAPACIDADE[id] as number) : 1);
 const PROP_RF = "eio_rf";
 export const cargaItem = (i: ItemStack): number => (i.getDynamicProperty(PROP_RF) as number | undefined) ?? 0;
 export function definirCarga(i: ItemStack, v: number): void {
-  const cap = CAPACIDADE[i.typeId] ?? 0;
+  const cap = capacidadeDaPilha(i) ?? 0;
   i.setDynamicProperty(PROP_RF, Math.max(0, Math.min(cap, Math.round(v))));
-  i.setLore([`§7${cargaItem(i).toLocaleString("pt-BR")} / ${cap.toLocaleString("pt-BR")} RF`]);
+  // 1.53.0: as outras linhas da descrição (módulos, dados guardados) ficam.
+  const outras = i.getLore().filter((l) => typeof l === "string" && !l.endsWith(" RF"));
+  i.setLore([`§7${cargaItem(i).toLocaleString("pt-BR")} / ${cap.toLocaleString("pt-BR")} RF`, ...outras]);
 }
 /** Gasta RF do item na mão do jogador (devolve se deu). */
 function gastarDaMaoRF(j: Player, item: ItemStack, quanto: number): boolean {
@@ -345,7 +352,7 @@ export const carregadorFio = maquina((b) => {
   if (!c) return "parada";
   for (let s = 0; s < c.size; s++) {
     const p = c.getItem(s);
-    const cap = p ? CAPACIDADE[p.typeId] : undefined;
+    const cap = p ? capacidadeDaPilha(p) : undefined;
     if (!p || !cap) continue;
     if (cargaItem(p) >= cap) {
       if (!cabe(b)) continue;
@@ -370,7 +377,7 @@ export const carregadorSemFio = maquina((b) => {
     // 1.33.0: o que está vestido (o jetpack) também carrega.
     const eq = j.getComponent("minecraft:equippable");
     const peito = eq?.getEquipment(EquipmentSlot.Chest);
-    const capP = peito ? CAPACIDADE[peito.typeId] : undefined;
+    const capP = peito ? capacidadeDaPilha(peito) : undefined;
     if (peito && capP && cargaItem(peito) < capP) {
       if (!gastarCE(b, Math.round(CARREGA_SF / 40))) return n ? "ok" : "sem_energia";
       definirCarga(peito, cargaItem(peito) + CARREGA_SF);
@@ -380,7 +387,7 @@ export const carregadorSemFio = maquina((b) => {
     }
     for (let s = 0; s < inv.size; s++) {
       const p = inv.getItem(s);
-      const cap = p ? CAPACIDADE[p.typeId] : undefined;
+      const cap = p ? capacidadeDaPilha(p) : undefined;
       if (!p || !cap || cargaItem(p) >= cap) continue;
       if (!gastarCE(b, Math.round(CARREGA_SF / 40))) return n ? "ok" : "sem_energia";
       definirCarga(p, cargaItem(p) + CARREGA_SF);

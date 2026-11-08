@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_silk_touch_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "DPD",
+      "HHH"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:bloco_glowstone_refinado"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "D": {
+        "item": "minecraft:diamond_pickaxe"
+      },
+      "H": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_toque_suave"
+    }
+  }
+}

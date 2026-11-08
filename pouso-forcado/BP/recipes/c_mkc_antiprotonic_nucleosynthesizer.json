@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_antiprotonic_nucleosynthesizer"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#C#",
+      "AXA",
+      "#C#"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:liga_atomica"
+      },
+      "A": {
+        "item": "cl:pastilha_antimateria"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:nucleossintetizador"
+    }
+  }
+}

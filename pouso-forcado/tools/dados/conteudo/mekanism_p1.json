@@ -31,6 +31,11 @@
    "en": "Lead Crystal"
   },
   {
+   "id": "cristal_uranio",
+   "pt": "Cristal de Urânio",
+   "en": "Uranium Crystal"
+  },
+  {
    "id": "po_enxofre",
    "pt": "Pó de Enxofre",
    "en": "Sulfur Dust"
@@ -122,6 +127,97 @@
    "cor": "#e9fef4"
   },
   {
+   "id": "cilindro_oxido_uranio",
+   "q": "uranium_oxide",
+   "pt": "Cilindro de Óxido de urânio líquido",
+   "en": "Liquid Uranium Oxide Tank",
+   "cor": "#e1f573"
+  },
+  {
+   "id": "cilindro_acido_fluoridrico",
+   "q": "hydrofluoric_acid",
+   "pt": "Cilindro de Ácido hidrofluórico líquido",
+   "en": "Liquid Hydrofluoric Acid Tank",
+   "cor": "#c6c7bd"
+  },
+  {
+   "id": "cilindro_hexafluoreto_uranio",
+   "q": "uranium_hexafluoride",
+   "pt": "Cilindro de Hexafluoreto de urânio líquido",
+   "en": "Liquid Uranium Hexafluoride Tank",
+   "cor": "#809960"
+  },
+  {
+   "id": "cilindro_combustivel_fissil",
+   "q": "fissile_fuel",
+   "pt": "Cilindro de Fissile Fuel",
+   "en": "Fissile Fuel Tank",
+   "cor": "#2e332f"
+  },
+  {
+   "id": "cilindro_residuo_nuclear",
+   "q": "nuclear_waste",
+   "pt": "Cilindro de Nuclear Waste",
+   "en": "Nuclear Waste Tank",
+   "cor": "#4f412a"
+  },
+  {
+   "id": "cilindro_residuo_nuclear_gasto",
+   "q": "spent_nuclear_waste",
+   "pt": "Cilindro de Spent Nuclear Waste",
+   "en": "Spent Nuclear Waste Tank",
+   "cor": "#262015"
+  },
+  {
+   "id": "cilindro_plutonio",
+   "q": "plutonium",
+   "pt": "Cilindro de Plutonium",
+   "en": "Plutonium Tank",
+   "cor": "#1f919c"
+  },
+  {
+   "id": "cilindro_polonio",
+   "q": "polonium",
+   "pt": "Cilindro de Polonium",
+   "en": "Polonium Tank",
+   "cor": "#1b9e7b"
+  },
+  {
+   "id": "cilindro_antimateria",
+   "q": "antimatter",
+   "pt": "Cilindro de Antimatter",
+   "en": "Antimatter Tank",
+   "cor": "#a464b3"
+  },
+  {
+   "id": "cilindro_vapor",
+   "q": "steam",
+   "pt": "Cilindro de Vapor líquido",
+   "en": "Liquid Steam Tank",
+   "cor": "#c4c4c4"
+  },
+  {
+   "id": "cilindro_deuterio",
+   "q": "deuterium",
+   "pt": "Cilindro de Deutério Líquido",
+   "en": "Liquid Deuterium Tank",
+   "cor": "#ff3232"
+  },
+  {
+   "id": "cilindro_tritio",
+   "q": "tritium",
+   "pt": "Cilindro de Trítio Líquido",
+   "en": "Liquid Tritium Tank",
+   "cor": "#64ff70"
+  },
+  {
+   "id": "cilindro_combustivel_fusao",
+   "q": "fusion_fuel",
+   "pt": "Cilindro de Combustível D-T Líquido",
+   "en": "Liquid D-T Fuel Tank",
+   "cor": "#7e007d"
+  },
+  {
    "id": "cilindro_pasta_suja_ferro",
    "q": "dirty_iron",
    "pt": "Cilindro de Pasta Suja de Ferro",
@@ -164,6 +260,13 @@
    "cor": "#22262c"
   },
   {
+   "id": "cilindro_pasta_suja_uranio",
+   "q": "dirty_uranium",
+   "pt": "Cilindro de Pasta Suja de Urânio",
+   "en": "Dirty Uranium Slurry Tank",
+   "cor": "#2a3d2f"
+  },
+  {
    "id": "cilindro_pasta_limpa_ferro",
    "q": "clean_iron",
    "pt": "Cilindro de Pasta Limpa de Ferro",
@@ -204,6 +307,13 @@
    "pt": "Cilindro de Pasta Limpa de Chumbo",
    "en": "Clean Lead Slurry Tank",
    "cor": "#3a404a"
+  },
+  {
+   "id": "cilindro_pasta_limpa_uranio",
+   "q": "clean_uranium",
+   "pt": "Cilindro de Pasta Limpa de Urânio",
+   "en": "Clean Uranium Slurry Tank",
+   "cor": "#46664f"
   }
  ],
  "cilindroDe": {
@@ -218,18 +328,33 @@
   "ethene": "cilindro_eteno",
   "lithium": "cilindro_litio",
   "sodium": "cilindro_sodio",
+  "uranium_oxide": "cilindro_oxido_uranio",
+  "hydrofluoric_acid": "cilindro_acido_fluoridrico",
+  "uranium_hexafluoride": "cilindro_hexafluoreto_uranio",
+  "fissile_fuel": "cilindro_combustivel_fissil",
+  "nuclear_waste": "cilindro_residuo_nuclear",
+  "spent_nuclear_waste": "cilindro_residuo_nuclear_gasto",
+  "plutonium": "cilindro_plutonio",
+  "polonium": "cilindro_polonio",
+  "antimatter": "cilindro_antimateria",
+  "steam": "cilindro_vapor",
+  "deuterium": "cilindro_deuterio",
+  "tritium": "cilindro_tritio",
+  "fusion_fuel": "cilindro_combustivel_fusao",
   "dirty_iron": "cilindro_pasta_suja_ferro",
   "dirty_gold": "cilindro_pasta_suja_ouro",
   "dirty_copper": "cilindro_pasta_suja_cobre",
   "dirty_tin": "cilindro_pasta_suja_estanho",
   "dirty_osmium": "cilindro_pasta_suja_osmio",
   "dirty_lead": "cilindro_pasta_suja_chumbo",
+  "dirty_uranium": "cilindro_pasta_suja_uranio",
   "clean_iron": "cilindro_pasta_limpa_ferro",
   "clean_gold": "cilindro_pasta_limpa_ouro",
   "clean_copper": "cilindro_pasta_limpa_cobre",
   "clean_tin": "cilindro_pasta_limpa_estanho",
   "clean_osmium": "cilindro_pasta_limpa_osmio",
-  "clean_lead": "cilindro_pasta_limpa_chumbo"
+  "clean_lead": "cilindro_pasta_limpa_chumbo",
+  "clean_uranium": "cilindro_pasta_limpa_uranio"
  },
  "maquinas": [
   {
@@ -1014,9 +1139,55 @@
      "sulfur_dioxide",
      100
     ]
+   },
+   {
+    "entra": [
+     "cl:pastilha_antimateria"
+    ],
+    "qtd": 1,
+    "sai_q": [
+     "antimatter",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "cl:bolo_amarelo_uranio"
+    ],
+    "qtd": 1,
+    "sai_q": [
+     "uranium_oxide",
+     250
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_fissil_reprocessado"
+    ],
+    "qtd": 1,
+    "sai_q": [
+     "fissile_fuel",
+     2000
+    ]
    }
   ],
   "chemical_infusing": [
+   {
+    "entra_q": [
+     [
+      "hydrofluoric_acid",
+      1
+     ],
+     [
+      "uranium_oxide",
+      1
+     ]
+    ],
+    "sai_q": [
+     "uranium_hexafluoride",
+     2
+    ]
+   },
    {
     "entra_q": [
      [
@@ -1063,6 +1234,22 @@
     "sai_q": [
      "sulfuric_acid",
      1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "deuterium",
+      1
+     ],
+     [
+      "tritium",
+      1
+     ]
+    ],
+    "sai_q": [
+     "fusion_fuel",
+     2
     ]
    }
   ],
@@ -1168,6 +1355,8 @@
    },
    {
     "entra": [
+     "cl:minerio_estanho",
+     "cl:minerio_estanho_profundo",
      "cl:minerio_estanho_lunar"
     ],
     "qtd": 1,
@@ -1180,6 +1369,38 @@
     "sai_q": [
      "dirty_tin",
      1000
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_estanho_bruto"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      200
+     ]
+    ],
+    "sai_q": [
+     "dirty_tin",
+     6000
+    ]
+   },
+   {
+    "entra": [
+     "cl:estanho_bruto"
+    ],
+    "qtd": 3,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_tin",
+     2000
     ]
    },
    {
@@ -1228,6 +1449,136 @@
     ],
     "sai_q": [
      "dirty_copper",
+     2000
+    ]
+   },
+   {
+    "entra": [
+     "cl:fluorita"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "hydrofluoric_acid",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_fluorita"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      900
+     ]
+    ],
+    "sai_q": [
+     "hydrofluoric_acid",
+     9000
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_uranio",
+     "cl:minerio_uranio_profundo"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_uranium",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_uranio_bruto"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      200
+     ]
+    ],
+    "sai_q": [
+     "dirty_uranium",
+     6000
+    ]
+   },
+   {
+    "entra": [
+     "cl:uranio_bruto"
+    ],
+    "qtd": 3,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_uranium",
+     2000
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_osmio",
+     "cl:minerio_osmio_profundo"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_osmium",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "cl:bloco_osmio_bruto"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      200
+     ]
+    ],
+    "sai_q": [
+     "dirty_osmium",
+     6000
+    ]
+   },
+   {
+    "entra": [
+     "cl:osmio_bruto"
+    ],
+    "qtd": 3,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_osmium",
      2000
     ]
    },
@@ -1402,6 +1753,18 @@
    {
     "entra_q": [
      [
+      "antimatter",
+      1000
+     ]
+    ],
+    "sai": [
+     "cl:pastilha_antimateria",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
       "clean_tin",
       200
      ]
@@ -1420,6 +1783,18 @@
     ],
     "sai": [
      "cl:cristal_cobre",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "clean_uranium",
+      200
+     ]
+    ],
+    "sai": [
+     "cl:cristal_uranio",
      1
     ]
    },
@@ -1612,10 +1987,419 @@
      "hydrogen",
      100
     ]
+   },
+   {
+    "entra": [
+     "cl:po_fluorita"
+    ],
+    "qtd": 1,
+    "agua": 1000,
+    "entra_q": [
+     [
+      "polonium",
+      1000
+     ]
+    ],
+    "ticks": 100,
+    "energia": 0,
+    "sai": [
+     "cl:pastilha_polonio",
+     1
+    ],
+    "sai_q": [
+     "spent_nuclear_waste",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_fluorita"
+    ],
+    "qtd": 1,
+    "agua": 1000,
+    "entra_q": [
+     [
+      "plutonium",
+      1000
+     ]
+    ],
+    "ticks": 100,
+    "energia": 0,
+    "sai": [
+     "cl:pastilha_plutonio",
+     1
+    ],
+    "sai_q": [
+     "spent_nuclear_waste",
+     1000
+    ]
+   }
+  ],
+  "centrifuging": [
+   {
+    "entra_q": [
+     [
+      "nuclear_waste",
+      10
+     ]
+    ],
+    "sai_q": [
+     "plutonium",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "uranium_hexafluoride",
+      1
+     ]
+    ],
+    "sai_q": [
+     "fissile_fuel",
+     1
+    ]
+   }
+  ],
+  "activating": [
+   {
+    "entra_q": [
+     [
+      "nuclear_waste",
+      10
+     ]
+    ],
+    "sai_q": [
+     "polonium",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "lithium",
+      1
+     ]
+    ],
+    "sai_q": [
+     "tritium",
+     1
+    ]
+   }
+  ],
+  "nucleosynthesizing": [
+   {
+    "entra": [
+     "minecraft:bow"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      1
+     ]
+    ],
+    "sai": [
+     "minecraft:crossbow",
+     1
+    ],
+    "ticks": 200
+   },
+   {
+    "entra": [
+     "minecraft:coal"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      4
+     ]
+    ],
+    "sai": [
+     "minecraft:diamond",
+     1
+    ],
+    "ticks": 1000
+   },
+   {
+    "entra": [
+     "minecraft:egg"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      4
+     ]
+    ],
+    "sai": [
+     "minecraft:dragon_egg",
+     1
+    ],
+    "ticks": 1000
+   },
+   {
+    "entra": [
+     "minecraft:amethyst_shard"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      2
+     ]
+    ],
+    "sai": [
+     "minecraft:echo_shard",
+     1
+    ],
+    "ticks": 500
+   },
+   {
+    "entra": [
+     "minecraft:diamond"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      4
+     ]
+    ],
+    "sai": [
+     "minecraft:emerald",
+     1
+    ],
+    "ticks": 1000
+   },
+   {
+    "entra": [
+     "minecraft:golden_apple"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      3
+     ]
+    ],
+    "sai": [
+     "minecraft:enchanted_golden_apple",
+     1
+    ],
+    "ticks": 750
+   },
+   {
+    "entra": [
+     "minecraft:beacon"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      3
+     ]
+    ],
+    "sai": [
+     "minecraft:end_crystal",
+     1
+    ],
+    "ticks": 750
+   },
+   {
+    "entra": [
+     "minecraft:chest"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      2
+     ]
+    ],
+    "sai": [
+     "minecraft:ender_chest",
+     1
+    ],
+    "ticks": 500
+   },
+   {
+    "entra": [
+     "minecraft:yellow_wool"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      2
+     ]
+    ],
+    "sai": [
+     "minecraft:glowstone",
+     1
+    ],
+    "ticks": 500
+   },
+   {
+    "entra": [
+     "minecraft:nether_star"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      5
+     ]
+    ],
+    "sai": [
+     "minecraft:heart_of_the_sea",
+     1
+    ],
+    "ticks": 1250
+   },
+   {
+    "entra": [
+     "cl:lingote_estanho"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      1
+     ]
+    ],
+    "sai": [
+     "minecraft:iron_ingot",
+     1
+    ],
+    "ticks": 200
+   },
+   {
+    "entra": [
+     "minecraft:blue_wool"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      2
+     ]
+    ],
+    "sai": [
+     "minecraft:lapis_block",
+     1
+    ],
+    "ticks": 500
+   },
+   {
+    "entra": [
+     "minecraft:flower_pot"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      3
+     ]
+    ],
+    "sai": [
+     "minecraft:nautilus_shell",
+     1
+    ],
+    "ticks": 750
+   },
+   {
+    "entra": [
+     "minecraft:leather"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      3
+     ]
+    ],
+    "sai": [
+     "minecraft:phantom_membrane",
+     1
+    ],
+    "ticks": 750
+   },
+   {
+    "entra": [
+     "minecraft:light_gray_wool"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      2
+     ]
+    ],
+    "sai": [
+     "minecraft:quartz_block",
+     1
+    ],
+    "ticks": 500
+   },
+   {
+    "entra": [
+     "minecraft:red_wool"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      2
+     ]
+    ],
+    "sai": [
+     "minecraft:redstone_block",
+     1
+    ],
+    "ticks": 500
+   },
+   {
+    "entra": [
+     "minecraft:diamond_sword"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      4
+     ]
+    ],
+    "sai": [
+     "minecraft:trident",
+     1
+    ],
+    "ticks": 1000
+   },
+   {
+    "entra": [
+     "minecraft:skeleton_skull"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "antimatter",
+      5
+     ]
+    ],
+    "sai": [
+     "minecraft:wither_skeleton_skull",
+     1
+    ],
+    "ticks": 1250
    }
   ]
  },
  "ce": {
+  "centrifuging": 200,
+  "activating": 0,
+  "nucleosynthesizing": 100000,
   "oxidizing": 200,
   "dissolution": 400,
   "crystallizing": 800,

@@ -7204,6 +7204,336 @@
     },
     "clc_robit": {
       "textures": "textures/items/cl/arte/robit"
+    },
+    "clc_torrao_uranio": {
+      "textures": "textures/items/cl/arte/torrao_uranio"
+    },
+    "clc_fragmento_uranio": {
+      "textures": "textures/items/cl/arte/fragmento_uranio"
+    },
+    "clc_po_sujo_uranio": {
+      "textures": "textures/items/cl/arte/po_sujo_uranio"
+    },
+    "clc_cristal_uranio": {
+      "textures": "textures/items/cl/arte/cristal_uranio"
+    },
+    "clc_cilindro_oxido_uranio": {
+      "textures": "textures/items/cl/c/cilindro_oxido_uranio"
+    },
+    "clc_cilindro_acido_fluoridrico": {
+      "textures": "textures/items/cl/c/cilindro_acido_fluoridrico"
+    },
+    "clc_cilindro_hexafluoreto_uranio": {
+      "textures": "textures/items/cl/c/cilindro_hexafluoreto_uranio"
+    },
+    "clc_cilindro_combustivel_fissil": {
+      "textures": "textures/items/cl/c/cilindro_combustivel_fissil"
+    },
+    "clc_cilindro_residuo_nuclear": {
+      "textures": "textures/items/cl/c/cilindro_residuo_nuclear"
+    },
+    "clc_cilindro_residuo_nuclear_gasto": {
+      "textures": "textures/items/cl/c/cilindro_residuo_nuclear_gasto"
+    },
+    "clc_cilindro_plutonio": {
+      "textures": "textures/items/cl/c/cilindro_plutonio"
+    },
+    "clc_cilindro_polonio": {
+      "textures": "textures/items/cl/c/cilindro_polonio"
+    },
+    "clc_cilindro_antimateria": {
+      "textures": "textures/items/cl/c/cilindro_antimateria"
+    },
+    "clc_cilindro_vapor": {
+      "textures": "textures/items/cl/c/cilindro_vapor"
+    },
+    "clc_cilindro_deuterio": {
+      "textures": "textures/items/cl/c/cilindro_deuterio"
+    },
+    "clc_cilindro_tritio": {
+      "textures": "textures/items/cl/c/cilindro_tritio"
+    },
+    "clc_cilindro_combustivel_fusao": {
+      "textures": "textures/items/cl/c/cilindro_combustivel_fusao"
+    },
+    "clc_cilindro_pasta_suja_uranio": {
+      "textures": "textures/items/cl/c/cilindro_pasta_suja_uranio"
+    },
+    "clc_cilindro_pasta_limpa_uranio": {
+      "textures": "textures/items/cl/c/cilindro_pasta_limpa_uranio"
+    },
+    "clc_lingote_uranio": {
+      "textures": "textures/items/cl/arte/lingote_uranio"
+    },
+    "clc_uranio_bruto": {
+      "textures": "textures/items/cl/arte/uranio_bruto"
+    },
+    "clc_pepita_uranio": {
+      "textures": "textures/items/cl/arte/pepita_uranio"
+    },
+    "clc_po_uranio": {
+      "textures": "textures/items/cl/arte/po_uranio"
+    },
+    "clc_osmio_bruto": {
+      "textures": "textures/items/cl/arte/osmio_bruto"
+    },
+    "clc_pepita_osmio": {
+      "textures": "textures/items/cl/arte/pepita_osmio"
+    },
+    "clc_estanho_bruto": {
+      "textures": "textures/items/cl/arte/estanho_bruto"
+    },
+    "clc_pepita_estanho": {
+      "textures": "textures/items/cl/arte/pepita_estanho"
+    },
+    "clc_pepita_aco": {
+      "textures": "textures/items/cl/arte/pepita_aco"
+    },
+    "clc_pepita_bronze": {
+      "textures": "textures/items/cl/arte/pepita_bronze"
+    },
+    "clc_pepita_obsidiana_refinada": {
+      "textures": "textures/items/cl/arte/pepita_obsidiana_refinada"
+    },
+    "clc_pepita_glowstone_refinado": {
+      "textures": "textures/items/cl/arte/pepita_glowstone_refinado"
+    },
+    "clc_po_bronze": {
+      "textures": "textures/items/cl/arte/po_bronze"
+    },
+    "clc_po_esmeralda": {
+      "textures": "textures/items/cl/arte/po_esmeralda"
+    },
+    "clc_po_netherita": {
+      "textures": "textures/items/cl/arte/po_netherita"
+    },
+    "clc_sucata_netherita_suja": {
+      "textures": "textures/items/cl/arte/sucata_netherita_suja"
+    },
+    "clc_bolo_amarelo_uranio": {
+      "textures": "textures/items/cl/arte/bolo_amarelo_uranio"
+    },
+    "clc_pastilha_plutonio": {
+      "textures": "textures/items/cl/arte/pastilha_plutonio"
+    },
+    "clc_pastilha_polonio": {
+      "textures": "textures/items/cl/arte/pastilha_polonio"
+    },
+    "clc_pastilha_antimateria": {
+      "textures": "textures/items/cl/arte/pastilha_antimateria"
+    },
+    "clc_fragmento_fissil_reprocessado": {
+      "textures": "textures/items/cl/arte/fragmento_fissil_reprocessado"
+    },
+    "clc_dosimetro": {
+      "textures": "textures/items/cl/arte/dosimetro"
+    },
+    "clc_contador_geiger": {
+      "textures": "textures/items/cl/arte/contador_geiger"
+    },
+    "clc_mascara_hazmat": {
+      "textures": "textures/items/cl/arte/mascara_hazmat"
+    },
+    "clc_jaleco_hazmat": {
+      "textures": "textures/items/cl/arte/jaleco_hazmat"
+    },
+    "clc_calca_hazmat": {
+      "textures": "textures/items/cl/arte/calca_hazmat"
+    },
+    "clc_botas_hazmat": {
+      "textures": "textures/items/cl/arte/botas_hazmat"
+    },
+    "clc_hohlraum": {
+      "textures": "textures/items/cl/arte/hohlraum"
+    },
+    "clc_pa_turbina_mk": {
+      "textures": "textures/items/cl/arte/pa_turbina_mk"
+    },
+    "clc_balde_agua_pesada": {
+      "textures": "textures/items/cl/c/balde_agua_pesada"
+    },
+    "clc_balde_pasta_nutritiva": {
+      "textures": "textures/items/cl/c/balde_pasta_nutritiva"
+    },
+    "clc_base_modulo": {
+      "textures": "textures/items/cl/arte/base_modulo"
+    },
+    "clc_modulo_energia": {
+      "textures": "textures/items/cl/arte/modulo_energia"
+    },
+    "clc_modulo_escavacao": {
+      "textures": "textures/items/cl/arte/modulo_escavacao"
+    },
+    "clc_modulo_ataque": {
+      "textures": "textures/items/cl/arte/modulo_ataque"
+    },
+    "clc_modulo_cultivo": {
+      "textures": "textures/items/cl/arte/modulo_cultivo"
+    },
+    "clc_modulo_tosquia": {
+      "textures": "textures/items/cl/arte/modulo_tosquia"
+    },
+    "clc_modulo_toque_suave": {
+      "textures": "textures/items/cl/arte/modulo_toque_suave"
+    },
+    "clc_modulo_fortuna": {
+      "textures": "textures/items/cl/arte/modulo_fortuna"
+    },
+    "clc_modulo_explosao": {
+      "textures": "textures/items/cl/arte/modulo_explosao"
+    },
+    "clc_modulo_veio": {
+      "textures": "textures/items/cl/arte/modulo_veio"
+    },
+    "clc_modulo_teletransporte": {
+      "textures": "textures/items/cl/arte/modulo_teletransporte"
+    },
+    "clc_modulo_respiracao": {
+      "textures": "textures/items/cl/arte/modulo_respiracao"
+    },
+    "clc_modulo_purificacao": {
+      "textures": "textures/items/cl/arte/modulo_purificacao"
+    },
+    "clc_modulo_visao": {
+      "textures": "textures/items/cl/arte/modulo_visao"
+    },
+    "clc_modulo_nutricao": {
+      "textures": "textures/items/cl/arte/modulo_nutricao"
+    },
+    "clc_modulo_blindagem_radiacao": {
+      "textures": "textures/items/cl/arte/modulo_blindagem_radiacao"
+    },
+    "clc_modulo_dosimetro": {
+      "textures": "textures/items/cl/arte/modulo_dosimetro"
+    },
+    "clc_modulo_geiger": {
+      "textures": "textures/items/cl/arte/modulo_geiger"
+    },
+    "clc_modulo_jetpack": {
+      "textures": "textures/items/cl/arte/modulo_jetpack"
+    },
+    "clc_modulo_distribuicao_carga": {
+      "textures": "textures/items/cl/arte/modulo_distribuicao_carga"
+    },
+    "clc_modulo_gravitacional": {
+      "textures": "textures/items/cl/arte/modulo_gravitacional"
+    },
+    "clc_modulo_elitro": {
+      "textures": "textures/items/cl/arte/modulo_elitro"
+    },
+    "clc_modulo_locomocao": {
+      "textures": "textures/items/cl/arte/modulo_locomocao"
+    },
+    "clc_modulo_giroscopio": {
+      "textures": "textures/items/cl/arte/modulo_giroscopio"
+    },
+    "clc_modulo_propulsao": {
+      "textures": "textures/items/cl/arte/modulo_propulsao"
+    },
+    "clc_modulo_magnetico": {
+      "textures": "textures/items/cl/arte/modulo_magnetico"
+    },
+    "clc_modulo_gelo": {
+      "textures": "textures/items/cl/arte/modulo_gelo"
+    },
+    "clc_modulo_hidrostatico": {
+      "textures": "textures/items/cl/arte/modulo_hidrostatico"
+    },
+    "clc_modulo_servo": {
+      "textures": "textures/items/cl/arte/modulo_servo"
+    },
+    "clc_modulo_almas": {
+      "textures": "textures/items/cl/arte/modulo_almas"
+    },
+    "clc_modulo_dissipacao_laser": {
+      "textures": "textures/items/cl/arte/modulo_dissipacao_laser"
+    },
+    "clc_modulo_cor": {
+      "textures": "textures/items/cl/arte/modulo_cor"
+    },
+    "clc_modulo_solar": {
+      "textures": "textures/items/cl/arte/modulo_solar"
+    },
+    "clc_modulo_geotermico": {
+      "textures": "textures/items/cl/arte/modulo_geotermico"
+    },
+    "clc_desmontador_atomico": {
+      "textures": "textures/items/cl/c/desmontador_atomico"
+    },
+    "clc_ferramenta_meka": {
+      "textures": "textures/items/cl/c/ferramenta_meka"
+    },
+    "clc_capacete_mekasuit": {
+      "textures": "textures/items/cl/arte/capacete_mekasuit"
+    },
+    "clc_peitoral_mekasuit": {
+      "textures": "textures/items/cl/arte/peitoral_mekasuit"
+    },
+    "clc_calcas_mekasuit": {
+      "textures": "textures/items/cl/arte/calcas_mekasuit"
+    },
+    "clc_botas_mekasuit": {
+      "textures": "textures/items/cl/arte/botas_mekasuit"
+    },
+    "clc_arco_eletrico": {
+      "textures": "textures/items/cl/arte/arco_eletrico"
+    },
+    "clc_lanca_chamas": {
+      "textures": "textures/items/cl/c/lanca_chamas"
+    },
+    "clc_corredores_livres": {
+      "textures": "textures/items/cl/c/corredores_livres"
+    },
+    "clc_corredores_livres_blindados": {
+      "textures": "textures/items/cl/c/corredores_livres_blindados"
+    },
+    "clc_jetpack_blindado": {
+      "textures": "textures/items/cl/c/jetpack_blindado"
+    },
+    "clc_mascara_mergulho": {
+      "textures": "textures/items/cl/c/mascara_mergulho"
+    },
+    "clc_tanque_mergulho": {
+      "textures": "textures/items/cl/c/tanque_mergulho"
+    },
+    "clc_configurador": {
+      "textures": "textures/items/cl/arte/configurador"
+    },
+    "clc_leitor_rede": {
+      "textures": "textures/items/cl/arte/leitor_rede"
+    },
+    "clc_dicionario": {
+      "textures": "textures/items/cl/arte/dicionario"
+    },
+    "clc_conta_gotas": {
+      "textures": "textures/items/cl/arte/conta_gotas"
+    },
+    "clc_cantil": {
+      "textures": "textures/items/cl/arte/cantil"
+    },
+    "clc_cartao_configuracao": {
+      "textures": "textures/items/cl/arte/cartao_configuracao"
+    },
+    "clc_elitro_pead": {
+      "textures": "textures/items/cl/arte/elitro_pead"
+    },
+    "clc_base_tinta": {
+      "textures": "textures/items/cl/arte/base_tinta"
+    },
+    "clc_unidade_qio_base": {
+      "textures": "textures/items/cl/arte/unidade_qio_base"
+    },
+    "clc_unidade_qio_hiperdensa": {
+      "textures": "textures/items/cl/arte/unidade_qio_hiperdensa"
+    },
+    "clc_unidade_qio_dilatacao": {
+      "textures": "textures/items/cl/arte/unidade_qio_dilatacao"
+    },
+    "clc_unidade_qio_supermassiva": {
+      "textures": "textures/items/cl/arte/unidade_qio_supermassiva"
+    },
+    "clc_painel_qio_portatil": {
+      "textures": "textures/items/cl/arte/painel_qio_portatil"
     }
   }
 }

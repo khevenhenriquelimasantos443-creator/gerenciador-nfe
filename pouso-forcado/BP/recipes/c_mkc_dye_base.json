@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_mkc_dye_base"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:serragem"
+      },
+      {
+        "item": "cl:serragem"
+      },
+      {
+        "item": "minecraft:clay_ball"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:base_tinta",
+      "count": 3
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:modulo_solar",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_modulo_solar",
+      "minecraft:display_name": {
+        "value": "item.cl:modulo_solar.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

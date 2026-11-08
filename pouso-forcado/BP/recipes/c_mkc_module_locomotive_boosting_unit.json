@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_module_locomotive_boosting_unit"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A#A",
+      "EPE",
+      "HHH"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:diamond_leggings"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "H": {
+        "item": "cl:pastilha_polonio"
+      },
+      "P": {
+        "item": "cl:base_modulo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:modulo_locomocao"
+    }
+  }
+}

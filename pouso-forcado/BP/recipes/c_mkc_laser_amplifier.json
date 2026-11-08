@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_laser_amplifier"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "SE#",
+      "SSS"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:diamond"
+      },
+      "E": {
+        "item": "cl:cubo_energia_basico"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:amplificador_laser"
+    }
+  }
+}

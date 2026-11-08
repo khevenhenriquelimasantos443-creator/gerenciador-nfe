@@ -39,6 +39,8 @@ const AGUAS: Readonly<Record<string, [string, string]>> = {
   "minecraft:water_bucket": ["oxigenio", "minecraft:bucket"],
   "minecraft:potion": ["oxigenio", "minecraft:glass_bottle"],
   "cl:balde_salmoura": ["cloro", "minecraft:bucket"],
+  // 1.52.0: água pesada (Bomba com Melhoria de Filtro) → deutério + oxigênio (Mekanism Generators).
+  "cl:balde_agua_pesada": ["oxigenio", "minecraft:bucket"],
 };
 export const separador = maquina((b) => {
   const ent = entrada(b);
@@ -48,7 +50,7 @@ export const separador = maquina((b) => {
   const [gas, volta] = AGUAS[agua.typeId];
   tirar(ent, agua.typeId);
   tirar(ent, VAZIO, 2);
-  entregar(b, [new ItemStack(CIL("hidrogenio"), 1), new ItemStack(CIL(gas), 1), new ItemStack(volta, 1)]);
+  entregar(b, [new ItemStack(agua.typeId === "cl:balde_agua_pesada" ? "cl:cilindro_deuterio" : CIL("hidrogenio"), 1), new ItemStack(CIL(gas), 1), new ItemStack(volta, 1)]);
   feito(b, "bubble.pop");
   const j = quemPerto(b);
   if (j) registrarAcao(j, "eletrolise");
@@ -136,12 +138,14 @@ function gravarJet(i: ItemStack, n: number): void {
   i.setLore([`§7Hidrogênio: ${n}/${JET.max}`]);
 }
 const voando = new Map<string, number>(); // jogador → ticks de voo desde o último gasto
+// 1.53.0: o Jetpack Blindado (Mekanism completo) voa igual e protege como peitoral.
+const JETPACKS = new Set(["cl:jetpack", "cl:jetpack_blindado"]);
 
 function cuidarJetpack(j: Player): void {
-  if (peitoDe(j) !== "cl:jetpack") return void voando.delete(j.id); // 1.16.4: cache (util/jogadores.ts)
+  if (!JETPACKS.has(peitoDe(j) ?? "")) return void voando.delete(j.id); // 1.16.4: cache (util/jogadores.ts)
   const eq = j.getComponent("minecraft:equippable");
   const jet = eq?.getEquipment(EquipmentSlot.Chest);
-  if (!eq || jet?.typeId !== "cl:jetpack") return void voando.delete(j.id);
+  if (!eq || !jet || !JETPACKS.has(jet.typeId)) return void voando.delete(j.id);
   const h2 = combustivel(jet);
   if (h2 <= 0) {
     if (j.isJumping && !j.isOnGround) aviso(j, "cl.mk.jetpack_vazio", 3);
@@ -173,7 +177,7 @@ export function registrarMekanism(): void {
     if (itemStack.typeId !== CIL("hidrogenio")) return;
     const eq = j.getComponent("minecraft:equippable");
     const jet = eq?.getEquipment(EquipmentSlot.Chest);
-    if (!eq || jet?.typeId !== "cl:jetpack") return;
+    if (!eq || !jet || !JETPACKS.has(jet.typeId)) return;
     const h2 = combustivel(jet);
     if (h2 >= JET.max) return;
     const novo = Math.min(JET.max, h2 + JET.porCilindro);

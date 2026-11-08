@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:conta_gotas",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_conta_gotas",
+      "minecraft:display_name": {
+        "value": "item.cl:conta_gotas.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_hazmat_boots"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "I I",
+      "IDI"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:black_dye"
+      },
+      "I": {
+        "item": "cl:lingote_chumbo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:botas_hazmat"
+    }
+  }
+}
