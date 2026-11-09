@@ -537,8 +537,8 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/arco_longo_aco_slime"
  },
  "cl:arco_longo_aluminio": {
-  "pt": "Arco Longo de aluminio",
-  "en": "aluminio Longbow",
+  "pt": "Arco Longo de Alumínio",
+  "en": "Aluminum Longbow",
   "icone": "textures/items/cl/arte/arco_longo_aluminio"
  },
  "cl:arco_longo_bronze": {
@@ -1552,8 +1552,8 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/besta_aco_slime"
  },
  "cl:besta_aluminio": {
-  "pt": "Besta de aluminio",
-  "en": "aluminio Crossbow",
+  "pt": "Besta de Alumínio",
+  "en": "Aluminum Crossbow",
   "icone": "textures/items/cl/arte/besta_aluminio"
  },
  "cl:besta_bronze": {
@@ -3942,7 +3942,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/cilindro_acido"
  },
  "cl:cilindro_acido_fluoridrico": {
-  "pt": "Cilindro de Ácido hidrofluórico líquido",
+  "pt": "Cilindro de Ácido Fluorídrico",
   "en": "Liquid Hydrofluoric Acid Tank",
   "icone": "textures/items/cl/c/cilindro_acido_fluoridrico"
  },
@@ -3952,7 +3952,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/c/cilindro_acido_sulfurico"
  },
  "cl:cilindro_antimateria": {
-  "pt": "Cilindro de Antimatter",
+  "pt": "Cilindro de Antimatéria",
   "en": "Antimatter Tank",
   "icone": "textures/items/cl/c/cilindro_antimateria"
  },
@@ -3962,17 +3962,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/cilindro_cloro"
  },
  "cl:cilindro_combustivel_fissil": {
-  "pt": "Cilindro de Fissile Fuel",
+  "pt": "Cilindro de Combustível Físsil",
   "en": "Fissile Fuel Tank",
   "icone": "textures/items/cl/c/cilindro_combustivel_fissil"
  },
  "cl:cilindro_combustivel_fusao": {
-  "pt": "Cilindro de Combustível D-T Líquido",
+  "pt": "Cilindro de Combustível de Fusão",
   "en": "Liquid D-T Fuel Tank",
   "icone": "textures/items/cl/c/cilindro_combustivel_fusao"
  },
  "cl:cilindro_deuterio": {
-  "pt": "Cilindro de Deutério Líquido",
+  "pt": "Cilindro de Deutério",
   "en": "Liquid Deuterium Tank",
   "icone": "textures/items/cl/c/cilindro_deuterio"
  },
@@ -3987,7 +3987,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/c/cilindro_eteno"
  },
  "cl:cilindro_hexafluoreto_uranio": {
-  "pt": "Cilindro de Hexafluoreto de urânio líquido",
+  "pt": "Cilindro de Hexafluoreto de Urânio",
   "en": "Liquid Uranium Hexafluoride Tank",
   "icone": "textures/items/cl/c/cilindro_hexafluoreto_uranio"
  },
@@ -4002,7 +4002,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/c/cilindro_litio"
  },
  "cl:cilindro_oxido_uranio": {
-  "pt": "Cilindro de Óxido de urânio líquido",
+  "pt": "Cilindro de Óxido de Urânio",
   "en": "Liquid Uranium Oxide Tank",
   "icone": "textures/items/cl/c/cilindro_oxido_uranio"
  },
@@ -4082,22 +4082,22 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/c/cilindro_pasta_suja_uranio"
  },
  "cl:cilindro_plutonio": {
-  "pt": "Cilindro de Plutonium",
+  "pt": "Cilindro de Plutônio",
   "en": "Plutonium Tank",
   "icone": "textures/items/cl/c/cilindro_plutonio"
  },
  "cl:cilindro_polonio": {
-  "pt": "Cilindro de Polonium",
+  "pt": "Cilindro de Polônio",
   "en": "Polonium Tank",
   "icone": "textures/items/cl/c/cilindro_polonio"
  },
  "cl:cilindro_residuo_nuclear": {
-  "pt": "Cilindro de Nuclear Waste",
+  "pt": "Cilindro de Resíduo Nuclear",
   "en": "Nuclear Waste Tank",
   "icone": "textures/items/cl/c/cilindro_residuo_nuclear"
  },
  "cl:cilindro_residuo_nuclear_gasto": {
-  "pt": "Cilindro de Spent Nuclear Waste",
+  "pt": "Cilindro de Resíduo Nuclear Gasto",
   "en": "Spent Nuclear Waste Tank",
   "icone": "textures/items/cl/c/cilindro_residuo_nuclear_gasto"
  },
@@ -4112,17 +4112,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/c/cilindro_trioxido_enxofre"
  },
  "cl:cilindro_tritio": {
-  "pt": "Cilindro de Trítio Líquido",
+  "pt": "Cilindro de Trítio",
   "en": "Liquid Tritium Tank",
   "icone": "textures/items/cl/c/cilindro_tritio"
  },
  "cl:cilindro_vapor": {
-  "pt": "Cilindro de Vapor líquido",
+  "pt": "Cilindro de Vapor",
   "en": "Liquid Steam Tank",
   "icone": "textures/items/cl/c/cilindro_vapor"
  },
  "cl:cilindro_vapor_agua": {
-  "pt": "Cilindro de Water Vapor",
+  "pt": "Cilindro de Vapor d'Água",
   "en": "Water Vapor Tank",
   "icone": "textures/items/cl/c/cilindro_vapor_agua"
  },
@@ -15318,7 +15318,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "cl:planta_gergelim": {
   "pt": "Plantação de Gergelim",
-  "en": "Sesame Seeds Crop",
+  "en": "Sesame Crop",
   "icone": "textures/blocks/cl/hc/gergelim_0"
  },
  "cl:planta_goji": {
@@ -15408,7 +15408,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "cl:planta_mostarda": {
   "pt": "Plantação de Mostarda",
-  "en": "Mustard Seeds Crop",
+  "en": "Mustard Crop",
   "icone": "textures/blocks/cl/hc/mostarda_0"
  },
  "cl:planta_nabo": {
@@ -17128,7 +17128,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "cl:semente_gergelim": {
   "pt": "Sementes de Gergelim",
-  "en": "Sesame Seeds Seeds",
+  "en": "Sesame Seeds",
   "icone": "textures/items/cl/hc/semente_gergelim"
  },
  "cl:semente_girassol": {
@@ -17228,7 +17228,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "cl:semente_mostarda": {
   "pt": "Sementes de Mostarda",
-  "en": "Mustard Seeds Seeds",
+  "en": "Mustard Seeds",
   "icone": "textures/items/cl/hc/semente_mostarda"
  },
  "cl:semente_nabo": {
@@ -27912,7 +27912,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "bancada",
   "id": "cl:c_chocolate_pie",
-  "resultado": "cl:torta_chocolate",
+  "resultado": "?",
   "qtd": 1,
   "grade": [
    "ccc",
@@ -36148,7 +36148,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "bancada",
   "id": "cl:c_mk10_crusher",
-  "resultado": "cl:triturador_mk",
+  "resultado": "?",
   "qtd": 1,
   "grade": [
    "RCR",
@@ -42301,7 +42301,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "bancada",
   "id": "cl:c_mkc_upgrade_stone_generator",
-  "resultado": "cl:melhoria_gerador_pedra",
+  "resultado": "?",
   "qtd": 1,
   "grade": [
    " G ",
@@ -43163,7 +43163,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "bancada",
   "id": "cl:c_panela_cozinha",
-  "resultado": "cl:panela_cozinha",
+  "resultado": "?",
   "qtd": 1,
   "grade": [
    "bSb",
@@ -44588,7 +44588,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "bancada",
   "id": "cl:c_pie_crust",
-  "resultado": "cl:massa_torta",
+  "resultado": "?",
   "qtd": 1,
   "grade": [
    "wMw",
@@ -46002,7 +46002,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "bancada",
   "id": "cl:c_porta_fluido_turbina",
-  "resultado": "cl:porta_fluido_turbina",
+  "resultado": "?",
   "qtd": 1,
   "grade": [
    "CSC",
@@ -49735,9 +49735,8 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "tipo": "bancada",
   "id": "cl:c_rocha_lunar_polida",
   "resultado": "cl:rocha_lunar_polida",
-  "qtd": 4,
+  "qtd": 2,
   "grade": [
-   "##",
    "##"
   ],
   "chaves": {
@@ -50480,7 +50479,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "bancada",
   "id": "cl:c_sweet_berry_cheesecake",
-  "resultado": "cl:cheesecake",
+  "resultado": "?",
   "qtd": 1,
   "grade": [
    "sss",
@@ -52512,7 +52511,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "qtd": 1,
   "ingredientes": [
    {
-    "item": "minecraft:potion",
+    "item": "minecraft:potion:0",
     "qtd": 1
    }
   ],

@@ -183,6 +183,10 @@ for _q, _c in {"uranium_oxide": "#e1f573", "hydrofluoric_acid": "#c6c7bd", "uran
                "steam": "#c4c4c4", "deuterium": "#ff3232", "tritium": "#64ff70", "fusion_fuel": "#7e007d"}.items():
     cor_q.setdefault(_q, _c)
 COR_METAL = {"iron": "#af8e77", "gold": "#f2cd67", "copper": "#c87240", "tin": "#ccccd9", "osmium": "#1e79c3", "lead": "#3a404a", "uranium": "#46664f"}
+PT_Q = {"water_vapor": "Vapor d'Água", "steam": "Vapor", "uranium_oxide": "Óxido de Urânio", "hydrofluoric_acid": "Ácido Fluorídrico",
+        "uranium_hexafluoride": "Hexafluoreto de Urânio", "fissile_fuel": "Combustível Físsil", "nuclear_waste": "Resíduo Nuclear",
+        "spent_nuclear_waste": "Resíduo Nuclear Gasto", "plutonium": "Plutônio", "polonium": "Polônio", "antimatter": "Antimatéria",
+        "deuterium": "Deutério", "tritium": "Trítio", "fusion_fuel": "Combustível de Fusão"}
 cilindros = []
 for q, pid in NOVOS_Q.items():
     if q.startswith(("dirty_", "clean_")):
@@ -193,6 +197,7 @@ for q, pid in NOVOS_Q.items():
         cor = COR_METAL[metal] if not sujo else "#" + "".join(f"{int(int(COR_METAL[metal][i:i + 2], 16) * 0.6):02x}" for i in (1, 3, 5))
     else:
         npt, nen = nome_de(q)
+        npt = PT_Q.get(q, npt)  # o pt_br do mod não traz estes
         pt, en, cor = f"Cilindro de {npt}", f"{nen} Tank", cor_q.get(q, "#9aa3ab")
     CILINDRO[q] = f"cilindro_{pid}"
     cilindros.append({"id": f"cilindro_{pid}", "q": q, "pt": pt, "en": en, "cor": cor})

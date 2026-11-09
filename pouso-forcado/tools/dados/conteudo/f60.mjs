@@ -29,7 +29,7 @@ export default {
   receitas: [
     { id: "pedregulho_lunar", tipo: "shapeless", ingredientes: ["cl:rocha_lunar"], resultado: "cl:pedregulho_lunar" },
     { id: "pedregulho_lunar_rocha", tipo: "furnace", entrada: "cl:pedregulho_lunar", resultado: "cl:rocha_lunar" },
-    { id: "rocha_lunar_polida", tipo: "shaped", padrao: ["##", "##"], chave: { "#": "cl:rocha_lunar" }, resultado: "cl:rocha_lunar_polida", qtd: 4 },
+    { id: "rocha_lunar_polida", tipo: "shaped", padrao: ["##"], chave: { "#": "cl:rocha_lunar" }, resultado: "cl:rocha_lunar_polida", qtd: 2 },
     { id: "tijolos_rocha_lunar", tipo: "shaped", padrao: ["##", "##"], chave: { "#": "cl:rocha_lunar_polida" }, resultado: "cl:tijolos_rocha_lunar", qtd: 4 },
     { id: "tijolos_rocha_lunar_rachados", tipo: "furnace", entrada: "cl:tijolos_rocha_lunar", resultado: "cl:tijolos_rocha_lunar_rachados" },
     { id: "tijolos_rocha_lunar_entalhados", tipo: "shaped", padrao: ["#", "#"], chave: { "#": "cl:tijolos_rocha_lunar" }, resultado: "cl:tijolos_rocha_lunar_entalhados" },

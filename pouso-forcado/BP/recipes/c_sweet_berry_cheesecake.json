@@ -26,9 +26,17 @@
     "unlock": {
       "context": "AlwaysUnlocked"
     },
-    "result": {
-      "item": "cl:cheesecake",
-      "count": 1
-    }
+    "result": [
+      {
+        "item": "cl:cheesecake",
+        "count": 1
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
   }
 }

@@ -29,9 +29,20 @@
     "unlock": {
       "context": "AlwaysUnlocked"
     },
-    "result": {
-      "item": "cl:torta_chocolate",
-      "count": 1
-    }
+    "result": [
+      {
+        "item": "cl:torta_chocolate",
+        "count": 1
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
   }
 }

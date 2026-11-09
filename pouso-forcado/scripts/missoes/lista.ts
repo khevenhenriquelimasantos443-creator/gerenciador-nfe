@@ -127,6 +127,8 @@ export type Acao =
   | "hc2_fruta"
   | "mk_melhoria"
   | "mk_fabrica"
+  | "qk_colher"
+  | "pw_reator"
   | "mk_cano"
   | "mk_transportador"
   | "mk_minerador"
@@ -214,7 +216,6 @@ export type Acao =
   | "cortar"
   | "cozinhar"
   | "nutricao"
-  | "colher"
   | "picarango"
   | "corda"
   | "ie_coque"
@@ -234,7 +235,6 @@ export type Acao =
   | "pw_termo"
   | "energizar"
   | "aco_energizado"
-  | "reator"
   | "ender_canal"
   | "bateria"
   | "raio"
@@ -612,7 +612,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     requer: ["chegada"],
     missoes: [
       { id: "qk_jaspe", objetivo: { tipo: "ter", item: "cl:jaspe", qtd: 16 }, recompensa: [{ item: "minecraft:red_dye", quantidade: 4 }] },
-      { id: "qk_colher", objetivo: { tipo: "acao", acao: "colher", qtd: 16 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 16 }] },
+      { id: "qk_colher", objetivo: { tipo: "acao", acao: "qk_colher", qtd: 16 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 16 }] },
       { id: "qk_picarango", objetivo: { tipo: "acao", acao: "picarango", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
       { id: "qk_corda", objetivo: { tipo: "acao", acao: "corda", qtd: 1 }, recompensa: [{ item: "cl:corda", quantidade: 16 }] },
       { id: "qk_armazem", objetivo: { tipo: "colocar", bloco: "cl:caixote_maca", qtd: 4 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
@@ -646,7 +646,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "pw_ardente", requer: ["pw_orbe"], objetivo: { tipo: "ter", item: "cl:cristal_ardente", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       // 1.19.0: o resto do Powah!
       { id: "pw_uraninita", requer: ["pw_pasta"], objetivo: { tipo: "ter", item: "cl:uraninita", qtd: 1 }, recompensa: [{ item: "minecraft:gravel", quantidade: 32 }] },
-      { id: "pw_reator", requer: ["pw_uraninita", "pw_cabo"], objetivo: { tipo: "acao", acao: "reator", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "pw_reator", requer: ["pw_uraninita", "pw_cabo"], objetivo: { tipo: "acao", acao: "pw_reator", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       { id: "pw_ender", requer: ["pw_cabo"], objetivo: { tipo: "acao", acao: "ender_canal", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
       { id: "pw_bateria", requer: ["pw_cabo"], objetivo: { tipo: "acao", acao: "bateria", qtd: 1 }, recompensa: [{ item: "minecraft:redstone_block", quantidade: 2 }] },
       { id: "pw_raio", requer: ["pw_orbe"], objetivo: { tipo: "acao", acao: "raio", qtd: 1 }, recompensa: [{ item: "minecraft:snowball", quantidade: 8 }] },
@@ -803,7 +803,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     ],
   },
   {
-    id: "armazenamento", // 1.32.0: Iron Chests e Storage Drawers
+    id: "gavetas", // 1.32.0: Iron Chests e Storage Drawers (o id "armazenamento" é do JABBA e AE)
     icone: "cl:bau_ferro",
     requer: ["utilidades"],
     missoes: [

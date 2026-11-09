@@ -101,7 +101,7 @@
   {
    "id": "cilindro_vapor_agua",
    "q": "water_vapor",
-   "pt": "Cilindro de Water Vapor",
+   "pt": "Cilindro de Vapor d'Água",
    "en": "Water Vapor Tank",
    "cor": "#d8e4ec"
   },
@@ -129,91 +129,91 @@
   {
    "id": "cilindro_oxido_uranio",
    "q": "uranium_oxide",
-   "pt": "Cilindro de Óxido de urânio líquido",
+   "pt": "Cilindro de Óxido de Urânio",
    "en": "Liquid Uranium Oxide Tank",
    "cor": "#e1f573"
   },
   {
    "id": "cilindro_acido_fluoridrico",
    "q": "hydrofluoric_acid",
-   "pt": "Cilindro de Ácido hidrofluórico líquido",
+   "pt": "Cilindro de Ácido Fluorídrico",
    "en": "Liquid Hydrofluoric Acid Tank",
    "cor": "#c6c7bd"
   },
   {
    "id": "cilindro_hexafluoreto_uranio",
    "q": "uranium_hexafluoride",
-   "pt": "Cilindro de Hexafluoreto de urânio líquido",
+   "pt": "Cilindro de Hexafluoreto de Urânio",
    "en": "Liquid Uranium Hexafluoride Tank",
    "cor": "#809960"
   },
   {
    "id": "cilindro_combustivel_fissil",
    "q": "fissile_fuel",
-   "pt": "Cilindro de Fissile Fuel",
+   "pt": "Cilindro de Combustível Físsil",
    "en": "Fissile Fuel Tank",
    "cor": "#2e332f"
   },
   {
    "id": "cilindro_residuo_nuclear",
    "q": "nuclear_waste",
-   "pt": "Cilindro de Nuclear Waste",
+   "pt": "Cilindro de Resíduo Nuclear",
    "en": "Nuclear Waste Tank",
    "cor": "#4f412a"
   },
   {
    "id": "cilindro_residuo_nuclear_gasto",
    "q": "spent_nuclear_waste",
-   "pt": "Cilindro de Spent Nuclear Waste",
+   "pt": "Cilindro de Resíduo Nuclear Gasto",
    "en": "Spent Nuclear Waste Tank",
    "cor": "#262015"
   },
   {
    "id": "cilindro_plutonio",
    "q": "plutonium",
-   "pt": "Cilindro de Plutonium",
+   "pt": "Cilindro de Plutônio",
    "en": "Plutonium Tank",
    "cor": "#1f919c"
   },
   {
    "id": "cilindro_polonio",
    "q": "polonium",
-   "pt": "Cilindro de Polonium",
+   "pt": "Cilindro de Polônio",
    "en": "Polonium Tank",
    "cor": "#1b9e7b"
   },
   {
    "id": "cilindro_antimateria",
    "q": "antimatter",
-   "pt": "Cilindro de Antimatter",
+   "pt": "Cilindro de Antimatéria",
    "en": "Antimatter Tank",
    "cor": "#a464b3"
   },
   {
    "id": "cilindro_vapor",
    "q": "steam",
-   "pt": "Cilindro de Vapor líquido",
+   "pt": "Cilindro de Vapor",
    "en": "Liquid Steam Tank",
    "cor": "#c4c4c4"
   },
   {
    "id": "cilindro_deuterio",
    "q": "deuterium",
-   "pt": "Cilindro de Deutério Líquido",
+   "pt": "Cilindro de Deutério",
    "en": "Liquid Deuterium Tank",
    "cor": "#ff3232"
   },
   {
    "id": "cilindro_tritio",
    "q": "tritium",
-   "pt": "Cilindro de Trítio Líquido",
+   "pt": "Cilindro de Trítio",
    "en": "Liquid Tritium Tank",
    "cor": "#64ff70"
   },
   {
    "id": "cilindro_combustivel_fusao",
    "q": "fusion_fuel",
-   "pt": "Cilindro de Combustível D-T Líquido",
+   "pt": "Cilindro de Combustível de Fusão",
    "en": "Liquid D-T Fuel Tank",
    "cor": "#7e007d"
   },

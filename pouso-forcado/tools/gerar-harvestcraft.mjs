@@ -636,9 +636,9 @@ for (const c of [...D.culturas, ...H2.culturas]) {
     "minecraft:recipe_shapeless": { description: { identifier: `cl:hc_semente_${c.id}` }, tags: ["crafting_table"], ingredients: [{ item: produto }], unlock: SEMPRE, result: { item: `cl:${semente}` } },
   });
   nomes.pt[`item.cl:${semente}.name`] = `Sementes de ${c.pt}`;
-  nomes.en[`item.cl:${semente}.name`] = `${c.en} Seeds`;
+  nomes.en[`item.cl:${semente}.name`] = `${c.en.replace(/ Seeds$/, "")} Seeds`;
   nomes.pt[`tile.cl:${planta}.name`] = `Plantação de ${c.pt}`;
-  nomes.en[`tile.cl:${planta}.name`] = `${c.en} Crop`;
+  nomes.en[`tile.cl:${planta}.name`] = `${c.en.replace(/ Seeds$/, "")} Crop`;
   if (!c.produto) {
     nomes.pt[`item.cl:${c.id}.name`] = c.pt;
     nomes.en[`item.cl:${c.id}.name`] = c.en;

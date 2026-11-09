@@ -104,7 +104,7 @@ function colher(j: Player, b: Block): void {
   const p = { x: b.x, y: b.y, z: b.z };
   b.dimension.runCommand(`setblock ${p.x} ${p.y} ${p.z} air destroy`);
   b.dimension.getBlock(p)?.setPermutation(BlockPermutation.resolve(tipo, { growth: 0 }));
-  registrarAcao(j, "colher");
+  registrarAcao(j, "qk_colher");
 }
 
 // ---------- Portas duplas ----------

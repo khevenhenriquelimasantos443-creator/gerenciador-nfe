@@ -29,8 +29,16 @@
     "unlock": {
       "context": "AlwaysUnlocked"
     },
-    "result": {
-      "item": "cl:melhoria_gerador_pedra"
-    }
+    "result": [
+      {
+        "item": "cl:melhoria_gerador_pedra"
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
   }
 }

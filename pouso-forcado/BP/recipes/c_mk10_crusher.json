@@ -29,8 +29,16 @@
     "unlock": {
       "context": "AlwaysUnlocked"
     },
-    "result": {
-      "item": "cl:triturador_mk"
-    }
+    "result": [
+      {
+        "item": "cl:triturador_mk"
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
   }
 }

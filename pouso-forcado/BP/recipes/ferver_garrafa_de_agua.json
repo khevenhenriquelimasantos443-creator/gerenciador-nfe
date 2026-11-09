@@ -9,7 +9,7 @@
       "campfire",
       "soul_campfire"
     ],
-    "input": "minecraft:potion",
+    "input": "minecraft:potion:0",
     "output": "cl:agua_boa"
   }
 }

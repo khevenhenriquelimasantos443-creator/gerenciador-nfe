@@ -1,6 +1,7 @@
 import { Dimension, EntityDamageCause, EquipmentSlot, Player, system, Vector3, world } from "@minecraft/server";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
+import { gravarGrande, lerGrande } from "../util/dados.js";
 
 /*
  * Radiação do Mekanism (1.52.0), com as escalas do mod (RadiationManager): o nível do lugar em Sv/h, por chunk, e a dose de
@@ -17,11 +18,7 @@ const BASE = 0.0000001; // 100 nSv/h
 let niveis: Record<string, number> | undefined;
 const mapa = (): Record<string, number> => {
   if (!niveis) {
-    try {
-      niveis = JSON.parse((world.getDynamicProperty(PROP) as string | undefined) ?? "{}") as Record<string, number>;
-    } catch {
-      niveis = {};
-    }
+    niveis = lerGrande<Record<string, number>>(PROP, {});
   }
   return niveis;
 };
@@ -95,7 +92,7 @@ export function registrarRadiacao(): void {
     }
     if (mudou && passo % 10 === 0) {
       mudou = false;
-      world.setDynamicProperty(PROP, JSON.stringify(mapa()));
+      gravarGrande(PROP, mapa());
     }
   }, 20);
   // Contador Geiger e Dosímetro.

@@ -591,8 +591,8 @@
    "tier": 2
   },
   "aluminio": {
-   "pt": "aluminio",
-   "en": "aluminio",
+   "pt": "Alumínio",
+   "en": "Aluminum",
    "item": "cl:lingote_aluminio",
    "dur": 225,
    "vel": -0.15,

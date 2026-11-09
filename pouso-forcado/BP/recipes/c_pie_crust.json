@@ -22,9 +22,14 @@
     "unlock": {
       "context": "AlwaysUnlocked"
     },
-    "result": {
-      "item": "cl:massa_torta",
-      "count": 1
-    }
+    "result": [
+      {
+        "item": "cl:massa_torta",
+        "count": 1
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
   }
 }

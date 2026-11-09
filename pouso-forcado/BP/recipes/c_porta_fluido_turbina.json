@@ -26,8 +26,25 @@
     "unlock": {
       "context": "AlwaysUnlocked"
     },
-    "result": {
-      "item": "cl:porta_fluido_turbina"
-    }
+    "result": [
+      {
+        "item": "cl:porta_fluido_turbina"
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
   }
 }

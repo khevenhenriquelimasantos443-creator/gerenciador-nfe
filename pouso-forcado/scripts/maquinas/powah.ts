@@ -508,7 +508,7 @@ export const reator: BlockCustomComponent = {
       if (temCarb) r.carbono = Math.max(0, r.carbono - 20);
       if (temRed) r.redstone = Math.max(0, r.redstone - 0.5);
       if (r.frio > 0 && r.agua) r.frio = Math.max(0, r.frio - 0.5);
-      creditarAcao(b, "reator");
+      creditarAcao(b, "pw_reator");
     } else ultimo.set(chave(b), 0);
     if (r.combustivel <= 0) r.base = 0;
     gravar("pw_reator", b, r);
@@ -530,7 +530,7 @@ export const reator: BlockCustomComponent = {
   },
 };
 
-function creditarAcao(b: Block, acao: "bateria" | "reator"): void {
+function creditarAcao(b: Block, acao: "bateria" | "pw_reator"): void {
   const j = b.dimension.getPlayers({ location: b.center(), maxDistance: 16, closest: 1 })[0];
   if (j) registrarAcao(j, acao);
 }

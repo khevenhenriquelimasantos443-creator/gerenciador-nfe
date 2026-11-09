@@ -3,7 +3,7 @@ import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { DADOS_F69 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { lerEm, gravarEm } from "../util/dados.js";
+import { gravarEm, gravarGrande, lerEm, lerGrande } from "../util/dados.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { consumir, gerar, registrarArmazem } from "../util/rede.js";
 import { CHEIO_MK, ehLiquidoMk, MB_CILINDRO, nomeQuimico, Ponta, RECIPIENTE_MK, registrarPonta } from "./mekanism_quimica.js";
@@ -370,11 +370,7 @@ const PROP = "cl:mk_mb";
 let idx: Record<string, Mb> | undefined;
 const estruturas = (): Record<string, Mb> => {
   if (!idx) {
-    try {
-      idx = JSON.parse((world.getDynamicProperty(PROP) as string | undefined) ?? "{}") as Record<string, Mb>;
-    } catch {
-      idx = {};
-    }
+    idx = lerGrande<Record<string, Mb>>(PROP, {});
   }
   return idx;
 };
@@ -386,7 +382,7 @@ function sujar(agora = false): void {
 function salvar(): void {
   if (!sujo) return;
   sujo = false;
-  world.setDynamicProperty(PROP, JSON.stringify(estruturas()));
+  gravarGrande(PROP, estruturas());
 }
 const chaveMb = (t: string, d: string, a: V) => `${t}|${d}|${a.x},${a.y},${a.z}`;
 const dentroDe = (m: Mb, p: V) => p.x >= m.a.x && p.x <= m.b.x && p.y >= m.a.y && p.y <= m.b.y && p.z >= m.a.z && p.z <= m.b.z;

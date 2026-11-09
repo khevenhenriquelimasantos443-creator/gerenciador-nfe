@@ -43,3 +43,33 @@ export function registrarDetalhe(ids: string | string[], fn: (b: Block) => RawMe
   for (const id of Array.isArray(ids) ? ids : [ids]) detalhes.set(id, fn);
 }
 export const detalheRegistrado = (b: Block) => detalhes.get(b.typeId)?.(b);
+
+/** JSON grande do mundo em pedaços de 30.000 caracteres (cada propriedade do Bedrock aceita até 32 KB). */
+export function lerGrande<T>(nome: string, padrao: T): T {
+  const n = (world.getDynamicProperty(`${nome}#n`) as number | undefined);
+  if (n === undefined) {
+    // formato antigo: uma propriedade só
+    const v = world.getDynamicProperty(nome);
+    try {
+      return typeof v === "string" ? (JSON.parse(v) as T) : padrao;
+    } catch {
+      return padrao;
+    }
+  }
+  let txt = "";
+  for (let i = 0; i < n; i++) txt += (world.getDynamicProperty(`${nome}#${i}`) as string | undefined) ?? "";
+  try {
+    return txt ? (JSON.parse(txt) as T) : padrao;
+  } catch {
+    return padrao;
+  }
+}
+export function gravarGrande(nome: string, dados: unknown): void {
+  const txt = JSON.stringify(dados);
+  const antes = (world.getDynamicProperty(`${nome}#n`) as number | undefined) ?? 0;
+  const n = Math.ceil(txt.length / 30000);
+  for (let i = 0; i < n; i++) world.setDynamicProperty(`${nome}#${i}`, txt.slice(i * 30000, (i + 1) * 30000));
+  for (let i = n; i < antes; i++) world.setDynamicProperty(`${nome}#${i}`, undefined);
+  world.setDynamicProperty(`${nome}#n`, n);
+  world.setDynamicProperty(nome, undefined);
+}

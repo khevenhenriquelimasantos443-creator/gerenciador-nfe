@@ -26,23 +26,52 @@ type Freq = { k: string; nome: string };
 type Itens = Record<string, number>;
 
 // ---------- Dados ----------
-let banco: Record<string, Itens> | undefined, matrizes: Record<string, { k?: string; d: string[] }> | undefined;
-const carregar = <T,>(prop: string): T => {
+// Cada frequência numa propriedade própria, em pedaços de 30.000 caracteres (o Bedrock limita cada propriedade a 32 KB).
+const PEDACO = 30000;
+const banco = new Map<string, Itens>();
+const sujas = new Set<string>();
+let matrizes: Record<string, { k?: string; d: string[] }> | undefined;
+const lerBanco = (k: string): Itens => {
+  let txt = "";
+  const n = (world.getDynamicProperty(`cl:mk_qio:${k}#n`) as number | undefined) ?? 0;
+  for (let i = 0; i < n; i++) txt += (world.getDynamicProperty(`cl:mk_qio:${k}#${i}`) as string | undefined) ?? "";
   try {
-    return JSON.parse((world.getDynamicProperty(prop) as string | undefined) ?? "{}") as T;
+    return txt ? (JSON.parse(txt) as Itens) : {};
   } catch {
-    return {} as T;
+    return {};
   }
 };
-const itensDe = (k: string): Itens => ((banco ??= carregar<Record<string, Itens>>("cl:mk_qio"))[k] ??= {});
-const arr = () => (matrizes ??= carregar<Record<string, { k?: string; d: string[] }>>("cl:mk_qio_arr"));
-let sujo = false;
-const sujar = () => {
-  if (sujo) return;
-  sujo = true;
+const itensDe = (k: string): Itens => {
+  let it = banco.get(k);
+  if (!it) banco.set(k, (it = lerBanco(k)));
+  return it;
+};
+const arr = () => {
+  if (!matrizes) {
+    try {
+      matrizes = JSON.parse((world.getDynamicProperty("cl:mk_qio_arr") as string | undefined) ?? "{}") as Record<string, { k?: string; d: string[] }>;
+    } catch {
+      matrizes = {};
+    }
+  }
+  return matrizes;
+};
+let agendado = false;
+const sujar = (k?: string) => {
+  if (k) sujas.add(k);
+  if (agendado) return;
+  agendado = true;
   system.runTimeout(() => {
-    sujo = false;
-    world.setDynamicProperty("cl:mk_qio", JSON.stringify(banco ?? {}));
+    agendado = false;
+    for (const f of sujas) {
+      const txt = JSON.stringify(itensDe(f));
+      const antes = (world.getDynamicProperty(`cl:mk_qio:${f}#n`) as number | undefined) ?? 0;
+      const n = Math.ceil(txt.length / PEDACO);
+      for (let i = 0; i < n; i++) world.setDynamicProperty(`cl:mk_qio:${f}#${i}`, txt.slice(i * PEDACO, (i + 1) * PEDACO));
+      for (let i = n; i < antes; i++) world.setDynamicProperty(`cl:mk_qio:${f}#${i}`, undefined);
+      world.setDynamicProperty(`cl:mk_qio:${f}#n`, n);
+    }
+    sujas.clear();
     world.setDynamicProperty("cl:mk_qio_arr", JSON.stringify(matrizes ?? {}));
   }, 20);
 };
@@ -68,7 +97,7 @@ function por(k: string, i: ItemStack): number {
   if (n <= 0) return 0;
   const it = itensDe(k);
   it[i.typeId] = (it[i.typeId] ?? 0) + n;
-  sujar();
+  sujar(k);
   return n;
 }
 function tirarDe(k: string, id: string, quer: number): number {
@@ -77,7 +106,7 @@ function tirarDe(k: string, id: string, quer: number): number {
   if (n <= 0) return 0;
   it[id] -= n;
   if (!it[id]) delete it[id];
-  sujar();
+  sujar(k);
   return n;
 }
 const freqDe = (b: Block): Freq | undefined => ler<Freq | undefined>("mkqf", b, undefined);
@@ -192,6 +221,7 @@ function exportar(b: Block): void {
     if (sobra) {
       const o = itensDe(f.k);
       o[id] = (o[id] ?? 0) + sobra.amount;
+      sujar(f.k);
     }
     if (!sobra || sobra.amount < n) return;
   }

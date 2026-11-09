@@ -39,7 +39,18 @@ const origem = {};
 const ingrediente = (i) => (i.startsWith("#") ? { tag: i.slice(1) } : { item: i });
 const resultado1 = (r) => (r.qtd ? { item: r.resultado, count: r.qtd } : { item: r.resultado });
 // r.devolve: itens que voltam junto (o balde vazio do creosoto, 1.13.0); só a receita com forma aceita mais de um resultado.
-const resultado = (r) => (r.devolve ? [resultado1(r), ...r.devolve.map((item) => ({ item }))] : resultado1(r));
+// 1.53.1: receita com forma que gasta balde cheio do jogo (água, lava, leite) devolve o balde vazio, um por balde usado.
+const BALDES = new Set(["minecraft:water_bucket", "minecraft:lava_bucket", "minecraft:milk_bucket"]);
+function devolveAuto(r) {
+  if (r.tipo !== "shaped" || r.devolve) return r.devolve;
+  const letras = Object.entries(r.chave).filter(([, v]) => BALDES.has(v)).map(([k]) => k);
+  const n = r.padrao.join("").split("").filter((c) => letras.includes(c)).length;
+  return n ? Array(n).fill("minecraft:bucket") : undefined;
+}
+const resultado = (r) => {
+  const d = devolveAuto(r);
+  return d ? [resultado1(r), ...d.map((item) => ({ item }))] : resultado1(r);
+};
 
 function receita(r) {
   const desc = { identifier: `cl:c_${r.id}` };

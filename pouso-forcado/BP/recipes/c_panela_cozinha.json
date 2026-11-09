@@ -29,8 +29,13 @@
     "unlock": {
       "context": "AlwaysUnlocked"
     },
-    "result": {
-      "item": "cl:panela_cozinha"
-    }
+    "result": [
+      {
+        "item": "cl:panela_cozinha"
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
   }
 }
