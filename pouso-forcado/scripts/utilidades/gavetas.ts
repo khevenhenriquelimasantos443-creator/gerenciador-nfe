@@ -415,7 +415,20 @@ export function registrarGavetas(): void {
     if (!g.s.some(Boolean) && !g.up?.length && !g.trava) return; // vazia: some como qualquer bloco
     const item = new ItemStack(tipo, 1);
     guardarNoItem(item, g, `§7${g.s.reduce((n, x) => n + (x?.n ?? 0), 0)}`);
-    dim.spawnItem(item, { x: onde.x + 0.5, y: onde.y + 0.3, z: onde.z + 0.5 });
+    const centro = { x: onde.x + 0.5, y: onde.y + 0.3, z: onde.z + 0.5 };
+    dim.spawnItem(item, centro);
+    // O jogo também solta o saque normal do bloco explodido (às vezes, por sorteio): uma gaveta vazia, que duplicaria a gaveta.
+    // Some com ela no tique seguinte; a que leva o conteúdo tem a descrição com o código e fica.
+    system.run(() => {
+      try {
+        for (const e of dim.getEntities({ type: "minecraft:item", location: centro, maxDistance: 2 })) {
+          const it = e.getComponent("minecraft:item")?.itemStack;
+          if (it?.typeId === tipo && it.getLore().length === 0) return e.remove();
+        }
+      } catch {
+        // chunk descarregado: o saque fica
+      }
+    });
   });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     const i = ev.itemStack;

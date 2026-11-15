@@ -3273,34 +3273,37 @@ teste("mkp_robit", 300, (t) => {
   });
 });
 
-// 1.53.2: uma explosão no lugar da gaveta cheia devolve o conteúdo no chão (antes sumia) e os outros tratadores não quebram.
+// 1.53.2: uma explosão no lugar da gaveta cheia devolve o conteúdo (antes sumia) e os outros tratadores não quebram.
+// 1.54.1: quatro gavetas cheias, para pegar o saque normal do jogo (sorteado): tem de sobrar UMA gaveta com conteúdo por gaveta, sem vazias de sobra.
 teste("explosao", 300, (t) => {
   const j = robo(t, { x: 1.5, y: 2, z: 6.5 });
   const inv = j.getComponent("minecraft:inventory").container;
   const dim = t.getDimension();
   const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`explosao: ${c} -> ${e}`); } };
   const w = (p) => t.worldBlockLocation(p);
-  t.setBlockType("cl:gaveta", { x: 2, y: 2, z: 2 });
-  t.setBlockType("cl:cabo", { x: 4, y: 2, z: 2 });
-  t.runAfterDelay(4, () => {
+  const POS = [{ x: 2, y: 2, z: 1 }, { x: 2, y: 2, z: 2 }, { x: 2, y: 2, z: 3 }, { x: 2, y: 2, z: 4 }];
+  for (const p of POS) t.setBlockType("cl:gaveta", p);
+  t.setBlockType("cl:cabo", { x: 5, y: 2, z: 2 });
+  POS.forEach((p, k) => t.runAfterDelay(4 + k * 3, () => {
     inv.setItem(0, new ItemStack("minecraft:iron_ingot", 64));
     j.selectedSlotIndex = 0;
-    const g = w({ x: 2, y: 2, z: 2 });
+    const g = w(p);
     cmd(`scriptevent cl:teste_gaveta por ${g.x} ${g.y} ${g.z} 0`);
-  });
-  t.runAfterDelay(14, () => {
-    t.assert(quantos(j, "minecraft:iron_ingot") === 0, "o ferro não entrou na gaveta");
+  }));
+  t.runAfterDelay(22, () => {
+    t.assert(quantos(j, "minecraft:iron_ingot") === 0, "o ferro não entrou nas gavetas");
     dim.createExplosion(t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), 6, { breaksBlocks: true });
   });
-  t.runAfterDelay(50, () => {
-    // A gaveta cheia vira UM item de gaveta com tudo dentro (como quebrar à mão): sem ferro solto, sem perder nada.
-    const itens = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), maxDistance: 12 });
+  t.runAfterDelay(70, () => {
+    // Cada gaveta cheia vira UM item de gaveta com tudo dentro (como quebrar à mão): sem ferro solto, sem gaveta vazia de sobra.
+    const itens = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), maxDistance: 14 });
     const stacks = itens.map((e) => e.getComponent("minecraft:item").itemStack);
-    const gaveta = stacks.find((i) => i.typeId === "cl:gaveta");
+    const gavetas = stacks.filter((i) => i.typeId === "cl:gaveta");
     const solto = stacks.filter((i) => i.typeId === "minecraft:iron_ingot").reduce((n, i) => n + i.amount, 0);
-    log(`explosao: gaveta=${t.getBlock({ x: 2, y: 2, z: 2 }).typeId} item gaveta=${!!gaveta} lore=${JSON.stringify(gaveta?.getLore())} ferro solto=${solto}`);
-    t.assert(!!gaveta, "a gaveta cheia não virou item na explosão");
-    t.assert((gaveta.getLore() ?? []).some((l) => l.includes("64")), "o item da gaveta não guardou os 64 lingotes");
+    const cheias = gavetas.filter((i) => (i.getLore() ?? []).some((l) => l.includes("64"))).length;
+    log(`explosao: ${gavetas.length} item(ns) de gaveta soltos, ${cheias} com os 64 lingotes: ${JSON.stringify(gavetas.map((i) => i.getLore()))} ferro solto=${solto}`);
+    t.assert(cheias === POS.length, `só ${cheias} de ${POS.length} gavetas guardaram os 64 lingotes`);
+    t.assert(gavetas.length === POS.length, `a explosão soltou ${gavetas.length} gavetas (era para ser ${POS.length}, as que levam o conteúdo)`);
     t.succeed();
   });
 });
