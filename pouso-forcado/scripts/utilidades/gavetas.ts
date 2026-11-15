@@ -404,6 +404,24 @@ export function registrarGavetas(): void {
       dim.spawnItem(item, { x: onde.x + 0.5, y: onde.y + 0.3, z: onde.z + 0.5 });
     });
   });
+  // Explosão: o bloco some sem passar pelo caminho acima; o que a gaveta guardava cai no chão (os itens, em pilhas).
+  world.afterEvents.blockExplode.subscribe(({ block, explodedBlockPermutation: perm, dimension: dim }) => {
+    const tipo = perm.type.id;
+    if (!ehGaveta(tipo)) return;
+    const onde = { x: block.x, y: block.y, z: block.z };
+    const g = lerEm<Gav>(T, dim, onde, { s: [] });
+    gravarEm(T, dim, onde, undefined);
+    const centro = { x: onde.x + 0.5, y: onde.y + 0.3, z: onde.z + 0.5 };
+    for (const s of g.s) {
+      if (!s) continue;
+      for (let falta = s.n, k = 0; falta > 0 && k < 64; k++) {
+        const n = Math.min(falta, pilhaDe(s.t));
+        dim.spawnItem(new ItemStack(s.t, n), centro);
+        falta -= n;
+      }
+    }
+    for (const u of g.up ?? []) dim.spawnItem(new ItemStack(u, 1), centro);
+  });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     const i = ev.itemStack;
     if (!i || !ehGaveta(i.typeId)) return;

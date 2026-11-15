@@ -10,6 +10,8 @@ import { fileURLToPath } from "node:url";
 const P = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "powah.json"), "utf8"));
 const PW = { mod: "Powah!" };
 const NIVEIS = P.niveis; // [id, pt, en]
+// Para substantivos femininos (Célula): Básico → Básica, Endurecido → Endurecida; Ardente, Espiritual etc. não mudam.
+const fem = (n) => n.replace(/(ic|id)o$/, "$1a");
 // Cor de cada nível (Tier.java do mod), para os desenhos gerados quando não há arte.
 const COR = ["#a7a7a7", "#a3ab9f", "#bba993", "#e4b040", "#13eed2", "#afe241", "#d7746c"];
 const N = P.numeros;
@@ -63,7 +65,7 @@ export default {
     ...maquina("magmator", "cl:pw_magmator", "Magmator", "Magmator", "vermelho", "chama"),
     ...maquina("termogerador", "cl:pw_termogerador", "Termogerador", "Thermo Generator", "laranja", "raio"),
     ...maquina("painel_solar", "cl:pw_solar", "Painel Solar", "Solar Panel", "amarelo", "circulo"),
-    ...NIVEIS.map(([n, npt, nen], k) => ({ id: `celula_powah_${n}`, pt: `Célula de Energia ${npt} (Powah)`, en: `${nen} Energy Cell (Powah)`, tipo: "cubo", cor: COR[k], padrao: "rebitado", dureza: 2, girar: false, ...PW })),
+    ...NIVEIS.map(([n, npt, nen], k) => ({ id: `celula_powah_${n}`, pt: `Célula de Energia ${fem(npt)} (Powah)`, en: `${nen} Energy Cell (Powah)`, tipo: "cubo", cor: COR[k], padrao: "rebitado", dureza: 2, girar: false, ...PW })),
     ...NIVEIS.map(([n, npt, nen], k) => ({
       id: `cabo_powah_${n}`, pt: `Cabo de Energia ${npt}`, en: `${nen} Energy Cable`, tipo: "cubo", cor: COR[k], padrao: "metal", dureza: 0.5, girar: false, ...PW,
       estados: Object.fromEntries(Object.values(LIGACOES).map((e) => [e, [false, true]])),
@@ -83,7 +85,7 @@ export default {
     // 1.19.0
     ...NIVEIS.map(([n, npt, nen], k) => ({ id: `reator_${n}`, pt: `Reator ${npt}`, en: `${nen} Reactor`, tipo: "cubo", cor: COR[k], padrao: "rebitado", dureza: 3, girar: false, comp: "cl:pw_reator", tick: 20, ...PW,
       estados: { "cl:parte": [false, true] }, loot: "loot_tables/empty.json" })),
-    ...NIVEIS.map(([n, npt, nen], k) => ({ id: `celula_ender_${n}`, pt: `Célula Ender ${npt}`, en: `${nen} Ender Cell`, tipo: "cubo", cor: COR[k], padrao: "rebitado", dureza: 2, girar: false, comp: "cl:pw_ender", ...PW })),
+    ...NIVEIS.map(([n, npt, nen], k) => ({ id: `celula_ender_${n}`, pt: `Célula Ender ${fem(npt)}`, en: `${nen} Ender Cell`, tipo: "cubo", cor: COR[k], padrao: "rebitado", dureza: 2, girar: false, comp: "cl:pw_ender", ...PW })),
     ...NIVEIS.map(([n, npt, nen], k) => ({ id: `portao_ender_${n}`, pt: `Portão Ender ${npt}`, en: `${nen} Ender Gate`, tipo: "cubo", cor: COR[k], padrao: "metal", dureza: 2, girar: false, comp: "cl:pw_ender", ...PW })),
     ...NIVEIS.map(([n, npt, nen], k) => ({ id: `descarregador_${n}`, pt: `Descarregador ${npt}`, en: `${nen} Energy Discharger`, tipo: "cubo", cor: COR[k], padrao: "metal", dureza: 2, girar: false, comp: "cl:pw_descarregador", tick: 20, ...PW })),
     ...NIVEIS.map(([n, npt, nen], k) => ({ id: `funil_energia_${n}`, pt: `Funil de Energia ${npt}`, en: `${nen} Energy Hopper`, tipo: "cubo", cor: COR[k], padrao: "metal", dureza: 2, girar: false, comp: "cl:pw_funil", tick: 20, ...PW })),

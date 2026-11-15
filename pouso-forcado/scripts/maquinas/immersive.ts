@@ -6,6 +6,7 @@ import { gravar, ler } from "../util/dados.js";
 import { darAoJogador, gastarDaMao, gastarFerramenta } from "../util/inventario.js";
 import { toqueNovo } from "../util/toque.js";
 import { gerador } from "./mekanism_extra.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Immersive Engineering (1.13.0), com os números do código do IE 1.20.1:
@@ -366,7 +367,7 @@ export function registrarImmersive(): void {
     const { player: j, block: b } = ev;
     system.run(() => formar(j, b));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block: b, brokenBlockPermutation: p }) => {
+  quebrado(({ block: b, brokenBlockPermutation: p }) => {
     const id = p.type.id;
     if (id === MOINHO || id === RODA) {
       tirarRotor(b.dimension, b.location);

@@ -7,6 +7,7 @@ import { codigoDoItem, guardarNoItem, lerCodigo } from "../util/item_guarda.js";
 import { cabe, contar, entrada, entregar, tirar } from "../util/maquina.js";
 import { aceitarMelhorias, gastarMk, rodarMk, textoMelhorias } from "./mekanism_upgrades.js";
 import { maquina } from "./thermal.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Mekanism completo, parte 1 (1.49.0): a química do Mekanism 10.7.19 (DADOS_F66, de tools/importar-mekanism-completo.py).
@@ -373,7 +374,7 @@ export function registrarMekanismQuimica(): void {
     return t.q && t.mb > 0 ? { rawtext: [{ text: `${t.mb} mB ` }, nomeQ(t.q)] } : { translate: "cl.mkq.vazio" };
   });
   // Tanque quebrado leva o conteúdo; posto de novo, devolve.
-  world.afterEvents.playerBreakBlock.subscribe(({ player, block, brokenBlockPermutation }) => {
+  quebrado(({ player, block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (!D.tanques[id]) return;
     const t = lerEm<Tanque>("mkt", block.dimension, block.location, { mb: 0 });

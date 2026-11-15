@@ -2017,9 +2017,9 @@
    "den": "Tool no longer is penalized when mining in the air and gains a projectile velocity bonus"
   },
   "ambush": {
-   "pt": "Ambush",
+   "pt": "Emboscada",
    "en": "Ambush",
-   "dpt": "Deals more damage when you or the target is at full health.",
+   "dpt": "Causa mais dano quando você ou o alvo está com a vida cheia.",
    "den": "Deals more damage when you or the target is at full health."
   },
   "antitoxin": {
@@ -2149,10 +2149,10 @@
    "den": "Critical hits on enemies drains their life to heal you"
   },
   "offhand_attack": {
-   "pt": "offhand_attack",
-   "en": "offhand_attack",
-   "dpt": "",
-   "den": ""
+   "pt": "Ataque com a mão secundária",
+   "en": "Offhand Attack",
+   "dpt": "Permite atacar com a ferramenta que está na mão secundária.",
+   "den": "Lets you attack with the tool held in your offhand."
   },
   "overburn": {
    "pt": "Superqueima",
@@ -2185,15 +2185,15 @@
    "den": "Tool consumes overslime instead of durability, until it runs out! Not friendly towards tools lacking slime"
   },
   "overslime_friend": {
-   "pt": "Amigo do Slimebilidade",
+   "pt": "Amigo do Slime",
    "en": "Overslime Friend",
-   "dpt": "Counts as a slimy material, preventing overslime from debuffing the tool",
+   "dpt": "Conta como material gosmento: o excesso de slime não enfraquece a ferramenta.",
    "den": "Counts as a slimy material, preventing overslime from debuffing the tool"
   },
   "overwield": {
-   "pt": "Overwield",
+   "pt": "Excesso de Poder",
    "en": "Overwield",
-   "dpt": "Consumes overslime to boost mining speed, attack speed, drawspeed, and projectile velocity",
+   "dpt": "Gasta o excesso de slime para aumentar a velocidade de mineração, de ataque, de arco e dos projéteis.",
    "den": "Consumes overslime to boost mining speed, attack speed, drawspeed, and projectile velocity"
   },
   "overworked": {
@@ -2269,9 +2269,9 @@
    "den": "Tool resists damage in sunlight"
   },
   "spiny": {
-   "pt": "Spiny",
+   "pt": "Espinhoso",
    "en": "Spiny",
-   "dpt": "Boosts the projectile's damage, but damages you when used.",
+   "dpt": "Aumenta o dano do projétil, mas machuca você ao usar.",
    "den": "Boosts the projectile's damage, but damages you when used."
   },
   "stonebound": {

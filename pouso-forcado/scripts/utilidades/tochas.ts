@@ -2,6 +2,7 @@ import { Block, BlockCustomComponent, Dimension, EntityInitializationCause, syst
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { gravarEm, lerEm } from "../util/dados.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * 1.33.0: TorchMaster 21.9 (xalcon, MIT). Mega Tocha: nenhum monstro nasce sozinho num cubo de 64 blocos para cada
@@ -105,7 +106,7 @@ export function registrarTochas(): void {
     if (block.typeId === "cl:tocha_mega") registrarAcao(player, "tm_mega");
     if (block.typeId === "cl:lanterna_feral") registrarAcao(player, "tm_lanterna");
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (id === "cl:tocha_mega") {
       megas = lista().filter((m) => !igual(m, block));

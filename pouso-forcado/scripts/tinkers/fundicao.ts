@@ -9,6 +9,7 @@ import { definirEstado, lerEstado } from "../util/blocos.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador, gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { abrirUmMenu } from "../util/menus.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Fundição do Tinkers' Construct (Fase 16). Multibloco validado só ao tocar no controlador:
@@ -664,7 +665,7 @@ export function registrarFundicao(): void {
     },
     { entityTypes: ["minecraft:wither_skeleton"] },
   );
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     const dim = block.dimension, p = block.location;
     if (MESAS.has(id) || BACIAS.has(id)) {

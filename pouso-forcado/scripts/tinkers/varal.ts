@@ -6,6 +6,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { definirEstado } from "../util/blocos.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador } from "../util/inventario.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Varal (o Drying Rack do Tinkers): até VARAL.ganchos itens pendurados, cada um com a hora em que fica
@@ -82,7 +83,7 @@ export function registrarVaral(): void {
       nota: { text: `${r.ticks / 1200} min` },
     })),
   );
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id !== "cl:varal") return;
     const dim = block.dimension, p = block.location;
     for (const g of lerEm<Varal>("varal", dim, p, { g: [] }).g) dim.spawnItem(new ItemStack(resultado(g), 1), block.center());

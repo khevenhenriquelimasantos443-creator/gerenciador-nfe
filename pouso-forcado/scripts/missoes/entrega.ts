@@ -3,6 +3,7 @@ import { aviso } from "../jogador/hud.js";
 import { vizinhos } from "../util/blocos.js";
 import { gravar, gravarEm, ler, registrarDetalhe } from "../util/dados.js";
 import { abertas, concluir, contarNoInventario, lerEstado, nomeItem } from "./progresso.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Caixa de Entrega (o "Quest Delivery System" do Hardcore Questing Mode, 1.2.0). Fica de quem colocou.
@@ -79,7 +80,7 @@ export function registrarEntrega(): void {
   world.afterEvents.playerPlaceBlock.subscribe(({ player, block }) => {
     if (block.typeId === "cl:caixa_entrega") gravar("dono", block, { id: player.id, nome: player.name });
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id === "cl:caixa_entrega") gravarEm("dono", block.dimension, block.location, undefined);
   });
   registrarDetalhe("cl:caixa_entrega", (b) => {

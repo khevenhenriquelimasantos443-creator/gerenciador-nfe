@@ -8,6 +8,7 @@ import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js
 import { gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { toqueNovo } from "../util/toque.js";
 import { entrada, inv, primeiro, tirar } from "../util/maquina.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * PneumaticCraft, versão leve (Fase 20).
@@ -330,7 +331,7 @@ export function registrarPneumatic(): void {
     const { player, block } = ev;
     system.run(() => mostrarPressao(player, block));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (COMPRESSORES.has(id)) gravarEm("comp", block.dimension, block.location, undefined);
     if (!CAMARA.has(id)) return;

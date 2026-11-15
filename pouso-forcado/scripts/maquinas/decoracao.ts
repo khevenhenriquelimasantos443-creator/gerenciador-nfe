@@ -10,6 +10,7 @@ import { darAoJogador } from "../util/inventario.js";
 import { ItemSalvo, carregarItem, salvarItem } from "../util/itens.js";
 import { toqueNovo } from "../util/toque.js";
 import { abrirUmMenu } from "../util/menus.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Fase 23: Chisel, BiblioCraft e ChickenChunks.
@@ -298,7 +299,7 @@ export function registrarDecoracao(): void {
   world.afterEvents.playerPlaceBlock.subscribe(({ player, block }) => {
     if (block.typeId.startsWith("cl:lampada_")) registrarAcao(player, "lampada_cor");
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     const dim = block.dimension, p = block.location;
     if (LIMITE[id]) {

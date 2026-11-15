@@ -9,6 +9,7 @@ import { gastarFerramenta, itemNaMao } from "../util/inventario.js";
 import { ItemSalvo, carregarItem, salvarItem } from "../util/itens.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { ajustarDrops } from "./tracos.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * 1.30.0 (Tinkers' Construct 3 completo, parte 5): livros, ferramentas antigas, cajados de slime, geringonças
@@ -383,7 +384,7 @@ export function registrarExtrasTC(): void {
     }
   });
   // Panela de Fusão: o que a pá quebra sai fundido.
-  world.afterEvents.playerBreakBlock.subscribe(({ player, block, brokenBlockPermutation, itemStackBeforeBreak }) => {
+  quebrado(({ player, block, brokenBlockPermutation, itemStackBeforeBreak }) => {
     const bid = brokenBlockPermutation.type.id;
     if (BAUS.has(bid)) {
       // Baú quebrado: solta o que tinha dentro.

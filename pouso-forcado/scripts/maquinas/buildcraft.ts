@@ -11,6 +11,7 @@ import { intervalo } from "../util/perfil.js";
 import { gerar } from "../util/rede.js";
 import { toqueNovo } from "../util/toque.js";
 import { feito, maquina } from "./thermal.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * BuildCraft (1.3.0). O petróleo imita um líquido (o Bedrock não tem fluido de add-on): bloco sem colisão,
@@ -255,7 +256,7 @@ export function registrarBuildcraft(): void {
   intervalo("petroleo", () => {
     for (const j of world.getPlayers()) cuidarNado(j);
   }, 4);
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (id === "cl:pedreira" || id === "cl:motor_combustao") gravar(id === "cl:pedreira" ? "pedreira" : "motor", block, undefined);
   });

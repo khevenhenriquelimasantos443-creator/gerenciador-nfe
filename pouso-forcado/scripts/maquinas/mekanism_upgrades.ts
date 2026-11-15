@@ -4,6 +4,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { gravar, gravarEm, ler, lerEm } from "../util/dados.js";
 import { gastarCE } from "../util/maquina.js";
 import { feito } from "./thermal.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Mekanism completo, parte 2 (1.50.0): melhorias e fábricas, com as fórmulas do mod (MekanismUtils; maxUpgradeMultiplier
@@ -178,7 +179,7 @@ export function registrarMelhorias(): void {
     }
   });
   // Quebrar a máquina devolve as melhorias (e solta a âncora).
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (!ACEITA.has(brokenBlockPermutation.type.id)) return;
     const u = lerEm<Upg>("mk_upg", block.dimension, block.location, {});
     gravarEm("mk_upg", block.dimension, block.location, undefined);

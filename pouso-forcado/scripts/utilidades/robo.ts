@@ -480,7 +480,7 @@ export function registrarRobo(): void {
         if (!inv || i?.typeId !== mao.typeId) return;
         // 1.39.0: até o limite do robô; o que não cabe fica na mão.
         const cabem = Math.min(i.amount, Math.floor((limite(r) - comb(r)) / valor));
-        if (cabem <= 0) return aviso(j, { translate: "cl.cc.limite", with: [String(comb(r))] }, 3);
+        if (cabem <= 0) return aviso(j, { translate: "cl.robo.comb_limite", with: [String(comb(r))] }, 3);
         r.setDynamicProperty(COMB, comb(r) + valor * cabem);
         const lava = i.typeId === "minecraft:lava_bucket";
         if (cabem === i.amount) inv.setItem(slot, lava ? new ItemStack("minecraft:bucket", i.amount) : undefined);

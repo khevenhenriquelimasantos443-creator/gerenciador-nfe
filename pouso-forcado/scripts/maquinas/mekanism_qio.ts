@@ -7,6 +7,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { gravar, ler, registrarDetalhe } from "../util/dados.js";
 import { inv } from "../util/maquina.js";
 import { abrirUmMenu } from "../util/menus.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * QIO do Mekanism (1.53.0): os itens ficam numa frequência (pública ou privada, como no mod). A capacidade vem dos discos
@@ -296,7 +297,7 @@ export function registrarQio(): void {
     return f ? { text: f.nome } : { translate: "cl.mkl.freq.nenhuma" };
   });
   // A matriz quebrada devolve os discos.
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id !== MATRIZ) return;
     const k = posK(block);
     for (const d of arr()[k]?.d ?? []) block.dimension.spawnItem(new ItemStack(d, 1), block.center());

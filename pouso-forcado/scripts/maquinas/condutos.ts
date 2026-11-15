@@ -5,6 +5,7 @@ import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { inv } from "../util/maquina.js";
 import { CELULAS } from "../util/rede.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Condutos do Ender IO (1.11.0):
@@ -163,7 +164,7 @@ export function registrarCondutos(): void {
     atualizar(block);
     for (const [, passo] of LADOS) atualizar(ao(block, passo));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block }) => {
+  quebrado(({ block }) => {
     for (const [, passo] of LADOS) atualizar(ao(block, passo));
   });
 }

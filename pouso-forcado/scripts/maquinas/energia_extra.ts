@@ -6,6 +6,7 @@ import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js
 import { gastarCE } from "../util/maquina.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { CELULAS, definirPares } from "../util/rede.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * 1.2.0, energia e PneumaticCraft:
@@ -50,7 +51,7 @@ function registrarCelulas(): void {
     aColocar.delete(player.id);
     gravar("celula", block, Math.min(p.carga, CELULAS[p.id]));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ player, block, brokenBlockPermutation }) => {
+  quebrado(({ player, block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (CELULAS[id] === undefined) return;
     const carga = lerEm<number>("celula", block.dimension, block.location, 0);
@@ -182,7 +183,7 @@ export function registrarEnergiaExtra(): void {
   registrarCelulas();
   definirPares(pares);
   registrarExplosao();
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id !== "cl:tesseract") return;
     const f = lerEm<number>("tesseract", block.dimension, block.location, 0);
     gravarEm("tesseract", block.dimension, block.location, undefined);

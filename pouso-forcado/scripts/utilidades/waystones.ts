@@ -6,6 +6,7 @@ import { gravarEm, lerEm, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador, gastarDaMao, gastarFerramenta } from "../util/inventario.js";
 import { DADOS_F54 } from "../conteudo/gerado.js";
 import { abrirUmMenu } from "../util/menus.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Waystones (1.10.0), como no mod do BlayTheNinth:
@@ -175,7 +176,7 @@ export function registrarWaystones(): void {
     ativar(player, p);
     abrirUmMenu(player, () => darNome(player, block));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (!ehPedra(brokenBlockPermutation.type.id)) return;
     const k = chave(block, block.dimension.id);
     gravarPedras(pedras().filter((x) => chaveDe(x) !== k));
@@ -314,7 +315,7 @@ function vincular(j: Player, p: Pedra): void {
 
 function registrarWaystones26(): void {
   system.runInterval(cuidarPlacas, 10);
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (id.startsWith("cl:pedra_partilha")) gravarPartilhas(partilhas().filter((x) => chaveDe(x) !== chave(block, block.dimension.id)));
     if (id === "cl:placa_dobra") gravarEm("placa_dobra", block.dimension, block.location, undefined);

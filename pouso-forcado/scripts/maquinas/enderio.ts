@@ -9,6 +9,7 @@ import { gravar, ler, registrarDetalhe } from "../util/dados.js";
 import { cabe, contar, entrada, entregar, gastarCE, primeiro, tirar } from "../util/maquina.js";
 import { agora, ceuAberto, gerador, solAlto } from "./mekanism_extra.js";
 import { feito, maquina } from "./thermal.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Ender IO (1.8.0; 1.20.0: atualizado para o Ender IO 9, o mais novo, com as receitas e os números de
@@ -159,7 +160,7 @@ export function registrarEnderIO(): void {
     if (block.typeId !== "cl:ancora_viagem") return;
     gravarAncoras([...lerAncoras().filter((a) => !mesma(a, block)), { d: block.dimension.id, x: block.x, y: block.y, z: block.z }]);
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id !== "cl:ancora_viagem") return;
     gravarAncoras(lerAncoras().filter((a) => !mesma(a, block)));
   });

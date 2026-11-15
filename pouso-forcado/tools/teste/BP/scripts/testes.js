@@ -3272,3 +3272,31 @@ teste("mkp_robit", 300, (t) => {
     t.succeed();
   });
 });
+
+// 1.53.2: uma explosão no lugar da gaveta cheia devolve o conteúdo no chão (antes sumia) e os outros tratadores não quebram.
+teste("explosao", 300, (t) => {
+  const j = robo(t, { x: 1.5, y: 2, z: 6.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const dim = t.getDimension();
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`explosao: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  t.setBlockType("cl:gaveta", { x: 2, y: 2, z: 2 });
+  t.setBlockType("cl:cabo", { x: 4, y: 2, z: 2 });
+  t.runAfterDelay(4, () => {
+    inv.setItem(0, new ItemStack("minecraft:iron_ingot", 64));
+    j.selectedSlotIndex = 0;
+    const g = w({ x: 2, y: 2, z: 2 });
+    cmd(`scriptevent cl:teste_gaveta por ${g.x} ${g.y} ${g.z} 0`);
+  });
+  t.runAfterDelay(14, () => {
+    t.assert(quantos(j, "minecraft:iron_ingot") === 0, "o ferro não entrou na gaveta");
+    dim.createExplosion(t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), 6, { breaksBlocks: true });
+  });
+  t.runAfterDelay(50, () => {
+    const itens = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), maxDistance: 12 });
+    const ferro = itens.reduce((n, e) => { const i = e.getComponent("minecraft:item").itemStack; return n + (i.typeId === "minecraft:iron_ingot" ? i.amount : 0); }, 0);
+    log(`explosao: gaveta=${t.getBlock({ x: 2, y: 2, z: 2 }).typeId} ferro no chão=${ferro}`);
+    t.assert(ferro >= 64, `a gaveta perdeu o ferro na explosão (${ferro})`);
+    t.succeed();
+  });
+});

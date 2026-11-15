@@ -12,6 +12,7 @@ import { destinosDaRede, moverItens, porNosDestinos, redeDe, registrarLigacao } 
 import { capacidadeDaPilha, cargaItem, definirCarga, registrarItemComEnergia } from "./enderio9.js";
 import { ehLiquidoMk, ehPonta, MB_CILINDRO, nomeQuimico, Ponta, pontaDe, registrarPonta } from "./mekanism_quimica.js";
 import { aceitarMelhorias, gastarMk, melhorias, rodarMk } from "./mekanism_upgrades.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Mekanism completo, parte 3 (1.51.0), com os números do Mekanism 10.7.19 (DADOS_F68, de tools/importar-mekanism-completo.py).
@@ -869,7 +870,7 @@ export function registrarMekanismUtilidades(): void {
     else if (i.typeId === LEITOR) abrirUmMenu(j, () => lerSismico(j, i));
   });
   // Quebrar: limpa os dados (o Minerador e o Teletransportador saem do índice).
-  world.afterEvents.playerBreakBlock.subscribe(({ block: b, brokenBlockPermutation: p }) => {
+  quebrado(({ block: b, brokenBlockPermutation: p }) => {
     const id = p.type.id;
     if (!TICK[id] && !D.transmissores[id]) return;
     if (id === TP) indexarTp(b, lerEm<Freq | undefined>("mk_tp", b.dimension, b.location, undefined)?.k);

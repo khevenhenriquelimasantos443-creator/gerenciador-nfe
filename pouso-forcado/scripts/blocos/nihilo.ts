@@ -6,6 +6,7 @@ import { gastarDaMao, gastarFerramenta } from "../util/inventario.js";
 import { esquecerBarril } from "./barril.js";
 import { toqueNovo } from "../util/toque.js";
 import { esquecerCadinho } from "./cadinho.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Ferramentas do Ex Nihilo e a seda.
@@ -55,7 +56,7 @@ export function registrarNihilo(): void {
     });
   });
 
-  world.afterEvents.playerBreakBlock.subscribe(({ player, block, brokenBlockPermutation, itemStackBeforeBreak }) => {
+  quebrado(({ player, block, brokenBlockPermutation, itemStackBeforeBreak }) => {
     const tipo = brokenBlockPermutation.type.id;
     if (tipo === IDS.barrilMadeira || tipo === IDS.barrilPedra) return esquecerBarril(block);
     if (tipo === IDS.cadinho) return esquecerCadinho(block);

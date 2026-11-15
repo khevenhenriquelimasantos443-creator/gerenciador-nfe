@@ -5,6 +5,7 @@ import { darAoJogador } from "../util/inventario.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
 import { maoDe } from "../util/jogadores.js";
 import { intervalo } from "../util/perfil.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * OpenBlocks (1.3.0).
@@ -178,7 +179,7 @@ export function registrarOpenBlocks(): void {
       if (j.isValid) enterrar(j, dim, onde);
     }, 3);
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id === TUMULO) esvaziar(block);
   });
   registrarDetalhe(TUMULO, (b) => {

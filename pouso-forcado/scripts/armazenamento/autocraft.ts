@@ -9,6 +9,7 @@ import { darAoJogador } from "../util/inventario.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { coletarNaRede, consumir } from "../util/rede.js";
 import { Inventario } from "./virtual.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Fabricação automática do Applied Energistics (1.2.0), num bloco só: o Montador Molecular guarda até 9
@@ -182,7 +183,7 @@ export const montadorMolecular: BlockCustomComponent = {
 
 export function registrarAutocraft(): void {
   // Quebrado, o montador devolve os padrões como Padrões em Branco.
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id !== "cl:montador_molecular") return;
     const n = lerEm<string[]>("padroes", block.dimension, block.location, []).length;
     gravarEm("padroes", block.dimension, block.location, undefined);

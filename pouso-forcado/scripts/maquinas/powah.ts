@@ -11,6 +11,7 @@ import { contar, entrada, entregar, gastarCE, primeiro, saida, tirar } from "../
 import { consumir, gerar, registrarArmazem } from "../util/rede.js";
 import { toqueNovo } from "../util/toque.js";
 import { ceuAberto, produzir, solAlto } from "./mekanism_extra.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Powah! (1.18.0), com os números do código do mod (owmii/Powah): 7 níveis de cada gerador, célula e cabo.
@@ -553,7 +554,7 @@ export function registrarPowahCompleto(): void {
     if (ENDER.includes(b.typeId)) gravar("pw_ender", b, { dono: j.id, canal: 0 });
     else if (b.typeId.startsWith("cl:reator_") && b.permutation.getState("cl:parte" as never) !== true) montarReator(j, b);
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block: b, brokenBlockPermutation: p }) => {
+  quebrado(({ block: b, brokenBlockPermutation: p }) => {
     const id = p.type.id;
     if (id.startsWith("cl:reator_")) {
       const n = p.getState("cl:parte" as never) === true ? ler<{ x: number; y: number; z: number } | undefined>("pw_nucleo", b, undefined) : { x: b.x, y: b.y, z: b.z };

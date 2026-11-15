@@ -1,5 +1,6 @@
 import { Block, world } from "@minecraft/server";
 import { ARMAZENAMENTO, IDS } from "../config.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Visual dos cabos (Fase 9): o modelo tem um braço para cada lado (RP/models/blocks/cl_cabo.geo.json)
@@ -44,5 +45,5 @@ export function registrarCabos(): void {
     atualizarCabo(block);
     emVolta(block);
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block }) => emVolta(block));
+  quebrado(({ block }) => emVolta(block));
 }

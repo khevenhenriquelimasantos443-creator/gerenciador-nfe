@@ -12,6 +12,7 @@ import { abrirUmMenu } from "../util/menus.js";
 import { procurarNaRede } from "../util/rede.js";
 import { toqueNovo } from "../util/toque.js";
 import { InventarioMapa, Mapa, registrarInventario } from "./virtual.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Applied Energistics 1 + ExtraCells (Fase 18).
@@ -229,7 +230,7 @@ export function registrarAE(): void {
     if (block.typeId !== "cl:ponto_acesso") return;
     world.setDynamicProperty("cl:pontos_acesso", JSON.stringify([...pontos(), `${block.dimension.id}:${block.x},${block.y},${block.z}`]));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (id === "cl:ponto_acesso") {
       const k = `${block.dimension.id}:${block.x},${block.y},${block.z}`;

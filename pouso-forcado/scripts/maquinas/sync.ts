@@ -10,6 +10,7 @@ import { itemNaMao } from "../util/inventario.js";
 import { InventarioSalvo, carregarItem, esvaziarJogador, vestirJogador } from "../util/itens.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { consumir } from "../util/rede.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Sync (Fase 21): corpos reserva com inventário próprio. Sem sistema de vidas (decisão 2).
@@ -174,7 +175,7 @@ export function registrarSync(): void {
       registrarAcao(player, "reviver_corpo");
     }, 5);
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (id !== "cl:armazem_corpos" && id !== "cl:construtor_corpos") return;
     // O corpo guardado se perde, mas o que ele carregava cai no chão.

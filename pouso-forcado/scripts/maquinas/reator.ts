@@ -13,6 +13,7 @@ import { gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { cabe, contar, entrada, entregar, gastarCE, inv, primeiro, tirar } from "../util/maquina.js";
 import { gerar } from "../util/rede.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Big Reactors (Fase 22), com fórmula fechada (sem a simulação de calor e radiação do mod).
@@ -304,7 +305,7 @@ export function registrarReator(): void {
     if (block.typeId !== "cl:controlador_reator") return;
     world.setDynamicProperty("cl:reatores", JSON.stringify([...indice(), `${block.dimension.id}:${k3(block.location)}`]));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (!CASCA.has(id) && id !== "cl:barra_combustivel") return;
     if (id === "cl:controlador_reator") {

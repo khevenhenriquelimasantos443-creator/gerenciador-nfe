@@ -8,6 +8,7 @@ import { abrirUmMenu } from "../util/menus.js";
 import { consumir, gerar, registrarArmazem } from "../util/rede.js";
 import { CHEIO_MK, ehLiquidoMk, MB_CILINDRO, nomeQuimico, Ponta, RECIPIENTE_MK, registrarPonta } from "./mekanism_quimica.js";
 import { soltarQuimicos } from "./mekanism_radiacao.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Multiblocos do Mekanism (1.52.0), com os números do Mekanism 10.7.19 / Generators:
@@ -639,7 +640,7 @@ export function registrarMultiblocos(): void {
     });
   });
   // Quebrar: a estrutura desfaz (o conteúdo fica guardado para quando montar igual de novo).
-  world.afterEvents.playerBreakBlock.subscribe(({ block: b }) => {
+  quebrado(({ block: b }) => {
     const m = estruturaEm(b.dimension, b);
     if (!m) return;
     m.ok = false;

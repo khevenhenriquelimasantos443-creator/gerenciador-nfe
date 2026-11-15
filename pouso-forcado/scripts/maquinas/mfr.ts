@@ -1,3 +1,4 @@
+import { quebrado } from "../util/explosao.js";
 import { Block, BlockCustomComponent, BlockTypes, Container, Dimension, Entity, ItemStack, Player, RawMessage, system, Vector3, world } from "@minecraft/server";
 import { FOME, MFR, PLANTACAO } from "../config.js";
 import { CULTURAS } from "../harvest/gerado.js";
@@ -359,6 +360,10 @@ export function registrarMFR(): void {
   world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if ((tora(id) || id === "minecraft:cactus") && Math.random() < MFR.resinaMao) block.dimension.spawnItem(new ItemStack("cl:resina", 1), block.center());
+  });
+  // Melhoria de alcance e dados da máquina: também numa explosão.
+  quebrado(({ block, brokenBlockPermutation }) => {
+    const id = brokenBlockPermutation.type.id;
     if (!id.startsWith("cl:")) return;
     const d = lerEm<Dados>(T, block.dimension, block.location, {});
     if (d.alcance) block.dimension.spawnItem(new ItemStack(`cl:upgrade_alcance_${d.alcance}`, 1), block.center());

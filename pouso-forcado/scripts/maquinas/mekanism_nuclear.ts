@@ -11,6 +11,7 @@ import { ehLiquidoMk, nomeQuimico, registrarPonta } from "./mekanism_quimica.js"
 import { darCalor, laserEm, recebeCalor } from "./mekanism_multiblocos.js";
 import { RADIOATIVO, soltarQuimicos } from "./mekanism_radiacao.js";
 import { feito } from "./thermal.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * Máquinas da parte 4 (1.52.0), números do Mekanism 10.7.19 (1 cE = 100 J):
@@ -267,7 +268,7 @@ export function registrarNuclear(): void {
   // Condutores Termodinâmicos ligam em condutores, aquecedores e nos multiblocos que recebem calor.
   registrarLigacao(Object.keys(COND), (_b, v) => ehCondutor(v.typeId) || AQUECEDORES.has(v.typeId) || recebeCalor(v));
   // Barril quebrado leva o conteúdo; posto, devolve. Máquinas químicas quebradas soltam o que tinham de radioativo.
-  world.afterEvents.playerBreakBlock.subscribe(({ player, block, brokenBlockPermutation }) => {
+  quebrado(({ player, block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (id === "cl:barril_residuos_radioativos") {
       const t = lerEm<Br>("mkbr", block.dimension, block.location, { mb: 0 });

@@ -3427,12 +3427,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/blocos/celula_ender_ardente"
  },
  "cl:celula_ender_basico": {
-  "pt": "Célula Ender Básico",
+  "pt": "Célula Ender Básica",
   "en": "Basic Ender Cell",
   "icone": "textures/items/cl/blocos/celula_ender_basico"
  },
  "cl:celula_ender_endurecido": {
-  "pt": "Célula Ender Endurecido",
+  "pt": "Célula Ender Endurecida",
   "en": "Hardened Ender Cell",
   "icone": "textures/items/cl/blocos/celula_ender_endurecido"
  },
@@ -3447,7 +3447,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/blocos/celula_ender_inicial"
  },
  "cl:celula_ender_niotico": {
-  "pt": "Célula Ender Niótico",
+  "pt": "Célula Ender Niótica",
   "en": "Niotic Ender Cell",
   "icone": "textures/items/cl/blocos/celula_ender_niotico"
  },
@@ -3562,12 +3562,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/blocos/celula_powah_ardente"
  },
  "cl:celula_powah_basico": {
-  "pt": "Célula de Energia Básico (Powah)",
+  "pt": "Célula de Energia Básica (Powah)",
   "en": "Basic Energy Cell (Powah)",
   "icone": "textures/items/cl/blocos/celula_powah_basico"
  },
  "cl:celula_powah_endurecido": {
-  "pt": "Célula de Energia Endurecido (Powah)",
+  "pt": "Célula de Energia Endurecida (Powah)",
   "en": "Hardened Energy Cell (Powah)",
   "icone": "textures/items/cl/blocos/celula_powah_endurecido"
  },
@@ -3582,7 +3582,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/blocos/celula_powah_inicial"
  },
  "cl:celula_powah_niotico": {
-  "pt": "Célula de Energia Niótico (Powah)",
+  "pt": "Célula de Energia Niótica (Powah)",
   "en": "Niotic Energy Cell (Powah)",
   "icone": "textures/items/cl/blocos/celula_powah_niotico"
  },

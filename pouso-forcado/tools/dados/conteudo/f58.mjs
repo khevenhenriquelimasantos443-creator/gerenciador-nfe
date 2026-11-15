@@ -41,7 +41,7 @@ export default {
     "cl.cc.lenhador": ["Cortar árvores numa linha de %s (replanta as mudas)", "Chop trees along a line of %s (replants saplings)"],
     "cl.cc.agricultor": ["Colher e replantar a plantação %s×%s à frente", "Harvest and replant the %s×%s field ahead"],
     "cl.cc.guarda": ["Guardar a área (ataca monstros a 3 blocos)", "Guard the area (attacks monsters within 3 blocks)"],
-    "cl.cc.limite": ["Combustível no limite (%s).", "Fuel at the limit (%s)."],
+    "cl.robo.comb_limite": ["Combustível no limite (%s).", "Fuel at the limit (%s)."],
     "cl.cc.monitor_titulo": ["Monitor", "Monitor"], "cl.cc.monitor_texto": ["Texto (use | para quebrar a linha)", "Text (use | for a line break)"],
     "cl.cc.impressora_titulo": ["Impressora", "Printer"], "cl.cc.impressora_nome": ["Título", "Title"], "cl.cc.impressora_texto": ["Texto (use | para quebrar a linha)", "Text (use | for a line break)"],
     "cl.cc.sem_papel": ["A impressora precisa de papel e tinta (corante preto ou bolsa de tinta) no seu inventário.", "The printer needs paper and ink (black dye or ink sac) in your inventory."],

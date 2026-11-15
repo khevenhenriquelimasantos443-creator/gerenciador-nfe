@@ -7,6 +7,7 @@ import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js
 import { rf } from "../util/energia.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { gerar } from "../util/rede.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * 1.36.0: a turbina do Extreme Reactors 2.4 (fórmula fechada, sem simular a rotação). Montagem conferida ao tocar no
@@ -182,7 +183,7 @@ export function registrarTurbina(): void {
     }
   });
   registrarDetalhe("cl:porta_fluido_turbina", (b) => ({ text: `§7${Math.round(lerEm<number>("vapor", b.dimension, b.location, 0))} mB` }));
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id === "cl:controlador_turbina") gravarEm("turbina", block.dimension, block.location, undefined);
   });
 }

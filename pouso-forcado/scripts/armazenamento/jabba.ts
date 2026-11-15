@@ -7,6 +7,7 @@ import { darAoJogador, gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { entrada, saida } from "../util/maquina.js";
 import { toqueNovo } from "../util/toque.js";
 import { InventarioMapa, Mapa, registrarInventario, simples } from "./virtual.js";
+import { quebrado } from "../util/explosao.js";
 
 /*
  * JABBA (Fase 18).
@@ -257,7 +258,7 @@ export function registrarJabba(): void {
     const { player, block, blockFace } = ev;
     system.run(() => usarCarrinho(player, block, blockFace));
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
+  quebrado(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id !== ID) return;
     const b = lerEm<Barril>(T, block.dimension, block.location, vazio());
     gravarEm(T, block.dimension, block.location, undefined);

@@ -224,5 +224,6 @@ export function conferir(jogador: Player): void {
 
 /** Chamado pelas máquinas quando o jogador usa uma (peneirar, compostar...). */
 export function registrarAcao(jogador: Player, acao: Acao): void {
+  if (jogador.id === "explosao") return; // quebra por explosão (util/explosao.ts)
   contar(jogador, "acao", (o) => o.tipo === "acao" && o.acao === acao);
 }

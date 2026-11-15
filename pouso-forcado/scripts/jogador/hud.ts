@@ -29,6 +29,7 @@ export function duasLinhas(chave: string, com?: string[]): RawMessage {
 }
 
 export function aviso(jogador: Player, msg: RawMessage | string, segundos = 3): void {
+  if (jogador.id === "explosao") return; // quebra por explosão (util/explosao.ts)
   avisos.set(jogador.id, { msg: typeof msg === "string" ? { translate: msg } : msg, ate: system.currentTick + segundos * 20 });
   desenhar(jogador);
 }
