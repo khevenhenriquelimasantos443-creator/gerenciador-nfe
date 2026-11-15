@@ -404,23 +404,18 @@ export function registrarGavetas(): void {
       dim.spawnItem(item, { x: onde.x + 0.5, y: onde.y + 0.3, z: onde.z + 0.5 });
     });
   });
-  // Explosão: o bloco some sem passar pelo caminho acima; o que a gaveta guardava cai no chão (os itens, em pilhas).
+  // Explosão: o bloco some sem passar pelo caminho acima. Igual a quebrar à mão: cai uma gaveta com tudo dentro
+  // (soltar os itens um a um perderia o que passa de 64 pilhas e criaria milhares de entidades).
   world.afterEvents.blockExplode.subscribe(({ block, explodedBlockPermutation: perm, dimension: dim }) => {
     const tipo = perm.type.id;
     if (!ehGaveta(tipo)) return;
     const onde = { x: block.x, y: block.y, z: block.z };
     const g = lerEm<Gav>(T, dim, onde, { s: [] });
     gravarEm(T, dim, onde, undefined);
-    const centro = { x: onde.x + 0.5, y: onde.y + 0.3, z: onde.z + 0.5 };
-    for (const s of g.s) {
-      if (!s) continue;
-      for (let falta = s.n, k = 0; falta > 0 && k < 64; k++) {
-        const n = Math.min(falta, pilhaDe(s.t));
-        dim.spawnItem(new ItemStack(s.t, n), centro);
-        falta -= n;
-      }
-    }
-    for (const u of g.up ?? []) dim.spawnItem(new ItemStack(u, 1), centro);
+    if (!g.s.some(Boolean) && !g.up?.length && !g.trava) return; // vazia: some como qualquer bloco
+    const item = new ItemStack(tipo, 1);
+    guardarNoItem(item, g, `§7${g.s.reduce((n, x) => n + (x?.n ?? 0), 0)}`);
+    dim.spawnItem(item, { x: onde.x + 0.5, y: onde.y + 0.3, z: onde.z + 0.5 });
   });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     const i = ev.itemStack;

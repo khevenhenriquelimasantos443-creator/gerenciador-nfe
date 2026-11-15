@@ -120,7 +120,8 @@ flipbook("solar", 8, 5, (ctx, f) => {
 flipbook("rotor", 8, 2, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#27272a");
   rect(ctx, 6, 6, 4, 4, "#71717a");
-  const ang = (f / 8) * Math.PI * 2;
+  // Ajuste da revisão: com 4 pás a 90°, girar 45° por quadro só alternava "+" e "×". Agora os 8 quadros cobrem 90° (11,25° cada) e o ciclo fecha sem salto.
+  const ang = (f / 8) * (Math.PI / 2);
   for (let d = 0; d < 4; d++) {
     const a = ang + d * (Math.PI / 2);
     for (let r = 2; r < 7; r++) px(ctx, Math.round(8 + Math.cos(a) * r), Math.round(8 + Math.sin(a) * r), "#e4e4e7");
@@ -165,10 +166,13 @@ flipbook("petroleo", 8, 5, (ctx, f) => {
 // ============================================================================
 // 2. As 33 texturas estáticas (listaTexturas do HTML)
 // ============================================================================
+const escurecer = (c, k) => "#" + corDe(c).map((v) => Math.round(v * k).toString(16).padStart(2, "0")).join("");
 const desenharChassi = (ctx, cor, borda, hi, lo) => {
   rect(ctx, 0, 0, 16, 16, cor);
   rect(ctx, 0, 0, 16, 1, hi); rect(ctx, 0, 0, 1, 16, hi);
   rect(ctx, 0, 15, 16, 1, lo); rect(ctx, 15, 0, 1, 16, lo);
+  // Ajuste da revisão: sombra interna de 1 px embaixo e à direita (profundidade nas máquinas; os rebites ficam de fora dela).
+  rect(ctx, 1, 14, 14, 1, escurecer(cor, 0.85)); rect(ctx, 14, 1, 1, 13, escurecer(cor, 0.85));
   px(ctx, 2, 2, "#d4d4d8"); px(ctx, 13, 2, "#d4d4d8");
   px(ctx, 2, 13, "#d4d4d8"); px(ctx, 13, 13, "#d4d4d8");
 };
@@ -262,7 +266,8 @@ const LISTA_TEXTURAS = [
   ["bateria_lado", "RP/textures/blocks/cl/bateria_lado", (ctx) => {
     desenharChassi(ctx, ...CINZA);
     rect(ctx, 6, 2, 4, 12, "#18181b");
-    rect(ctx, 7, 4, 2, 8, "#22c55e");
+    // Ajuste da revisão: a barra contínua virou 3 LEDs (medidor segmentado).
+    for (const y of [4, 7, 10]) rect(ctx, 7, y, 2, 2, "#22c55e");
   }],
   ["moinho_lado", "RP/textures/blocks/cl/moinho_lado", (ctx) => {
     rect(ctx, 0, 0, 16, 16, "#9a6432");
@@ -288,7 +293,9 @@ const LISTA_TEXTURAS = [
   }],
   ["montadora_lado", "RP/textures/blocks/cl/montadora_lado", (ctx) => {
     desenharChassi(ctx, ...METAL);
-    rect(ctx, 2, 6, 12, 4, "#f97316");
+    // Ajuste da revisão: duas faixas (o painel da nave e o terminal têm uma só), para não se confundirem de longe.
+    rect(ctx, 3, 4, 10, 3, "#f97316");
+    rect(ctx, 3, 9, 10, 3, "#f97316");
   }],
   ["gerador_monstros", "RP/textures/blocks/cl/gerador_monstros", (ctx) => {
     rect(ctx, 0, 0, 16, 16, "#18181b");

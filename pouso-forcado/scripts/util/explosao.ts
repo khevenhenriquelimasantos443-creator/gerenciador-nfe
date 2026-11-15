@@ -22,6 +22,8 @@ export function quebrado(fn: Fn): void {
   if (ligado) return;
   ligado = true;
   world.afterEvents.blockExplode.subscribe((ev) => {
+    // Uma explosão grande chama isto uma vez por bloco: bloco do jogo base nunca interessa aos tratadores (todos são de blocos cl:).
+    if (!ev.explodedBlockPermutation.type.id.startsWith("cl:")) return;
     const falso = {
       player: FALSO, block: ev.block, dimension: ev.dimension, brokenBlockPermutation: ev.explodedBlockPermutation,
       itemStackBeforeBreak: undefined, itemStackAfterBreak: undefined,

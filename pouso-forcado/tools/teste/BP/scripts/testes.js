@@ -3293,10 +3293,14 @@ teste("explosao", 300, (t) => {
     dim.createExplosion(t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), 6, { breaksBlocks: true });
   });
   t.runAfterDelay(50, () => {
+    // A gaveta cheia vira UM item de gaveta com tudo dentro (como quebrar à mão): sem ferro solto, sem perder nada.
     const itens = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), maxDistance: 12 });
-    const ferro = itens.reduce((n, e) => { const i = e.getComponent("minecraft:item").itemStack; return n + (i.typeId === "minecraft:iron_ingot" ? i.amount : 0); }, 0);
-    log(`explosao: gaveta=${t.getBlock({ x: 2, y: 2, z: 2 }).typeId} ferro no chão=${ferro}`);
-    t.assert(ferro >= 64, `a gaveta perdeu o ferro na explosão (${ferro})`);
+    const stacks = itens.map((e) => e.getComponent("minecraft:item").itemStack);
+    const gaveta = stacks.find((i) => i.typeId === "cl:gaveta");
+    const solto = stacks.filter((i) => i.typeId === "minecraft:iron_ingot").reduce((n, i) => n + i.amount, 0);
+    log(`explosao: gaveta=${t.getBlock({ x: 2, y: 2, z: 2 }).typeId} item gaveta=${!!gaveta} lore=${JSON.stringify(gaveta?.getLore())} ferro solto=${solto}`);
+    t.assert(!!gaveta, "a gaveta cheia não virou item na explosão");
+    t.assert((gaveta.getLore() ?? []).some((l) => l.includes("64")), "o item da gaveta não guardou os 64 lingotes");
     t.succeed();
   });
 });

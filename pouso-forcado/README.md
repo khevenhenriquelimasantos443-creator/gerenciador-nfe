@@ -167,6 +167,10 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
   Powah e QE/Teletransportadores do Mekanism passam a gravar em pedaços de 30.000 caracteres (cada propriedade aceita 32 KB). Mundos antigos
   continuam lendo o formato antigo.
 - **Textos:** cinco chaves repetidas com valores diferentes removidas das fases antigas; `cl.robo.comb_limite` (o carregador de chunks mostrava "Combustível no limite (%s)").
+- **Ajustes de arte da revisão** (feitos no `gerar-artes-aprovadas.mjs`, marcados com "Ajuste da revisão"): o rotor do moinho agora gira de verdade (os 8 quadros
+  cobrem 90°; antes alternava entre "+" e "×"), a bateria tem medidor de 3 LEDs, o chassi das máquinas ganhou sombra interna de 1 px e a montadora tem duas faixas.
+- **Explosão:** a gaveta que explode vira uma gaveta com tudo dentro (como quebrar à mão), sem limite de pilhas; o tratador de explosão ignora blocos do jogo base
+  (uma explosão grande chamava os 29 tratadores para cada bloco). Pedaços das listas grandes do mundo: 10.000 caracteres.
 - **Build:** `tools/limpar-referencias.mjs` tira do `terrain_texture.json` chaves sem arquivo, e os PNG de `textures/blocks/cl/c/` e `cl/hc/` que
   nada usa não entram mais no pacote.
 

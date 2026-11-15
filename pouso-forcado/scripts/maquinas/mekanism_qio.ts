@@ -28,7 +28,7 @@ type Itens = Record<string, number>;
 
 // ---------- Dados ----------
 // Cada frequência numa propriedade própria, em pedaços de 30.000 caracteres (o Bedrock limita cada propriedade a 32 KB).
-const PEDACO = 30000;
+const PEDACO = 10000; // 1.54.0: abaixo de 32 KB mesmo se o limite for em bytes (até 3 bytes por caractere)
 const banco = new Map<string, Itens>();
 const sujas = new Set<string>();
 let matrizes: Record<string, { k?: string; d: string[] }> | undefined;

@@ -44,7 +44,9 @@ export function registrarDetalhe(ids: string | string[], fn: (b: Block) => RawMe
 }
 export const detalheRegistrado = (b: Block) => detalhes.get(b.typeId)?.(b);
 
-/** JSON grande do mundo em pedaços de 30.000 caracteres (cada propriedade do Bedrock aceita até 32 KB). */
+/** Tamanho de cada pedaço: 10.000 caracteres, para ficar abaixo de 32 KB mesmo se o limite for em bytes UTF-8 (até 3 bytes por caractere). A leitura usa o número de pedaços gravado, então mundos com pedaços de 30.000 continuam lendo. */
+const PEDACO = 10000;
+/** JSON grande do mundo em pedaços (cada propriedade dinâmica do Bedrock aceita até 32 KB). */
 export function lerGrande<T>(nome: string, padrao: T): T {
   const n = (world.getDynamicProperty(`${nome}#n`) as number | undefined);
   if (n === undefined) {
@@ -67,8 +69,8 @@ export function lerGrande<T>(nome: string, padrao: T): T {
 export function gravarGrande(nome: string, dados: unknown): void {
   const txt = JSON.stringify(dados);
   const antes = (world.getDynamicProperty(`${nome}#n`) as number | undefined) ?? 0;
-  const n = Math.ceil(txt.length / 30000);
-  for (let i = 0; i < n; i++) world.setDynamicProperty(`${nome}#${i}`, txt.slice(i * 30000, (i + 1) * 30000));
+  const n = Math.ceil(txt.length / PEDACO);
+  for (let i = 0; i < n; i++) world.setDynamicProperty(`${nome}#${i}`, txt.slice(i * PEDACO, (i + 1) * PEDACO));
   for (let i = n; i < antes; i++) world.setDynamicProperty(`${nome}#${i}`, undefined);
   world.setDynamicProperty(`${nome}#n`, n);
   world.setDynamicProperty(nome, undefined);
