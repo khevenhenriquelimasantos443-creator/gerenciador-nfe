@@ -79,7 +79,6 @@ export default {
     "cl.wy.espera": ["A Pedra de Viagem ainda está carregando: %s s.", "The Warp Stone is still charging: %s s."],
     "cl.wy.sem_retorno": ["Ative uma Pedra do Caminho nesta dimensão primeiro.", "Activate a Waystone in this dimension first."],
     "cl.wy.sumiu": ["Essa Pedra do Caminho foi quebrada.", "That Waystone was broken."],
-    "cl.mochila.dica": ["Mochila no chão: use o botão Abrir para mexer nela e bata nela para guardar de volta.", "Backpack on the ground: use the Open button to use it and hit it to pick it back up."],
     "cl.robo.tocar": ["Programar", "Program"],
     "cl.robo.titulo": ["Robô Minerador", "Mining Turtle"],
     "cl.robo.corpo": ["Combustível: %s (carvão = 80)\nItens: %s de 16 espaços\n%s\n\nToque no robô com combustível na mão para abastecer. Os itens vão para um baú atrás do ponto de partida.", "Fuel: %s (coal = 80)\nItems: %s of 16 slots\n%s\n\nTap the turtle with fuel in hand to refuel. Items go into a chest behind the starting point."],

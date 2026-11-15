@@ -154,6 +154,22 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.54.0 (mega revisão e artes aprovadas)
+
+- **Artes aprovadas** (`tools/gerar-artes-aprovadas.mjs`, roda no fim do `npm run build`, depois do `gerar-visual` e do `gerar-ui`): os 9 flipbooks
+  (tela da nave, terminal, solar, rotor, brasa, forja, água, lava e petróleo) e as 33 texturas das máquinas em 16×16 (as de `cl/v/` eram 32×32;
+  o pack do Recursos encolheu cerca de 2 MB), mais as texturas dos controles do Diário: moldura, barra de título, botão laranja, botão grafite,
+  capítulo selecionado, fechar, barra de progresso, caixinhas do objetivo e as molduras do Diário clássico e da tela de busca. A tela de carregamento
+  não foi tocada. Para mudar uma dessas artes, mude o script (os dois geradores antigos continuam desenhando o resto).
+- **Textos com várias linhas:** o Bedrock lê o `.lang` linha a linha, então os parágrafos dos livros do Tinkers e os textos do foguete e da bancada
+  podiam vir cortados (a conferir no jogo). `tools/normalizar-lang.mjs` (no fim do build) junta as linhas com `\n`.
+- **Listas do mundo em pedaços:** Waystones, Partilhas, Tochas, âncoras do Ender IO, tochas do Extra Utilities, marcos do BuildCraft, canais do
+  Powah e QE/Teletransportadores do Mekanism passam a gravar em pedaços de 30.000 caracteres (cada propriedade aceita 32 KB). Mundos antigos
+  continuam lendo o formato antigo.
+- **Textos:** cinco chaves repetidas com valores diferentes removidas das fases antigas; `cl.robo.comb_limite` (o carregador de chunks mostrava "Combustível no limite (%s)").
+- **Build:** `tools/limpar-referencias.mjs` tira do `terrain_texture.json` chaves sem arquivo, e os PNG de `textures/blocks/cl/c/` e `cl/hc/` que
+  nada usa não entram mais no pacote.
+
 ## Novidades da 1.53.0 (Mekanism completo, parte 5: equipamentos, QIO e Robit)
 
 - **Meka-Tool** (16 MJ) e **MekaSuit** (capacete, armadura, calça e botas, 16 MJ cada), com os **módulos** instalados na

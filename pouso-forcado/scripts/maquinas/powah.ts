@@ -4,7 +4,7 @@ import { registrarNoCatalogo, Receita } from "../catalogo/catalogo.js";
 import { DADOS_F39 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { gravar, ler, registrarDetalhe } from "../util/dados.js";
+import { gravar, ler, registrarDetalhe, lerGrande, gravarGrande } from "../util/dados.js";
 import { rf, rfPorTick } from "../util/energia.js";
 import { darAoJogador, gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { contar, entrada, entregar, gastarCE, primeiro, saida, tirar } from "../util/maquina.js";
@@ -360,11 +360,7 @@ const PROP_ENDER = "cl:pw_ender";
 let canais: Record<string, Canal> | undefined;
 const lerCanais = (): Record<string, Canal> => {
   if (!canais) {
-    try {
-      canais = JSON.parse((world.getDynamicProperty(PROP_ENDER) as string) ?? "{}") as Record<string, Canal>;
-    } catch {
-      canais = {};
-    }
+    canais = lerGrande<Record<string, Canal>>(PROP_ENDER, {});
   }
   return canais;
 };
@@ -374,7 +370,7 @@ const salvarCanais = () => {
   salvarDepois = true;
   system.run(() => {
     salvarDepois = false;
-    world.setDynamicProperty(PROP_ENDER, JSON.stringify(lerCanais()));
+    gravarGrande(PROP_ENDER, lerCanais());
   });
 };
 type Ender = { dono: string; canal: number; cells?: string[] };

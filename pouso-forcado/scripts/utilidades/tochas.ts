@@ -1,7 +1,7 @@
 import { Block, BlockCustomComponent, Dimension, EntityInitializationCause, system, Vector3, world } from "@minecraft/server";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { gravarEm, lerEm } from "../util/dados.js";
+import { gravarEm, lerEm, lerGrande, gravarGrande } from "../util/dados.js";
 import { quebrado } from "../util/explosao.js";
 
 /*
@@ -16,15 +16,11 @@ type Pos = { d: string; x: number; y: number; z: number };
 let megas: Pos[] | undefined;
 function lista(): Pos[] {
   if (!megas)
-    try {
-      megas = JSON.parse((world.getDynamicProperty(LISTA) as string | undefined) ?? "[]") as Pos[];
-    } catch {
-      megas = [];
-    }
+    megas = lerGrande<Pos[]>(LISTA, []);
   return megas;
 }
 function salvar(): void {
-  world.setDynamicProperty(LISTA, JSON.stringify(lista()));
+  gravarGrande(LISTA, lista());
 }
 const igual = (a: Pos, b: Block) => a.d === b.dimension.id && a.x === b.x && a.y === b.y && a.z === b.z;
 function protegido(dim: Dimension, p: Vector3): boolean {

@@ -2,7 +2,7 @@ import { Block, BlockCustomComponent, Direction, Entity, EntityDamageCause, Enti
 import { DADOS_F59 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { registrarDetalhe } from "../util/dados.js";
+import { registrarDetalhe, lerGrande, gravarGrande } from "../util/dados.js";
 import { toqueNovo } from "../util/toque.js";
 
 /*
@@ -189,14 +189,10 @@ type Tocha = { d: string; x: number; y: number; z: number; h: number; v: number 
 let tochas: Tocha[] | undefined;
 function lista(): Tocha[] {
   if (!tochas)
-    try {
-      tochas = JSON.parse((world.getDynamicProperty(LISTA) as string | undefined) ?? "[]") as Tocha[];
-    } catch {
-      tochas = [];
-    }
+    tochas = lerGrande<Tocha[]>(LISTA, []);
   return tochas;
 }
-const salvar = () => world.setDynamicProperty(LISTA, JSON.stringify(lista()));
+const salvar = () => gravarGrande(LISTA, lista());
 const mesma = (t: Tocha, b: Block) => t.d === b.dimension.id && t.x === b.x && t.y === b.y && t.z === b.z;
 export function protegidoXu(d: string, p: Vector3): boolean {
   for (const t of lista()) {

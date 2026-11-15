@@ -2038,13 +2038,11 @@ cl.tc.moldes_como=Tap holding a Blank Pattern.
 cl.tc.pecas_titulo=Part Builder
 cl.tc.pecas_corpo=Part: %s (costs %s of the material). Which material?
 cl.tc.pecas_como=Tap holding a part pattern (Stencil Table).
-cl.tc.pecas_falta=Not enough material: needs %s of wood, stone, flint, cactus, bone or obsidian.
 cl.tc.pecas_metal=Metal parts only come from the Smeltery (casting table with a cast).
 cl.tc.pecas_feita=Made: %s
 cl.tc.estacao_titulo=Tool Station
 cl.tc.montar=Build a tool
 cl.tc.montar_corpo=Tools you can build with the parts in your inventory:
-cl.tc.sem_pecas=No parts to build with. Pickaxe: head + binding + rod; Shovel and Hatchet: head + rod; Broadsword: blade + wide guard + rod.
 cl.tc.escolher=Choose: %s
 cl.tc.montou=Built: %s
 cl.tc.consertar=Repair (%s)
@@ -2539,7 +2537,6 @@ cl.fun.vazia=Nothing molten. Throw ingots, ores, ore pieces or metal parts insid
 cl.fun.como=How to use: 3x3 seared brick floor, empty 3x3 inside behind the controller, a 12-block seared wall per layer (up to 4), a tank with lava and a drain with a faucet over a table or basin.
 cl.fun.revalidar=Check again
 cl.fun.fechar=Close
-cl.fun.cat_liga=Melt everything together in the smeltery.
 cl.fun.cat_dobra=Ores and ore pieces yield double in the smeltery (288 mB per ore).
 cl.fun.cat_molde=Put the part on the table and pour 288 mB of gold.
 cl.fun.cat_peca=Cast on the table (kept) + molten metal from the faucet.
@@ -3133,20 +3130,14 @@ cl.gc.sem_ar=No oxygen! Wear the Oxygen Mask and Oxygen Gear and carry a full ta
 cl.gc.sem_equipamento=There is no air on the Moon: you need the %s.
 cl.gc.pouco_ar=Oxygen running out: %s s.
 cl.gc.bancada.titulo=NASA Workbench
-cl.gc.bancada.corpo=Tier 1 Rocket: 1 Nose Cone, 8 Heavy Duty Plates, 4 Fins and 1 Tier 1 Engine.
-
-%s
+cl.gc.bancada.corpo=Tier 1 Rocket: 1 Nose Cone, 8 Heavy Duty Plates, 4 Fins and 1 Tier 1 Engine.\n\n%s
 cl.gc.bancada.montar=Build the rocket
 cl.gc.bancada.falta=Missing: %s
 cl.gc.bancada.pronto=Everything is ready to build.
 cl.gc.bancada.feito=Tier 1 Rocket built! Place it on the middle of a 3×3 Launch Pad.
 cl.gc.foguete.so_plataforma=The rocket only stands on the middle block of a 3×3 Launch Pad.
 cl.gc.foguete.titulo=Tier 1 Rocket
-cl.gc.foguete.corpo=Fuel: %s/1000 mB
-Destination: %s
-Fuel needed: %s mB
-
-%s
+cl.gc.foguete.corpo=Fuel: %s/1000 mB\nDestination: %s\nFuel needed: %s mB\n\n%s
 cl.gc.foguete.lancar=Launch
 cl.gc.foguete.recolher=Pick up the rocket
 cl.gc.foguete.fechar=Close
@@ -3501,22 +3492,16 @@ entity.cl:robo_minerador.name=Mining Turtle
 cl.wy.ativada=§dWaystone activated: %s.
 cl.wy.titulo=Waystones
 cl.wy.corpo=Where to? (only the ones you activated, in this dimension)
-cl.wy.item=%s
-§8%s blocks
+cl.wy.item=%s\n§8%s blocks
 cl.wy.renomear=Rename this waystone
 cl.wy.nome=Waystone name
 cl.wy.nenhuma=No other activated Waystone in this dimension.
 cl.wy.espera=The Warp Stone is still charging: %s s.
 cl.wy.sem_retorno=Activate a Waystone in this dimension first.
 cl.wy.sumiu=That Waystone was broken.
-cl.mochila.dica=Backpack on the ground: use the Open button to use it and hit it to pick it back up.
 cl.robo.tocar=Program
 cl.robo.titulo=Mining Turtle
-cl.robo.corpo=Fuel: %s (coal = 80)
-Items: %s of 16 slots
-%s
-
-Tap the turtle with fuel in hand to refuel. Items go into a chest behind the starting point.
+cl.robo.corpo=Fuel: %s (coal = 80)\nItems: %s of 16 slots\n%s\n\nTap the turtle with fuel in hand to refuel. Items go into a chest behind the starting point.
 cl.robo.parado=Idle.
 cl.robo.trabalhando=Working: %s (%s blocks).
 cl.robo.tunel=Tunnel of %s (3 wide, 2 high)
@@ -3913,7 +3898,6 @@ cl.sb.comeu=Backpack: ate %s.
 cl.comando.piramide=The desert pyramid
 cl.capitulo.mochilas.nome=Backpack Upgrades
 cl.capitulo.mochilas.curto=Backpack+
-cl.capitulo.mochilas.desc=Put one upgrade inside the backpack (1 per backpack): pickup, magnet, feeding, compacting, deposit or restock. And the great desert pyramid.
 cl.missao.sb_base.titulo=Upgrade base
 cl.missao.sb_base.desc=Make an Upgrade Base.
 cl.missao.sb_ima.titulo=Attraction
@@ -5004,51 +4988,15 @@ cl.tc.cajado_espera=Staff recharging...
 cl.tc.livro_prox=Next ›
 cl.tc.livro_ant=‹ Previous
 cl.tc.livro_fechar=Close
-cl.livro.livro_materiais.1=Materials and You.
-
-Every Tinker tool is made of parts, each part of a material. The head (first part) sets speed, damage and mining level; the handle multiplies durability; the binding (and the materials) give traits.
-
-Start with the Stencil Table (patterns), the Part Builder (wood, stone, flint, bone parts...) and the Tool Station.
-cl.livro.livro_materiais.2=Large tools (Sledge Hammer, Vein Hammer, Excavator, Broad Axe, Scythe, Cleaver) have 4 parts and need the Tinker's Anvil (3 iron blocks and 4 seared bricks).
-
-Next pages: each material's durability, speed, damage, level and trait.
-cl.livro.livro_fundicao_pequena.1=Puny Smelting.
-
-The Seared Melter on top of a Heater melts one item at a time: fuel in the Heater (coal, coal block, blaze rod, lava bucket), items in the chest above the Melter or by tapping it.
-
-The Faucet beside the Melter pours into the Casting Table (with a cast) or the Basin (block).
-cl.livro.livro_fundicao_pequena.2=Casts: pour gold over a part, ingot or nugget on the Table. Sand cast: sand on the Table and tap with the part (single use).
-
-Seared Brick: grout (clay, sand and gravel) in a furnace.
-
-In the Melter ore doesn't double: use the Smeltery for that.
-cl.livro.livro_fundicao_poderosa.1=Mighty Smelting.
-
-3×3 floor of Seared Bricks, empty 3×3 inside and walls of seared blocks (bricks, glass, tank, drain, chute, the controller), up to 4 layers. At least one Tank with lava (tap with a lava bucket).
-
-Tap the Controller to form it. Throw items inside: ore doubles.
-cl.livro.livro_fundicao_poderosa.2=Alloys: fluids combine by themselves. Bronze (3 copper + 1 tin), Rose Gold, Amethyst Bronze, Pig Iron (iron + meat soup from animals inside + honey), Hepatizon, Manyullyn (3 cobalt + 1 debris), Queen's Slime, Slimesteel, Cinderslime, Knightslime, obsidian (water + lava).
-
-Chute: the touching chest feeds it. Channel: the faucet fills several tables.
-
-Composite: part on the Table + fluid = another material.
-cl.livro.livro_geringoncas.1=Tinkers' Gadgetry.
-
-EFLN (gunpowder + flint): explodes where it lands. Glow Ball (8 snowballs + glowstone dust): light where it lands. Slime Sling: launches you opposite to where you look (aim at the ground to go up). Punji Sticks (sugar cane): hurt whoever steps on them. Piggybackpack (saddle + sky slime): carry an animal with you.
-
-Slime staffs (crystal + slime log): Sky (leap), Earth (shockwave), Ichor (fireball), Ender (teleport).
-cl.livro.livro_geringoncas.2=Armor: Plate (the material and the Maille from chains), Traveler's (leather and copper), Slimesuit (boots bounce, Slimelytra glide). Shields in the offhand: sneak to block.
-
-Longbow, Crossbow, Shuriken, Throwing Axe and Javelin.
-
-Ancient tools (War Pick, Battlesign, Swasher, Minotaur Axe, Melting Pan): in the pyramid chests.
-cl.livro.livro_fundicao_fantastica.1=Fantastic Foundry.
-
-Like the Smeltery, but of scorched blocks (scorched brick: nether grout — soul sand, magma cream and gravel — in a furnace) with the Foundry Controller.
-
-No alloys, but ores give byproducts: iron gives steel, gold gives cobalt, copper gives gold, osmium gives iron.
-
-Scorched Alloyer: joins the fluids of adjacent Melters and makes alloys.
+cl.livro.livro_materiais.1=Materials and You.\n\nEvery Tinker tool is made of parts, each part of a material. The head (first part) sets speed, damage and mining level; the handle multiplies durability; the binding (and the materials) give traits.\n\nStart with the Stencil Table (patterns), the Part Builder (wood, stone, flint, bone parts...) and the Tool Station.
+cl.livro.livro_materiais.2=Large tools (Sledge Hammer, Vein Hammer, Excavator, Broad Axe, Scythe, Cleaver) have 4 parts and need the Tinker's Anvil (3 iron blocks and 4 seared bricks).\n\nNext pages: each material's durability, speed, damage, level and trait.
+cl.livro.livro_fundicao_pequena.1=Puny Smelting.\n\nThe Seared Melter on top of a Heater melts one item at a time: fuel in the Heater (coal, coal block, blaze rod, lava bucket), items in the chest above the Melter or by tapping it.\n\nThe Faucet beside the Melter pours into the Casting Table (with a cast) or the Basin (block).
+cl.livro.livro_fundicao_pequena.2=Casts: pour gold over a part, ingot or nugget on the Table. Sand cast: sand on the Table and tap with the part (single use).\n\nSeared Brick: grout (clay, sand and gravel) in a furnace.\n\nIn the Melter ore doesn't double: use the Smeltery for that.
+cl.livro.livro_fundicao_poderosa.1=Mighty Smelting.\n\n3×3 floor of Seared Bricks, empty 3×3 inside and walls of seared blocks (bricks, glass, tank, drain, chute, the controller), up to 4 layers. At least one Tank with lava (tap with a lava bucket).\n\nTap the Controller to form it. Throw items inside: ore doubles.
+cl.livro.livro_fundicao_poderosa.2=Alloys: fluids combine by themselves. Bronze (3 copper + 1 tin), Rose Gold, Amethyst Bronze, Pig Iron (iron + meat soup from animals inside + honey), Hepatizon, Manyullyn (3 cobalt + 1 debris), Queen's Slime, Slimesteel, Cinderslime, Knightslime, obsidian (water + lava).\n\nChute: the touching chest feeds it. Channel: the faucet fills several tables.\n\nComposite: part on the Table + fluid = another material.
+cl.livro.livro_geringoncas.1=Tinkers' Gadgetry.\n\nEFLN (gunpowder + flint): explodes where it lands. Glow Ball (8 snowballs + glowstone dust): light where it lands. Slime Sling: launches you opposite to where you look (aim at the ground to go up). Punji Sticks (sugar cane): hurt whoever steps on them. Piggybackpack (saddle + sky slime): carry an animal with you.\n\nSlime staffs (crystal + slime log): Sky (leap), Earth (shockwave), Ichor (fireball), Ender (teleport).
+cl.livro.livro_geringoncas.2=Armor: Plate (the material and the Maille from chains), Traveler's (leather and copper), Slimesuit (boots bounce, Slimelytra glide). Shields in the offhand: sneak to block.\n\nLongbow, Crossbow, Shuriken, Throwing Axe and Javelin.\n\nAncient tools (War Pick, Battlesign, Swasher, Minotaur Axe, Melting Pan): in the pyramid chests.
+cl.livro.livro_fundicao_fantastica.1=Fantastic Foundry.\n\nLike the Smeltery, but of scorched blocks (scorched brick: nether grout — soul sand, magma cream and gravel — in a furnace) with the Foundry Controller.\n\nNo alloys, but ores give byproducts: iron gives steel, gold gives cobalt, copper gives gold, osmium gives iron.\n\nScorched Alloyer: joins the fluids of adjacent Melters and makes alloys.
 cl.missao.tc3_bigorna.titulo=Tinker's Anvil
 cl.missao.tc3_bigorna.desc=Make the Tinker's Anvil: 4-part tools and big modifiers.
 cl.missao.tc3_habilidade.titulo=Ability
@@ -5165,13 +5113,11 @@ cl.art.equipou=Artifact equipped: %s
 cl.art.tirou=Artifact removed: %s
 cl.art.totem=The Chorus Totem saved you!
 cl.art.flamingo=Flamingo recharging...
-cl.mochila.mao_guardar_tudo=Store your inventory
-§8(hotbar stays)
+cl.mochila.mao_guardar_tudo=Store your inventory\n§8(hotbar stays)
 cl.mochila.mao_guardar_um=Store one item…
 cl.mochila.mao_tirar=Take one item… §8(%s)
 cl.mochila.mao_tirar_tudo=Take everything
-cl.mochila.mao_chao=Place on the ground (full screen)
-§8(or use while sneaking)
+cl.mochila.mao_chao=Place on the ground (full screen)\n§8(or use while sneaking)
 cl.mochila.mao_guardou=Stored %s stacks in the backpack.
 cl.mochila.mao_nada=Nothing to store.
 cl.mochila.mao_vazia=The backpack is empty.
@@ -6282,30 +6228,21 @@ cl.mkn.erro.dispersor=the Pressure Dispersers must fill a whole layer.
 cl.mkn.erro.rotor=the Rotors must go up from the floor center to the Rotational Complex.
 cl.mkn.erro.combustivel=needs Fuel Assemblies topped by a Control Rod.
 cl.mkn.titulo=%s
-cl.mkn.tanque=Dynamic Tank: %s of %s mB.
-Holds one fluid or chemical (350,000 mB of fluid or 16,000,000 mB of chemical per inside block). Tap the valve with a bucket or tank to put in or take out; Pipes and Tubes connect to it.
-cl.mkn.evaporacao=Thermal Evaporation Plant (height %s): input %s, output %s. Rate now: %s mB/t (sun on the open top and heat from heaters).
-Water becomes brine (10 → 1) and brine becomes lithium (10 → 1).
-cl.mkn.inducao=Induction Matrix: %s of %s.
-Input/output up to %s/t (providers). Connects to the grid like a battery through the Ports.
-cl.mkn.caldeira=Thermoelectric Boiler: water %s mB, steam %s mB, heat %s J/t (up to %s J/t from the Superheating Elements). Steam now: %s mB/t.
-Heat comes from touching Heaters or through Thermodynamic Conductors.
+cl.mkn.tanque=Dynamic Tank: %s of %s mB.\nHolds one fluid or chemical (350,000 mB of fluid or 16,000,000 mB of chemical per inside block). Tap the valve with a bucket or tank to put in or take out; Pipes and Tubes connect to it.
+cl.mkn.evaporacao=Thermal Evaporation Plant (height %s): input %s, output %s. Rate now: %s mB/t (sun on the open top and heat from heaters).\nWater becomes brine (10 → 1) and brine becomes lithium (10 → 1).
+cl.mkn.inducao=Induction Matrix: %s of %s.\nInput/output up to %s/t (providers). Connects to the grid like a battery through the Ports.
+cl.mkn.caldeira=Thermoelectric Boiler: water %s mB, steam %s mB, heat %s J/t (up to %s J/t from the Superheating Elements). Steam now: %s mB/t.\nHeat comes from touching Heaters or through Thermodynamic Conductors.
 cl.mkn.sps=SPS: polonium %s mB, antimatter %s mB. 1,000 mB of polonium + 1,000,000 J per mB = 1 mB of antimatter. Energy comes in through Supercharged Coils on the Ports.
-cl.mkn.fissao=Fission Reactor (%s assemblies): %s. Burns %s mB/t (max %s).
-Fuel %s, water %s, steam %s, waste %s. Damage %s%%.
-Without enough water the reactor heats up and gets damaged; at 100%% damage it melts down (explosion and radiation).
+cl.mkn.fissao=Fission Reactor (%s assemblies): %s. Burns %s mB/t (max %s).\nFuel %s, water %s, steam %s, waste %s. Damage %s%%.\nWithout enough water the reactor heats up and gets damaged; at 100%% damage it melts down (explosion and radiation).
 cl.mkn.fissao.ligar=Active
 cl.mkn.fissao.taxa=Burn rate (mB/t)
 cl.mkn.fissao.scram=Shut down at 80% damage (Logic Adapter)
 cl.mkn.ligado=active
 cl.mkn.desligado=off
 cl.mkn.derreteu=The Fission Reactor melted down!
-cl.mkn.turbina=Industrial Turbine: steam %s mB, flow %s mB/t, making %s/t.
-Blades %s, coils %s, dispersers %s, vents %s, condensers %s. Tap a Rotor with Turbine Blades to add them (2 per rotor).
+cl.mkn.turbina=Industrial Turbine: steam %s mB, flow %s mB/t, making %s/t.\nBlades %s, coils %s, dispersers %s, vents %s, condensers %s. Tap a Rotor with Turbine Blades to add them (2 per rotor).
 cl.mkn.pa=Blades on this rotor: %s/2.
-cl.mkn.fusao=Fusion Reactor: %s. Injection %s mB/t, making %s/t.
-Deuterium %s, tritium %s, D-T %s, water %s, steam %s.
-To ignite: tap the Controller with a Hohlraum and aim a Laser Amplifier with 400 MJ at the Focus Matrix.
+cl.mkn.fusao=Fusion Reactor: %s. Injection %s mB/t, making %s/t.\nDeuterium %s, tritium %s, D-T %s, water %s, steam %s.\nTo ignite: tap the Controller with a Hohlraum and aim a Laser Amplifier with 400 MJ at the Focus Matrix.
 cl.mkn.fusao.injecao=Injection rate (mB/t)
 cl.mkn.aceso=ignited
 cl.mkn.apagado=not ignited
@@ -6414,11 +6351,7 @@ tile.cl:caixa_papelao.name=Cardboard Box
 entity.cl:robit.name=Robit
 cl.mke.sem_energia=%s out of energy (charge it in a charger).
 cl.mke.estacao=Modification Station
-cl.mke.estacao.corpo=%s · %s
-
-Installed modules: %s
-
-Tap a module from your inventory to install it (uses the item) or an installed one to remove it.
+cl.mke.estacao.corpo=%s · %s\n\nInstalled modules: %s\n\nTap a module from your inventory to install it (uses the item) or an installed one to remove it.
 cl.mke.estacao.mao=Hold the Meka-Tool or a MekaSuit piece and tap the Station.
 cl.mke.instalar=Install: %s (%s/%s)
 cl.mke.tirar=Remove: %s (%s)
@@ -6457,8 +6390,7 @@ cl.mkqio.importador=Importer: pulls from the inventory behind into the QIO.
 cl.mkqio.exportador=Exporter: puts the filtered items into the inventory behind.
 cl.mkqio.redstone=Redstone Adapter: Bedrock does not let add-on blocks emit redstone; it shows the count of the chosen item.
 cl.mkr.titulo=Robit · %s
-cl.mkr.corpo=Energy: %s / 100 kJ (recharges on a Chargepad).
-Items: %s
+cl.mkr.corpo=Energy: %s / 100 kJ (recharges on a Chargepad).\nItems: %s
 cl.mkr.seguir=Follow
 cl.mkr.parar=Stay
 cl.mkr.pegar_on=Pick up items: on

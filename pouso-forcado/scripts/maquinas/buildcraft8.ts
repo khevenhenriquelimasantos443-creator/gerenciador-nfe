@@ -3,7 +3,7 @@ import { ActionFormData } from "@minecraft/server-ui";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import type { Acao } from "../missoes/lista.js";
-import { gravar, ler, registrarDetalhe } from "../util/dados.js";
+import { gravar, ler, registrarDetalhe, lerGrande, gravarGrande } from "../util/dados.js";
 import { entrada, entregar, gastarCE } from "../util/maquina.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { gerar } from "../util/rede.js";
@@ -160,14 +160,10 @@ type Marco = { d: string; x: number; y: number; z: number };
 let marcos: Marco[] | undefined;
 function listaMarcos(): Marco[] {
   if (!marcos)
-    try {
-      marcos = JSON.parse((world.getDynamicProperty(LISTA_MARCOS) as string | undefined) ?? "[]") as Marco[];
-    } catch {
-      marcos = [];
-    }
+    marcos = lerGrande<Marco[]>(LISTA_MARCOS, []);
   return marcos;
 }
-const salvarMarcos = () => world.setDynamicProperty(LISTA_MARCOS, JSON.stringify(listaMarcos()));
+const salvarMarcos = () => gravarGrande(LISTA_MARCOS, listaMarcos());
 export const marcoComp: BlockCustomComponent = {
   onPlace({ block }) {
     const m = { d: block.dimension.id, x: block.x, y: block.y, z: block.z };

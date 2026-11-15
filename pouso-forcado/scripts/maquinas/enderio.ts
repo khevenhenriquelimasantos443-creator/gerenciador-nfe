@@ -5,7 +5,7 @@ import { registrarNoCatalogo, Receita } from "../catalogo/catalogo.js";
 import { DADOS_F29, DADOS_F40 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { gravar, ler, registrarDetalhe } from "../util/dados.js";
+import { gravar, ler, registrarDetalhe, lerGrande, gravarGrande } from "../util/dados.js";
 import { cabe, contar, entrada, entregar, gastarCE, primeiro, tirar } from "../util/maquina.js";
 import { agora, ceuAberto, gerador, solAlto } from "./mekanism_extra.js";
 import { feito, maquina } from "./thermal.js";
@@ -117,14 +117,9 @@ const ANCORAS = "cl:ancoras";
 const ALCANCE = 96;
 type Ancora = { d: string; x: number; y: number; z: number };
 function lerAncoras(): Ancora[] {
-  try {
-    const v = world.getDynamicProperty(ANCORAS);
-    return typeof v === "string" ? (JSON.parse(v) as Ancora[]) : [];
-  } catch {
-    return [];
-  }
+  return lerGrande<Ancora[]>(ANCORAS, []);
 }
-const gravarAncoras = (l: Ancora[]) => world.setDynamicProperty(ANCORAS, JSON.stringify(l));
+const gravarAncoras = (l: Ancora[]) => gravarGrande(ANCORAS, l);
 const mesma = (a: Ancora, b: Block) => a.d === b.dimension.id && a.x === b.x && a.y === b.y && a.z === b.z;
 
 async function viajar(j: Player, b: Block): Promise<void> {

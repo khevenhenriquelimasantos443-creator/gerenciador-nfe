@@ -2039,13 +2039,11 @@ cl.tc.moldes_como=Toque com um Padrão em Branco na mão.
 cl.tc.pecas_titulo=Construtor de Peças
 cl.tc.pecas_corpo=Peça: %s (custa %s do material). De que material?
 cl.tc.pecas_como=Toque com um padrão de peça na mão (Mesa de Moldes).
-cl.tc.pecas_falta=Falta material: precisa de %s de madeira, pedra, sílex, cacto, osso ou obsidiana.
 cl.tc.pecas_metal=Peças de metal só saem da Fundição (mesa de fundição com molde).
 cl.tc.pecas_feita=Fez: %s
 cl.tc.estacao_titulo=Estação de Ferramentas
 cl.tc.montar=Montar ferramenta
 cl.tc.montar_corpo=Ferramentas que dá para montar com as peças da mochila:
-cl.tc.sem_pecas=Sem peças para montar. Picareta: cabeça + ligação + cabo; Pá e Machadinha: cabeça + cabo; Espada Larga: lâmina + guarda larga + cabo.
 cl.tc.escolher=Escolha: %s
 cl.tc.montou=Montou: %s
 cl.tc.consertar=Consertar (%s)
@@ -2540,7 +2538,6 @@ cl.fun.vazia=Nada derretido. Jogue lingotes, minérios, pedaços ou peças de me
 cl.fun.como=Como usar: piso 3x3 de tijolos refratários, interior 3x3 vazio atrás do controlador, parede de 12 blocos refratários por camada (até 4), um tanque com lava e um dreno com torneira em cima de uma mesa ou bacia.
 cl.fun.revalidar=Verificar de novo
 cl.fun.fechar=Fechar
-cl.fun.cat_liga=Derreta tudo junto na fundição.
 cl.fun.cat_dobra=Minério e pedaços rendem o dobro na fundição (288 mB por minério).
 cl.fun.cat_molde=Ponha a peça na mesa e derrame 288 mB de ouro.
 cl.fun.cat_peca=Molde na mesa (não gasta) + metal derretido pela torneira.
@@ -3134,20 +3131,14 @@ cl.gc.sem_ar=Sem oxigênio! Vista a Máscara e o Equipamento de Oxigênio e leve
 cl.gc.sem_equipamento=Na Lua não há ar: falta a %s.
 cl.gc.pouco_ar=Oxigênio acabando: %s s.
 cl.gc.bancada.titulo=Bancada da NASA
-cl.gc.bancada.corpo=Foguete Tier 1: 1 Bico, 8 Placas Reforçadas, 4 Aletas e 1 Motor Tier 1.
-
-%s
+cl.gc.bancada.corpo=Foguete Tier 1: 1 Bico, 8 Placas Reforçadas, 4 Aletas e 1 Motor Tier 1.\n\n%s
 cl.gc.bancada.montar=Montar o foguete
 cl.gc.bancada.falta=Falta: %s
 cl.gc.bancada.pronto=Tudo pronto para montar.
 cl.gc.bancada.feito=Foguete Tier 1 montado! Ponha no meio de uma Plataforma de Lançamento 3×3.
 cl.gc.foguete.so_plataforma=O foguete só fica de pé no bloco do meio de uma Plataforma de Lançamento 3×3.
 cl.gc.foguete.titulo=Foguete Tier 1
-cl.gc.foguete.corpo=Combustível: %s/1000 mB
-Destino: %s
-Gasto na viagem: %s mB
-
-%s
+cl.gc.foguete.corpo=Combustível: %s/1000 mB\nDestino: %s\nGasto na viagem: %s mB\n\n%s
 cl.gc.foguete.lancar=Lançar
 cl.gc.foguete.recolher=Recolher o foguete
 cl.gc.foguete.fechar=Fechar
@@ -3502,22 +3493,16 @@ entity.cl:robo_minerador.name=Robô Minerador
 cl.wy.ativada=§dPedra do Caminho ativada: %s.
 cl.wy.titulo=Pedras do Caminho
 cl.wy.corpo=Para onde? (só as que você já ativou, nesta dimensão)
-cl.wy.item=%s
-§8%s blocos
+cl.wy.item=%s\n§8%s blocos
 cl.wy.renomear=Renomear esta pedra
 cl.wy.nome=Nome da Pedra do Caminho
 cl.wy.nenhuma=Nenhuma outra Pedra do Caminho ativada nesta dimensão.
 cl.wy.espera=A Pedra de Viagem ainda está carregando: %s s.
 cl.wy.sem_retorno=Ative uma Pedra do Caminho nesta dimensão primeiro.
 cl.wy.sumiu=Essa Pedra do Caminho foi quebrada.
-cl.mochila.dica=Mochila no chão: use o botão Abrir para mexer nela e bata nela para guardar de volta.
 cl.robo.tocar=Programar
 cl.robo.titulo=Robô Minerador
-cl.robo.corpo=Combustível: %s (carvão = 80)
-Itens: %s de 16 espaços
-%s
-
-Toque no robô com combustível na mão para abastecer. Os itens vão para um baú atrás do ponto de partida.
+cl.robo.corpo=Combustível: %s (carvão = 80)\nItens: %s de 16 espaços\n%s\n\nToque no robô com combustível na mão para abastecer. Os itens vão para um baú atrás do ponto de partida.
 cl.robo.parado=Parado.
 cl.robo.trabalhando=Trabalhando: %s (%s blocos).
 cl.robo.tunel=Túnel de %s (3 de largura, 2 de altura)
@@ -3914,7 +3899,6 @@ cl.sb.comeu=Mochila: comeu %s.
 cl.comando.piramide=A pirâmide do deserto
 cl.capitulo.mochilas.nome=Melhorias da Mochila
 cl.capitulo.mochilas.curto=Mochila+
-cl.capitulo.mochilas.desc=Ponha uma melhoria dentro da mochila (1 por mochila): coleta, ímã, alimentação, compactação, depósito ou reabastecer. E a grande pirâmide do deserto.
 cl.missao.sb_base.titulo=Base de melhoria
 cl.missao.sb_base.desc=Faça uma Base de Melhoria.
 cl.missao.sb_ima.titulo=Atração
@@ -5005,51 +4989,15 @@ cl.tc.cajado_espera=Cajado carregando...
 cl.tc.livro_prox=Próxima ›
 cl.tc.livro_ant=‹ Anterior
 cl.tc.livro_fechar=Fechar
-cl.livro.livro_materiais.1=Materiais e Você.
-
-Toda ferramenta do Tinker é feita de peças, e cada peça de um material. A cabeça (a primeira peça) decide a velocidade, o dano e o nível de mineração; o cabo multiplica a durabilidade; a ligação (e os materiais) dão traços.
-
-Comece pela Mesa de Moldes (padrões), o Construtor de Peças (peças de madeira, pedra, sílex, osso...) e a Estação de Ferramentas.
-cl.livro.livro_materiais.2=As ferramentas grandes (Marreta, Martelo de Mineração, Escavadeira, Machado Grande, Foice, Espadão) têm 4 peças e precisam da Bigorna do Tinker (3 blocos de ferro e 4 tijolos refratários).
-
-Nas próximas páginas, cada material: durabilidade, velocidade, dano, nível e traço.
-cl.livro.livro_fundicao_pequena.1=Fundição Pequena.
-
-O Fusor Refratário em cima de um Aquecedor derrete um item por vez: combustível no Aquecedor (carvão, bloco de carvão, vara de blaze, balde de lava), itens no baú em cima do Fusor ou tocando nele.
-
-A Torneira do lado do Fusor derrama na Mesa de Fundição (com molde) ou na Bacia (bloco).
-cl.livro.livro_fundicao_pequena.2=Moldes: derrame ouro sobre uma peça, lingote ou pepita na Mesa. Molde de areia: areia na Mesa e toque com a peça (serve uma vez).
-
-Tijolo Refratário: argamassa (argila, areia e cascalho) na fornalha.
-
-No Fusor, minério não dobra: para dobrar, use a Fundição.
-cl.livro.livro_fundicao_poderosa.1=Fundição Poderosa.
-
-Piso 3×3 de Tijolos Refratários, interior 3×3 vazio e paredes de blocos refratários (tijolos, vidro, tanque, dreno, calha, o controlador), até 4 camadas. Pelo menos um Tanque com lava (toque com balde de lava).
-
-Toque no Controlador para montar. Jogue os itens dentro: minério dobra.
-cl.livro.livro_fundicao_poderosa.2=Ligas: os líquidos se juntam sozinhos. Bronze (3 cobre + 1 estanho), Ouro Rosa, Bronze de Ametista, Ferro-Porco (ferro + sopa de carne de animais dentro da fundição + mel), Hepatizão, Manyullyn (3 cobalto + 1 detrito), Slime da Rainha, Aço de Slime, Slime de Brasa, Slime-Cavaleiro, obsidiana (água + lava).
-
-Calha: o baú encostado alimenta. Canal: a torneira enche várias mesas.
-
-Material composto: peça na Mesa + líquido = outro material.
-cl.livro.livro_geringoncas.1=Geringonças do Tinker.
-
-EFLN (pólvora + sílex): explode onde cai. Bola Brilhante (8 bolas de neve + pó de glowstone): luz onde cai. Estilingue de Slime: lança você para o lado contrário de onde olha (mire no chão para subir). Estacas Punji (cana-de-açúcar): ferem quem pisa. Mochila de Porco (sela + slime-do-céu): leva um animal com você.
-
-Cajados de slime (cristal + tronco de slime): Céu (salto), Terra (onda de choque), Icor (bola de fogo), Ender (teleporte).
-cl.livro.livro_geringoncas.2=Armaduras: Placa (o material e a Malha de correntes), Viajante (couro e cobre), Traje de Slime (as botas quicam, as Slimélitros planam). Escudos na mão secundária: agache para segurar.
-
-Arco Longo, Besta, Shuriken, Machado de Arremesso e Dardo.
-
-Ferramentas antigas (Picareta de Guerra, Placa de Batalha, Lavador, Machado do Minotauro, Panela de Fusão): nos baús da pirâmide.
-cl.livro.livro_fundicao_fantastica.1=Fundição Fantástica.
-
-Como a Fundição, mas de blocos chamuscados (tijolo chamuscado: argamassa do Nether — areia das almas, creme de magma e cascalho — na fornalha) e com o Controlador da Fundição Fantástica.
-
-Não faz liga, mas os minérios dão subproduto: ferro dá aço, ouro dá cobalto, cobre dá ouro, ósmio dá ferro.
-
-Ligador Chamuscado: junta os líquidos dos Fusores encostados e faz as ligas.
+cl.livro.livro_materiais.1=Materiais e Você.\n\nToda ferramenta do Tinker é feita de peças, e cada peça de um material. A cabeça (a primeira peça) decide a velocidade, o dano e o nível de mineração; o cabo multiplica a durabilidade; a ligação (e os materiais) dão traços.\n\nComece pela Mesa de Moldes (padrões), o Construtor de Peças (peças de madeira, pedra, sílex, osso...) e a Estação de Ferramentas.
+cl.livro.livro_materiais.2=As ferramentas grandes (Marreta, Martelo de Mineração, Escavadeira, Machado Grande, Foice, Espadão) têm 4 peças e precisam da Bigorna do Tinker (3 blocos de ferro e 4 tijolos refratários).\n\nNas próximas páginas, cada material: durabilidade, velocidade, dano, nível e traço.
+cl.livro.livro_fundicao_pequena.1=Fundição Pequena.\n\nO Fusor Refratário em cima de um Aquecedor derrete um item por vez: combustível no Aquecedor (carvão, bloco de carvão, vara de blaze, balde de lava), itens no baú em cima do Fusor ou tocando nele.\n\nA Torneira do lado do Fusor derrama na Mesa de Fundição (com molde) ou na Bacia (bloco).
+cl.livro.livro_fundicao_pequena.2=Moldes: derrame ouro sobre uma peça, lingote ou pepita na Mesa. Molde de areia: areia na Mesa e toque com a peça (serve uma vez).\n\nTijolo Refratário: argamassa (argila, areia e cascalho) na fornalha.\n\nNo Fusor, minério não dobra: para dobrar, use a Fundição.
+cl.livro.livro_fundicao_poderosa.1=Fundição Poderosa.\n\nPiso 3×3 de Tijolos Refratários, interior 3×3 vazio e paredes de blocos refratários (tijolos, vidro, tanque, dreno, calha, o controlador), até 4 camadas. Pelo menos um Tanque com lava (toque com balde de lava).\n\nToque no Controlador para montar. Jogue os itens dentro: minério dobra.
+cl.livro.livro_fundicao_poderosa.2=Ligas: os líquidos se juntam sozinhos. Bronze (3 cobre + 1 estanho), Ouro Rosa, Bronze de Ametista, Ferro-Porco (ferro + sopa de carne de animais dentro da fundição + mel), Hepatizão, Manyullyn (3 cobalto + 1 detrito), Slime da Rainha, Aço de Slime, Slime de Brasa, Slime-Cavaleiro, obsidiana (água + lava).\n\nCalha: o baú encostado alimenta. Canal: a torneira enche várias mesas.\n\nMaterial composto: peça na Mesa + líquido = outro material.
+cl.livro.livro_geringoncas.1=Geringonças do Tinker.\n\nEFLN (pólvora + sílex): explode onde cai. Bola Brilhante (8 bolas de neve + pó de glowstone): luz onde cai. Estilingue de Slime: lança você para o lado contrário de onde olha (mire no chão para subir). Estacas Punji (cana-de-açúcar): ferem quem pisa. Mochila de Porco (sela + slime-do-céu): leva um animal com você.\n\nCajados de slime (cristal + tronco de slime): Céu (salto), Terra (onda de choque), Icor (bola de fogo), Ender (teleporte).
+cl.livro.livro_geringoncas.2=Armaduras: Placa (o material e a Malha de correntes), Viajante (couro e cobre), Traje de Slime (as botas quicam, as Slimélitros planam). Escudos na mão secundária: agache para segurar.\n\nArco Longo, Besta, Shuriken, Machado de Arremesso e Dardo.\n\nFerramentas antigas (Picareta de Guerra, Placa de Batalha, Lavador, Machado do Minotauro, Panela de Fusão): nos baús da pirâmide.
+cl.livro.livro_fundicao_fantastica.1=Fundição Fantástica.\n\nComo a Fundição, mas de blocos chamuscados (tijolo chamuscado: argamassa do Nether — areia das almas, creme de magma e cascalho — na fornalha) e com o Controlador da Fundição Fantástica.\n\nNão faz liga, mas os minérios dão subproduto: ferro dá aço, ouro dá cobalto, cobre dá ouro, ósmio dá ferro.\n\nLigador Chamuscado: junta os líquidos dos Fusores encostados e faz as ligas.
 cl.missao.tc3_bigorna.titulo=Bigorna do Tinker
 cl.missao.tc3_bigorna.desc=Faça a Bigorna do Tinker: ferramentas de 4 peças e modificadores grandes.
 cl.missao.tc3_habilidade.titulo=Habilidade
@@ -5166,13 +5114,11 @@ cl.art.equipou=Artefato posto: %s
 cl.art.tirou=Artefato tirado: %s
 cl.art.totem=O Totem de Coro te salvou!
 cl.art.flamingo=Flamingo recarregando...
-cl.mochila.mao_guardar_tudo=Guardar a mochila do jogador
-§8(a barra rápida fica)
+cl.mochila.mao_guardar_tudo=Guardar a mochila do jogador\n§8(a barra rápida fica)
 cl.mochila.mao_guardar_um=Guardar um item…
 cl.mochila.mao_tirar=Tirar um item… §8(%s)
 cl.mochila.mao_tirar_tudo=Tirar tudo
-cl.mochila.mao_chao=Pôr no chão (tela completa)
-§8(ou use agachado)
+cl.mochila.mao_chao=Pôr no chão (tela completa)\n§8(ou use agachado)
 cl.mochila.mao_guardou=Guardou %s pilhas na mochila.
 cl.mochila.mao_nada=Nada para guardar.
 cl.mochila.mao_vazia=A mochila está vazia.
@@ -6283,30 +6229,21 @@ cl.mkn.erro.dispersor=os Dispersores de Pressão têm de fechar uma camada intei
 cl.mkn.erro.rotor=os Rotores têm de subir do centro do chão até o Complexo Rotacional.
 cl.mkn.erro.combustivel=precisa de Conjuntos de Combustível com uma Barra de Controle em cima.
 cl.mkn.titulo=%s
-cl.mkn.tanque=Tanque Dinâmico: %s de %s mB.
-Guarda um fluido ou um químico (350.000 mB de fluido ou 16.000.000 mB de químico por bloco de dentro). Toque a válvula com balde ou cilindro para pôr ou tirar; Canos e Tubos ligam nela.
-cl.mkn.evaporacao=Planta de Evaporação Térmica (altura %s): entrada %s, saída %s. Ritmo agora: %s mB/t (sol no topo aberto e calor dos aquecedores).
-Água vira salmoura (10 → 1) e salmoura vira lítio (10 → 1).
-cl.mkn.inducao=Matriz de Indução: %s de %s.
-Entrada/saída até %s/t (provedores). Liga na rede como uma bateria pelas Portas.
-cl.mkn.caldeira=Caldeira Térmica: água %s mB, vapor %s mB, calor %s J/t (até %s J/t pelos Elementos de Superaquecimento). Vapor agora: %s mB/t.
-O calor vem dos Aquecedores encostados ou pelos Condutores Termodinâmicos.
+cl.mkn.tanque=Tanque Dinâmico: %s de %s mB.\nGuarda um fluido ou um químico (350.000 mB de fluido ou 16.000.000 mB de químico por bloco de dentro). Toque a válvula com balde ou cilindro para pôr ou tirar; Canos e Tubos ligam nela.
+cl.mkn.evaporacao=Planta de Evaporação Térmica (altura %s): entrada %s, saída %s. Ritmo agora: %s mB/t (sol no topo aberto e calor dos aquecedores).\nÁgua vira salmoura (10 → 1) e salmoura vira lítio (10 → 1).
+cl.mkn.inducao=Matriz de Indução: %s de %s.\nEntrada/saída até %s/t (provedores). Liga na rede como uma bateria pelas Portas.
+cl.mkn.caldeira=Caldeira Térmica: água %s mB, vapor %s mB, calor %s J/t (até %s J/t pelos Elementos de Superaquecimento). Vapor agora: %s mB/t.\nO calor vem dos Aquecedores encostados ou pelos Condutores Termodinâmicos.
 cl.mkn.sps=SPS: polônio %s mB, antimatéria %s mB. 1.000 mB de polônio + 1.000.000 J por mB = 1 mB de antimatéria. A energia entra pelas Bobinas Supercarregadas nas Portas.
-cl.mkn.fissao=Reator de Fissão (%s conjuntos): %s. Queima %s mB/t (máx. %s).
-Combustível %s, água %s, vapor %s, resíduo %s. Dano %s%%.
-Sem água bastante o reator esquenta e se danifica; com 100%% de dano, ele derrete (explosão e radiação).
+cl.mkn.fissao=Reator de Fissão (%s conjuntos): %s. Queima %s mB/t (máx. %s).\nCombustível %s, água %s, vapor %s, resíduo %s. Dano %s%%.\nSem água bastante o reator esquenta e se danifica; com 100%% de dano, ele derrete (explosão e radiação).
 cl.mkn.fissao.ligar=Ligado
 cl.mkn.fissao.taxa=Queima (mB/t)
 cl.mkn.fissao.scram=Desligar sozinho com 80% de dano (Adaptador Lógico)
 cl.mkn.ligado=ligado
 cl.mkn.desligado=desligado
 cl.mkn.derreteu=O Reator de Fissão derreteu!
-cl.mkn.turbina=Turbina Industrial: vapor %s mB, fluxo %s mB/t, gerando %s/t.
-Pás %s, bobinas %s, dispersores %s, ventilações %s, condensadores %s. Toque um Rotor com Pás da Turbina para pôr (2 por rotor).
+cl.mkn.turbina=Turbina Industrial: vapor %s mB, fluxo %s mB/t, gerando %s/t.\nPás %s, bobinas %s, dispersores %s, ventilações %s, condensadores %s. Toque um Rotor com Pás da Turbina para pôr (2 por rotor).
 cl.mkn.pa=Pás neste rotor: %s/2.
-cl.mkn.fusao=Reator de Fusão: %s. Injeção %s mB/t, gerando %s/t.
-Deutério %s, trítio %s, D-T %s, água %s, vapor %s.
-Para acender: toque o Controlador com um Hohlraum e mire um Amplificador de Laser com 400 MJ na Matriz de Foco.
+cl.mkn.fusao=Reator de Fusão: %s. Injeção %s mB/t, gerando %s/t.\nDeutério %s, trítio %s, D-T %s, água %s, vapor %s.\nPara acender: toque o Controlador com um Hohlraum e mire um Amplificador de Laser com 400 MJ na Matriz de Foco.
 cl.mkn.fusao.injecao=Injeção (mB/t)
 cl.mkn.aceso=aceso
 cl.mkn.apagado=apagado
@@ -6415,11 +6352,7 @@ tile.cl:caixa_papelao.name=Caixa de papelão
 entity.cl:robit.name=Robit
 cl.mke.sem_energia=%s sem energia (carregue num carregador).
 cl.mke.estacao=Estação de Modificação
-cl.mke.estacao.corpo=%s · %s
-
-Módulos instalados: %s
-
-Toque um módulo da sua mochila para instalar (gasta o item) ou um instalado para tirar.
+cl.mke.estacao.corpo=%s · %s\n\nMódulos instalados: %s\n\nToque um módulo da sua mochila para instalar (gasta o item) ou um instalado para tirar.
 cl.mke.estacao.mao=Segure a Meka-Tool ou uma peça da MekaSuit e toque a Estação.
 cl.mke.instalar=Instalar: %s (%s/%s)
 cl.mke.tirar=Tirar: %s (%s)
@@ -6458,8 +6391,7 @@ cl.mkqio.importador=Importador: puxa do inventário de trás para a QIO.
 cl.mkqio.exportador=Exportador: põe os itens do filtro no inventário de trás.
 cl.mkqio.redstone=Adaptador de Redstone: o Bedrock não deixa blocos de add-on emitirem redstone; ele mostra a contagem do item escolhido.
 cl.mkr.titulo=Robit · %s
-cl.mkr.corpo=Energia: %s / 100 kJ (recarrega no Carregador de Chão).
-Itens: %s
+cl.mkr.corpo=Energia: %s / 100 kJ (recarrega no Carregador de Chão).\nItens: %s
 cl.mkr.seguir=Seguir
 cl.mkr.parar=Ficar parado
 cl.mkr.pegar_on=Pegar itens do chão: ligado

@@ -2683,12 +2683,6 @@
     "clc_vidro_emoldurado": {
       "textures": "textures/blocks/cl/arte/vidro_emoldurado"
     },
-    "clc_placa_ferro": {
-      "textures": "textures/blocks/cl/arte/placa_ferro"
-    },
-    "clc_placa_ferro_enferrujada": {
-      "textures": "textures/blocks/cl/arte/placa_ferro_enferrujada"
-    },
     "clc_grade": {
       "textures": "textures/blocks/cl/arte/grade"
     },

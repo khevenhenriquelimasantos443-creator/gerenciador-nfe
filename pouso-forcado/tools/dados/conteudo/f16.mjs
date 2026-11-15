@@ -71,7 +71,6 @@ export default {
     "cl.fun.como": ["Como usar: piso 3x3 de tijolos refratários, interior 3x3 vazio atrás do controlador, parede de 12 blocos refratários por camada (até 4), um tanque com lava e um dreno com torneira em cima de uma mesa ou bacia.", "How to use: 3x3 seared brick floor, empty 3x3 inside behind the controller, a 12-block seared wall per layer (up to 4), a tank with lava and a drain with a faucet over a table or basin."],
     "cl.fun.revalidar": ["Verificar de novo", "Check again"],
     "cl.fun.fechar": ["Fechar", "Close"],
-    "cl.fun.cat_liga": ["Derreta tudo junto na fundição.", "Melt everything together in the smeltery."],
     "cl.fun.cat_dobra": ["Minério e pedaços rendem o dobro na fundição (288 mB por minério).", "Ores and ore pieces yield double in the smeltery (288 mB per ore)."],
     "cl.fun.cat_molde": ["Ponha a peça na mesa e derrame 288 mB de ouro.", "Put the part on the table and pour 288 mB of gold."],
     "cl.fun.cat_peca": ["Molde na mesa (não gasta) + metal derretido pela torneira.", "Cast on the table (kept) + molten metal from the faucet."],

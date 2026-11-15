@@ -2,7 +2,7 @@ import { Block, BlockCustomComponent, GameMode, ItemStack, Player, system, world
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { gravarEm, lerEm, registrarDetalhe } from "../util/dados.js";
+import { gravarEm, lerEm, registrarDetalhe, lerGrande, gravarGrande } from "../util/dados.js";
 import { darAoJogador, gastarDaMao, gastarFerramenta } from "../util/inventario.js";
 import { DADOS_F54 } from "../conteudo/gerado.js";
 import { abrirUmMenu } from "../util/menus.js";
@@ -36,8 +36,8 @@ function lerJson<T>(v: unknown, padrao: T): T {
     return padrao;
   }
 }
-const pedras = (): Pedra[] => lerJson<Pedra[]>(world.getDynamicProperty(REGISTRO), []);
-const gravarPedras = (l: Pedra[]) => world.setDynamicProperty(REGISTRO, JSON.stringify(l));
+const pedras = (): Pedra[] => lerGrande<Pedra[]>(REGISTRO, []);
+const gravarPedras = (l: Pedra[]) => gravarGrande(REGISTRO, l);
 const ativas = (j: Player): string[] => lerJson<string[]>(j.getDynamicProperty(ATIVAS), []);
 const daqui = (b: Block) => pedras().find((p) => chaveDe(p) === chave(b, b.dimension.id));
 
@@ -195,8 +195,8 @@ export function registrarWaystones(): void {
 // ---------- 1.35.0: Pedras de Partilha, Pedras-Porto, Pedras de Viagem coloridas, Placa de Dobra e pergaminhos ----------
 const PARTILHA = "cl:pedras_partilha";
 type Partilha = Pedra & { cor: string };
-const partilhas = (): Partilha[] => lerJson<Partilha[]>(world.getDynamicProperty(PARTILHA), []);
-const gravarPartilhas = (l: Partilha[]) => world.setDynamicProperty(PARTILHA, JSON.stringify(l));
+const partilhas = (): Partilha[] => lerGrande<Partilha[]>(PARTILHA, []);
+const gravarPartilhas = (l: Partilha[]) => gravarGrande(PARTILHA, l);
 const corDe = (id: string) => CORES.find((c) => id.endsWith(`_${c}`));
 
 /** A rede de uma cor (ou, sem cor, as pedras ativadas): escolhe e viaja. `porXp`: Pedra de Viagem (custa XP e durabilidade). */

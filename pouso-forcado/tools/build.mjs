@@ -35,11 +35,12 @@ function listar(pasta) {
 }
 
 // Ícones de item que ninguém usa (os gerados que perderam para os desenhados à mão) ficam fora
-// do pack: só entra o PNG de textures/items/cl/ citado no RP (item_texture.json) ou nos scripts (Catálogo).
+// do pack: só entra o PNG de textures/items/cl/, textures/blocks/cl/c/ e textures/blocks/cl/hc/ citado no RP (item_texture.json) ou nos scripts (Catálogo).
 let citados;
 function iconeUsado(arq) {
   const rel = relative(join(RAIZ, "RP"), arq).split(sep).join("/");
-  if (!rel.startsWith("textures/items/cl/") || !rel.endsWith(".png")) return true;
+  const filtrada = ["textures/items/cl/", "textures/blocks/cl/c/", "textures/blocks/cl/hc/"].some((d) => rel.startsWith(d));
+  if (!filtrada || !rel.endsWith(".png")) return true;
   citados ??= [...listar(join(RAIZ, "RP")), ...listar(join(RAIZ, "BP/scripts"))]
     .filter((a) => a.endsWith(".json") || a.endsWith(".js"))
     .map((a) => readFileSync(a, "utf8"))
@@ -96,10 +97,15 @@ execFileSync(node, [join(RAIZ, "tools/gerar-nave.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-aviao.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-relevo.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-ui.mjs")], { stdio: "inherit" });
+// As artes aprovadas (flipbooks, texturas das máquinas e telas) vão por cima do que o gerar-visual e o gerar-ui desenharam.
+execFileSync(node, [join(RAIZ, "tools/gerar-artes-aprovadas.mjs")], { stdio: "inherit" });
 // Geração natural do mundo normal (features, tabelas de saque e estruturas com baú): depois do tsc e das estruturas.
 execFileSync("python3", [join(RAIZ, "tools/gerar-geracao.py")], { stdio: "inherit" });
 // Os geradores reescrevem item_texture.json: os ícones desenhados voltam a valer.
 execFileSync(node, [join(RAIZ, "tools/aplicar-icones.mjs")], { stdio: "inherit" });
+// Textos com várias linhas viram "\\n" (o Bedrock lê o .lang linha a linha) e chaves de textura sem arquivo saem.
+execFileSync(node, [join(RAIZ, "tools/normalizar-lang.mjs")], { stdio: "inherit" });
+execFileSync(node, [join(RAIZ, "tools/limpar-referencias.mjs")], { stdio: "inherit" });
 
 // O jogo descarta parte de um item (até o ícone) se a velocidade do "minecraft:digger" não for inteira.
 function validarItens(pasta) {

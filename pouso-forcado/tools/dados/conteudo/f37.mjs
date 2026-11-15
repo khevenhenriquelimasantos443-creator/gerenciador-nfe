@@ -55,7 +55,6 @@ export default {
     "cl.comando.piramide": ["A pirâmide do deserto", "The desert pyramid"],
     "cl.capitulo.mochilas.nome": ["Melhorias da Mochila", "Backpack Upgrades"],
     "cl.capitulo.mochilas.curto": ["Mochila+", "Backpack+"],
-    "cl.capitulo.mochilas.desc": ["Ponha uma melhoria dentro da mochila (1 por mochila): coleta, ímã, alimentação, compactação, depósito ou reabastecer. E a grande pirâmide do deserto.", "Put one upgrade inside the backpack (1 per backpack): pickup, magnet, feeding, compacting, deposit or restock. And the great desert pyramid."],
     "cl.missao.sb_base.titulo": ["Base de melhoria", "Upgrade base"], "cl.missao.sb_base.desc": ["Faça uma Base de Melhoria.", "Make an Upgrade Base."],
     "cl.missao.sb_ima.titulo": ["Atração", "Attraction"], "cl.missao.sb_ima.desc": ["Use a Melhoria de Ímã numa mochila (ela puxa os itens até você).", "Use a Magnet Upgrade in a backpack (it pulls items to you)."],
     "cl.missao.sb_comer.titulo": ["Lanche automático", "Auto snack"], "cl.missao.sb_comer.desc": ["Coma da mochila com a Melhoria de Alimentação.", "Eat from the backpack with a Feeding Upgrade."],

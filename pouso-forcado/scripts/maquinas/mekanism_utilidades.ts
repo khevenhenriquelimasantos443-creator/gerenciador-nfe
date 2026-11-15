@@ -4,7 +4,7 @@ import { nomeDe } from "../catalogo/catalogo.js";
 import { DADOS_F66, DADOS_F68 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
+import { gravar, gravarEm, ler, lerEm, registrarDetalhe, lerGrande, gravarGrande } from "../util/dados.js";
 import { entrada, gastarCE, inv, saida, tirar } from "../util/maquina.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { registrarArmazem } from "../util/rede.js";
@@ -452,11 +452,7 @@ const CAP_CH_QE = TANQUES["cl:tanque_quimico_definitivo"]?.[1] ?? 8192000;
 let qeCache: Record<string, Qe> | undefined;
 const qes = (): Record<string, Qe> => {
   if (!qeCache) {
-    try {
-      qeCache = JSON.parse((world.getDynamicProperty(PROP_QE) as string | undefined) ?? "{}") as Record<string, Qe>;
-    } catch {
-      qeCache = {};
-    }
+    qeCache = lerGrande<Record<string, Qe>>(PROP_QE, {});
   }
   return qeCache;
 };
@@ -466,7 +462,7 @@ const marcarQe = () => {
   salvarQe = true;
   system.runTimeout(() => {
     salvarQe = false;
-    world.setDynamicProperty(PROP_QE, JSON.stringify(qes()));
+    gravarGrande(PROP_QE, qes());
   }, 20);
 };
 const freqQe = (b: Block): Qe | undefined => {
@@ -651,11 +647,7 @@ const PROP_TP = "cl:mk_tps";
 const TP = "cl:teletransportador", MOLDURA = "cl:moldura_teletransportador";
 type Pos = { d: string; x: number; y: number; z: number };
 const lerTps = (): Record<string, string[]> => {
-  try {
-    return JSON.parse((world.getDynamicProperty(PROP_TP) as string | undefined) ?? "{}") as Record<string, string[]>;
-  } catch {
-    return {};
-  }
+  return lerGrande<Record<string, string[]>>(PROP_TP, {});
 };
 const posDe = (s: string): Pos => {
   const [d, xyz] = s.split("|");
@@ -670,7 +662,7 @@ function indexarTp(b: { x: number; y: number; z: number; dimension: Dimension },
     if (!tps[antiga].length) delete tps[antiga];
   }
   if (nova) tps[nova] = [...new Set([...(tps[nova] ?? []), k])];
-  world.setDynamicProperty(PROP_TP, JSON.stringify(tps));
+  gravarGrande(PROP_TP, tps);
 }
 const ehMoldura = (dim: Dimension, p: Vector3) => {
   try {
