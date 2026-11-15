@@ -2228,28 +2228,28 @@
       "textures": "textures/blocks/cl/c/bloco_angelical"
     },
     "clc_pedregulho_comprimido_1": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_1"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_1"
     },
     "clc_pedregulho_comprimido_2": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_2"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_2"
     },
     "clc_pedregulho_comprimido_3": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_3"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_3"
     },
     "clc_pedregulho_comprimido_4": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_4"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_4"
     },
     "clc_pedregulho_comprimido_5": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_5"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_5"
     },
     "clc_pedregulho_comprimido_6": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_6"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_6"
     },
     "clc_pedregulho_comprimido_7": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_7"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_7"
     },
     "clc_pedregulho_comprimido_8": {
-      "textures": "textures/blocks/cl/c/pedregulho_comprimido_8"
+      "textures": "textures/blocks/cl/arte/pedregulho_comprimido_8"
     },
     "clc_tumulo_frente": {
       "textures": "textures/blocks/cl/arte/tumulo_frente"
@@ -2945,7 +2945,7 @@
       "textures": "textures/blocks/cl/c/tijolo_alto_forno"
     },
     "clc_bloco_coque": {
-      "textures": "textures/blocks/cl/c/bloco_coque"
+      "textures": "textures/blocks/cl/arte/bloco_coque"
     },
     "clc_tabuas_tratadas": {
       "textures": "textures/blocks/cl/c/tabuas_tratadas"
@@ -3968,10 +3968,10 @@
       "textures": "textures/blocks/cl/arte/carregador_ae_baixo"
     },
     "clc_bloco_ouro_rosa": {
-      "textures": "textures/blocks/cl/c/bloco_ouro_rosa"
+      "textures": "textures/blocks/cl/arte/bloco_ouro_rosa"
     },
     "clc_bloco_bronze_ametista": {
-      "textures": "textures/blocks/cl/c/bloco_bronze_ametista"
+      "textures": "textures/blocks/cl/arte/bloco_bronze_ametista"
     },
     "clc_minerio_cobalto": {
       "textures": "textures/blocks/cl/arte/minerio_cobalto"
@@ -5129,13 +5129,13 @@
       "textures": "textures/blocks/cl/c/placa_dobra"
     },
     "clc_bloco_ludicrita": {
-      "textures": "textures/blocks/cl/c/bloco_ludicrita"
+      "textures": "textures/blocks/cl/arte/bloco_ludicrita"
     },
     "clc_bloco_ridiculita": {
-      "textures": "textures/blocks/cl/c/bloco_ridiculita"
+      "textures": "textures/blocks/cl/arte/bloco_ridiculita"
     },
     "clc_bloco_inanita": {
-      "textures": "textures/blocks/cl/c/bloco_inanita"
+      "textures": "textures/blocks/cl/arte/bloco_inanita"
     },
     "clc_carcaca_turbina": {
       "textures": "textures/blocks/cl/c/carcaca_turbina"

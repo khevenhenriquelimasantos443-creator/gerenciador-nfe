@@ -2084,7 +2084,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bobina_bt": {
   "pt": "Bobina de Baixa Tensão",
   "en": "LV Coil Block Item",
-  "icone": "textures/items/cl/c/bobina_bt"
+  "icone": "textures/items/cl/arte/bobina_bt"
  },
  "cl:bobina_eletromagnetica": {
   "pt": "Bobina Eletromagnética",
@@ -3744,7 +3744,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:chave_masmorra": {
   "pt": "Chave da Masmorra Tier 1",
   "en": "Tier 1 Dungeon Key",
-  "icone": "textures/items/cl/c/chave_masmorra"
+  "icone": "textures/items/cl/arte/chave_masmorra"
  },
  "cl:chave_powah": {
   "pt": "Chave (Powah)",
@@ -4294,7 +4294,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:componente_ferro": {
   "pt": "Componente de Ferro",
   "en": "Iron Mechanical Component",
-  "icone": "textures/items/cl/c/componente_ferro"
+  "icone": "textures/items/cl/arte/componente_ferro"
  },
  "cl:componente_me_16k": {
   "pt": "Componente de Armazenamento de 16k",
@@ -4554,7 +4554,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:coque": {
   "pt": "Coque",
   "en": "Coal Coke",
-  "icone": "textures/items/cl/c/coque"
+  "icone": "textures/items/cl/arte/coque"
  },
  "cl:coracao_cristal": {
   "pt": "Coração de Cristal",
@@ -5404,7 +5404,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:escoria": {
   "pt": "Escória",
   "en": "Slag",
-  "icone": "textures/items/cl/c/escoria"
+  "icone": "textures/items/cl/arte/escoria"
  },
  "cl:escudo_placa_aco": {
   "pt": "Escudo de Placa de Aço",
@@ -6549,7 +6549,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fibra_canhamo": {
   "pt": "Fibra de Cânhamo",
   "en": "Industrial Hemp Fiber",
-  "icone": "textures/items/cl/c/fibra_canhamo"
+  "icone": "textures/items/cl/arte/fibra_canhamo"
  },
  "cl:fibra_quartzo": {
   "pt": "Fibra de Quartzo",
@@ -7499,7 +7499,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:graveto_tratado": {
   "pt": "Graveto de Madeira Tratada",
   "en": "Treated Stick",
-  "icone": "textures/items/cl/c/graveto_tratado"
+  "icone": "textures/items/cl/arte/graveto_tratado"
  },
  "cl:graviola": {
   "pt": "Graviola",
@@ -8429,17 +8429,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:lingote_inanita": {
   "pt": "Lingote de Inanita",
   "en": "Inanite Ingot",
-  "icone": "textures/items/cl/c/lingote_inanita"
+  "icone": "textures/items/cl/arte/lingote_inanita"
  },
  "cl:lingote_latao": {
   "pt": "Lingote de Latão",
   "en": "Brass Ingot",
-  "icone": "textures/items/cl/c/lingote_latao"
+  "icone": "textures/items/cl/arte/lingote_latao"
  },
  "cl:lingote_ludicrita": {
   "pt": "Lingote de Ludicrita",
   "en": "Ludicrite Ingot",
-  "icone": "textures/items/cl/c/lingote_ludicrita"
+  "icone": "textures/items/cl/arte/lingote_ludicrita"
  },
  "cl:lingote_manyullyn": {
   "pt": "Lingote de Manyullyn",
@@ -8464,7 +8464,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:lingote_ridiculita": {
   "pt": "Lingote de Ridiculita",
   "en": "Ridiculite Ingot",
-  "icone": "textures/items/cl/c/lingote_ridiculita"
+  "icone": "textures/items/cl/arte/lingote_ridiculita"
  },
  "cl:lingote_slime_brasa": {
   "pt": "Lingote de Slime de Brasa",
@@ -8494,7 +8494,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:lingote_zinco": {
   "pt": "Lingote de Zinco",
   "en": "Zinc Ingot",
-  "icone": "textures/items/cl/c/lingote_zinco"
+  "icone": "textures/items/cl/arte/lingote_zinco"
  },
  "cl:linho": {
   "pt": "Linho",
@@ -9329,7 +9329,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:martelo_engenheiro": {
   "pt": "Martelo de Engenheiro",
   "en": "Engineer's Hammer",
-  "icone": "textures/items/cl/c/martelo_engenheiro"
+  "icone": "textures/items/cl/arte/martelo_engenheiro"
  },
  "cl:martelo_ferro": {
   "pt": "Martelo de Ferro",
@@ -9569,12 +9569,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:melhoria_alimentacao": {
   "pt": "Melhoria: Alimentação",
   "en": "Feeding Upgrade",
-  "icone": "textures/items/cl/c/melhoria_alimentacao"
+  "icone": "textures/items/cl/arte/melhoria_alimentacao"
  },
  "cl:melhoria_alimentacao_avancada": {
   "pt": "Melhoria: Alimentação Avançada",
   "en": "Advanced Feeding Upgrade",
-  "icone": "textures/items/cl/c/melhoria_alimentacao_avancada"
+  "icone": "textures/items/cl/arte/melhoria_alimentacao_avancada"
  },
  "cl:melhoria_ancora": {
   "pt": "Melhoria de Âncora",
@@ -9584,7 +9584,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:melhoria_base": {
   "pt": "Base de Melhoria",
   "en": "Upgrade Base",
-  "icone": "textures/items/cl/c/melhoria_base"
+  "icone": "textures/items/cl/arte/melhoria_base"
  },
  "cl:melhoria_bau_cobre_ferro": {
   "pt": "Melhoria de Baú: Cobre → Ferro",
@@ -9624,22 +9624,22 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:melhoria_coleta": {
   "pt": "Melhoria: Coleta",
   "en": "Pickup Upgrade",
-  "icone": "textures/items/cl/c/melhoria_coleta"
+  "icone": "textures/items/cl/arte/melhoria_coleta"
  },
  "cl:melhoria_compactacao": {
   "pt": "Melhoria: Compactação",
   "en": "Compacting Upgrade",
-  "icone": "textures/items/cl/c/melhoria_compactacao"
+  "icone": "textures/items/cl/arte/melhoria_compactacao"
  },
  "cl:melhoria_compactacao_avancada": {
   "pt": "Melhoria: Compactação Avançada",
   "en": "Advanced Compacting Upgrade",
-  "icone": "textures/items/cl/c/melhoria_compactacao_avancada"
+  "icone": "textures/items/cl/arte/melhoria_compactacao_avancada"
  },
  "cl:melhoria_deposito": {
   "pt": "Melhoria: Depósito",
   "en": "Deposit Upgrade",
-  "icone": "textures/items/cl/c/melhoria_deposito"
+  "icone": "textures/items/cl/arte/melhoria_deposito"
  },
  "cl:melhoria_energia": {
   "pt": "Melhoria de Energia",
@@ -9654,12 +9654,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:melhoria_fornalha": {
   "pt": "Melhoria: Fornalha",
   "en": "Smelting Upgrade",
-  "icone": "textures/items/cl/c/melhoria_fornalha"
+  "icone": "textures/items/cl/arte/melhoria_fornalha"
  },
  "cl:melhoria_fundicao_auto": {
   "pt": "Melhoria: Fornalha Automática",
   "en": "Auto-Smelting Upgrade",
-  "icone": "textures/items/cl/c/melhoria_fundicao_auto"
+  "icone": "textures/items/cl/arte/melhoria_fundicao_auto"
  },
  "cl:melhoria_gaveta_1": {
   "pt": "Melhoria de Armazenamento (I)",
@@ -9714,12 +9714,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:melhoria_ima": {
   "pt": "Melhoria: Ímã",
   "en": "Magnet Upgrade",
-  "icone": "textures/items/cl/c/melhoria_ima"
+  "icone": "textures/items/cl/arte/melhoria_ima"
  },
  "cl:melhoria_ima_avancada": {
   "pt": "Melhoria: Ímã Avançado",
   "en": "Advanced Magnet Upgrade",
-  "icone": "textures/items/cl/c/melhoria_ima_avancada"
+  "icone": "textures/items/cl/arte/melhoria_ima_avancada"
  },
  "cl:melhoria_quimica": {
   "pt": "Melhoria Química",
@@ -9729,12 +9729,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:melhoria_reabastecer": {
   "pt": "Melhoria: Reabastecer",
   "en": "Restock Upgrade",
-  "icone": "textures/items/cl/c/melhoria_reabastecer"
+  "icone": "textures/items/cl/arte/melhoria_reabastecer"
  },
  "cl:melhoria_recarga": {
   "pt": "Melhoria: Reposição",
   "en": "Refill Upgrade",
-  "icone": "textures/items/cl/c/melhoria_recarga"
+  "icone": "textures/items/cl/arte/melhoria_recarga"
  },
  "cl:melhoria_silenciador": {
   "pt": "Melhoria de Silenciador",
@@ -10214,32 +10214,32 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:mochila": {
   "pt": "Mochila",
   "en": "Backpack",
-  "icone": "textures/items/cl/c/mochila"
+  "icone": "textures/items/cl/arte/mochila"
  },
  "cl:mochila_cobre": {
   "pt": "Mochila de Cobre",
   "en": "Copper Backpack",
-  "icone": "textures/items/cl/c/mochila_cobre"
+  "icone": "textures/items/cl/arte/mochila_cobre"
  },
  "cl:mochila_diamante": {
   "pt": "Mochila de Diamante",
   "en": "Diamond Backpack",
-  "icone": "textures/items/cl/c/mochila_diamante"
+  "icone": "textures/items/cl/arte/mochila_diamante"
  },
  "cl:mochila_ferro": {
   "pt": "Mochila de Ferro",
   "en": "Iron Backpack",
-  "icone": "textures/items/cl/c/mochila_ferro"
+  "icone": "textures/items/cl/arte/mochila_ferro"
  },
  "cl:mochila_netherite": {
   "pt": "Mochila de Netherita",
   "en": "Netherite Backpack",
-  "icone": "textures/items/cl/c/mochila_netherite"
+  "icone": "textures/items/cl/arte/mochila_netherite"
  },
  "cl:mochila_ouro": {
   "pt": "Mochila de Ouro",
   "en": "Gold Backpack",
-  "icone": "textures/items/cl/c/mochila_ouro"
+  "icone": "textures/items/cl/arte/mochila_ouro"
  },
  "cl:mochila_porco": {
   "pt": "Mochila de Porco",
@@ -11154,7 +11154,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:nucleo_salto": {
   "pt": "Núcleo de Salto",
   "en": "Jump Core",
-  "icone": "textures/items/cl/c/nucleo_salto"
+  "icone": "textures/items/cl/arte/nucleo_salto"
  },
  "cl:nucleo_sync": {
   "pt": "Núcleo Sync",
@@ -11389,7 +11389,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:pa_moinho": {
   "pt": "Pá de Moinho",
   "en": "Windmill Blade",
-  "icone": "textures/items/cl/c/pa_moinho"
+  "icone": "textures/items/cl/arte/pa_moinho"
  },
  "cl:pa_obsidiana": {
   "pt": "Pá de Obsidiana",
@@ -15004,12 +15004,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:placa_aco": {
   "pt": "Placa Comprimida de Aço",
   "en": "Compressed Steel",
-  "icone": "textures/items/cl/c/placa_aco"
+  "icone": "textures/items/cl/arte/placa_aco"
  },
  "cl:placa_aluminio": {
   "pt": "Placa Comprimida de Alumínio",
   "en": "Compressed Aluminum",
-  "icone": "textures/items/cl/c/placa_aluminio"
+  "icone": "textures/items/cl/arte/placa_aluminio"
  },
  "cl:placa_batalha": {
   "pt": "Placa de Batalha",
@@ -15019,7 +15019,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:placa_bronze": {
   "pt": "Placa Comprimida de Bronze",
   "en": "Compressed Bronze",
-  "icone": "textures/items/cl/c/placa_bronze"
+  "icone": "textures/items/cl/arte/placa_bronze"
  },
  "cl:placa_casco": {
   "pt": "Placa de Casco",
@@ -15034,7 +15034,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:placa_cobre": {
   "pt": "Placa Comprimida de Cobre",
   "en": "Compressed Copper",
-  "icone": "textures/items/cl/c/placa_cobre"
+  "icone": "textures/items/cl/arte/placa_cobre"
  },
  "cl:placa_dobra": {
   "pt": "Placa de Dobra",
@@ -15044,12 +15044,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:placa_estanho": {
   "pt": "Placa Comprimida de Estanho",
   "en": "Compressed Tin",
-  "icone": "textures/items/cl/c/placa_estanho"
+  "icone": "textures/items/cl/arte/placa_estanho"
  },
  "cl:placa_ferro": {
   "pt": "Placa Comprimida de Ferro",
   "en": "Compressed Iron",
-  "icone": "textures/items/cl/c/placa_ferro"
+  "icone": "textures/items/cl/arte/placa_ferro"
  },
  "cl:placa_fotovoltaica": {
   "pt": "Chapa Fotovoltaica",
@@ -16019,7 +16019,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:po_salitre": {
   "pt": "Pó de Salitre",
   "en": "Saltpeter Dust",
-  "icone": "textures/items/cl/c/po_salitre"
+  "icone": "textures/items/cl/arte/po_salitre"
  },
  "cl:po_sujo_chumbo": {
   "pt": "Pó de Chumbo Sujo",
@@ -16879,7 +16879,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:segmento_roda": {
   "pt": "Segmento de Roda d'Água",
   "en": "Waterwheel Segment",
-  "icone": "textures/items/cl/c/segmento_roda"
+  "icone": "textures/items/cl/arte/segmento_roda"
  },
  "cl:semente_abacaxi": {
   "pt": "Sementes de Abacaxi",
@@ -17849,7 +17849,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tecido_canhamo": {
   "pt": "Tecido de Cânhamo",
   "en": "Hemp Fabric",
-  "icone": "textures/items/cl/c/tecido_canhamo"
+  "icone": "textures/items/cl/arte/tecido_canhamo"
  },
  "cl:teletransportador": {
   "pt": "Teletransportador",
@@ -18699,7 +18699,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:vela_lona": {
   "pt": "Vela de Moinho",
   "en": "Windmill Sail",
-  "icone": "textures/items/cl/c/vela_lona"
+  "icone": "textures/items/cl/arte/vela_lona"
  },
  "cl:vela_moinho": {
   "pt": "Vela de Moinho",

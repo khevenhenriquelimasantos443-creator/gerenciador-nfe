@@ -1014,22 +1014,22 @@
       "textures": "textures/items/cl/arte/lingote_aluminio"
     },
     "clc_placa_cobre": {
-      "textures": "textures/items/cl/c/placa_cobre"
+      "textures": "textures/items/cl/arte/placa_cobre"
     },
     "clc_placa_estanho": {
-      "textures": "textures/items/cl/c/placa_estanho"
+      "textures": "textures/items/cl/arte/placa_estanho"
     },
     "clc_placa_aluminio": {
-      "textures": "textures/items/cl/c/placa_aluminio"
+      "textures": "textures/items/cl/arte/placa_aluminio"
     },
     "clc_placa_ferro": {
-      "textures": "textures/items/cl/c/placa_ferro"
+      "textures": "textures/items/cl/arte/placa_ferro"
     },
     "clc_placa_bronze": {
-      "textures": "textures/items/cl/c/placa_bronze"
+      "textures": "textures/items/cl/arte/placa_bronze"
     },
     "clc_placa_aco": {
-      "textures": "textures/items/cl/c/placa_aco"
+      "textures": "textures/items/cl/arte/placa_aco"
     },
     "clc_placa_reforcada": {
       "textures": "textures/items/cl/arte/placa_reforcada"
@@ -1089,10 +1089,10 @@
       "textures": "textures/items/cl/arte/coalhada_queijo"
     },
     "clc_nucleo_salto": {
-      "textures": "textures/items/cl/c/nucleo_salto"
+      "textures": "textures/items/cl/arte/nucleo_salto"
     },
     "clc_chave_masmorra": {
-      "textures": "textures/items/cl/c/chave_masmorra"
+      "textures": "textures/items/cl/arte/chave_masmorra"
     },
     "clc_osmio_quebrado": {
       "textures": "textures/items/cl/c/osmio_quebrado"
@@ -1410,10 +1410,10 @@
       "textures": "textures/items/cl/c/zinco_po"
     },
     "clc_lingote_zinco": {
-      "textures": "textures/items/cl/c/lingote_zinco"
+      "textures": "textures/items/cl/arte/lingote_zinco"
     },
     "clc_lingote_latao": {
-      "textures": "textures/items/cl/c/lingote_latao"
+      "textures": "textures/items/cl/arte/lingote_latao"
     },
     "clc_chapa_ferro": {
       "textures": "textures/items/cl/c/chapa_ferro"
@@ -1455,7 +1455,7 @@
       "textures": "textures/items/cl/arte/pergaminho_viagem"
     },
     "clc_mochila": {
-      "textures": "textures/items/cl/c/mochila"
+      "textures": "textures/items/cl/arte/mochila"
     },
     "clc_computador": {
       "textures": "textures/items/cl/arte/computador"
@@ -1686,43 +1686,43 @@
       "textures": "textures/items/cl/hc/semente_canhamo"
     },
     "clc_martelo_engenheiro": {
-      "textures": "textures/items/cl/c/martelo_engenheiro"
+      "textures": "textures/items/cl/arte/martelo_engenheiro"
     },
     "clc_coque": {
-      "textures": "textures/items/cl/c/coque"
+      "textures": "textures/items/cl/arte/coque"
     },
     "clc_escoria": {
-      "textures": "textures/items/cl/c/escoria"
+      "textures": "textures/items/cl/arte/escoria"
     },
     "clc_balde_creosoto": {
       "textures": "textures/items/cl/c/balde_creosoto"
     },
     "clc_graveto_tratado": {
-      "textures": "textures/items/cl/c/graveto_tratado"
+      "textures": "textures/items/cl/arte/graveto_tratado"
     },
     "clc_fibra_canhamo": {
-      "textures": "textures/items/cl/c/fibra_canhamo"
+      "textures": "textures/items/cl/arte/fibra_canhamo"
     },
     "clc_tecido_canhamo": {
-      "textures": "textures/items/cl/c/tecido_canhamo"
+      "textures": "textures/items/cl/arte/tecido_canhamo"
     },
     "clc_vela_lona": {
-      "textures": "textures/items/cl/c/vela_lona"
+      "textures": "textures/items/cl/arte/vela_lona"
     },
     "clc_pa_moinho": {
-      "textures": "textures/items/cl/c/pa_moinho"
+      "textures": "textures/items/cl/arte/pa_moinho"
     },
     "clc_segmento_roda": {
-      "textures": "textures/items/cl/c/segmento_roda"
+      "textures": "textures/items/cl/arte/segmento_roda"
     },
     "clc_componente_ferro": {
-      "textures": "textures/items/cl/c/componente_ferro"
+      "textures": "textures/items/cl/arte/componente_ferro"
     },
     "clc_bobina_fio_cobre": {
       "textures": "textures/items/cl/arte/bobina_fio_cobre"
     },
     "clc_bobina_bt": {
-      "textures": "textures/items/cl/c/bobina_bt"
+      "textures": "textures/items/cl/arte/bobina_bt"
     },
     "clc_casco_aeronave": {
       "textures": "textures/items/cl/arte/casco_aeronave"
@@ -1752,28 +1752,28 @@
       "textures": "textures/items/cl/arte/quadricoptero"
     },
     "clc_melhoria_base": {
-      "textures": "textures/items/cl/c/melhoria_base"
+      "textures": "textures/items/cl/arte/melhoria_base"
     },
     "clc_melhoria_coleta": {
-      "textures": "textures/items/cl/c/melhoria_coleta"
+      "textures": "textures/items/cl/arte/melhoria_coleta"
     },
     "clc_melhoria_ima": {
-      "textures": "textures/items/cl/c/melhoria_ima"
+      "textures": "textures/items/cl/arte/melhoria_ima"
     },
     "clc_melhoria_alimentacao": {
-      "textures": "textures/items/cl/c/melhoria_alimentacao"
+      "textures": "textures/items/cl/arte/melhoria_alimentacao"
     },
     "clc_melhoria_compactacao": {
-      "textures": "textures/items/cl/c/melhoria_compactacao"
+      "textures": "textures/items/cl/arte/melhoria_compactacao"
     },
     "clc_melhoria_compactacao_avancada": {
-      "textures": "textures/items/cl/c/melhoria_compactacao_avancada"
+      "textures": "textures/items/cl/arte/melhoria_compactacao_avancada"
     },
     "clc_melhoria_deposito": {
-      "textures": "textures/items/cl/c/melhoria_deposito"
+      "textures": "textures/items/cl/arte/melhoria_deposito"
     },
     "clc_melhoria_reabastecer": {
-      "textures": "textures/items/cl/c/melhoria_reabastecer"
+      "textures": "textures/items/cl/arte/melhoria_reabastecer"
     },
     "clc_pasta_dieletrica": {
       "textures": "textures/items/cl/arte/pasta_dieletrica"
@@ -2661,34 +2661,34 @@
       "textures": "textures/items/cl/arte/machado_largo_bronze_ametista"
     },
     "clc_mochila_cobre": {
-      "textures": "textures/items/cl/c/mochila_cobre"
+      "textures": "textures/items/cl/arte/mochila_cobre"
     },
     "clc_mochila_ferro": {
-      "textures": "textures/items/cl/c/mochila_ferro"
+      "textures": "textures/items/cl/arte/mochila_ferro"
     },
     "clc_mochila_ouro": {
-      "textures": "textures/items/cl/c/mochila_ouro"
+      "textures": "textures/items/cl/arte/mochila_ouro"
     },
     "clc_mochila_diamante": {
-      "textures": "textures/items/cl/c/mochila_diamante"
+      "textures": "textures/items/cl/arte/mochila_diamante"
     },
     "clc_mochila_netherite": {
-      "textures": "textures/items/cl/c/mochila_netherite"
+      "textures": "textures/items/cl/arte/mochila_netherite"
     },
     "clc_melhoria_ima_avancada": {
-      "textures": "textures/items/cl/c/melhoria_ima_avancada"
+      "textures": "textures/items/cl/arte/melhoria_ima_avancada"
     },
     "clc_melhoria_alimentacao_avancada": {
-      "textures": "textures/items/cl/c/melhoria_alimentacao_avancada"
+      "textures": "textures/items/cl/arte/melhoria_alimentacao_avancada"
     },
     "clc_melhoria_fornalha": {
-      "textures": "textures/items/cl/c/melhoria_fornalha"
+      "textures": "textures/items/cl/arte/melhoria_fornalha"
     },
     "clc_melhoria_fundicao_auto": {
-      "textures": "textures/items/cl/c/melhoria_fundicao_auto"
+      "textures": "textures/items/cl/arte/melhoria_fundicao_auto"
     },
     "clc_melhoria_recarga": {
-      "textures": "textures/items/cl/c/melhoria_recarga"
+      "textures": "textures/items/cl/arte/melhoria_recarga"
     },
     "clc_padrao_cabeca_enxo": {
       "textures": "textures/items/cl/c/padrao_cabeca_enxo"
@@ -5673,13 +5673,13 @@
       "textures": "textures/items/cl/c/pergaminho_vinculado"
     },
     "clc_lingote_ludicrita": {
-      "textures": "textures/items/cl/c/lingote_ludicrita"
+      "textures": "textures/items/cl/arte/lingote_ludicrita"
     },
     "clc_lingote_ridiculita": {
-      "textures": "textures/items/cl/c/lingote_ridiculita"
+      "textures": "textures/items/cl/arte/lingote_ridiculita"
     },
     "clc_lingote_inanita": {
-      "textures": "textures/items/cl/c/lingote_inanita"
+      "textures": "textures/items/cl/arte/lingote_inanita"
     },
     "clc_colher_pedreiro": {
       "textures": "textures/items/cl/arte/colher_pedreiro"
@@ -5712,7 +5712,7 @@
       "textures": "textures/items/cl/c/molde_desembalar"
     },
     "clc_po_salitre": {
-      "textures": "textures/items/cl/c/po_salitre"
+      "textures": "textures/items/cl/arte/po_salitre"
     },
     "clc_balde_oleo_vegetal": {
       "textures": "textures/items/cl/c/balde_oleo_vegetal"
