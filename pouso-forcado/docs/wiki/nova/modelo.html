@@ -1,0 +1,645 @@
+<title>Wiki do Pouso Forçado</title>
+<meta name="description" content="Pouso Forçado: add-on de sobrevivência no deserto para Minecraft Bedrock. Guia, instalação e download.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Conceito: o painel da nave. Console grafite com a luz laranja do casco, ciano nos sistemas, o deserto do próprio jogo no topo.
+   Tokens: grafite de fundo e painéis, laranja de ação, ciano de sistema, verde e vermelho só para o estado dos sistemas. */
+:root {
+  --fundo: #0d1218; --fundo-2: #111821; --painel: #17202a; --painel-2: #1e2935; --linha: #2a3744;
+  --texto: #e8edf2; --texto-2: #a8b5c3;
+  --acento: #f59e0b; --acento-tinta: #1b1204; --acento-texto: #fbbf24;
+  --ciano: #38bdf8; --verde: #4ade80; --vermelho: #f87171;
+  --topo: rgba(13, 18, 24, 0.94); --vidro: rgba(23, 32, 42, 0.97); --sombra: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --f-titulo: "Chakra Petch", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-texto: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --fundo: #e9eef3; --fundo-2: #dfe6ed; --painel: #f7f9fb; --painel-2: #ffffff; --linha: #c2ccd7;
+    --texto: #111a23; --texto-2: #46535f;
+    --acento: #f59e0b; --acento-tinta: #1b1204; --acento-texto: #8f4605;
+    --ciano: #0369a1; --verde: #15803d; --vermelho: #b91c1c;
+    --topo: rgba(233, 238, 243, 0.94); --vidro: rgba(247, 249, 251, 0.97); --sombra: 0 18px 40px rgba(25, 40, 55, 0.18);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --fundo: #e9eef3; --fundo-2: #dfe6ed; --painel: #f7f9fb; --painel-2: #ffffff; --linha: #c2ccd7;
+  --texto: #111a23; --texto-2: #46535f;
+  --acento: #f59e0b; --acento-tinta: #1b1204; --acento-texto: #8f4605;
+  --ciano: #0369a1; --verde: #15803d; --vermelho: #b91c1c;
+  --topo: rgba(233, 238, 243, 0.94); --vidro: rgba(247, 249, 251, 0.97); --sombra: 0 18px 40px rgba(25, 40, 55, 0.18);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --fundo: #0d1218; --fundo-2: #111821; --painel: #17202a; --painel-2: #1e2935; --linha: #2a3744;
+  --texto: #e8edf2; --texto-2: #a8b5c3;
+  --acento: #f59e0b; --acento-tinta: #1b1204; --acento-texto: #fbbf24;
+  --ciano: #38bdf8; --verde: #4ade80; --vermelho: #f87171;
+  --topo: rgba(13, 18, 24, 0.94); --vidro: rgba(23, 32, 42, 0.97); --sombra: 0 18px 40px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: 76px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0; background: var(--fundo); color: var(--texto);
+  font: 400 16px/1.6 var(--f-texto); -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--topo);
+}
+img { max-width: 100%; height: auto; }
+a { color: var(--acento-texto); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--ciano); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--f-titulo); line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(1.7rem, 4.4vw, 2.5rem); font-weight: 700; letter-spacing: 0.01em; }
+h3 { font-size: 1.2rem; font-weight: 600; }
+p { margin: 0; }
+.cx {
+  width: 100%; max-width: 1120px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--f-mono); }
+.pix { image-rendering: pixelated; width: 32px; height: 32px; flex: none; }
+.so-leitor { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 46px; padding: 10px 20px;
+  border-radius: 6px; border: 2px solid transparent; font: 600 1rem/1.2 var(--f-titulo); letter-spacing: 0.02em;
+  text-decoration: none; cursor: pointer; text-align: center;
+}
+.btn-p { background: var(--acento); color: var(--acento-tinta); border-color: #fbbf24; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.22); }
+.btn-p:hover { filter: brightness(1.07); }
+.btn-s { background: var(--painel-2); color: var(--texto); border-color: var(--linha); }
+.btn-s:hover { border-color: var(--acento); }
+.btn small { display: block; font: 500 0.74rem/1.2 var(--f-mono); opacity: 0.8; }
+
+/* ---------- barra do topo ---------- */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--topo); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linha); }
+.topo .cx { display: flex; align-items: center; gap: 12px; min-height: 56px; }
+.marca { display: flex; align-items: center; gap: 10px; font: 700 1.1rem var(--f-titulo); color: var(--texto); text-decoration: none; min-width: 0; margin-right: auto; }
+.marca span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topo .btn { min-height: 40px; padding: 6px 14px; font-size: 0.92rem; }
+.tema { min-width: 44px; padding-inline: 10px; }
+.tema svg { display: block; }
+
+/* ---------- abertura ---------- */
+.abertura { position: relative; }
+.abertura-img { display: block; width: 100%; height: clamp(300px, 46vw, 520px); object-fit: cover; object-position: 17% 92%; }
+.abertura .cx { position: relative; margin-top: calc(-1 * clamp(70px, 10vw, 120px)); }
+.cartao-ab {
+  background: var(--vidro); backdrop-filter: blur(6px); border: 1px solid var(--linha); border-radius: 10px; box-shadow: var(--sombra);
+  padding: clamp(18px, 4vw, 36px); display: grid; gap: 18px; justify-items: start;
+}
+.cartao-ab h1 { width: min(100%, 560px); }
+.cartao-ab h1 img { display: block; width: 100%; }
+.chamada { font-size: clamp(1.05rem, 2.6vw, 1.28rem); line-height: 1.5; max-width: 62ch; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 560px) { .cartao-ab .cta { width: 100%; } .cartao-ab .cta .btn { flex: 1 1 100%; } }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { font: 500 0.8rem var(--f-mono); color: var(--texto-2); border: 1px solid var(--linha); border-radius: 999px; padding: 4px 12px; }
+
+.numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; margin: 34px 0 0; padding: 0; border-block: 1px solid var(--linha); }
+.numeros div { padding: 18px 8px 16px; text-align: left; }
+.numeros dt { font: 700 clamp(1.7rem, 4.6vw, 2.4rem)/1 var(--f-titulo); color: var(--acento-texto); font-variant-numeric: tabular-nums; }
+.numeros dd { margin: 6px 0 0; color: var(--texto-2); font-size: 0.92rem; }
+.sumario { display: flex; gap: 8px; overflow-x: auto; padding: 16px 0 4px; scrollbar-width: thin; }
+.sumario a {
+  flex: none; font: 600 0.9rem var(--f-titulo); color: var(--texto); text-decoration: none; background: var(--painel);
+  border: 1px solid var(--linha); border-radius: 999px; padding: 8px 16px; min-height: 40px; display: inline-flex; align-items: center;
+}
+.sumario a:hover { border-color: var(--acento); }
+
+/* ---------- seções ---------- */
+section { padding-block: clamp(48px, 8vw, 96px); }
+.faixa { background: var(--fundo-2); border-block: 1px solid var(--linha); }
+.cab { display: grid; gap: 12px; margin-bottom: 30px; max-width: 70ch; }
+.cab p { color: var(--texto-2); font-size: 1.06rem; }
+.dupla { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start; }
+@media (min-width: 860px) { .dupla { grid-template-columns: 1.05fr 0.95fr; gap: 48px; } .dupla.igual { grid-template-columns: 1fr 1fr; } }
+.dupla > * { min-width: 0; }
+.texto { display: grid; gap: 14px; max-width: 62ch; }
+.texto p { color: var(--texto-2); }
+.texto strong { color: var(--texto); font-weight: 600; }
+
+/* painel dos sistemas */
+.console { background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; overflow: hidden; box-shadow: var(--sombra); }
+.console-cab { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; background: var(--painel-2); border-bottom: 1px solid var(--linha); font: 600 0.82rem var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.console-cab output { color: var(--acento-texto); font-variant-numeric: tabular-nums; }
+.sistemas { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linha); }
+.sis {
+  appearance: none; border: 0; background: var(--painel); color: var(--texto); text-align: left; cursor: pointer; font: inherit;
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: center; padding: 16px; min-height: 88px;
+}
+.sis:hover { background: var(--painel-2); }
+.sis img { grid-row: span 3; }
+.sis .pecas { font: 500 0.78rem/1.35 var(--f-mono); color: var(--texto-2); }
+.sis b { font: 600 1rem var(--f-titulo); }
+.sis .estado { font: 500 0.78rem var(--f-mono); color: var(--vermelho); display: flex; align-items: center; gap: 7px; }
+.sis .estado::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+.sis[aria-pressed="true"] .estado { color: var(--verde); }
+.console-msg { padding: 16px; min-height: 92px; color: var(--texto-2); font-size: 0.95rem; border-top: 1px solid var(--linha); }
+.console-msg strong { color: var(--texto); }
+@media (max-width: 420px) { .sistemas { grid-template-columns: 1fr; } }
+
+/* regras do deserto */
+.regras { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.regra { background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; padding: 22px; display: grid; gap: 12px; align-content: start; }
+.regra h3 { display: flex; align-items: center; gap: 12px; }
+.regra p { color: var(--texto-2); font-size: 0.97rem; }
+.cadeia { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: center; }
+.cadeia li { font: 500 0.82rem var(--f-mono); background: var(--painel-2); border: 1px solid var(--linha); border-radius: 4px; padding: 3px 9px; }
+.cadeia li + li::before { content: "→"; color: var(--acento-texto); margin-right: 8px; margin-left: -4px; position: relative; }
+.cadeia li + li { border: 0; background: none; padding-left: 0; }
+.cadeia li + li span { background: var(--painel-2); border: 1px solid var(--linha); border-radius: 4px; padding: 3px 9px; }
+
+/* exploração */
+.foto { margin: 0; display: grid; gap: 8px; }
+.foto img { display: block; width: 100%; border-radius: 10px; border: 1px solid var(--linha); aspect-ratio: 760 / 540; object-fit: cover; image-rendering: auto; }
+.foto figcaption { font: 500 0.8rem var(--f-mono); color: var(--texto-2); }
+.perigos { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 10px; }
+.perigos li { display: grid; gap: 2px; border-left: 3px solid var(--acento); padding: 2px 0 2px 14px; }
+.perigos b { font: 600 1.02rem var(--f-titulo); }
+.perigos span { color: var(--texto-2); font-size: 0.93rem; }
+
+/* passos */
+.passos { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: p; max-width: 760px; }
+.passos li { counter-increment: p; display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; padding: 18px; }
+.passos li::before { content: counter(p); display: grid; place-items: center; width: 48px; height: 48px; border-radius: 8px; background: var(--acento); color: var(--acento-tinta); font: 700 1.4rem var(--f-titulo); }
+.passos b { font: 600 1.1rem var(--f-titulo); display: block; margin-bottom: 2px; }
+.passos span { color: var(--texto-2); }
+
+/* instalar */
+.abas { display: flex; gap: 8px; margin-bottom: 16px; }
+.aba { appearance: none; flex: 1 1 0; max-width: 220px; min-height: 46px; border-radius: 6px; border: 2px solid var(--linha); background: var(--painel); color: var(--texto); font: 600 1rem var(--f-titulo); cursor: pointer; }
+.aba[aria-selected="true"] { background: var(--acento); color: var(--acento-tinta); border-color: #fbbf24; }
+.painel-aba { background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; padding: 22px; display: grid; gap: 14px; }
+.painel-aba ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 10px; color: var(--texto-2); }
+.painel-aba ol strong { color: var(--texto); font-weight: 600; }
+.dicas { display: grid; gap: 10px; margin-top: 18px; }
+details { background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; }
+summary { cursor: pointer; padding: 16px 18px; font: 600 1.02rem var(--f-titulo); list-style: none; display: flex; justify-content: space-between; gap: 14px; align-items: center; min-height: 52px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font: 700 1.4rem var(--f-titulo); color: var(--acento-texto); flex: none; }
+details[open] > summary::after { content: "−"; }
+details > div { padding: 0 18px 18px; color: var(--texto-2); display: grid; gap: 10px; }
+details > div ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 8px; }
+code { font: 500 0.88em var(--f-mono); background: var(--painel-2); border: 1px solid var(--linha); border-radius: 4px; padding: 1px 6px; }
+
+/* caminho */
+.caminho { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; max-width: 820px; position: relative; }
+.caminho li { display: grid; grid-template-columns: 34px 1fr; gap: 18px; padding-bottom: 26px; position: relative; }
+.caminho li:last-child { padding-bottom: 0; }
+.caminho li::before { content: ""; position: absolute; left: 16px; top: 34px; bottom: 0; width: 2px; background: var(--linha); }
+.caminho li:last-child::before { display: none; }
+.caminho .no { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--acento); background: var(--fundo); display: grid; place-items: center; font: 700 0.9rem var(--f-titulo); color: var(--acento-texto); }
+.caminho li:last-child .no { background: var(--acento); color: var(--acento-tinta); }
+.caminho h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.caminho p { color: var(--texto-2); }
+.etiquetas { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.etiqueta { font: 500 0.76rem var(--f-mono); color: var(--ciano); border: 1px solid var(--linha); border-radius: 4px; padding: 2px 8px; background: var(--painel); }
+.nota { margin-top: 26px; max-width: 820px; color: var(--texto-2); font-size: 0.95rem; border-top: 1px solid var(--linha); padding-top: 16px; }
+
+/* mods */
+.filtros { display: grid; gap: 14px; margin-bottom: 22px; }
+.busca { display: grid; gap: 6px; max-width: 460px; }
+.busca label { font: 600 0.85rem var(--f-mono); color: var(--texto-2); letter-spacing: 0.04em; }
+.busca input { font: inherit; min-height: 48px; padding: 8px 14px; border-radius: 6px; border: 2px solid var(--linha); background: var(--painel); color: var(--texto); }
+.busca input:focus { border-color: var(--ciano); outline: none; }
+.cats { display: flex; flex-wrap: wrap; gap: 8px; }
+.cat { appearance: none; min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--linha); background: var(--painel); color: var(--texto); font: 600 0.88rem var(--f-titulo); cursor: pointer; }
+.cat[aria-pressed="true"] { background: var(--acento); color: var(--acento-tinta); border-color: #fbbf24; }
+.contagem { font: 500 0.85rem var(--f-mono); color: var(--texto-2); }
+.grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+.cap { background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.cap h3 { font-size: 1.05rem; }
+.cap p { color: var(--texto-2); font-size: 0.92rem; }
+.cap .etiqueta { justify-self: start; margin-top: 4px; }
+.vazio { padding: 28px 0; color: var(--texto-2); }
+
+/* ferramentas */
+.ferr { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.ferr article { background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; padding: 22px; display: grid; gap: 8px; align-content: start; }
+.ferr p { color: var(--texto-2); font-size: 0.96rem; }
+.ferr h3 code { font-size: 0.95rem; }
+
+/* novidades e créditos */
+.novas { list-style: none; margin: 0; padding: 0; display: grid; max-width: 820px; border-top: 1px solid var(--linha); }
+.novas li { display: grid; grid-template-columns: 78px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--linha); }
+.novas .v { font: 700 0.95rem var(--f-mono); color: var(--acento-texto); }
+.tab-rolagem { overflow-x: auto; border: 1px solid var(--linha); border-radius: 10px; margin-top: 20px; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 0.92rem; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+th { font: 600 0.8rem var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--texto-2); background: var(--painel-2); }
+tr:last-child td { border-bottom: 0; }
+.aviso-legal { margin-top: 20px; color: var(--texto-2); font-size: 0.95rem; max-width: 72ch; }
+.rodape { border-top: 1px solid var(--linha); padding-block: 36px calc(36px + env(safe-area-inset-bottom, 0px)); color: var(--texto-2); font-size: 0.92rem; }
+.rodape .cx { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; }
+.rodape nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+</style>
+<!--FIM-CABECALHO-->
+
+<header class="topo">
+  <div class="cx">
+    <a class="marca" href="#inicio" aria-label="Pouso Forçado, voltar ao início"><img class="pix" src="{{ICO_DIARIO}}" alt=""><span>Pouso Forçado</span></a>
+    <a class="btn btn-p" href="https://pouso-forcado.vercel.app/baixar">Baixar</a>
+    <button class="btn btn-s tema" id="tema" type="button" aria-label="Alternar entre tema claro e escuro" title="Tema claro/escuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="abertura">
+    <img class="abertura-img" src="{{IMG_HERO}}" alt="O deserto do jogo: o avião caído, o sol, um cacto e o templo soterrado.">
+    <div class="cx">
+      <div class="cartao-ab">
+        <h1><img src="{{IMG_LOGO}}" alt="Pouso Forçado" width="900" height="155"></h1>
+        <p class="chamada">Sua nave caiu num planeta de deserto, sem água e sem ninguém. Ninguém vem buscar você: o único jeito de sair é consertar a nave e decolar.</p>
+        <div class="cta">
+          <a class="btn btn-p" href="https://pouso-forcado.vercel.app/baixar"><span>Baixar o add-on<small>pouso-forcado.mcaddon · {{TAMANHO_MB}} MB</small></span></a>
+          <a class="btn btn-s" href="https://pouso-forcado.vercel.app/mundo"><span>Baixar só o mundo<small>.mcworld</small></span></a>
+          <a class="btn btn-s" href="{{REPO}}">Ver no GitHub</a>
+        </div>
+        <ul class="chips">
+          <li>Versão {{VERSAO}}</li>
+          <li>Minecraft Bedrock 26.30 ou mais novo</li>
+          <li>Android e iPhone</li>
+          <li>Sem experimentos</li>
+          <li>Gratuito, sem fins comerciais</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cx">
+    <dl class="numeros" aria-label="O pacote em números">
+      <div><dt>{{N_CAPITULOS}}</dt><dd>capítulos no Diário de Bordo</dd></div>
+      <div><dt>{{N_MISSOES}}+</dt><dd>missões com recompensa</dd></div>
+      <div><dt>{{N_ITENS}}+</dt><dd>itens e blocos</dd></div>
+      <div><dt>{{N_RECEITAS}}+</dt><dd>receitas</dd></div>
+    </dl>
+    <nav class="sumario" aria-label="Seções da página">
+      <a href="#queda">A queda</a><a href="#deserto">Como é viver aqui</a><a href="#comecar">Primeiros passos</a><a href="#instalar">Instalar</a>
+      <a href="#caminho">O caminho</a><a href="#mods">Os 50 capítulos</a><a href="#ferramentas">Ferramentas do jogo</a><a href="#comandos">Comandos</a><a href="#perguntas">Perguntas</a>
+      <a href="#novidades">Novidades</a><a href="#creditos">Créditos</a>
+    </nav>
+  </div>
+</main>
+
+<section id="queda">
+  <div class="cx dupla">
+    <div>
+      <div class="cab">
+        <h2>A queda</h2>
+        <p>É a primeira página do Diário de Bordo do jogo.</p>
+      </div>
+      <div class="texto">
+        <p>Seu abrigo é o <strong>casco da nave</strong>: dentro dele há luz, a cabine e um baú com o que sobrou da carga.</p>
+        <p>Quatro sistemas queimaram na queda: casco, computador de bordo, combustível e motor. Toque em cada um ao lado para ver o que ele pede e como o Painel da Nave o mostra quando você o conserta.</p>
+      </div>
+    </div>
+    <div class="console" role="group" aria-labelledby="sis-t">
+      <div class="console-cab"><span id="sis-t">Sistemas da nave</span><output id="sis-n" aria-live="polite">0/4 consertados</output></div>
+      <div class="sistemas">
+        <button class="sis" type="button" aria-pressed="false"><img class="pix" src="{{ICO_CASCO}}" alt=""><b>Casco</b><span class="pecas">12 placas de casco + 8 vidros</span><span class="estado">queimado</span></button>
+        <button class="sis" type="button" aria-pressed="false"><img class="pix" src="{{ICO_COMPUTADOR}}" alt=""><b>Computador de bordo</b><span class="pecas">1 computador de bordo</span><span class="estado">queimado</span></button>
+        <button class="sis" type="button" aria-pressed="false"><img class="pix" src="{{ICO_COMBUSTIVEL}}" alt=""><b>Combustível</b><span class="pecas">8 células de combustível</span><span class="estado">queimado</span></button>
+        <button class="sis" type="button" aria-pressed="false"><img class="pix" src="{{ICO_MOTOR}}" alt=""><b>Motor</b><span class="pecas">1 motor da nave (leva o Coração do Faraó)</span><span class="estado">queimado</span></button>
+      </div>
+      <p class="console-msg" id="sis-msg">Nada consertado ainda. Você conserta os sistemas no Painel da Nave, com peças que a Montadora faz: os ingredientes vão num baú ou funil em cima dela e a peça sai num baú ou funil embaixo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="deserto" class="faixa">
+  <div class="cx">
+    <div class="cab">
+      <h2>Como é viver aqui</h2>
+      <p>O deserto muda as regras do Minecraft que você conhece. O Diário de Bordo ensina estas cedo.</p>
+    </div>
+    <div class="regras">
+      <article class="regra">
+        <h3>Sem minério e sem pedra</h3>
+        <p>Debaixo da areia só há arenito. Na peneira, terra solta pedrinhas (4 viram 1 pedregulho). Com o martelo, pedregulho vira cascalho, cascalho vira areia e areia vira poeira. Peneirados, todos soltam minério, sementes e outras coisas.</p>
+        <ol class="cadeia" aria-label="Cadeia do martelo">
+          <li>pedrinhas ×4</li><li><span>pedregulho</span></li><li><span>cascalho</span></li><li><span>areia</span></li><li><span>poeira</span></li>
+        </ol>
+      </article>
+      <article class="regra">
+        <h3><img class="pix" src="{{ICO_AGUA}}" alt="">Água, calor e sede</h3>
+        <p>A barra de Água e a temperatura do Corpo ficam embaixo da tela. Ao sol do meio-dia o corpo esquenta: fique na sombra e beba. Água salgada ou suja não se bebe direto: ferva na fornalha, na fogueira ou no caldeirão em cima do fogo. O Camel Pack leva água com você.</p>
+      </article>
+      <article class="regra">
+        <h3>As ferramentas do Minecraft não servem</h3>
+        <p>Na mão, elas dão Cansaço (mineram devagar), espada e machado dão Fraqueza, e cada uso gasta 8 vezes mais: uma picareta de ferro dura uns 30 blocos. As de verdade são as do Tinkers' Construct, do Mekanism Tools e do Ender IO.</p>
+      </article>
+      <article class="regra">
+        <h3>Comer sempre a mesma coisa não alimenta</h3>
+        <p>O jogo lembra as últimas 12 comidas. Repetir rende 75%, depois 50% e depois 25%. Varie entre as plantações do HarvestCraft e os pratos do Farmer's Delight.</p>
+      </article>
+      <article class="regra">
+        <h3>Dia calmo, noite perigosa</h3>
+        <p>De dia os monstros se enterram na areia e nada nasce na superfície. À noite eles saem. A cada 10 noites vem uma horda, com aviso no fim da tarde. Tempestades de areia trazem o Golem de Areia. Quando estiver seguro, o Saco de Dormir pula a noite.</p>
+      </article>
+      <article class="regra">
+        <h3><img class="pix" src="{{ICO_CACTO}}" alt="">Os animais vêm do céu</h3>
+        <p>Animais não vivem aqui. Eles chegam nas cápsulas de carga que caem do céu.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="explorar">
+  <div class="cx dupla igual">
+    <figure class="foto">
+      <img src="{{IMG_RUINAS}}" alt="Uma cidade abandonada no horizonte do deserto, com prédios em ruínas e cactos.">
+      <figcaption>Cidade abandonada, vista no próprio jogo.</figcaption>
+    </figure>
+    <div>
+      <div class="cab">
+        <h2>Explorar tem preço</h2>
+        <p>As cidades abandonadas têm prédios de até 9 andares e uma torre de rádio. Há masmorras comuns e fundas, destroços de outras naves e tempestades de areia. Lá fora, três ameaças:</p>
+      </div>
+      <ul class="perigos">
+        <li><b>Múmia</b><span>Um pouco maior que um zumbi, e o golpe dá fome. Às vezes deixa Faixa de Múmia, que entra na receita do Ídolo.</span></li>
+        <li><b>Golem de Areia</b><span>Só aparece durante a tempestade de areia.</span></li>
+        <li><b>Faraó Amaldiçoado</b><span>O chefe do deserto. Faça o Ídolo Amaldiçoado, coloque e toque nele à noite.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="comecar" class="faixa">
+  <div class="cx">
+    <div class="cab"><h2>Primeiros passos</h2><p>Do download à primeira água, em cinco passos.</p></div>
+    <ol class="passos">
+      <li><div><b>Baixe o add-on</b><span>O arquivo é o <code>pouso-forcado.mcaddon</code>, com cerca de {{TAMANHO_MB}} MB.</span></div></li>
+      <li><div><b>Abra no Minecraft</b><span>O jogo importa os dois packs e cria o mundo Pouso Forçado. As instruções por aparelho estão logo abaixo.</span></div></li>
+      <li><div><b>Entre no mundo</b><span>Jogar, aba Mundos, Pouso Forçado. Os packs já vêm ativados: não precisa ligar experimentos.</span></div></li>
+      <li><div><b>Pegue o Condensador de Água</b><span>Ele está no baú do avião. Ponha no chão: ele tira água do ar. Plante as mudas e faça as primeiras ferramentas.</span></div></li>
+      <li><div><b>Siga o Diário de Bordo</b><span>Cada missão ensina o próximo passo e dá recompensa.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="instalar">
+  <div class="cx">
+    <div class="cab"><h2>Instalar no celular</h2><p>Escolha o seu aparelho.</p></div>
+    <div class="abas" role="tablist" aria-label="Aparelho">
+      <button class="aba" id="aba-android" role="tab" aria-selected="true" aria-controls="p-android" type="button">Android</button>
+      <button class="aba" id="aba-ios" role="tab" aria-selected="false" aria-controls="p-ios" type="button" tabindex="-1">iPhone e iPad</button>
+    </div>
+    <div class="painel-aba" id="p-android" role="tabpanel" aria-labelledby="aba-android">
+      <ol>
+        <li><strong>Baixe</strong> o <code>pouso-forcado.mcaddon</code>, pelo navegador ou pelo app do GitHub.</li>
+        <li>Abra a pasta <strong>Downloads</strong> no gerenciador de arquivos e toque no arquivo.</li>
+        <li>Escolha <strong>Minecraft</strong> em "Abrir com". O jogo importa os dois packs e o mundo.</li>
+      </ol>
+      <details>
+        <summary>Apareceu "nenhum app pode abrir"</summary>
+        <div><p>Mande o arquivo pelo <strong>Telegram</strong> (pode ser para você mesmo, em "Mensagens salvas") e toque nele dentro do Telegram, depois em Minecraft. Funcionou num Android em que o gerenciador de arquivos, o ZArchiver e o botão Importar não funcionaram.</p></div>
+      </details>
+    </div>
+    <div class="painel-aba" id="p-ios" role="tabpanel" aria-labelledby="aba-ios" hidden>
+      <ol>
+        <li><strong>Baixe</strong> o <code>pouso-forcado.mcaddon</code> pelo Safari. Ele vai para o app <strong>Arquivos</strong>, na pasta Downloads.</li>
+        <li>No app Arquivos, toque e segure o arquivo, depois <strong>Compartilhar</strong> e <strong>Minecraft</strong>.</li>
+        <li>O jogo importa os dois packs e o mundo.</li>
+      </ol>
+    </div>
+    <div class="cta" style="margin-top:20px">
+      <a class="btn btn-p" href="https://pouso-forcado.vercel.app/baixar">Baixar o add-on</a>
+      <a class="btn btn-s" href="https://pouso-forcado.vercel.app/mundo">Só o mundo (.mcworld)</a>
+      <a class="btn btn-s" href="{{REPO}}/tree/{{RAMO}}/pouso-forcado/dist">Packs soltos (BP e RP)</a>
+    </div>
+    <div class="dicas">
+      <details>
+        <summary>Menu e tela de carregamento com o deserto do jogo (opcional)</summary>
+        <div>
+          <p>O add-on traz um terceiro pack, o <strong>Pouso Forçado (Menu)</strong>. Ele põe o deserto no fundo do menu e da tela de "Carregando…". Não mexe em nada dentro dos mundos.</p>
+          <ol><li>Configurações, depois <strong>Recursos Globais</strong>.</li><li>Em Meus Pacotes, toque em <strong>Pouso Forçado (Menu)</strong> e em Ativar.</li><li>Volte ao menu: o fundo e o logo já mudam.</li></ol>
+        </div>
+      </details>
+      <details>
+        <summary>Atualizar para uma versão nova</summary>
+        <div>
+          <p>Cada versão nova entra como um <strong>mundo novo</strong>: importe o <code>.mcaddon</code> de novo e aparece mais um Pouso Forçado na lista. Os mundos antigos continuam como estavam, na versão deles.</p>
+          <p>Para levar um mundo antigo para a versão nova no Android: duplique o mundo, depois em Editar, Pacotes de Comportamento, desative o Pouso Forçado e ative o que tem a versão nova no nome. Faça o mesmo em Pacotes de Recursos.</p>
+          <p>Para conferir a versão, olhe a linha cinza do chat ao entrar: <code>[Pouso Forçado {{VERSAO}}]</code>.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="caminho" class="faixa">
+  <div class="cx">
+    <div class="cab"><h2>O caminho até a decolagem</h2><p>As etapas do caminho principal, na ordem em que o Diário as abre.</p></div>
+    <ol class="caminho">
+      <li><span class="no">1</span><div><h3>A queda</h3><p>Água, madeira, ferramentas e sobreviver à primeira noite.</p><div class="etiquetas"><span class="etiqueta">A Queda</span></div></div></li>
+      <li><span class="no">2</span><div><h3>Máquinas e comida</h3><p>Peneira, compostor, estufa e condensador para tirar recursos da areia. Cápsulas de carga, frutas e água boa para comer e beber.</p><div class="etiquetas"><span class="etiqueta">Máquinas</span><span class="etiqueta">Comida e Vida</span></div></div></li>
+      <li><span class="no">3</span><div><h3>Energia</h3><p>Painéis solares, gerador a carvão, moinho de vento, baterias e cabos. Tudo em RF.</p><div class="etiquetas"><span class="etiqueta">Energia</span></div></div></li>
+      <li><span class="no">4</span><div><h3>Exploração</h3><p>Cidades abandonadas, masmorras e destroços de outras naves.</p><div class="etiquetas"><span class="etiqueta">Exploração</span></div></div></li>
+      <li><span class="no">5</span><div><h3>Perigos do deserto</h3><p>Múmias, o Golem de Areia da tempestade e o Faraó Amaldiçoado.</p><div class="etiquetas"><span class="etiqueta">Perigos do Deserto</span></div></div></li>
+      <li><span class="no">6</span><div><h3>Consertar a nave</h3><p>A Montadora faz as peças (ingredientes num baú ou funil em cima, peça pronta no de baixo), o Terminal de Armazenamento guarda tudo e o Painel da Nave recebe os 4 sistemas.</p><div class="etiquetas"><span class="etiqueta">Consertar a Nave</span></div></div></li>
+      <li><span class="no">7</span><div><h3>A Lua</h3><p>Com os 4 sistemas consertados, o Painel da Nave mostra a Bobina de Salto queimada. O Núcleo de Salto está na Base de Pesquisa Lunar. O Esqueleto Evoluído Gigante deixa a chave do Baú do Tesouro, onde está o núcleo. Para chegar lá: oxigênio, a Bancada da NASA e o Foguete Tier 1.</p><div class="etiquetas"><span class="etiqueta">Galacticraft</span></div></div></li>
+      <li><span class="no">8</span><div><h3>Decolar</h3><p>Com o Núcleo de Salto instalado, aparece o botão Decolar no Painel da Nave. Depois da decolagem o mundo segue no modo infinito.</p><div class="etiquetas"><span class="etiqueta">Final: a decolagem</span></div></div></li>
+    </ol>
+    <p class="nota">Os capítulos dos mods (Mekanism, Tinkers' Construct, Create e os outros) abrem em paralelo, quando você quiser. Eles não bloqueiam o caminho principal, mas as máquinas deles aceleram cada etapa.</p>
+  </div>
+</section>
+
+<section id="mods">
+  <div class="cx">
+    <div class="cab">
+      <h2>{{N_CAPITULOS}} capítulos do Diário</h2>
+      <p>Cada mod recriado tem o seu capítulo no Diário de Bordo, com missões e recompensas. As mecânicas e os números seguem os do mod original e o código é próprio. A arte é a do mod quando a licença permite; nos outros casos, foi desenhada para o projeto (veja os créditos).</p>
+    </div>
+    <div class="filtros">
+      <div class="busca"><label for="busca">Buscar capítulo ou mod</label><input id="busca" type="search" placeholder="Ex.: Mekanism, fundição, jetpack" autocomplete="off"></div>
+      <div class="cats" id="cats" role="group" aria-label="Filtrar por tipo"></div>
+      <p class="contagem" id="contagem" aria-live="polite"></p>
+    </div>
+    <div class="grade" id="grade"></div>
+    <p class="vazio" id="vazio" hidden>Nenhum capítulo encontrado. Tente outro nome ou limpe o filtro.</p>
+  </div>
+</section>
+
+<section id="ferramentas" class="faixa">
+  <div class="cx">
+    <div class="cab"><h2>Ferramentas do jogo</h2><p>Além dos mods, o add-on traz ferramentas para você não precisar de wiki aberta ao lado.</p></div>
+    <div class="ferr">
+      <article><h3>Diário de Bordo</h3><p>O menu de missões. Os capítulos têm dependências, como no Hardcore Questing Mode: uma missão abre a próxima. Algumas pedem para entregar itens, outras deixam você escolher 1 recompensa entre várias, e há 5 sacolas de recompensa.</p></article>
+      <article><h3>Catálogo</h3><p>Receitas e usos de cada item do jogo, no estilo do JEI. Procure por nome ou por <code>@mod</code>, e veja de onde o item vem e para que ele serve.</p></article>
+      <article><h3>O que estou olhando</h3><p>Mostra, na barra de ação, informações do bloco para o qual você aponta, como a energia guardada ou o conteúdo. Dá para ligar e desligar nas opções do Catálogo.</p></article>
+      <article><h3>Organizador e reposição</h3><p>Organiza o inventário e repõe o item da mão quando ele acaba ou quebra, no estilo do Inventory Tweaks.</p></article>
+      <article><h3>Energia em RF</h3><p>Todas as máquinas de energia usam a mesma unidade, o RF, e o jogo mostra a energia sempre em RF.</p></article>
+      <article><h3>Corpos reserva</h3><p>Do mod Sync: clones que guardam o seu inventário. Troque de corpo quando quiser e, se morrer, acorde num deles.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="comandos">
+  <div class="cx">
+    <div class="cab"><h2>Comandos úteis</h2><p>Funcionam no chat, sem precisar ligar trapaças. Cada um responde com as coordenadas, a distância e a direção do lugar mais perto.</p></div>
+    <div class="ferr">
+      <article><h3><code>/cl:cidade</code></h3><p>A cidade abandonada mais perto.</p></article>
+      <article><h3><code>/cl:templo</code></h3><p>O templo soterrado mais perto.</p></article>
+      <article><h3><code>/cl:destrocos</code></h3><p>Os destroços de outras naves caídas no deserto.</p></article>
+      <article><h3><code>/cl:piramide</code></h3><p>A pirâmide do deserto.</p></article>
+      <article><h3><code>/cl:diagnostico</code></h3><p>A versão do add-on, os blocos ativos e o tempo que os scripts gastam. Útil para contar um problema.</p></article>
+    </div>
+    <p class="nota">Se não houver nada por perto, o jogo avisa para você explorar mais longe e tentar de novo.</p>
+  </div>
+</section>
+
+<section id="perguntas">
+  <div class="cx">
+    <div class="cab"><h2>Perguntas frequentes</h2></div>
+    <div class="dicas" style="max-width:820px">
+      <details><summary>Preciso ativar experimentos?</summary><div><p>Não. O add-on não usa APIs beta nem experimentos. Funciona no Minecraft Bedrock 26.30 e em versões mais novas.</p></div></details>
+      <details><summary>Isso é o modpack Crash Landing?</summary><div><p>Não. É um projeto próprio, inspirado no modpack Crash Landing (Minecraft 1.6.4) e nos mods dele. As mecânicas e os números seguem os originais; o código é todo próprio, e as texturas de terceiros só entram quando a licença deixa.</p></div></details>
+      <details><summary>Funciona no iPhone?</summary><div><p>Sim. Baixe pelo Safari, abra o app Arquivos e compartilhe o arquivo com o Minecraft. Os passos estão na aba iPhone, em "Instalar no celular".</p></div></details>
+      <details><summary>Posso usar num mundo meu?</summary><div><p>Sim. Os packs soltos (<code>pouso-forcado_BP.mcpack</code> e <code>pouso-forcado_RP.mcpack</code>), que ficam na pasta <code>dist</code> do GitHub, servem para um mundo infinito normal.</p></div></details>
+      <details><summary>Como atualizo sem perder o meu mundo?</summary><div><p>Cada versão entra como mundo novo, e os antigos continuam intactos. Para levar um mundo antigo para a versão nova, duplique o mundo e troque os packs na cópia. O passo a passo está em "Atualizar para uma versão nova", na seção Instalar.</p></div></details>
+      <details><summary>Roda bem no celular?</summary><div><p>O add-on foi feito pensando no celular: texturas de 16×16, scripts otimizados e nenhum experimento ligado. Ele roda como um add-on comum, sem aplicativo extra.</p></div></details>
+      <details><summary>É gratuito? Posso redistribuir?</summary><div><p>É gratuito e sem fins comerciais. O pacote de recursos usa a licença CC BY-NC-SA 4.0: você pode copiar e adaptar, dando crédito, sem vender, mantendo a mesma licença. As texturas que vieram de mods continuam com a licença de cada mod, listada na seção Créditos.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section id="novidades" class="faixa">
+  <div class="cx">
+    <div class="cab"><h2>Novidades</h2><p>As últimas versões. A lista completa, com o que mudou em cada uma, está no README do projeto.</p></div>
+    <ul class="novas" id="novas"></ul>
+    <p style="margin-top:20px"><a class="btn btn-s" href="{{REPO}}/blob/{{RAMO}}/pouso-forcado/README.md">Ler o README completo</a></p>
+  </div>
+</section>
+
+<section id="creditos">
+  <div class="cx">
+    <div class="cab"><h2>Créditos e licenças</h2><p>O código do add-on foi escrito para este projeto. A arte de cada mod abaixo vem do repositório público dele, com a licença dele.</p></div>
+    <div class="tab-rolagem">
+      <table>
+        <thead><tr><th>Mod</th><th>Autores</th><th>Licença da arte</th></tr></thead>
+        <tbody>
+          <tr><td>Mekanism, Generators, Tools e Additions</td><td>aidancbrady e equipe</td><td>MIT</td></tr>
+          <tr><td>Galacticraft 5</td><td>Team Galacticraft</td><td>MIT</td></tr>
+          <tr><td>Farmer's Delight</td><td>vectorwing e equipe</td><td>MIT</td></tr>
+          <tr><td>Iron Jetpacks</td><td>BlakeBr0</td><td>MIT</td></tr>
+          <tr><td>TorchMaster</td><td>xalcon</td><td>MIT</td></tr>
+          <tr><td>Storage Drawers</td><td>jaquadro</td><td>MIT</td></tr>
+          <tr><td>Artifacts</td><td>Wouter Pauwels (ochotonida)</td><td>MIT</td></tr>
+          <tr><td>Tinkers' Construct</td><td>mDiyo e SlimeKnights</td><td>MIT (TC3) e CC BY 3.0 (1.7.10)</td></tr>
+          <tr><td>Ender IO 9</td><td>CrazyPants, SleepyTrousers e Team Ender IO</td><td>Unlicense / CC0</td></tr>
+          <tr><td>Iron Chests</td><td>progwml6</td><td>GPL-3</td></tr>
+          <tr><td>Immersive Aircraft</td><td>Luke100000 e equipe</td><td>GPLv3</td></tr>
+          <tr><td>Quark</td><td>Vazkii e equipe</td><td>CC BY-NC-SA 3.0</td></tr>
+          <tr><td>Applied Energistics 2</td><td>AlgorithmX2, Ridanisaurus Rid e equipe</td><td>CC BY-NC-SA 3.0</td></tr>
+          <tr><td>EnviroMine</td><td>Funwayguy, TimbuckTato e equipe</td><td>CC BY-NC-SA 4.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="aviso-legal">Ficaram com arte própria, por causa da licença: Create, Extra Utilities, Thermal Expansion, MineFactory Reloaded, Pam's HarvestCraft, Sync, JABBA, BiblioCraft, Ex Nihilo, Hunger Overhaul e Sophisticated Backpacks. O avião caído é um modelo do dono do projeto. É um projeto de fã, gratuito e sem fins comerciais, sem ligação com a Mojang, a Microsoft nem com os autores dos mods.</p>
+    <p style="margin-top:20px"><a class="btn btn-s" href="{{REPO}}/blob/{{RAMO}}/pouso-forcado/CREDITOS.md">Ver a lista completa de créditos</a></p>
+  </div>
+</section>
+
+<footer class="rodape">
+  <div class="cx">
+    <span class="mono">Pouso Forçado {{VERSAO}} · Minecraft Bedrock 26.30+</span>
+    <nav aria-label="Rodapé"><a href="#inicio">Voltar ao topo</a><a href="{{REPO}}">GitHub</a><a href="https://pouso-forcado.vercel.app/baixar">Baixar</a></nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var CATS = {{CATEGORIAS_JSON}};
+  var CAPS = {{CAPITULOS_JSON}};
+  var NOVAS = {{NOVIDADES_JSON}};
+  var $ = function (id) { return document.getElementById(id); };
+
+  // Tema: segue o sistema; o botão força claro ou escuro e lembra a escolha (se o navegador deixar).
+  var raiz = document.documentElement;
+  try { var salvo = localStorage.getItem("pf-tema"); if (salvo === "light" || salvo === "dark") raiz.setAttribute("data-theme", salvo); } catch (e) {}
+  $("tema").addEventListener("click", function () {
+    var atual = raiz.getAttribute("data-theme") || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    var novo = atual === "dark" ? "light" : "dark";
+    raiz.setAttribute("data-theme", novo);
+    try { localStorage.setItem("pf-tema", novo); } catch (e) {}
+  });
+
+  // Sistemas da nave: cada toque conserta ou queima de novo.
+  var botoes = Array.prototype.slice.call(document.querySelectorAll(".sis"));
+  function atualizaSistemas() {
+    var n = botoes.filter(function (b) { return b.getAttribute("aria-pressed") === "true"; }).length;
+    $("sis-n").textContent = n + "/4 consertados";
+    botoes.forEach(function (b) { b.querySelector(".estado").textContent = b.getAttribute("aria-pressed") === "true" ? "consertado" : "queimado"; });
+    $("sis-msg").innerHTML = n === 4
+      ? "<strong>Os 4 sistemas estão consertados.</strong> O Painel da Nave agora mostra a Bobina de Salto queimada. O Núcleo de Salto está na Base de Pesquisa Lunar: instalado, aparece o botão Decolar."
+      : n === 0 ? "Nada consertado ainda. Você conserta os sistemas no Painel da Nave, com peças que a Montadora faz: os ingredientes vão num baú ou funil em cima dela e a peça sai num baú ou funil embaixo."
+      : "Faltam " + (4 - n) + " sistema" + (4 - n > 1 ? "s" : "") + " para a nave.";
+  }
+  botoes.forEach(function (b) { b.addEventListener("click", function () { b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"); atualizaSistemas(); }); });
+
+  // Abas de instalação.
+  var abas = [$("aba-android"), $("aba-ios")], paineis = [$("p-android"), $("p-ios")];
+  function mostra(i) {
+    abas.forEach(function (a, k) { a.setAttribute("aria-selected", k === i ? "true" : "false"); a.tabIndex = k === i ? 0 : -1; paineis[k].hidden = k !== i; });
+  }
+  abas.forEach(function (a, i) {
+    a.addEventListener("click", function () { mostra(i); });
+    a.addEventListener("keydown", function (e) { if (e.key === "ArrowRight" || e.key === "ArrowLeft") { var j = (i + 1) % 2; mostra(j); abas[j].focus(); } });
+  });
+
+  // Capítulos: busca e filtro por tipo.
+  var estado = { cat: "todos", q: "" };
+  var cats = $("cats"), grade = $("grade");
+  function botaoCat(chave, nome) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "cat"; b.textContent = nome; b.dataset.cat = chave;
+    b.setAttribute("aria-pressed", chave === "todos" ? "true" : "false");
+    b.addEventListener("click", function () { estado.cat = chave; Array.prototype.forEach.call(cats.children, function (c) { c.setAttribute("aria-pressed", c.dataset.cat === chave ? "true" : "false"); }); desenha(); });
+    cats.appendChild(b);
+  }
+  botaoCat("todos", "Todos");
+  Object.keys(CATS).forEach(function (k) { botaoCat(k, CATS[k]); });
+  var normal = function (s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); };
+  CAPS.forEach(function (c) {
+    var a = document.createElement("article"); a.className = "cap"; a.dataset.cat = c.cat; a.dataset.busca = normal(c.nome + " " + c.desc);
+    var h = document.createElement("h3"); h.textContent = c.nome;
+    var p = document.createElement("p"); p.textContent = c.desc;
+    var t = document.createElement("span"); t.className = "etiqueta"; t.textContent = CATS[c.cat];
+    a.appendChild(h); a.appendChild(p); a.appendChild(t); grade.appendChild(a);
+  });
+  function desenha() {
+    var q = normal(estado.q.trim()), vistos = 0;
+    Array.prototype.forEach.call(grade.children, function (a) {
+      var ok = (estado.cat === "todos" || a.dataset.cat === estado.cat) && (!q || a.dataset.busca.indexOf(q) >= 0);
+      a.hidden = !ok; if (ok) vistos++;
+    });
+    $("contagem").textContent = "Mostrando " + vistos + " de " + CAPS.length + " capítulos";
+    $("vazio").hidden = vistos > 0;
+  }
+  $("busca").addEventListener("input", function (e) { estado.q = e.target.value; desenha(); });
+  desenha();
+
+  // Novidades.
+  NOVAS.forEach(function (n) {
+    var li = document.createElement("li");
+    var v = document.createElement("span"); v.className = "v"; v.textContent = n.v;
+    var t = document.createElement("span"); t.textContent = n.t;
+    li.appendChild(v); li.appendChild(t); $("novas").appendChild(li);
+  });
+})();
+</script>
