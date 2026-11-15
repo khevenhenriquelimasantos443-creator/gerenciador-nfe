@@ -154,6 +154,17 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.54.1 (revisão das artes e das telas)
+
+- **Flipbooks sem "pulo" ao reiniciar:** `tela_terminal`, `agua`, `lava`, `petroleo`, `forja` e `brasa_on` tinham o deslocamento fechando fora do ciclo
+  (volta em 12, 13 ou 14 px com 16 px de passo total) e davam um salto no fim. Agora o último quadro encaixa no primeiro (conferido: a mudança na volta é
+  igual à dos outros quadros). O brilho do `solar` só aparecia em quadros pares (piscava); agora uma faixa percorre a diagonal.
+- **Rotor** sem buracos nas pás (pixel que contém o ponto, passo de 0,5).
+- **Texturas:** faixas coloridas do painel da nave, terminal e montadora com moldura escura e filete claro; gerador desligado com frestas; barril com aduelas;
+  folha infestada com manchas agrupadas em vez de pontilhado; X do botão fechar centrado.
+- **Telas** (`RP/ui/server_form.json`): botão fechar 22×22 (alvo de toque maior), botão principal 142 de largura e com resposta ao toque, divisória de 1 unidade na
+  cor do mockup. A barra de progresso agora é 300×18, exatamente o dobro dos 150×9 em que é desenhada (antes 128×12 esticada).
+
 ## Novidades da 1.54.0 (mega revisão e artes aprovadas)
 
 - **Artes aprovadas** (`tools/gerar-artes-aprovadas.mjs`, roda no fim do `npm run build`, depois do `gerar-visual` e do `gerar-ui`): os 9 flipbooks

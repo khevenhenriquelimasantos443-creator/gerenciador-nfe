@@ -74,6 +74,11 @@ function px(ctx, x, y, c) {
   rect(ctx, x, y, 1, 1, c);
 }
 
+// Ajuste da revisão: faixa que dá a volta na textura (x módulo 16). Os flipbooks de 8 quadros andam 2 px por quadro (8 x 2 = 16),
+// então com a volta em 16 o último quadro encaixa no primeiro, sem o "pulo" de antes (a volta era em 12, 13 ou 14).
+const rectV = (ctx, x, y, w, h, c) => { for (let i = 0; i < w; i++) rect(ctx, (x + i) % 16, y, 1, h, c); };
+const clarear = (c, k) => "#" + corDe(c).map((v) => Math.round(v + (255 - v) * k).toString(16).padStart(2, "0")).join("");
+
 const SAIDAS = []; // { caminho, img }
 function salvar(caminho, img) {
   const arq = join(RAIZ, caminho);
@@ -106,7 +111,7 @@ flipbook("tela_nave", 8, 3, (ctx, f) => {
 flipbook("tela_terminal", 8, 6, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#2e1065");
   for (let r = 0; r < 4; r++) {
-    const y = ((r * 3 + f) % 13) + 1;
+    const y = ((r * 3 + Math.floor(f * 1.5)) % 12) + 1; // ajuste da revisão: 8 quadros somam 12 px e fecham o ciclo
     rect(ctx, 2, y, 2, 2, "#38bdf8");
     rect(ctx, 5, y, 8, 1, "#c084fc");
   }
@@ -114,7 +119,8 @@ flipbook("tela_terminal", 8, 6, (ctx, f) => {
 
 flipbook("solar", 8, 5, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#1e293b");
-  for (let y = 1; y < 15; y += 4) for (let x = 1; x < 15; x += 4) rect(ctx, x, y, 3, 3, (x + y + f * 2) % 16 < 4 ? "#38bdf8" : "#1d4ed8");
+  // Ajuste da revisão: o brilho só aparecia em quadros pares (x + y + f * 2 nunca batia nos ímpares), então piscava. Agora uma faixa de 2 diagonais de células avança uma diagonal por quadro.
+  for (let y = 1; y < 15; y += 4) for (let x = 1; x < 15; x += 4) rect(ctx, x, y, 3, 3, ((((x + y - 2) / 4 - f) % 8) + 8) % 8 < 2 ? "#38bdf8" : "#1d4ed8");
 });
 
 flipbook("rotor", 8, 2, (ctx, f) => {
@@ -124,7 +130,8 @@ flipbook("rotor", 8, 2, (ctx, f) => {
   const ang = (f / 8) * (Math.PI / 2);
   for (let d = 0; d < 4; d++) {
     const a = ang + d * (Math.PI / 2);
-    for (let r = 2; r < 7; r++) px(ctx, Math.round(8 + Math.cos(a) * r), Math.round(8 + Math.sin(a) * r), "#e4e4e7");
+    // Ajuste da revisão: pixel que contém o ponto (floor, centro em 8,8 como o miolo) e passo de 0,5: a pá não fica com buracos.
+    for (let r = 2; r <= 6.5; r += 0.5) px(ctx, Math.floor(8 + Math.cos(a) * r), Math.floor(8 + Math.sin(a) * r), "#e4e4e7");
   }
 });
 
@@ -132,7 +139,7 @@ flipbook("brasa_on", 6, 3, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#18181b");
   for (let y = 2; y < 14; y += 3) {
     rect(ctx, 2, y, 12, 2, (f + y) % 2 === 0 ? "#f97316" : "#dc2626");
-    px(ctx, 4 + ((f * 3 + y) % 8), y, "#fef08a");
+    px(ctx, 4 + ((f * 4 + y) % 8), y, "#fef08a"); // ajuste da revisão: 6 quadros x 4 = 24 fecha o ciclo em 8
   }
 });
 
@@ -140,27 +147,27 @@ flipbook("forja", 6, 3, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#7c2d12");
   for (let y = 1; y < 15; y += 2) {
     rect(ctx, 1, y, 14, 2, (y + f) % 3 === 0 ? "#ea580c" : "#fb923c");
-    px(ctx, ((f * 5 + y) % 13) + 1, y, "#fef08a");
+    px(ctx, ((f * 2 + y * 5) % 12) + 1, y, "#fef08a"); // ajuste da revisão: 6 quadros x 2 = 12 fecha o ciclo
   }
 });
 
 flipbook("agua", 8, 4, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#0284c7");
-  for (let y = 0; y < 16; y += 4) rect(ctx, (y * 2 + f * 2) % 14, y, 4, 1, "#7dd3fc");
+  for (let y = 0; y < 16; y += 4) rectV(ctx, (y * 3 + f * 2) % 16, y, 4, 1, "#7dd3fc");
 });
 
 flipbook("lava", 8, 4, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#ea580c");
   for (let y = 0; y < 16; y += 3) {
-    const x = (y * 3 + f * 2) % 12;
-    rect(ctx, x, y, 5, 2, "#c2410c");
-    rect(ctx, (x + 6) % 12, y, 3, 1, "#facc15");
+    const x = (y * 3 + f * 2) % 16;
+    rectV(ctx, x, y, 5, 2, "#c2410c");
+    rectV(ctx, x + 6, y, 3, 1, "#facc15");
   }
 });
 
 flipbook("petroleo", 8, 5, (ctx, f) => {
   rect(ctx, 0, 0, 16, 16, "#0a0a0c");
-  for (let y = 0; y < 16; y += 4) rect(ctx, (y * 3 + f * 2) % 13, y, 4, 1, "#27272a");
+  for (let y = 0; y < 16; y += 4) rectV(ctx, (y * 3 + f * 2) % 16, y, 4, 1, "#27272a");
 });
 
 // ============================================================================
@@ -180,6 +187,12 @@ const luz = (fundo, meio, centro) => (ctx) => {
   rect(ctx, 0, 0, 16, 16, fundo);
   rect(ctx, 3, 3, 10, 10, meio);
   rect(ctx, 6, 6, 4, 4, centro);
+};
+// Ajuste da revisão: faixa colorida com moldura escura de 1 px e filete claro em cima (antes ficava chapada contra o chassi claro).
+const faixa = (ctx, x, y, w, h, cor) => {
+  rect(ctx, x - 1, y - 1, w + 2, h + 2, "#1e293b");
+  rect(ctx, x, y, w, h, cor);
+  rect(ctx, x, y, w, 1, clarear(cor, 0.35));
 };
 const CINZA = ["#3f3f46", "#18181b", "#71717a", "#27272a"];
 const METAL = ["#94a3b8", "#334155", "#cbd5e1", "#475569"];
@@ -257,6 +270,7 @@ const LISTA_TEXTURAS = [
   ["gerador_lado", "RP/textures/blocks/cl/gerador_lado", (ctx) => {
     desenharChassi(ctx, ...CINZA);
     rect(ctx, 3, 4, 10, 8, "#18181b");
+    for (const y of [6, 8, 10]) rect(ctx, 4, y, 8, 1, "#27272a"); // ajuste da revisão: frestas (não é mais uma caixa preta lisa)
   }],
   ["gerador_lado_aceso", "RP/textures/blocks/cl/gerador_lado_aceso", (ctx) => {
     desenharChassi(ctx, ...CINZA);
@@ -285,17 +299,17 @@ const LISTA_TEXTURAS = [
   }],
   ["painel_nave_lado", "RP/textures/blocks/cl/painel_nave_lado", (ctx) => {
     desenharChassi(ctx, ...METAL);
-    rect(ctx, 2, 6, 12, 4, "#38bdf8");
+    faixa(ctx, 3, 6, 10, 4, "#38bdf8");
   }],
   ["terminal_lado", "RP/textures/blocks/cl/terminal_lado", (ctx) => {
     desenharChassi(ctx, ...METAL);
-    rect(ctx, 2, 6, 12, 4, "#c084fc");
+    faixa(ctx, 3, 6, 10, 4, "#c084fc");
   }],
   ["montadora_lado", "RP/textures/blocks/cl/montadora_lado", (ctx) => {
     desenharChassi(ctx, ...METAL);
     // Ajuste da revisão: duas faixas (o painel da nave e o terminal têm uma só), para não se confundirem de longe.
-    rect(ctx, 3, 4, 10, 3, "#f97316");
-    rect(ctx, 3, 9, 10, 3, "#f97316");
+    faixa(ctx, 3, 4, 10, 3, "#f97316");
+    faixa(ctx, 3, 9, 10, 3, "#f97316");
   }],
   ["gerador_monstros", "RP/textures/blocks/cl/gerador_monstros", (ctx) => {
     rect(ctx, 0, 0, 16, 16, "#18181b");
@@ -305,6 +319,7 @@ const LISTA_TEXTURAS = [
   }],
   ["barril_madeira", `${V}barril_madeira`, (ctx) => {
     rect(ctx, 0, 0, 16, 16, "#78350f");
+    for (const x of [3, 7, 11]) { rect(ctx, x, 0, 1, 2, "#5c280b"); rect(ctx, x, 4, 1, 8, "#5c280b"); rect(ctx, x, 14, 1, 2, "#5c280b"); } // ajuste da revisão: aduelas
     rect(ctx, 0, 2, 16, 2, "#3f3f46"); rect(ctx, 0, 12, 16, 2, "#3f3f46");
   }],
   ["barril_pedra", `${V}barril_pedra`, (ctx) => {
@@ -317,7 +332,10 @@ const LISTA_TEXTURAS = [
   }],
   ["folha_infestada", `${V}folha_infestada`, (ctx) => {
     rect(ctx, 0, 0, 16, 16, "#d6d3d1");
-    for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) if ((x + y) % 3 === 0) px(ctx, x, y, "#a8a29e");
+    // Ajuste da revisão: manchas agrupadas (o pontilhado regular virava ruído cinza no celular).
+    for (const [x, y, w, h] of [[1, 1, 2, 2], [9, 0, 3, 2], [5, 5, 2, 3], [12, 6, 2, 2], [2, 10, 3, 2], [8, 11, 2, 3], [13, 12, 2, 2]]) rect(ctx, x, y, w, h, "#a8a29e");
+    for (const [x, y, w, h] of [[4, 2, 2, 2], [10, 4, 3, 1], [0, 7, 3, 2], [7, 8, 2, 2], [11, 9, 2, 2], [5, 13, 3, 2]]) rect(ctx, x, y, w, h, "#e7e5e4");
+    for (const [x, y] of [[2, 2], [10, 1], [6, 6], [13, 7], [3, 11], [9, 12], [14, 13]]) px(ctx, x, y, "#78716c");
   }],
 ];
 
@@ -355,10 +373,10 @@ ui("painel/botao_selecionado", 128, 32, (c, w, h) => {
 });
 ui("painel/botao_fechar", 32, 32, (c, w, h) => {
   caixaMetal(c, 0, 0, w, h, "#991b1b", "#ef4444", "#5c0f0f");
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 12; i++) { // ajuste da revisão: X centrado (x de 9 a 22, y de 10 a 21 em 32 x 32)
     for (let t = 0; t < 3; t++) {
-      px(c, 9 + i + t, 9 + i, "#ffffff");
-      px(c, 21 - i + t, 9 + i, "#ffffff");
+      px(c, 9 + i + t, 10 + i, "#ffffff");
+      px(c, 20 - i + t, 10 + i, "#ffffff");
     }
   }
 });
@@ -367,17 +385,18 @@ ui("painel/icone_diario", 64, 64, (c, w, h) => {
   rect(c, 13, 10, 38, 45, "#f59e0b"); // o livro
   rect(c, 19, 16, 26, 6, "#fef08a");
 });
+// Ajuste da revisão: 300 x 18, o dobro dos 150 x 9 em que a tela desenha a barra (antes 128 x 12 era esticada para 150 x 9, e a borda de 1 px sumia).
 const barra = (k) => (c, w, h) => {
-  caixaMetal(c, 0, 0, w, h, "#0f141c", "#222c3c", "#111722", "#080a0e", 1);
-  const util = w - 4;
+  caixaMetal(c, 0, 0, w, h, "#0f141c", "#222c3c", "#111722", "#080a0e", 2);
+  const util = w - 8;
   const cheio = Math.round((util * k) / 10);
   if (cheio > 0) {
-    rect(c, 2, 2, cheio, h - 4, "#f59e0b");
-    rect(c, 2 + Math.max(0, cheio - 2), 2, Math.min(2, cheio), h - 4, "#fef08a"); // marcador na ponta
+    rect(c, 4, 4, cheio, h - 8, "#f59e0b");
+    rect(c, 4 + Math.max(0, cheio - 4), 4, Math.min(4, cheio), h - 8, "#fef08a"); // marcador na ponta
   }
 };
-ui("painel/barra_progresso_vazia", 128, 12, barra(0));
-for (let k = 0; k <= 10; k++) ui(`painel/progresso_${k}`, 128, 12, barra(k));
+ui("painel/barra_progresso_vazia", 300, 18, barra(0));
+for (let k = 0; k <= 10; k++) ui(`painel/progresso_${k}`, 300, 18, barra(k));
 const caixinha = (marcada) => (c, w, h) => {
   caixaMetal(c, 0, 0, w, h, marcada ? "#22c55e" : "#0f141c", "#222c3c", "#111722", "#080a0e", 1);
   if (marcada) for (const [x, y] of [[3, 6], [4, 7], [5, 8], [6, 7], [7, 6], [8, 5], [8, 4], [9, 3]]) rect(c, x, y - 1, 1, 2, "#0f172a");

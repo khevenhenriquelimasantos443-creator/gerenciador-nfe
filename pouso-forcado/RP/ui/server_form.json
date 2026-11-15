@@ -619,20 +619,20 @@
           "type": "image",
           "texture": "textures/ui/white",
           "size": [
-            2,
+            1,
             147
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            133,
+            134,
             34
           ],
           "layer": 2,
           "color": [
-            0.78,
-            0.8,
-            0.82
+            0.22,
+            0.255,
+            0.31
           ],
           "keep_ratio": false
         }
@@ -735,12 +735,12 @@
       {
         "fechar@common.close_button": {
           "size": [
-            18,
-            18
+            22,
+            22
           ],
           "$close_button_offset": [
-            -9,
-            9
+            -7,
+            7
           ],
           "layer": 6,
           "controls": [
@@ -978,7 +978,7 @@
             }
           ],
           "offset": [
-            -26,
+            -31,
             0
           ],
           "layer": 1
@@ -2101,7 +2101,7 @@
         "principal": {
           "type": "panel",
           "size": [
-            126,
+            142,
             "100%"
           ],
           "bindings": [
@@ -2152,6 +2152,11 @@
                         {
                           "conteudo@server_form.cl_painel_acao_texto": {}
                         }
+                      ],
+                      "color": [
+                        1.0,
+                        0.88,
+                        0.7
                       ]
                     }
                   },
