@@ -263,6 +263,17 @@ function podeConstruir(dim: Dimension, b: Base): boolean {
   return true;
 }
 
+const CHAO_LUA = new Set(["minecraft:air", "cl:solo_lunar", "cl:terra_lunar", "cl:rocha_lunar", "cl:basalto_lunar", "cl:ardosia_lunar", "cl:meteorito"]);
+/** O topo em volta da cabine (11×11) é só o chão da Lua. */
+function soChaoDaLua(dim: Dimension, b: Base): boolean {
+  for (let x = b.x - 5; x <= b.x + 5; x++)
+    for (let z = b.z - 5; z <= b.z + 5; z++) {
+      const t = dim.getTopmostBlock({ x, z });
+      if (t && !CHAO_LUA.has(t.typeId)) return false;
+    }
+  return true;
+}
+
 // ---------- Salas, chefe e baú ----------
 const dentro = (p: Vector3, b: Base, s: Sala) => {
   const [x, z] = centroSala(b, s);
@@ -389,6 +400,13 @@ export function registrarBase(): void {
       prepararArea(dim, alvo);
       if (podeConstruir(dim, alvo)) {
         try {
+          // 1.55.0: as outras masmorras não entram onde alguém já construiu (a cabine da superfície e o poço).
+          if (alvo.chave && alvo.chave !== "teste" && !soChaoDaLua(dim, alvo)) {
+            alvo.cancelada = true;
+            gravarBase(alvo);
+            soltarArea();
+            return;
+          }
           construir(dim, alvo);
           soltarArea();
         } catch (erro) {

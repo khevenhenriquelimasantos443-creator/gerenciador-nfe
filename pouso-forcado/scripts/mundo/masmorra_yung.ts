@@ -1,4 +1,4 @@
-import { Player, system, world } from "@minecraft/server";
+import { Dimension, Player, system, world } from "@minecraft/server";
 import { registrarAcao } from "../missoes/progresso.js";
 import { chunkDaNave, rng, sementeDe, sementeDoMundo } from "../util/aleatorio.js";
 import { intervalo } from "../util/perfil.js";
@@ -64,6 +64,22 @@ function soltarArea(): void {
   }
 }
 
+// Sinais de construção do jogador no subsolo (os blocos do pack, fora minérios e pedras, e os do jogo que não nascem
+// sozinhos lá embaixo): num mundo de antes da 1.55.0 a masmorra não pode apagar o túnel ou a base de alguém.
+const DO_JOGADOR = new Set(["minecraft:torch", "minecraft:crafting_table", "minecraft:furnace", "minecraft:lit_furnace", "minecraft:ladder",
+  "minecraft:glass", "minecraft:bed", "minecraft:barrel", "minecraft:smoker", "minecraft:blast_furnace"]);
+const NATURAL_CL = /minerio|marmore|calcario|petroleo|pedra|rocha|bolsao/;
+function subsoloLivre(dim: Dimension, m: Masmorra): boolean {
+  for (let x = m.x1; x <= m.x2; x += 2)
+    for (let z = m.z1; z <= m.z2; z += 2)
+      for (let y = m.y1; y <= m.y2; y += 2) {
+        const id = dim.getBlock({ x, y, z })?.typeId ?? "";
+        if (DO_JOGADOR.has(id) || (id.startsWith("cl:") && !NATURAL_CL.test(id))) return false;
+      }
+  return true;
+}
+
+/** true: terminou (posta, ou cancelada por ter construção do jogador ali); false: esperando os chunks. */
 function construir(m: Masmorra): boolean {
   const dim = world.getDimension("overworld");
   const pronta = dim.isChunkLoaded({ x: m.x1, y: m.y1, z: m.z1 }) && dim.isChunkLoaded({ x: m.x2, y: m.y1, z: m.z2 }) &&
@@ -82,10 +98,16 @@ function construir(m: Masmorra): boolean {
     }
     return false;
   }
+  if (m.chave !== "teste" && !subsoloLivre(dim, m)) {
+    gravar(m, { ...ler(m), e: 2 });
+    cancelada = true;
+    return true;
+  }
   const d = MASMORRA_YUNG.variantes[m.v];
   for (const [i, k] of d.tiles) world.structureManager.place(`cl:masmorra_yung_${m.v}_${i}_${k}`, dim, { x: m.x1 + i * 64, y: m.y1, z: m.z1 + k * 64 });
   return true;
 }
+let cancelada = false;
 
 let teste: Masmorra | undefined;
 export function registrarMasmorraYung(): void {
@@ -131,9 +153,13 @@ export function registrarMasmorraYung(): void {
     }
     if (teste) alvo = teste;
     if (!alvo) return soltarArea();
+    cancelada = false;
     if (!construir(alvo)) return;
-    if (alvo !== teste) gravar(alvo, { ...ler(alvo), e: 1 });
-    console.warn(`[Pouso Forçado] Masmorra dos Esqueletos em ${alvo.x}, ${alvo.y}, ${alvo.z}`);
+    if (cancelada) console.warn(`[Pouso Forçado] Masmorra dos Esqueletos em ${alvo.x}, ${alvo.z} ficou sem: construção do jogador ali`);
+    else {
+      if (alvo !== teste) gravar(alvo, { ...ler(alvo), e: 1 });
+      console.warn(`[Pouso Forçado] Masmorra dos Esqueletos em ${alvo.x}, ${alvo.y}, ${alvo.z}`);
+    }
     teste = undefined;
     soltarArea();
   }, 20);

@@ -168,6 +168,25 @@ function chao(s: Sitio): number {
   return hs[Math.floor(hs.length / 2)];
 }
 
+// O que o terreno da Lua tem sozinho: o resto (no topo de uma coluna) foi posto por alguém.
+const NATURAL = new Set<string>([
+  "minecraft:air", "cl:solo_lunar", "cl:terra_lunar", "cl:rocha_lunar", "cl:basalto_lunar", "cl:ardosia_lunar", "minecraft:bedrock",
+  "minecraft:barrier", "cl:meteorito", "cl:minerio_cobre_lunar", "cl:minerio_estanho_lunar", "cl:minerio_queijo", "cl:minerio_safira_lunar",
+]);
+/** A área só tem terreno natural no topo (num mundo de antes da 1.55.0 o jogador pode ter construído ali). */
+function* soNatural(dim: Dimension, s: Sitio): Generator<void, boolean, void> {
+  for (let cx = Math.floor(s.x1 / 16); cx <= Math.floor(s.x2 / 16); cx++)
+    for (let cz = Math.floor(s.z1 / 16); cz <= Math.floor(s.z2 / 16); cz++) {
+      for (let x = Math.max(s.x1, cx * 16); x <= Math.min(s.x2, cx * 16 + 15); x += 2)
+        for (let z = Math.max(s.z1, cz * 16); z <= Math.min(s.z2, cz * 16 + 15); z += 2) {
+          const t = dim.getTopmostBlock({ x, z });
+          if (t && !NATURAL.has(t.typeId)) return false;
+        }
+      yield;
+    }
+  return true;
+}
+
 function* fazerVila(dim: Dimension, s: Sitio): Generator<void, void, void> {
   const d = VILA_LUA.vilas[s.v];
   const H = chao(s);
@@ -213,6 +232,10 @@ function construir(dim: Dimension, s: Sitio): void {
   system.runJob(
     (function* () {
       try {
+        if (!s.chave.startsWith("teste") && !(yield* soNatural(dim, s))) {
+          gravar(s, { ...ler(s), e: 2 }); // tem construção de alguém ali: fica sem
+          return;
+        }
         yield* s.tipo === "vila" ? fazerVila(dim, s) : fazerRuina(dim, s);
         gravar(s, { ...ler(s), e: 1 });
         console.warn(`[Pouso Forçado] ${s.tipo === "vila" ? "Vila Lunar" : "Ruínas Lunares"} em ${s.x}, ${s.z}`);
