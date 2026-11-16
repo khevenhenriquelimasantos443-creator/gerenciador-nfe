@@ -86,6 +86,8 @@ def main():
     partes = []
     for g, titulo in (("gerado", "ícones gerados pelo build"), ("hc", "Pam's HarvestCraft 2"), ("script", "desenhados por script")):
         lista = grupos[g]
+        if not lista:
+            continue
         n = -(-len(lista) // POR_PARTE)  # partes do mesmo tamanho, até POR_PARTE cada
         tam = -(-len(lista) // max(1, n))
         for i in range(0, len(lista), tam):

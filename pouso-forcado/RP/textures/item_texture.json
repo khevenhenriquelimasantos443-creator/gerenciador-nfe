@@ -1002,13 +1002,13 @@
       "textures": "textures/items/cl/arte/asa_delta"
     },
     "clc_aluminio_quebrado": {
-      "textures": "textures/items/cl/c/aluminio_quebrado"
+      "textures": "textures/items/cl/arte/aluminio_quebrado"
     },
     "clc_aluminio_triturado": {
-      "textures": "textures/items/cl/c/aluminio_triturado"
+      "textures": "textures/items/cl/arte/aluminio_triturado"
     },
     "clc_aluminio_po": {
-      "textures": "textures/items/cl/c/aluminio_po"
+      "textures": "textures/items/cl/arte/aluminio_po"
     },
     "clc_lingote_aluminio": {
       "textures": "textures/items/cl/arte/lingote_aluminio"
@@ -1095,13 +1095,13 @@
       "textures": "textures/items/cl/arte/chave_masmorra"
     },
     "clc_osmio_quebrado": {
-      "textures": "textures/items/cl/c/osmio_quebrado"
+      "textures": "textures/items/cl/arte/osmio_quebrado"
     },
     "clc_osmio_triturado": {
-      "textures": "textures/items/cl/c/osmio_triturado"
+      "textures": "textures/items/cl/arte/osmio_triturado"
     },
     "clc_osmio_po": {
-      "textures": "textures/items/cl/c/osmio_po"
+      "textures": "textures/items/cl/arte/osmio_po"
     },
     "clc_lingote_osmio": {
       "textures": "textures/items/cl/arte/lingote_osmio"
@@ -1398,16 +1398,16 @@
       "textures": "textures/items/cl/arte/eio_botas_aco_negro"
     },
     "clc_liga_andesita": {
-      "textures": "textures/items/cl/c/liga_andesita"
+      "textures": "textures/items/cl/arte/liga_andesita"
     },
     "clc_zinco_quebrado": {
-      "textures": "textures/items/cl/c/zinco_quebrado"
+      "textures": "textures/items/cl/arte/zinco_quebrado"
     },
     "clc_zinco_triturado": {
-      "textures": "textures/items/cl/c/zinco_triturado"
+      "textures": "textures/items/cl/arte/zinco_triturado"
     },
     "clc_zinco_po": {
-      "textures": "textures/items/cl/c/zinco_po"
+      "textures": "textures/items/cl/arte/zinco_po"
     },
     "clc_lingote_zinco": {
       "textures": "textures/items/cl/arte/lingote_zinco"
@@ -1416,28 +1416,28 @@
       "textures": "textures/items/cl/arte/lingote_latao"
     },
     "clc_chapa_ferro": {
-      "textures": "textures/items/cl/c/chapa_ferro"
+      "textures": "textures/items/cl/arte/chapa_ferro"
     },
     "clc_chapa_cobre": {
-      "textures": "textures/items/cl/c/chapa_cobre"
+      "textures": "textures/items/cl/arte/chapa_cobre"
     },
     "clc_chapa_ouro": {
-      "textures": "textures/items/cl/c/chapa_ouro"
+      "textures": "textures/items/cl/arte/chapa_ouro"
     },
     "clc_chapa_latao": {
-      "textures": "textures/items/cl/c/chapa_latao"
+      "textures": "textures/items/cl/arte/chapa_latao"
     },
     "clc_triturado_ferro": {
-      "textures": "textures/items/cl/c/triturado_ferro"
+      "textures": "textures/items/cl/arte/triturado_ferro"
     },
     "clc_triturado_ouro": {
-      "textures": "textures/items/cl/c/triturado_ouro"
+      "textures": "textures/items/cl/arte/triturado_ouro"
     },
     "clc_triturado_cobre": {
-      "textures": "textures/items/cl/c/triturado_cobre"
+      "textures": "textures/items/cl/arte/triturado_cobre"
     },
     "clc_triturado_zinco": {
-      "textures": "textures/items/cl/c/triturado_zinco"
+      "textures": "textures/items/cl/arte/triturado_zinco"
     },
     "clc_helice": {
       "textures": "textures/items/cl/arte/helice"
@@ -1467,10 +1467,10 @@
       "textures": "textures/items/cl/arte/regador"
     },
     "clc_varinha_construtor": {
-      "textures": "textures/items/cl/c/varinha_construtor"
+      "textures": "textures/items/cl/arte/varinha_construtor"
     },
     "clc_super_varinha_construtor": {
-      "textures": "textures/items/cl/c/super_varinha_construtor"
+      "textures": "textures/items/cl/arte/super_varinha_construtor"
     },
     "clc_balao_branco": {
       "textures": "textures/items/cl/arte/balao_branco"
@@ -1683,7 +1683,7 @@
       "textures": "textures/items/cl/arte/picarango"
     },
     "clhc_semente_canhamo": {
-      "textures": "textures/items/cl/hc/semente_canhamo"
+      "textures": "textures/items/cl/arte/semente_canhamo"
     },
     "clc_martelo_engenheiro": {
       "textures": "textures/items/cl/arte/martelo_engenheiro"
@@ -1695,7 +1695,7 @@
       "textures": "textures/items/cl/arte/escoria"
     },
     "clc_balde_creosoto": {
-      "textures": "textures/items/cl/c/balde_creosoto"
+      "textures": "textures/items/cl/arte/balde_creosoto"
     },
     "clc_graveto_tratado": {
       "textures": "textures/items/cl/arte/graveto_tratado"
@@ -2028,10 +2028,10 @@
       "textures": "textures/items/cl/arte/ressonador_ender"
     },
     "clc_frank_n_zumbi": {
-      "textures": "textures/items/cl/c/frank_n_zumbi"
+      "textures": "textures/items/cl/arte/frank_n_zumbi"
     },
     "clc_ender_senciente": {
-      "textures": "textures/items/cl/c/ender_senciente"
+      "textures": "textures/items/cl/arte/ender_senciente"
     },
     "clc_enderios": {
       "textures": "textures/items/cl/arte/enderios"
@@ -2064,7 +2064,7 @@
       "textures": "textures/items/cl/arte/corrente_almas"
     },
     "clc_cabeca_enderman": {
-      "textures": "textures/items/cl/c/cabeca_enderman"
+      "textures": "textures/items/cl/arte/cabeca_enderman"
     },
     "clc_simbolo_animal": {
       "textures": "textures/items/cl/arte/simbolo_animal"
@@ -2259,25 +2259,25 @@
       "textures": "textures/items/cl/arte/po_pedra_ceu"
     },
     "clc_pepita_experiencia": {
-      "textures": "textures/items/cl/c/pepita_experiencia"
+      "textures": "textures/items/cl/arte/pepita_experiencia"
     },
     "clc_farinha_cinzas": {
-      "textures": "textures/items/cl/c/farinha_cinzas"
+      "textures": "textures/items/cl/arte/farinha_cinzas"
     },
     "clc_padrao_cabeca_martelo": {
-      "textures": "textures/items/cl/c/padrao_cabeca_martelo"
+      "textures": "textures/items/cl/arte/padrao_cabeca_martelo"
     },
     "clc_padrao_placa_grande": {
-      "textures": "textures/items/cl/c/padrao_placa_grande"
+      "textures": "textures/items/cl/arte/padrao_placa_grande"
     },
     "clc_padrao_cabo_resistente": {
-      "textures": "textures/items/cl/c/padrao_cabo_resistente"
+      "textures": "textures/items/cl/arte/padrao_cabo_resistente"
     },
     "clc_padrao_ligacao_resistente": {
-      "textures": "textures/items/cl/c/padrao_ligacao_resistente"
+      "textures": "textures/items/cl/arte/padrao_ligacao_resistente"
     },
     "clc_padrao_cabeca_machado_larga": {
-      "textures": "textures/items/cl/c/padrao_cabeca_machado_larga"
+      "textures": "textures/items/cl/arte/padrao_cabeca_machado_larga"
     },
     "clc_peca_cabeca_martelo_madeira": {
       "textures": "textures/items/cl/arte/peca_cabeca_martelo_madeira"
@@ -2691,10 +2691,10 @@
       "textures": "textures/items/cl/arte/melhoria_recarga"
     },
     "clc_padrao_cabeca_enxo": {
-      "textures": "textures/items/cl/c/padrao_cabeca_enxo"
+      "textures": "textures/items/cl/arte/padrao_cabeca_enxo"
     },
     "clc_padrao_lamina_larga": {
-      "textures": "textures/items/cl/c/padrao_lamina_larga"
+      "textures": "textures/items/cl/arte/padrao_lamina_larga"
     },
     "clc_peca_cabeca_enxo_madeira": {
       "textures": "textures/items/cl/arte/peca_cabeca_enxo_madeira"
@@ -5154,13 +5154,13 @@
       "textures": "textures/items/cl/arte/molde_areia_cabo_resistente"
     },
     "clc_molde_areia_cabeca_pa": {
-      "textures": "textures/items/cl/c/molde_areia_cabeca_pa"
+      "textures": "textures/items/cl/arte/molde_areia_cabeca_pa"
     },
     "clc_molde_areia_guarda_larga": {
-      "textures": "textures/items/cl/c/molde_areia_guarda_larga"
+      "textures": "textures/items/cl/arte/molde_areia_guarda_larga"
     },
     "clc_molde_areia_travessa": {
-      "textures": "textures/items/cl/c/molde_areia_travessa"
+      "textures": "textures/items/cl/arte/molde_areia_travessa"
     },
     "clc_livro_materiais": {
       "textures": "textures/items/cl/arte/livro_materiais"
@@ -5637,40 +5637,40 @@
       "textures": "textures/items/cl/arte/faca_netherita"
     },
     "clc_pedra_viagem_cobre": {
-      "textures": "textures/items/cl/c/pedra_viagem_cobre"
+      "textures": "textures/items/cl/arte/pedra_viagem_cobre"
     },
     "clc_pedra_viagem_prismarinho": {
-      "textures": "textures/items/cl/c/pedra_viagem_prismarinho"
+      "textures": "textures/items/cl/arte/pedra_viagem_prismarinho"
     },
     "clc_pedra_viagem_ouro": {
-      "textures": "textures/items/cl/c/pedra_viagem_ouro"
+      "textures": "textures/items/cl/arte/pedra_viagem_ouro"
     },
     "clc_pedra_viagem_diamante": {
-      "textures": "textures/items/cl/c/pedra_viagem_diamante"
+      "textures": "textures/items/cl/arte/pedra_viagem_diamante"
     },
     "clc_pedra_viagem_ametista": {
-      "textures": "textures/items/cl/c/pedra_viagem_ametista"
+      "textures": "textures/items/cl/arte/pedra_viagem_ametista"
     },
     "clc_pedra_viagem_lapis": {
-      "textures": "textures/items/cl/c/pedra_viagem_lapis"
+      "textures": "textures/items/cl/arte/pedra_viagem_lapis"
     },
     "clc_pedra_viagem_esmeralda": {
-      "textures": "textures/items/cl/c/pedra_viagem_esmeralda"
+      "textures": "textures/items/cl/arte/pedra_viagem_esmeralda"
     },
     "clc_pedra_viagem_redstone": {
-      "textures": "textures/items/cl/c/pedra_viagem_redstone"
+      "textures": "textures/items/cl/arte/pedra_viagem_redstone"
     },
     "clc_fragmento_dormente": {
-      "textures": "textures/items/cl/c/fragmento_dormente"
+      "textures": "textures/items/cl/arte/fragmento_dormente"
     },
     "clc_fragmento_sintonizado": {
-      "textures": "textures/items/cl/c/fragmento_sintonizado"
+      "textures": "textures/items/cl/arte/fragmento_sintonizado"
     },
     "clc_pergaminho_vazio": {
-      "textures": "textures/items/cl/c/pergaminho_vazio"
+      "textures": "textures/items/cl/arte/pergaminho_vazio"
     },
     "clc_pergaminho_vinculado": {
-      "textures": "textures/items/cl/c/pergaminho_vinculado"
+      "textures": "textures/items/cl/arte/pergaminho_vinculado"
     },
     "clc_lingote_ludicrita": {
       "textures": "textures/items/cl/arte/lingote_ludicrita"
@@ -5700,31 +5700,31 @@
       "textures": "textures/items/cl/arte/caco_vidro"
     },
     "clc_molde_chapa": {
-      "textures": "textures/items/cl/c/molde_chapa"
+      "textures": "textures/items/cl/arte/molde_chapa"
     },
     "clc_molde_engrenagem": {
-      "textures": "textures/items/cl/c/molde_engrenagem"
+      "textures": "textures/items/cl/arte/molde_engrenagem"
     },
     "clc_molde_haste": {
-      "textures": "textures/items/cl/c/molde_haste"
+      "textures": "textures/items/cl/arte/molde_haste"
     },
     "clc_molde_desembalar": {
-      "textures": "textures/items/cl/c/molde_desembalar"
+      "textures": "textures/items/cl/arte/molde_desembalar"
     },
     "clc_po_salitre": {
       "textures": "textures/items/cl/arte/po_salitre"
     },
     "clc_balde_oleo_vegetal": {
-      "textures": "textures/items/cl/c/balde_oleo_vegetal"
+      "textures": "textures/items/cl/arte/balde_oleo_vegetal"
     },
     "clc_balde_etanol": {
-      "textures": "textures/items/cl/c/balde_etanol"
+      "textures": "textures/items/cl/arte/balde_etanol"
     },
     "clc_balde_biodiesel": {
-      "textures": "textures/items/cl/c/balde_biodiesel"
+      "textures": "textures/items/cl/arte/balde_biodiesel"
     },
     "clc_robo_avancado": {
-      "textures": "textures/items/cl/c/robo_avancado"
+      "textures": "textures/items/cl/arte/robo_avancado"
     },
     "clc_pagina_impressa": {
       "textures": "textures/items/cl/arte/pagina_impressa"
@@ -5748,13 +5748,13 @@
       "textures": "textures/items/cl/arte/safira_lunar"
     },
     "clc_pa_turbina_pneumatica": {
-      "textures": "textures/items/cl/c/pa_turbina_pneumatica"
+      "textures": "textures/items/cl/arte/pa_turbina_pneumatica"
     },
     "clc_cinzel_diamante": {
-      "textures": "textures/items/cl/c/cinzel_diamante"
+      "textures": "textures/items/cl/arte/cinzel_diamante"
     },
     "clc_cinzel_hitech": {
-      "textures": "textures/items/cl/c/cinzel_hitech"
+      "textures": "textures/items/cl/arte/cinzel_hitech"
     },
     "clc_malha_barbante": {
       "textures": "textures/items/cl/arte/malha_barbante"
@@ -5775,1270 +5775,1270 @@
       "textures": "textures/items/cl/arte/malha_netherita"
     },
     "clhc_semente_agave": {
-      "textures": "textures/items/cl/hc/semente_agave"
+      "textures": "textures/items/cl/arte/semente_agave"
     },
     "clhc_agave": {
-      "textures": "textures/items/cl/hc/agave"
+      "textures": "textures/items/cl/arte/agave"
     },
     "clhc_semente_amaranto": {
-      "textures": "textures/items/cl/hc/semente_amaranto"
+      "textures": "textures/items/cl/arte/semente_amaranto"
     },
     "clhc_amaranto": {
-      "textures": "textures/items/cl/hc/amaranto"
+      "textures": "textures/items/cl/arte/amaranto"
     },
     "clhc_semente_araruta": {
-      "textures": "textures/items/cl/hc/semente_araruta"
+      "textures": "textures/items/cl/arte/semente_araruta"
     },
     "clhc_araruta": {
-      "textures": "textures/items/cl/hc/araruta"
+      "textures": "textures/items/cl/arte/araruta"
     },
     "clhc_semente_alcachofra": {
-      "textures": "textures/items/cl/hc/semente_alcachofra"
+      "textures": "textures/items/cl/arte/semente_alcachofra"
     },
     "clhc_alcachofra": {
-      "textures": "textures/items/cl/hc/alcachofra"
+      "textures": "textures/items/cl/arte/alcachofra"
     },
     "clhc_semente_aspargo": {
-      "textures": "textures/items/cl/hc/semente_aspargo"
+      "textures": "textures/items/cl/arte/semente_aspargo"
     },
     "clhc_aspargo": {
-      "textures": "textures/items/cl/hc/aspargo"
+      "textures": "textures/items/cl/arte/aspargo"
     },
     "clhc_semente_cevada": {
-      "textures": "textures/items/cl/hc/semente_cevada"
+      "textures": "textures/items/cl/arte/semente_cevada"
     },
     "clhc_cevada": {
-      "textures": "textures/items/cl/hc/cevada"
+      "textures": "textures/items/cl/arte/cevada"
     },
     "clhc_semente_amora_preta": {
-      "textures": "textures/items/cl/hc/semente_amora_preta"
+      "textures": "textures/items/cl/arte/semente_amora_preta"
     },
     "clhc_amora_preta": {
-      "textures": "textures/items/cl/hc/amora_preta"
+      "textures": "textures/items/cl/arte/amora_preta"
     },
     "clhc_semente_mirtilo": {
-      "textures": "textures/items/cl/hc/semente_mirtilo"
+      "textures": "textures/items/cl/arte/semente_mirtilo"
     },
     "clhc_mirtilo": {
-      "textures": "textures/items/cl/hc/mirtilo"
+      "textures": "textures/items/cl/arte/mirtilo"
     },
     "clhc_semente_brocolis": {
-      "textures": "textures/items/cl/hc/semente_brocolis"
+      "textures": "textures/items/cl/arte/semente_brocolis"
     },
     "clhc_brocolis": {
-      "textures": "textures/items/cl/hc/brocolis"
+      "textures": "textures/items/cl/arte/brocolis"
     },
     "clhc_semente_couve_bruxelas": {
-      "textures": "textures/items/cl/hc/semente_couve_bruxelas"
+      "textures": "textures/items/cl/arte/semente_couve_bruxelas"
     },
     "clhc_couve_bruxelas": {
-      "textures": "textures/items/cl/hc/couve_bruxelas"
+      "textures": "textures/items/cl/arte/couve_bruxelas"
     },
     "clhc_semente_baga_cera": {
-      "textures": "textures/items/cl/hc/semente_baga_cera"
+      "textures": "textures/items/cl/arte/semente_baga_cera"
     },
     "clhc_baga_cera": {
-      "textures": "textures/items/cl/hc/baga_cera"
+      "textures": "textures/items/cl/arte/baga_cera"
     },
     "clhc_semente_melao": {
-      "textures": "textures/items/cl/hc/semente_melao"
+      "textures": "textures/items/cl/arte/semente_melao"
     },
     "clhc_melao": {
-      "textures": "textures/items/cl/hc/melao"
+      "textures": "textures/items/cl/arte/melao"
     },
     "clhc_semente_mandioca": {
-      "textures": "textures/items/cl/hc/semente_mandioca"
+      "textures": "textures/items/cl/arte/semente_mandioca"
     },
     "clhc_mandioca": {
-      "textures": "textures/items/cl/hc/mandioca"
+      "textures": "textures/items/cl/arte/mandioca"
     },
     "clhc_semente_couve_flor": {
-      "textures": "textures/items/cl/hc/semente_couve_flor"
+      "textures": "textures/items/cl/arte/semente_couve_flor"
     },
     "clhc_couve_flor": {
-      "textures": "textures/items/cl/hc/couve_flor"
+      "textures": "textures/items/cl/arte/couve_flor"
     },
     "clhc_semente_salsao": {
-      "textures": "textures/items/cl/hc/semente_salsao"
+      "textures": "textures/items/cl/arte/semente_salsao"
     },
     "clhc_salsao": {
-      "textures": "textures/items/cl/hc/salsao"
+      "textures": "textures/items/cl/arte/salsao"
     },
     "clhc_semente_grao_de_bico": {
-      "textures": "textures/items/cl/hc/semente_grao_de_bico"
+      "textures": "textures/items/cl/arte/semente_grao_de_bico"
     },
     "clhc_grao_de_bico": {
-      "textures": "textures/items/cl/hc/grao_de_bico"
+      "textures": "textures/items/cl/arte/grao_de_bico"
     },
     "clhc_semente_cafe": {
-      "textures": "textures/items/cl/hc/semente_cafe"
+      "textures": "textures/items/cl/arte/semente_cafe"
     },
     "clhc_cafe": {
-      "textures": "textures/items/cl/hc/cafe"
+      "textures": "textures/items/cl/arte/cafe"
     },
     "clhc_semente_algodao": {
-      "textures": "textures/items/cl/hc/semente_algodao"
+      "textures": "textures/items/cl/arte/semente_algodao"
     },
     "clhc_algodao": {
-      "textures": "textures/items/cl/hc/algodao"
+      "textures": "textures/items/cl/arte/algodao"
     },
     "clhc_semente_oxicoco": {
-      "textures": "textures/items/cl/hc/semente_oxicoco"
+      "textures": "textures/items/cl/arte/semente_oxicoco"
     },
     "clhc_oxicoco": {
-      "textures": "textures/items/cl/hc/oxicoco"
+      "textures": "textures/items/cl/arte/oxicoco"
     },
     "clhc_semente_pepino": {
-      "textures": "textures/items/cl/hc/semente_pepino"
+      "textures": "textures/items/cl/arte/semente_pepino"
     },
     "clhc_pepino": {
-      "textures": "textures/items/cl/hc/pepino"
+      "textures": "textures/items/cl/arte/pepino"
     },
     "clhc_semente_berinjela": {
-      "textures": "textures/items/cl/hc/semente_berinjela"
+      "textures": "textures/items/cl/arte/semente_berinjela"
     },
     "clhc_berinjela": {
-      "textures": "textures/items/cl/hc/berinjela"
+      "textures": "textures/items/cl/arte/berinjela"
     },
     "clhc_semente_sabugueiro": {
-      "textures": "textures/items/cl/hc/semente_sabugueiro"
+      "textures": "textures/items/cl/arte/semente_sabugueiro"
     },
     "clhc_sabugueiro": {
-      "textures": "textures/items/cl/hc/sabugueiro"
+      "textures": "textures/items/cl/arte/sabugueiro"
     },
     "clhc_semente_linho": {
-      "textures": "textures/items/cl/hc/semente_linho"
+      "textures": "textures/items/cl/arte/semente_linho"
     },
     "clhc_linho": {
-      "textures": "textures/items/cl/hc/linho"
+      "textures": "textures/items/cl/arte/linho"
     },
     "clhc_semente_gengibre": {
-      "textures": "textures/items/cl/hc/semente_gengibre"
+      "textures": "textures/items/cl/arte/semente_gengibre"
     },
     "clhc_gengibre": {
-      "textures": "textures/items/cl/hc/gengibre"
+      "textures": "textures/items/cl/arte/gengibre"
     },
     "clhc_semente_uva": {
-      "textures": "textures/items/cl/hc/semente_uva"
+      "textures": "textures/items/cl/arte/semente_uva"
     },
     "clhc_uva": {
-      "textures": "textures/items/cl/hc/uva"
+      "textures": "textures/items/cl/arte/uva"
     },
     "clhc_semente_uva_verde": {
-      "textures": "textures/items/cl/hc/semente_uva_verde"
+      "textures": "textures/items/cl/arte/semente_uva_verde"
     },
     "clhc_uva_verde": {
-      "textures": "textures/items/cl/hc/uva_verde"
+      "textures": "textures/items/cl/arte/uva_verde"
     },
     "clhc_semente_uva_do_monte": {
-      "textures": "textures/items/cl/hc/semente_uva_do_monte"
+      "textures": "textures/items/cl/arte/semente_uva_do_monte"
     },
     "clhc_uva_do_monte": {
-      "textures": "textures/items/cl/hc/uva_do_monte"
+      "textures": "textures/items/cl/arte/uva_do_monte"
     },
     "clhc_semente_jicama": {
-      "textures": "textures/items/cl/hc/semente_jicama"
+      "textures": "textures/items/cl/arte/semente_jicama"
     },
     "clhc_jicama": {
-      "textures": "textures/items/cl/hc/jicama"
+      "textures": "textures/items/cl/arte/jicama"
     },
     "clhc_semente_zimbro": {
-      "textures": "textures/items/cl/hc/semente_zimbro"
+      "textures": "textures/items/cl/arte/semente_zimbro"
     },
     "clhc_zimbro": {
-      "textures": "textures/items/cl/hc/zimbro"
+      "textures": "textures/items/cl/arte/zimbro"
     },
     "clhc_semente_juta": {
-      "textures": "textures/items/cl/hc/semente_juta"
+      "textures": "textures/items/cl/arte/semente_juta"
     },
     "clhc_juta": {
-      "textures": "textures/items/cl/hc/juta"
+      "textures": "textures/items/cl/arte/juta"
     },
     "clhc_semente_couve": {
-      "textures": "textures/items/cl/hc/semente_couve"
+      "textures": "textures/items/cl/arte/semente_couve"
     },
     "clhc_couve": {
-      "textures": "textures/items/cl/hc/couve"
+      "textures": "textures/items/cl/arte/couve"
     },
     "clhc_semente_kenaf": {
-      "textures": "textures/items/cl/hc/semente_kenaf"
+      "textures": "textures/items/cl/arte/semente_kenaf"
     },
     "clhc_kenaf": {
-      "textures": "textures/items/cl/hc/kenaf"
+      "textures": "textures/items/cl/arte/kenaf"
     },
     "clhc_semente_kiwi": {
-      "textures": "textures/items/cl/hc/semente_kiwi"
+      "textures": "textures/items/cl/arte/semente_kiwi"
     },
     "clhc_kiwi": {
-      "textures": "textures/items/cl/hc/kiwi"
+      "textures": "textures/items/cl/arte/kiwi"
     },
     "clhc_semente_couve_rabano": {
-      "textures": "textures/items/cl/hc/semente_couve_rabano"
+      "textures": "textures/items/cl/arte/semente_couve_rabano"
     },
     "clhc_couve_rabano": {
-      "textures": "textures/items/cl/hc/couve_rabano"
+      "textures": "textures/items/cl/arte/couve_rabano"
     },
     "clhc_semente_alho_poro": {
-      "textures": "textures/items/cl/hc/semente_alho_poro"
+      "textures": "textures/items/cl/arte/semente_alho_poro"
     },
     "clhc_alho_poro": {
-      "textures": "textures/items/cl/hc/alho_poro"
+      "textures": "textures/items/cl/arte/alho_poro"
     },
     "clhc_semente_lentilha": {
-      "textures": "textures/items/cl/hc/semente_lentilha"
+      "textures": "textures/items/cl/arte/semente_lentilha"
     },
     "clhc_lentilha": {
-      "textures": "textures/items/cl/hc/lentilha"
+      "textures": "textures/items/cl/arte/lentilha"
     },
     "clhc_semente_alface": {
-      "textures": "textures/items/cl/hc/semente_alface"
+      "textures": "textures/items/cl/arte/semente_alface"
     },
     "clhc_alface": {
-      "textures": "textures/items/cl/hc/alface"
+      "textures": "textures/items/cl/arte/alface"
     },
     "clhc_semente_painco": {
-      "textures": "textures/items/cl/hc/semente_painco"
+      "textures": "textures/items/cl/arte/semente_painco"
     },
     "clhc_painco": {
-      "textures": "textures/items/cl/hc/painco"
+      "textures": "textures/items/cl/arte/painco"
     },
     "clhc_semente_amora": {
-      "textures": "textures/items/cl/hc/semente_amora"
+      "textures": "textures/items/cl/arte/semente_amora"
     },
     "clhc_amora": {
-      "textures": "textures/items/cl/hc/amora"
+      "textures": "textures/items/cl/arte/amora"
     },
     "clhc_semente_mostarda": {
-      "textures": "textures/items/cl/hc/semente_mostarda"
+      "textures": "textures/items/cl/arte/semente_mostarda"
     },
     "clhc_mostarda": {
-      "textures": "textures/items/cl/hc/mostarda"
+      "textures": "textures/items/cl/arte/mostarda"
     },
     "clhc_semente_aveia": {
-      "textures": "textures/items/cl/hc/semente_aveia"
+      "textures": "textures/items/cl/arte/semente_aveia"
     },
     "clhc_aveia": {
-      "textures": "textures/items/cl/hc/aveia"
+      "textures": "textures/items/cl/arte/aveia"
     },
     "clhc_semente_quiabo": {
-      "textures": "textures/items/cl/hc/semente_quiabo"
+      "textures": "textures/items/cl/arte/semente_quiabo"
     },
     "clhc_quiabo": {
-      "textures": "textures/items/cl/hc/quiabo"
+      "textures": "textures/items/cl/arte/quiabo"
     },
     "clhc_semente_pastinaca": {
-      "textures": "textures/items/cl/hc/semente_pastinaca"
+      "textures": "textures/items/cl/arte/semente_pastinaca"
     },
     "clhc_pastinaca": {
-      "textures": "textures/items/cl/hc/pastinaca"
+      "textures": "textures/items/cl/arte/pastinaca"
     },
     "clhc_semente_ervilha": {
-      "textures": "textures/items/cl/hc/semente_ervilha"
+      "textures": "textures/items/cl/arte/semente_ervilha"
     },
     "clhc_ervilha": {
-      "textures": "textures/items/cl/hc/ervilha"
+      "textures": "textures/items/cl/arte/ervilha"
     },
     "clhc_semente_abacaxi": {
-      "textures": "textures/items/cl/hc/semente_abacaxi"
+      "textures": "textures/items/cl/arte/semente_abacaxi"
     },
     "clhc_abacaxi": {
-      "textures": "textures/items/cl/hc/abacaxi"
+      "textures": "textures/items/cl/arte/abacaxi"
     },
     "clhc_semente_quinoa": {
-      "textures": "textures/items/cl/hc/semente_quinoa"
+      "textures": "textures/items/cl/arte/semente_quinoa"
     },
     "clhc_quinoa": {
-      "textures": "textures/items/cl/hc/quinoa"
+      "textures": "textures/items/cl/arte/quinoa"
     },
     "clhc_semente_rabanete": {
-      "textures": "textures/items/cl/hc/semente_rabanete"
+      "textures": "textures/items/cl/arte/semente_rabanete"
     },
     "clhc_rabanete": {
-      "textures": "textures/items/cl/hc/rabanete"
+      "textures": "textures/items/cl/arte/rabanete"
     },
     "clhc_semente_framboesa": {
-      "textures": "textures/items/cl/hc/semente_framboesa"
+      "textures": "textures/items/cl/arte/semente_framboesa"
     },
     "clhc_framboesa": {
-      "textures": "textures/items/cl/hc/framboesa"
+      "textures": "textures/items/cl/arte/framboesa"
     },
     "clhc_semente_ruibarbo": {
-      "textures": "textures/items/cl/hc/semente_ruibarbo"
+      "textures": "textures/items/cl/arte/semente_ruibarbo"
     },
     "clhc_ruibarbo": {
-      "textures": "textures/items/cl/hc/ruibarbo"
+      "textures": "textures/items/cl/arte/ruibarbo"
     },
     "clhc_semente_nabo_sueco": {
-      "textures": "textures/items/cl/hc/semente_nabo_sueco"
+      "textures": "textures/items/cl/arte/semente_nabo_sueco"
     },
     "clhc_nabo_sueco": {
-      "textures": "textures/items/cl/hc/nabo_sueco"
+      "textures": "textures/items/cl/arte/nabo_sueco"
     },
     "clhc_semente_centeio": {
-      "textures": "textures/items/cl/hc/semente_centeio"
+      "textures": "textures/items/cl/arte/semente_centeio"
     },
     "clhc_centeio": {
-      "textures": "textures/items/cl/hc/centeio"
+      "textures": "textures/items/cl/arte/centeio"
     },
     "clhc_semente_cebolinha": {
-      "textures": "textures/items/cl/hc/semente_cebolinha"
+      "textures": "textures/items/cl/arte/semente_cebolinha"
     },
     "clhc_cebolinha": {
-      "textures": "textures/items/cl/hc/cebolinha"
+      "textures": "textures/items/cl/arte/cebolinha"
     },
     "clhc_semente_gergelim": {
-      "textures": "textures/items/cl/hc/semente_gergelim"
+      "textures": "textures/items/cl/arte/semente_gergelim"
     },
     "clhc_gergelim": {
-      "textures": "textures/items/cl/hc/gergelim"
+      "textures": "textures/items/cl/arte/gergelim"
     },
     "clhc_semente_sisal": {
-      "textures": "textures/items/cl/hc/semente_sisal"
+      "textures": "textures/items/cl/arte/semente_sisal"
     },
     "clhc_sisal": {
-      "textures": "textures/items/cl/hc/sisal"
+      "textures": "textures/items/cl/arte/sisal"
     },
     "clhc_semente_soja": {
-      "textures": "textures/items/cl/hc/semente_soja"
+      "textures": "textures/items/cl/arte/semente_soja"
     },
     "clhc_soja": {
-      "textures": "textures/items/cl/hc/soja"
+      "textures": "textures/items/cl/arte/soja"
     },
     "clhc_semente_folha_tempero": {
-      "textures": "textures/items/cl/hc/semente_folha_tempero"
+      "textures": "textures/items/cl/arte/semente_folha_tempero"
     },
     "clhc_folha_tempero": {
-      "textures": "textures/items/cl/hc/folha_tempero"
+      "textures": "textures/items/cl/arte/folha_tempero"
     },
     "clhc_semente_espinafre": {
-      "textures": "textures/items/cl/hc/semente_espinafre"
+      "textures": "textures/items/cl/arte/semente_espinafre"
     },
     "clhc_espinafre": {
-      "textures": "textures/items/cl/hc/espinafre"
+      "textures": "textures/items/cl/arte/espinafre"
     },
     "clhc_semente_morango": {
-      "textures": "textures/items/cl/hc/semente_morango"
+      "textures": "textures/items/cl/arte/semente_morango"
     },
     "clhc_morango": {
-      "textures": "textures/items/cl/hc/morango"
+      "textures": "textures/items/cl/arte/morango"
     },
     "clhc_semente_batata_doce": {
-      "textures": "textures/items/cl/hc/semente_batata_doce"
+      "textures": "textures/items/cl/arte/semente_batata_doce"
     },
     "clhc_batata_doce": {
-      "textures": "textures/items/cl/hc/batata_doce"
+      "textures": "textures/items/cl/arte/batata_doce"
     },
     "clhc_semente_inhame": {
-      "textures": "textures/items/cl/hc/semente_inhame"
+      "textures": "textures/items/cl/arte/semente_inhame"
     },
     "clhc_inhame": {
-      "textures": "textures/items/cl/hc/inhame"
+      "textures": "textures/items/cl/arte/inhame"
     },
     "clhc_semente_folha_cha": {
-      "textures": "textures/items/cl/hc/semente_folha_cha"
+      "textures": "textures/items/cl/arte/semente_folha_cha"
     },
     "clhc_folha_cha": {
-      "textures": "textures/items/cl/hc/folha_cha"
+      "textures": "textures/items/cl/arte/folha_cha"
     },
     "clhc_semente_tomatilho": {
-      "textures": "textures/items/cl/hc/semente_tomatilho"
+      "textures": "textures/items/cl/arte/semente_tomatilho"
     },
     "clhc_tomatilho": {
-      "textures": "textures/items/cl/hc/tomatilho"
+      "textures": "textures/items/cl/arte/tomatilho"
     },
     "clhc_semente_nabo": {
-      "textures": "textures/items/cl/hc/semente_nabo"
+      "textures": "textures/items/cl/arte/semente_nabo"
     },
     "clhc_nabo": {
-      "textures": "textures/items/cl/hc/nabo"
+      "textures": "textures/items/cl/arte/nabo"
     },
     "clhc_semente_castanha_dagua": {
-      "textures": "textures/items/cl/hc/semente_castanha_dagua"
+      "textures": "textures/items/cl/arte/semente_castanha_dagua"
     },
     "clhc_castanha_dagua": {
-      "textures": "textures/items/cl/hc/castanha_dagua"
+      "textures": "textures/items/cl/arte/castanha_dagua"
     },
     "clhc_semente_cogumelo_branco": {
-      "textures": "textures/items/cl/hc/semente_cogumelo_branco"
+      "textures": "textures/items/cl/arte/semente_cogumelo_branco"
     },
     "clhc_cogumelo_branco": {
-      "textures": "textures/items/cl/hc/cogumelo_branco"
+      "textures": "textures/items/cl/arte/cogumelo_branco"
     },
     "clhc_semente_abobora_inverno": {
-      "textures": "textures/items/cl/hc/semente_abobora_inverno"
+      "textures": "textures/items/cl/arte/semente_abobora_inverno"
     },
     "clhc_abobora_inverno": {
-      "textures": "textures/items/cl/hc/abobora_inverno"
+      "textures": "textures/items/cl/arte/abobora_inverno"
     },
     "clhc_semente_abobrinha": {
-      "textures": "textures/items/cl/hc/semente_abobrinha"
+      "textures": "textures/items/cl/arte/semente_abobrinha"
     },
     "clhc_abobrinha": {
-      "textures": "textures/items/cl/hc/abobrinha"
+      "textures": "textures/items/cl/arte/abobrinha"
     },
     "clhc_semente_alfafa": {
-      "textures": "textures/items/cl/hc/semente_alfafa"
+      "textures": "textures/items/cl/arte/semente_alfafa"
     },
     "clhc_alfafa": {
-      "textures": "textures/items/cl/hc/alfafa"
+      "textures": "textures/items/cl/arte/alfafa"
     },
     "clhc_semente_babosa": {
-      "textures": "textures/items/cl/hc/semente_babosa"
+      "textures": "textures/items/cl/arte/semente_babosa"
     },
     "clhc_babosa": {
-      "textures": "textures/items/cl/hc/babosa"
+      "textures": "textures/items/cl/arte/babosa"
     },
     "clhc_semente_cacto_barril": {
-      "textures": "textures/items/cl/hc/semente_cacto_barril"
+      "textures": "textures/items/cl/arte/semente_cacto_barril"
     },
     "clhc_cacto_barril": {
-      "textures": "textures/items/cl/hc/cacto_barril"
+      "textures": "textures/items/cl/arte/cacto_barril"
     },
     "clhc_semente_canola": {
-      "textures": "textures/items/cl/hc/semente_canola"
+      "textures": "textures/items/cl/arte/semente_canola"
     },
     "clhc_canola": {
-      "textures": "textures/items/cl/hc/canola"
+      "textures": "textures/items/cl/arte/canola"
     },
     "clhc_semente_taboa": {
-      "textures": "textures/items/cl/hc/semente_taboa"
+      "textures": "textures/items/cl/arte/semente_taboa"
     },
     "clhc_taboa": {
-      "textures": "textures/items/cl/hc/taboa"
+      "textures": "textures/items/cl/arte/taboa"
     },
     "clhc_semente_chia": {
-      "textures": "textures/items/cl/hc/semente_chia"
+      "textures": "textures/items/cl/arte/semente_chia"
     },
     "clhc_chia": {
-      "textures": "textures/items/cl/hc/chia"
+      "textures": "textures/items/cl/arte/chia"
     },
     "clhc_semente_amora_artica": {
-      "textures": "textures/items/cl/hc/semente_amora_artica"
+      "textures": "textures/items/cl/arte/semente_amora_artica"
     },
     "clhc_amora_artica": {
-      "textures": "textures/items/cl/hc/amora_artica"
+      "textures": "textures/items/cl/arte/amora_artica"
     },
     "clhc_semente_lotus": {
-      "textures": "textures/items/cl/hc/semente_lotus"
+      "textures": "textures/items/cl/arte/semente_lotus"
     },
     "clhc_lotus": {
-      "textures": "textures/items/cl/hc/lotus"
+      "textures": "textures/items/cl/arte/lotus"
     },
     "clhc_semente_urtiga": {
-      "textures": "textures/items/cl/hc/semente_urtiga"
+      "textures": "textures/items/cl/arte/semente_urtiga"
     },
     "clhc_urtiga": {
-      "textures": "textures/items/cl/hc/urtiga"
+      "textures": "textures/items/cl/arte/urtiga"
     },
     "clhc_semente_palma": {
-      "textures": "textures/items/cl/hc/semente_palma"
+      "textures": "textures/items/cl/arte/semente_palma"
     },
     "clhc_palma": {
-      "textures": "textures/items/cl/hc/palma"
+      "textures": "textures/items/cl/arte/palma"
     },
     "clhc_semente_sorgo": {
-      "textures": "textures/items/cl/hc/semente_sorgo"
+      "textures": "textures/items/cl/arte/semente_sorgo"
     },
     "clhc_sorgo": {
-      "textures": "textures/items/cl/hc/sorgo"
+      "textures": "textures/items/cl/arte/sorgo"
     },
     "clhc_semente_trufa": {
-      "textures": "textures/items/cl/hc/semente_trufa"
+      "textures": "textures/items/cl/arte/semente_trufa"
     },
     "clhc_trufa": {
-      "textures": "textures/items/cl/hc/trufa"
+      "textures": "textures/items/cl/arte/trufa"
     },
     "clhc_semente_goji": {
-      "textures": "textures/items/cl/hc/semente_goji"
+      "textures": "textures/items/cl/arte/semente_goji"
     },
     "clhc_goji": {
-      "textures": "textures/items/cl/hc/goji"
+      "textures": "textures/items/cl/arte/goji"
     },
     "clhc_semente_iuca": {
-      "textures": "textures/items/cl/hc/semente_iuca"
+      "textures": "textures/items/cl/arte/semente_iuca"
     },
     "clhc_iuca": {
-      "textures": "textures/items/cl/hc/iuca"
+      "textures": "textures/items/cl/arte/iuca"
     },
     "clhc_semente_couve_chinesa": {
-      "textures": "textures/items/cl/hc/semente_couve_chinesa"
+      "textures": "textures/items/cl/arte/semente_couve_chinesa"
     },
     "clhc_couve_chinesa": {
-      "textures": "textures/items/cl/hc/couve_chinesa"
+      "textures": "textures/items/cl/arte/couve_chinesa"
     },
     "clhc_semente_cabaca": {
-      "textures": "textures/items/cl/hc/semente_cabaca"
+      "textures": "textures/items/cl/arte/semente_cabaca"
     },
     "clhc_cabaca": {
-      "textures": "textures/items/cl/hc/cabaca"
+      "textures": "textures/items/cl/arte/cabaca"
     },
     "clhc_semente_guarana": {
-      "textures": "textures/items/cl/hc/semente_guarana"
+      "textures": "textures/items/cl/arte/semente_guarana"
     },
     "clhc_guarana": {
-      "textures": "textures/items/cl/hc/guarana"
+      "textures": "textures/items/cl/arte/guarana"
     },
     "clhc_semente_papiro": {
-      "textures": "textures/items/cl/hc/semente_papiro"
+      "textures": "textures/items/cl/arte/semente_papiro"
     },
     "clhc_papiro": {
-      "textures": "textures/items/cl/hc/papiro"
+      "textures": "textures/items/cl/arte/papiro"
     },
     "clhc_semente_tupinambo": {
-      "textures": "textures/items/cl/hc/semente_tupinambo"
+      "textures": "textures/items/cl/arte/semente_tupinambo"
     },
     "clhc_tupinambo": {
-      "textures": "textures/items/cl/hc/tupinambo"
+      "textures": "textures/items/cl/arte/tupinambo"
     },
     "clhc_bolota": {
-      "textures": "textures/items/cl/hc/bolota"
+      "textures": "textures/items/cl/arte/bolota"
     },
     "clhc_amendoa": {
-      "textures": "textures/items/cl/hc/amendoa"
+      "textures": "textures/items/cl/arte/amendoa"
     },
     "clhc_damasco": {
-      "textures": "textures/items/cl/hc/damasco"
+      "textures": "textures/items/cl/arte/damasco"
     },
     "clhc_abacate": {
-      "textures": "textures/items/cl/hc/abacate"
+      "textures": "textures/items/cl/arte/abacate"
     },
     "clhc_banana": {
-      "textures": "textures/items/cl/hc/banana"
+      "textures": "textures/items/cl/arte/banana"
     },
     "clhc_fruta_pao": {
-      "textures": "textures/items/cl/hc/fruta_pao"
+      "textures": "textures/items/cl/arte/fruta_pao"
     },
     "clhc_noz_iguape": {
-      "textures": "textures/items/cl/hc/noz_iguape"
+      "textures": "textures/items/cl/arte/noz_iguape"
     },
     "clhc_castanha_caju": {
-      "textures": "textures/items/cl/hc/castanha_caju"
+      "textures": "textures/items/cl/arte/castanha_caju"
     },
     "clhc_cereja": {
-      "textures": "textures/items/cl/hc/cereja"
+      "textures": "textures/items/cl/arte/cereja"
     },
     "clhc_castanha": {
-      "textures": "textures/items/cl/hc/castanha"
+      "textures": "textures/items/cl/arte/castanha"
     },
     "clhc_canela": {
-      "textures": "textures/items/cl/hc/canela"
+      "textures": "textures/items/cl/arte/canela"
     },
     "clhc_coco": {
-      "textures": "textures/items/cl/hc/coco"
+      "textures": "textures/items/cl/arte/coco"
     },
     "clhc_pitaya": {
-      "textures": "textures/items/cl/hc/pitaya"
+      "textures": "textures/items/cl/arte/pitaya"
     },
     "clhc_durian": {
-      "textures": "textures/items/cl/hc/durian"
+      "textures": "textures/items/cl/arte/durian"
     },
     "clhc_figo": {
-      "textures": "textures/items/cl/hc/figo"
+      "textures": "textures/items/cl/arte/figo"
     },
     "clhc_groselha": {
-      "textures": "textures/items/cl/hc/groselha"
+      "textures": "textures/items/cl/arte/groselha"
     },
     "clhc_toranja": {
-      "textures": "textures/items/cl/hc/toranja"
+      "textures": "textures/items/cl/arte/toranja"
     },
     "clhc_goiaba": {
-      "textures": "textures/items/cl/hc/goiaba"
+      "textures": "textures/items/cl/arte/goiaba"
     },
     "clhc_avela": {
-      "textures": "textures/items/cl/hc/avela"
+      "textures": "textures/items/cl/arte/avela"
     },
     "clhc_jaca": {
-      "textures": "textures/items/cl/hc/jaca"
+      "textures": "textures/items/cl/arte/jaca"
     },
     "clhc_limao_siciliano": {
-      "textures": "textures/items/cl/hc/limao_siciliano"
+      "textures": "textures/items/cl/arte/limao_siciliano"
     },
     "clhc_limao": {
-      "textures": "textures/items/cl/hc/limao"
+      "textures": "textures/items/cl/arte/limao"
     },
     "clhc_lichia": {
-      "textures": "textures/items/cl/hc/lichia"
+      "textures": "textures/items/cl/arte/lichia"
     },
     "clhc_manga": {
-      "textures": "textures/items/cl/hc/manga"
+      "textures": "textures/items/cl/arte/manga"
     },
     "clhc_xarope_bordo": {
-      "textures": "textures/items/cl/hc/xarope_bordo"
+      "textures": "textures/items/cl/arte/xarope_bordo"
     },
     "clhc_noz_moscada": {
-      "textures": "textures/items/cl/hc/noz_moscada"
+      "textures": "textures/items/cl/arte/noz_moscada"
     },
     "clhc_azeitona": {
-      "textures": "textures/items/cl/hc/azeitona"
+      "textures": "textures/items/cl/arte/azeitona"
     },
     "clhc_laranja": {
-      "textures": "textures/items/cl/hc/laranja"
+      "textures": "textures/items/cl/arte/laranja"
     },
     "clhc_mamao": {
-      "textures": "textures/items/cl/hc/mamao"
+      "textures": "textures/items/cl/arte/mamao"
     },
     "clhc_maracuja": {
-      "textures": "textures/items/cl/hc/maracuja"
+      "textures": "textures/items/cl/arte/maracuja"
     },
     "clhc_asimina": {
-      "textures": "textures/items/cl/hc/asimina"
+      "textures": "textures/items/cl/arte/asimina"
     },
     "clhc_pessego": {
-      "textures": "textures/items/cl/hc/pessego"
+      "textures": "textures/items/cl/arte/pessego"
     },
     "clhc_pera": {
-      "textures": "textures/items/cl/hc/pera"
+      "textures": "textures/items/cl/arte/pera"
     },
     "clhc_peca": {
-      "textures": "textures/items/cl/hc/peca"
+      "textures": "textures/items/cl/arte/peca"
     },
     "clhc_pimenta_reino": {
-      "textures": "textures/items/cl/hc/pimenta_reino"
+      "textures": "textures/items/cl/arte/pimenta_reino"
     },
     "clhc_caqui": {
-      "textures": "textures/items/cl/hc/caqui"
+      "textures": "textures/items/cl/arte/caqui"
     },
     "clhc_pinoli": {
-      "textures": "textures/items/cl/hc/pinoli"
+      "textures": "textures/items/cl/arte/pinoli"
     },
     "clhc_pistache": {
-      "textures": "textures/items/cl/hc/pistache"
+      "textures": "textures/items/cl/arte/pistache"
     },
     "clhc_ameixa": {
-      "textures": "textures/items/cl/hc/ameixa"
+      "textures": "textures/items/cl/arte/ameixa"
     },
     "clhc_roma": {
-      "textures": "textures/items/cl/hc/roma"
+      "textures": "textures/items/cl/arte/roma"
     },
     "clhc_rambutan": {
-      "textures": "textures/items/cl/hc/rambutan"
+      "textures": "textures/items/cl/arte/rambutan"
     },
     "clhc_graviola": {
-      "textures": "textures/items/cl/hc/graviola"
+      "textures": "textures/items/cl/arte/graviola"
     },
     "clhc_carambola": {
-      "textures": "textures/items/cl/hc/carambola"
+      "textures": "textures/items/cl/arte/carambola"
     },
     "clhc_tamarindo": {
-      "textures": "textures/items/cl/hc/tamarindo"
+      "textures": "textures/items/cl/arte/tamarindo"
     },
     "clhc_baunilha": {
-      "textures": "textures/items/cl/hc/baunilha"
+      "textures": "textures/items/cl/arte/baunilha"
     },
     "clhc_noz": {
-      "textures": "textures/items/cl/hc/noz"
+      "textures": "textures/items/cl/arte/noz"
     },
     "clhc_rosquinha_maca": {
-      "textures": "textures/items/cl/hc/rosquinha_maca"
+      "textures": "textures/items/cl/arte/rosquinha_maca"
     },
     "clhc_geleia_maca": {
-      "textures": "textures/items/cl/hc/geleia_maca"
+      "textures": "textures/items/cl/arte/geleia_maca"
     },
     "clhc_torrada_geleia_maca": {
-      "textures": "textures/items/cl/hc/torrada_geleia_maca"
+      "textures": "textures/items/cl/arte/torrada_geleia_maca"
     },
     "clhc_suco_maca": {
-      "textures": "textures/items/cl/hc/suco_maca"
+      "textures": "textures/items/cl/arte/suco_maca"
     },
     "clhc_muffin_maca": {
-      "textures": "textures/items/cl/hc/muffin_maca"
+      "textures": "textures/items/cl/arte/muffin_maca"
     },
     "clhc_hc_torta_maca": {
-      "textures": "textures/items/cl/hc/hc_torta_maca"
+      "textures": "textures/items/cl/arte/hc_torta_maca"
     },
     "clhc_picole_maca": {
-      "textures": "textures/items/cl/hc/picole_maca"
+      "textures": "textures/items/cl/arte/picole_maca"
     },
     "clhc_pure_maca": {
-      "textures": "textures/items/cl/hc/pure_maca"
+      "textures": "textures/items/cl/arte/pure_maca"
     },
     "clhc_vitamina_maca": {
-      "textures": "textures/items/cl/hc/vitamina_maca"
+      "textures": "textures/items/cl/arte/vitamina_maca"
     },
     "clhc_iogurte_maca": {
-      "textures": "textures/items/cl/hc/iogurte_maca"
+      "textures": "textures/items/cl/arte/iogurte_maca"
     },
     "clhc_ovos_bacon": {
-      "textures": "textures/items/cl/hc/ovos_bacon"
+      "textures": "textures/items/cl/arte/ovos_bacon"
     },
     "clhc_x_bacon": {
-      "textures": "textures/items/cl/hc/x_bacon"
+      "textures": "textures/items/cl/arte/x_bacon"
     },
     "clhc_legumes_assados": {
-      "textures": "textures/items/cl/hc/legumes_assados"
+      "textures": "textures/items/cl/arte/legumes_assados"
     },
     "clhc_x_burguer": {
-      "textures": "textures/items/cl/hc/x_burguer"
+      "textures": "textures/items/cl/arte/x_burguer"
     },
     "clhc_sanduiche_peixe": {
-      "textures": "textures/items/cl/hc/sanduiche_peixe"
+      "textures": "textures/items/cl/arte/sanduiche_peixe"
     },
     "clhc_hamburguer_simples": {
-      "textures": "textures/items/cl/hc/hamburguer_simples"
+      "textures": "textures/items/cl/arte/hamburguer_simples"
     },
     "clhc_sanduiche_carneiro": {
-      "textures": "textures/items/cl/hc/sanduiche_carneiro"
+      "textures": "textures/items/cl/arte/sanduiche_carneiro"
     },
     "clhc_sanduiche_porco": {
-      "textures": "textures/items/cl/hc/sanduiche_porco"
+      "textures": "textures/items/cl/arte/sanduiche_porco"
     },
     "clhc_sanduiche_coelho": {
-      "textures": "textures/items/cl/hc/sanduiche_coelho"
+      "textures": "textures/items/cl/arte/sanduiche_coelho"
     },
     "clhc_hamburguer_vegetariano": {
-      "textures": "textures/items/cl/hc/hamburguer_vegetariano"
+      "textures": "textures/items/cl/arte/hamburguer_vegetariano"
     },
     "clhc_sopa_macarrao_carne": {
-      "textures": "textures/items/cl/hc/sopa_macarrao_carne"
+      "textures": "textures/items/cl/arte/sopa_macarrao_carne"
     },
     "clhc_empadao_carne": {
-      "textures": "textures/items/cl/hc/empadao_carne"
+      "textures": "textures/items/cl/arte/empadao_carne"
     },
     "clhc_batata_manteiga": {
-      "textures": "textures/items/cl/hc/batata_manteiga"
+      "textures": "textures/items/cl/arte/batata_manteiga"
     },
     "clhc_maca_amor": {
-      "textures": "textures/items/cl/hc/maca_amor"
+      "textures": "textures/items/cl/arte/maca_amor"
     },
     "clhc_rosquinha_caramelo": {
-      "textures": "textures/items/cl/hc/rosquinha_caramelo"
+      "textures": "textures/items/cl/arte/rosquinha_caramelo"
     },
     "clhc_sorvete_caramelo": {
-      "textures": "textures/items/cl/hc/sorvete_caramelo"
+      "textures": "textures/items/cl/arte/sorvete_caramelo"
     },
     "clhc_caramelo": {
-      "textures": "textures/items/cl/hc/caramelo"
+      "textures": "textures/items/cl/arte/caramelo"
     },
     "clhc_muffin_caramelo": {
-      "textures": "textures/items/cl/hc/muffin_caramelo"
+      "textures": "textures/items/cl/arte/muffin_caramelo"
     },
     "clhc_torta_caramelo": {
-      "textures": "textures/items/cl/hc/torta_caramelo"
+      "textures": "textures/items/cl/arte/torta_caramelo"
     },
     "clhc_iogurte_caramelo": {
-      "textures": "textures/items/cl/hc/iogurte_caramelo"
+      "textures": "textures/items/cl/arte/iogurte_caramelo"
     },
     "clhc_pao_cenoura": {
-      "textures": "textures/items/cl/hc/pao_cenoura"
+      "textures": "textures/items/cl/arte/pao_cenoura"
     },
     "clhc_bolo_cenoura": {
-      "textures": "textures/items/cl/hc/bolo_cenoura"
+      "textures": "textures/items/cl/arte/bolo_cenoura"
     },
     "clhc_rosquinha_cenoura": {
-      "textures": "textures/items/cl/hc/rosquinha_cenoura"
+      "textures": "textures/items/cl/arte/rosquinha_cenoura"
     },
     "clhc_suco_cenoura": {
-      "textures": "textures/items/cl/hc/suco_cenoura"
+      "textures": "textures/items/cl/arte/suco_cenoura"
     },
     "clhc_muffin_cenoura": {
-      "textures": "textures/items/cl/hc/muffin_cenoura"
+      "textures": "textures/items/cl/arte/muffin_cenoura"
     },
     "clhc_torta_cenoura": {
-      "textures": "textures/items/cl/hc/torta_cenoura"
+      "textures": "textures/items/cl/arte/torta_cenoura"
     },
     "clhc_sopa_cenoura": {
-      "textures": "textures/items/cl/hc/sopa_cenoura"
+      "textures": "textures/items/cl/arte/sopa_cenoura"
     },
     "clhc_hc_cheesecake": {
-      "textures": "textures/items/cl/hc/hc_cheesecake"
+      "textures": "textures/items/cl/arte/hc_cheesecake"
     },
     "clhc_jantar_frango": {
-      "textures": "textures/items/cl/hc/jantar_frango"
+      "textures": "textures/items/cl/arte/jantar_frango"
     },
     "clhc_charque_frango": {
-      "textures": "textures/items/cl/hc/charque_frango"
+      "textures": "textures/items/cl/arte/charque_frango"
     },
     "clhc_sopa_macarrao_frango": {
-      "textures": "textures/items/cl/hc/sopa_macarrao_frango"
+      "textures": "textures/items/cl/arte/sopa_macarrao_frango"
     },
     "clhc_nuggets_frango": {
-      "textures": "textures/items/cl/hc/nuggets_frango"
+      "textures": "textures/items/cl/arte/nuggets_frango"
     },
     "clhc_empadao_frango": {
-      "textures": "textures/items/cl/hc/empadao_frango"
+      "textures": "textures/items/cl/arte/empadao_frango"
     },
     "clhc_bacon_chocolate": {
-      "textures": "textures/items/cl/hc/bacon_chocolate"
+      "textures": "textures/items/cl/arte/bacon_chocolate"
     },
     "clhc_barra_chocolate": {
-      "textures": "textures/items/cl/hc/barra_chocolate"
+      "textures": "textures/items/cl/arte/barra_chocolate"
     },
     "clhc_bolo_chocolate": {
-      "textures": "textures/items/cl/hc/bolo_chocolate"
+      "textures": "textures/items/cl/arte/bolo_chocolate"
     },
     "clhc_fudge_chocolate": {
-      "textures": "textures/items/cl/hc/fudge_chocolate"
+      "textures": "textures/items/cl/arte/fudge_chocolate"
     },
     "clhc_rosquinha_chocolate": {
-      "textures": "textures/items/cl/hc/rosquinha_chocolate"
+      "textures": "textures/items/cl/arte/rosquinha_chocolate"
     },
     "clhc_sorvete_chocolate": {
-      "textures": "textures/items/cl/hc/sorvete_chocolate"
+      "textures": "textures/items/cl/arte/sorvete_chocolate"
     },
     "clhc_achocolatado": {
-      "textures": "textures/items/cl/hc/achocolatado"
+      "textures": "textures/items/cl/arte/achocolatado"
     },
     "clhc_muffin_chocolate": {
-      "textures": "textures/items/cl/hc/muffin_chocolate"
+      "textures": "textures/items/cl/arte/muffin_chocolate"
     },
     "clhc_hc_torta_chocolate": {
-      "textures": "textures/items/cl/hc/hc_torta_chocolate"
+      "textures": "textures/items/cl/arte/hc_torta_chocolate"
     },
     "clhc_rocambole_chocolate": {
-      "textures": "textures/items/cl/hc/rocambole_chocolate"
+      "textures": "textures/items/cl/arte/rocambole_chocolate"
     },
     "clhc_iogurte_chocolate": {
-      "textures": "textures/items/cl/hc/iogurte_chocolate"
+      "textures": "textures/items/cl/arte/iogurte_chocolate"
     },
     "clhc_rosquinha_coro": {
-      "textures": "textures/items/cl/hc/rosquinha_coro"
+      "textures": "textures/items/cl/arte/rosquinha_coro"
     },
     "clhc_geleia_coro": {
-      "textures": "textures/items/cl/hc/geleia_coro"
+      "textures": "textures/items/cl/arte/geleia_coro"
     },
     "clhc_torrada_geleia_coro": {
-      "textures": "textures/items/cl/hc/torrada_geleia_coro"
+      "textures": "textures/items/cl/arte/torrada_geleia_coro"
     },
     "clhc_suco_coro": {
-      "textures": "textures/items/cl/hc/suco_coro"
+      "textures": "textures/items/cl/arte/suco_coro"
     },
     "clhc_muffin_coro": {
-      "textures": "textures/items/cl/hc/muffin_coro"
+      "textures": "textures/items/cl/arte/muffin_coro"
     },
     "clhc_torta_coro": {
-      "textures": "textures/items/cl/hc/torta_coro"
+      "textures": "textures/items/cl/arte/torta_coro"
     },
     "clhc_picole_coro": {
-      "textures": "textures/items/cl/hc/picole_coro"
+      "textures": "textures/items/cl/arte/picole_coro"
     },
     "clhc_vitamina_coro": {
-      "textures": "textures/items/cl/hc/vitamina_coro"
+      "textures": "textures/items/cl/arte/vitamina_coro"
     },
     "clhc_iogurte_coro": {
-      "textures": "textures/items/cl/hc/iogurte_coro"
+      "textures": "textures/items/cl/arte/iogurte_coro"
     },
     "clhc_cacau_po": {
-      "textures": "textures/items/cl/hc/cacau_po"
+      "textures": "textures/items/cl/arte/cacau_po"
     },
     "clhc_moido_carne_cozido": {
-      "textures": "textures/items/cl/hc/moido_carne_cozido"
+      "textures": "textures/items/cl/arte/moido_carne_cozido"
     },
     "clhc_moido_frango_cozido": {
-      "textures": "textures/items/cl/hc/moido_frango_cozido"
+      "textures": "textures/items/cl/arte/moido_frango_cozido"
     },
     "clhc_moido_peixe_cozido": {
-      "textures": "textures/items/cl/hc/moido_peixe_cozido"
+      "textures": "textures/items/cl/arte/moido_peixe_cozido"
     },
     "clhc_moido_carneiro_cozido": {
-      "textures": "textures/items/cl/hc/moido_carneiro_cozido"
+      "textures": "textures/items/cl/arte/moido_carneiro_cozido"
     },
     "clhc_moido_porco_cozido": {
-      "textures": "textures/items/cl/hc/moido_porco_cozido"
+      "textures": "textures/items/cl/arte/moido_porco_cozido"
     },
     "clhc_moido_coelho_cozido": {
-      "textures": "textures/items/cl/hc/moido_coelho_cozido"
+      "textures": "textures/items/cl/arte/moido_coelho_cozido"
     },
     "clhc_biscoitos_leite": {
-      "textures": "textures/items/cl/hc/biscoitos_leite"
+      "textures": "textures/items/cl/arte/biscoitos_leite"
     },
     "clhc_oleo_cozinha": {
-      "textures": "textures/items/cl/hc/oleo_cozinha"
+      "textures": "textures/items/cl/arte/oleo_cozinha"
     },
     "clhc_algodao_doce": {
-      "textures": "textures/items/cl/hc/algodao_doce"
+      "textures": "textures/items/cl/arte/algodao_doce"
     },
     "clhc_bolacha": {
-      "textures": "textures/items/cl/hc/bolacha"
+      "textures": "textures/items/cl/arte/bolacha"
     },
     "clhc_bolachas_queijo": {
-      "textures": "textures/items/cl/hc/bolachas_queijo"
+      "textures": "textures/items/cl/arte/bolachas_queijo"
     },
     "clhc_creme_leite": {
-      "textures": "textures/items/cl/hc/creme_leite"
+      "textures": "textures/items/cl/arte/creme_leite"
     },
     "clhc_bacon_epico": {
-      "textures": "textures/items/cl/hc/bacon_epico"
+      "textures": "textures/items/cl/arte/bacon_epico"
     },
     "clhc_peixe_fritas": {
-      "textures": "textures/items/cl/hc/peixe_fritas"
+      "textures": "textures/items/cl/arte/peixe_fritas"
     },
     "clhc_charque_peixe": {
-      "textures": "textures/items/cl/hc/charque_peixe"
+      "textures": "textures/items/cl/arte/charque_peixe"
     },
     "clhc_sopa_macarrao_peixe": {
-      "textures": "textures/items/cl/hc/sopa_macarrao_peixe"
+      "textures": "textures/items/cl/arte/sopa_macarrao_peixe"
     },
     "clhc_empadao_peixe": {
-      "textures": "textures/items/cl/hc/empadao_peixe"
+      "textures": "textures/items/cl/arte/empadao_peixe"
     },
     "clhc_iscas_peixe": {
-      "textures": "textures/items/cl/hc/iscas_peixe"
+      "textures": "textures/items/cl/arte/iscas_peixe"
     },
     "clhc_leite_fresco": {
-      "textures": "textures/items/cl/hc/leite_fresco"
+      "textures": "textures/items/cl/arte/leite_fresco"
     },
     "clhc_frango_frito": {
-      "textures": "textures/items/cl/hc/frango_frito"
+      "textures": "textures/items/cl/arte/frango_frito"
     },
     "clhc_batata_frita": {
-      "textures": "textures/items/cl/hc/batata_frita"
+      "textures": "textures/items/cl/arte/batata_frita"
     },
     "clhc_ponche_frutas": {
-      "textures": "textures/items/cl/hc/ponche_frutas"
+      "textures": "textures/items/cl/arte/ponche_frutas"
     },
     "clhc_picole_chocolate": {
-      "textures": "textures/items/cl/hc/picole_chocolate"
+      "textures": "textures/items/cl/arte/picole_chocolate"
     },
     "clhc_cenouras_glaceadas": {
-      "textures": "textures/items/cl/hc/cenouras_glaceadas"
+      "textures": "textures/items/cl/arte/cenouras_glaceadas"
     },
     "clhc_rosquinha_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/rosquinha_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/rosquinha_bagas_brilhantes"
     },
     "clhc_geleia_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/geleia_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/geleia_bagas_brilhantes"
     },
     "clhc_torrada_geleia_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/torrada_geleia_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/torrada_geleia_bagas_brilhantes"
     },
     "clhc_suco_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/suco_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/suco_bagas_brilhantes"
     },
     "clhc_muffin_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/muffin_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/muffin_bagas_brilhantes"
     },
     "clhc_torta_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/torta_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/torta_bagas_brilhantes"
     },
     "clhc_picole_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/picole_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/picole_bagas_brilhantes"
     },
     "clhc_vitamina_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/vitamina_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/vitamina_bagas_brilhantes"
     },
     "clhc_iogurte_bagas_brilhantes": {
-      "textures": "textures/items/cl/hc/iogurte_bagas_brilhantes"
+      "textures": "textures/items/cl/arte/iogurte_bagas_brilhantes"
     },
     "clhc_espetinho_carne": {
-      "textures": "textures/items/cl/hc/espetinho_carne"
+      "textures": "textures/items/cl/arte/espetinho_carne"
     },
     "clhc_misto_quente": {
-      "textures": "textures/items/cl/hc/misto_quente"
+      "textures": "textures/items/cl/arte/misto_quente"
     },
     "clhc_queijo_quente": {
-      "textures": "textures/items/cl/hc/queijo_quente"
+      "textures": "textures/items/cl/arte/queijo_quente"
     },
     "clhc_espetinho_frango": {
-      "textures": "textures/items/cl/hc/espetinho_frango"
+      "textures": "textures/items/cl/arte/espetinho_frango"
     },
     "clhc_espetinho_peixe": {
-      "textures": "textures/items/cl/hc/espetinho_peixe"
+      "textures": "textures/items/cl/arte/espetinho_peixe"
     },
     "clhc_espetinho_carneiro": {
-      "textures": "textures/items/cl/hc/espetinho_carneiro"
+      "textures": "textures/items/cl/arte/espetinho_carneiro"
     },
     "clhc_espetinho_porco": {
-      "textures": "textures/items/cl/hc/espetinho_porco"
+      "textures": "textures/items/cl/arte/espetinho_porco"
     },
     "clhc_espetinho_coelho": {
-      "textures": "textures/items/cl/hc/espetinho_coelho"
+      "textures": "textures/items/cl/arte/espetinho_coelho"
     },
     "clhc_espetinho_legumes": {
-      "textures": "textures/items/cl/hc/espetinho_legumes"
+      "textures": "textures/items/cl/arte/espetinho_legumes"
     },
     "clhc_moido_carne": {
-      "textures": "textures/items/cl/hc/moido_carne"
+      "textures": "textures/items/cl/arte/moido_carne"
     },
     "clhc_moido_frango": {
-      "textures": "textures/items/cl/hc/moido_frango"
+      "textures": "textures/items/cl/arte/moido_frango"
     },
     "clhc_moido_peixe": {
-      "textures": "textures/items/cl/hc/moido_peixe"
+      "textures": "textures/items/cl/arte/moido_peixe"
     },
     "clhc_moido_carneiro": {
-      "textures": "textures/items/cl/hc/moido_carneiro"
+      "textures": "textures/items/cl/arte/moido_carneiro"
     },
     "clhc_moido_porco": {
-      "textures": "textures/items/cl/hc/moido_porco"
+      "textures": "textures/items/cl/arte/moido_porco"
     },
     "clhc_moido_coelho": {
-      "textures": "textures/items/cl/hc/moido_coelho"
+      "textures": "textures/items/cl/arte/moido_coelho"
     },
     "clhc_balas_creeper": {
-      "textures": "textures/items/cl/hc/balas_creeper"
+      "textures": "textures/items/cl/arte/balas_creeper"
     },
     "clhc_rosquinha_mel": {
-      "textures": "textures/items/cl/hc/rosquinha_mel"
+      "textures": "textures/items/cl/arte/rosquinha_mel"
     },
     "clhc_muffin_mel": {
-      "textures": "textures/items/cl/hc/muffin_mel"
+      "textures": "textures/items/cl/arte/muffin_mel"
     },
     "clhc_torta_mel": {
-      "textures": "textures/items/cl/hc/torta_mel"
+      "textures": "textures/items/cl/arte/torta_mel"
     },
     "clhc_cachorro_quente": {
-      "textures": "textures/items/cl/hc/cachorro_quente"
+      "textures": "textures/items/cl/arte/cachorro_quente"
     },
     "clhc_sorvete": {
-      "textures": "textures/items/cl/hc/sorvete"
+      "textures": "textures/items/cl/arte/sorvete"
     },
     "clhc_jujubas": {
-      "textures": "textures/items/cl/hc/jujubas"
+      "textures": "textures/items/cl/arte/jujubas"
     },
     "clhc_macarrao_queijo": {
-      "textures": "textures/items/cl/hc/macarrao_queijo"
+      "textures": "textures/items/cl/arte/macarrao_queijo"
     },
     "clhc_marshmallow": {
-      "textures": "textures/items/cl/hc/marshmallow"
+      "textures": "textures/items/cl/arte/marshmallow"
     },
     "clhc_pure_batata": {
-      "textures": "textures/items/cl/hc/pure_batata"
+      "textures": "textures/items/cl/arte/pure_batata"
     },
     "clhc_bolo_carne": {
-      "textures": "textures/items/cl/hc/bolo_carne"
+      "textures": "textures/items/cl/arte/bolo_carne"
     },
     "clhc_rosquinha_melancia": {
-      "textures": "textures/items/cl/hc/rosquinha_melancia"
+      "textures": "textures/items/cl/arte/rosquinha_melancia"
     },
     "clhc_geleia_melancia": {
-      "textures": "textures/items/cl/hc/geleia_melancia"
+      "textures": "textures/items/cl/arte/geleia_melancia"
     },
     "clhc_torrada_geleia_melancia": {
-      "textures": "textures/items/cl/hc/torrada_geleia_melancia"
+      "textures": "textures/items/cl/arte/torrada_geleia_melancia"
     },
     "clhc_muffin_melancia": {
-      "textures": "textures/items/cl/hc/muffin_melancia"
+      "textures": "textures/items/cl/arte/muffin_melancia"
     },
     "clhc_torta_melancia": {
-      "textures": "textures/items/cl/hc/torta_melancia"
+      "textures": "textures/items/cl/arte/torta_melancia"
     },
     "clhc_vitamina_melancia": {
-      "textures": "textures/items/cl/hc/vitamina_melancia"
+      "textures": "textures/items/cl/arte/vitamina_melancia"
     },
     "clhc_iogurte_melancia": {
-      "textures": "textures/items/cl/hc/iogurte_melancia"
+      "textures": "textures/items/cl/arte/iogurte_melancia"
     },
     "clhc_charque_carneiro": {
-      "textures": "textures/items/cl/hc/charque_carneiro"
+      "textures": "textures/items/cl/arte/charque_carneiro"
     },
     "clhc_sopa_macarrao_carneiro": {
-      "textures": "textures/items/cl/hc/sopa_macarrao_carneiro"
+      "textures": "textures/items/cl/arte/sopa_macarrao_carneiro"
     },
     "clhc_empadao_carneiro": {
-      "textures": "textures/items/cl/hc/empadao_carneiro"
+      "textures": "textures/items/cl/arte/empadao_carneiro"
     },
     "clhc_suco_p8": {
-      "textures": "textures/items/cl/hc/suco_p8"
+      "textures": "textures/items/cl/arte/suco_p8"
     },
     "clhc_macarrao": {
-      "textures": "textures/items/cl/hc/macarrao"
+      "textures": "textures/items/cl/arte/macarrao"
     },
     "clhc_beterraba_conserva": {
-      "textures": "textures/items/cl/hc/beterraba_conserva"
+      "textures": "textures/items/cl/arte/beterraba_conserva"
     },
     "clhc_rosquinha": {
-      "textures": "textures/items/cl/hc/rosquinha"
+      "textures": "textures/items/cl/arte/rosquinha"
     },
     "clhc_charque_porco": {
-      "textures": "textures/items/cl/hc/charque_porco"
+      "textures": "textures/items/cl/arte/charque_porco"
     },
     "clhc_sopa_macarrao_porco": {
-      "textures": "textures/items/cl/hc/sopa_macarrao_porco"
+      "textures": "textures/items/cl/arte/sopa_macarrao_porco"
     },
     "clhc_empadao_porco": {
-      "textures": "textures/items/cl/hc/empadao_porco"
+      "textures": "textures/items/cl/arte/empadao_porco"
     },
     "clhc_batata_chips": {
-      "textures": "textures/items/cl/hc/batata_chips"
+      "textures": "textures/items/cl/arte/batata_chips"
     },
     "clhc_sopa_batata": {
-      "textures": "textures/items/cl/hc/sopa_batata"
+      "textures": "textures/items/cl/arte/sopa_batata"
     },
     "clhc_carne_panela": {
-      "textures": "textures/items/cl/hc/carne_panela"
+      "textures": "textures/items/cl/arte/carne_panela"
     },
     "clhc_rosquinha_acucarada": {
-      "textures": "textures/items/cl/hc/rosquinha_acucarada"
+      "textures": "textures/items/cl/arte/rosquinha_acucarada"
     },
     "clhc_pao_abobora": {
-      "textures": "textures/items/cl/hc/pao_abobora"
+      "textures": "textures/items/cl/arte/pao_abobora"
     },
     "clhc_cheesecake_abobora": {
-      "textures": "textures/items/cl/hc/cheesecake_abobora"
+      "textures": "textures/items/cl/arte/cheesecake_abobora"
     },
     "clhc_rosquinha_abobora": {
-      "textures": "textures/items/cl/hc/rosquinha_abobora"
+      "textures": "textures/items/cl/arte/rosquinha_abobora"
     },
     "clhc_muffin_abobora": {
-      "textures": "textures/items/cl/hc/muffin_abobora"
+      "textures": "textures/items/cl/arte/muffin_abobora"
     },
     "clhc_iogurte_abobora": {
-      "textures": "textures/items/cl/hc/iogurte_abobora"
+      "textures": "textures/items/cl/arte/iogurte_abobora"
     },
     "clhc_charque_coelho": {
-      "textures": "textures/items/cl/hc/charque_coelho"
+      "textures": "textures/items/cl/arte/charque_coelho"
     },
     "clhc_sopa_macarrao_coelho": {
-      "textures": "textures/items/cl/hc/sopa_macarrao_coelho"
+      "textures": "textures/items/cl/arte/sopa_macarrao_coelho"
     },
     "clhc_empadao_coelho": {
-      "textures": "textures/items/cl/hc/empadao_coelho"
+      "textures": "textures/items/cl/arte/empadao_coelho"
     },
     "clhc_girassol_torrado": {
-      "textures": "textures/items/cl/hc/girassol_torrado"
+      "textures": "textures/items/cl/arte/girassol_torrado"
     },
     "clhc_ovos_mexidos": {
-      "textures": "textures/items/cl/hc/ovos_mexidos"
+      "textures": "textures/items/cl/arte/ovos_mexidos"
     },
     "clhc_smores": {
-      "textures": "textures/items/cl/hc/smores"
+      "textures": "textures/items/cl/arte/smores"
     },
     "clhc_pretzel": {
-      "textures": "textures/items/cl/hc/pretzel"
+      "textures": "textures/items/cl/arte/pretzel"
     },
     "clhc_rosquinha_granulado": {
-      "textures": "textures/items/cl/hc/rosquinha_granulado"
+      "textures": "textures/items/cl/arte/rosquinha_granulado"
     },
     "clhc_ensopado": {
-      "textures": "textures/items/cl/hc/ensopado"
+      "textures": "textures/items/cl/arte/ensopado"
     },
     "clhc_semente_girassol": {
-      "textures": "textures/items/cl/hc/semente_girassol"
+      "textures": "textures/items/cl/arte/semente_girassol"
     },
     "clhc_rosquinha_bagas_doces": {
-      "textures": "textures/items/cl/hc/rosquinha_bagas_doces"
+      "textures": "textures/items/cl/arte/rosquinha_bagas_doces"
     },
     "clhc_geleia_bagas_doces": {
-      "textures": "textures/items/cl/hc/geleia_bagas_doces"
+      "textures": "textures/items/cl/arte/geleia_bagas_doces"
     },
     "clhc_torrada_geleia_bagas_doces": {
-      "textures": "textures/items/cl/hc/torrada_geleia_bagas_doces"
+      "textures": "textures/items/cl/arte/torrada_geleia_bagas_doces"
     },
     "clhc_suco_bagas_doces": {
-      "textures": "textures/items/cl/hc/suco_bagas_doces"
+      "textures": "textures/items/cl/arte/suco_bagas_doces"
     },
     "clhc_muffin_bagas_doces": {
-      "textures": "textures/items/cl/hc/muffin_bagas_doces"
+      "textures": "textures/items/cl/arte/muffin_bagas_doces"
     },
     "clhc_torta_bagas_doces": {
-      "textures": "textures/items/cl/hc/torta_bagas_doces"
+      "textures": "textures/items/cl/arte/torta_bagas_doces"
     },
     "clhc_picole_bagas_doces": {
-      "textures": "textures/items/cl/hc/picole_bagas_doces"
+      "textures": "textures/items/cl/arte/picole_bagas_doces"
     },
     "clhc_vitamina_bagas_doces": {
-      "textures": "textures/items/cl/hc/vitamina_bagas_doces"
+      "textures": "textures/items/cl/arte/vitamina_bagas_doces"
     },
     "clhc_iogurte_bagas_doces": {
-      "textures": "textures/items/cl/hc/iogurte_bagas_doces"
+      "textures": "textures/items/cl/arte/iogurte_bagas_doces"
     },
     "clhc_mix_castanhas": {
-      "textures": "textures/items/cl/hc/mix_castanhas"
+      "textures": "textures/items/cl/arte/mix_castanhas"
     },
     "clhc_sopa_macarrao_legumes": {
-      "textures": "textures/items/cl/hc/sopa_macarrao_legumes"
+      "textures": "textures/items/cl/arte/sopa_macarrao_legumes"
     },
     "clhc_empadao_legumes": {
-      "textures": "textures/items/cl/hc/empadao_legumes"
+      "textures": "textures/items/cl/arte/empadao_legumes"
     },
     "clhc_vinagre": {
-      "textures": "textures/items/cl/hc/vinagre"
+      "textures": "textures/items/cl/arte/vinagre"
     },
     "clhc_iogurte": {
-      "textures": "textures/items/cl/hc/iogurte"
+      "textures": "textures/items/cl/arte/iogurte"
     },
     "clhc_araruta_assada": {
-      "textures": "textures/items/cl/hc/araruta_assada"
+      "textures": "textures/items/cl/arte/araruta_assada"
     },
     "clhc_mandioca_assada": {
-      "textures": "textures/items/cl/hc/mandioca_assada"
+      "textures": "textures/items/cl/arte/mandioca_assada"
     },
     "clhc_jicama_assada": {
-      "textures": "textures/items/cl/hc/jicama_assada"
+      "textures": "textures/items/cl/arte/jicama_assada"
     },
     "clhc_pastinaca_assada": {
-      "textures": "textures/items/cl/hc/pastinaca_assada"
+      "textures": "textures/items/cl/arte/pastinaca_assada"
     },
     "clhc_nabo_sueco_assado": {
-      "textures": "textures/items/cl/hc/nabo_sueco_assado"
+      "textures": "textures/items/cl/arte/nabo_sueco_assado"
     },
     "clhc_tupinambo_assado": {
-      "textures": "textures/items/cl/hc/tupinambo_assado"
+      "textures": "textures/items/cl/arte/tupinambo_assado"
     },
     "clhc_batata_doce_assada": {
-      "textures": "textures/items/cl/hc/batata_doce_assada"
+      "textures": "textures/items/cl/arte/batata_doce_assada"
     },
     "clhc_inhame_assado": {
-      "textures": "textures/items/cl/hc/inhame_assado"
+      "textures": "textures/items/cl/arte/inhame_assado"
     },
     "clhc_nabo_assado": {
-      "textures": "textures/items/cl/hc/nabo_assado"
+      "textures": "textures/items/cl/arte/nabo_assado"
     },
     "clhc_castanha_dagua_assada": {
-      "textures": "textures/items/cl/hc/castanha_dagua_assada"
+      "textures": "textures/items/cl/arte/castanha_dagua_assada"
     },
     "clhc_cafe_quente": {
-      "textures": "textures/items/cl/hc/cafe_quente"
+      "textures": "textures/items/cl/arte/cafe_quente"
     },
     "clhc_cha_urtiga": {
-      "textures": "textures/items/cl/hc/cha_urtiga"
+      "textures": "textures/items/cl/arte/cha_urtiga"
     },
     "clhc_cha_quente": {
-      "textures": "textures/items/cl/hc/cha_quente"
+      "textures": "textures/items/cl/arte/cha_quente"
     },
     "clhc_alho_assado": {
-      "textures": "textures/items/cl/hc/alho_assado"
+      "textures": "textures/items/cl/arte/alho_assado"
     },
     "clhc_couve_rabano_assada": {
-      "textures": "textures/items/cl/hc/couve_rabano_assada"
+      "textures": "textures/items/cl/arte/couve_rabano_assada"
     },
     "clhc_alho_poro_assado": {
-      "textures": "textures/items/cl/hc/alho_poro_assado"
+      "textures": "textures/items/cl/arte/alho_poro_assado"
     },
     "clhc_cogumelo_assado": {
-      "textures": "textures/items/cl/hc/cogumelo_assado"
+      "textures": "textures/items/cl/arte/cogumelo_assado"
     },
     "clhc_cebola_assada": {
-      "textures": "textures/items/cl/hc/cebola_assada"
+      "textures": "textures/items/cl/arte/cebola_assada"
     },
     "clhc_amendoim_torrado": {
-      "textures": "textures/items/cl/hc/amendoim_torrado"
+      "textures": "textures/items/cl/arte/amendoim_torrado"
     },
     "clhc_rabanete_assado": {
-      "textures": "textures/items/cl/hc/rabanete_assado"
+      "textures": "textures/items/cl/arte/rabanete_assado"
     },
     "clhc_ruibarbo_assado": {
-      "textures": "textures/items/cl/hc/ruibarbo_assado"
+      "textures": "textures/items/cl/arte/ruibarbo_assado"
     },
     "clhc_cebolinha_assada": {
-      "textures": "textures/items/cl/hc/cebolinha_assada"
+      "textures": "textures/items/cl/arte/cebolinha_assada"
     },
     "clhc_bolota_assada": {
-      "textures": "textures/items/cl/hc/bolota_assada"
+      "textures": "textures/items/cl/arte/bolota_assada"
     },
     "clhc_amendoa_torrada": {
-      "textures": "textures/items/cl/hc/amendoa_torrada"
+      "textures": "textures/items/cl/arte/amendoa_torrada"
     },
     "clhc_caju_torrado": {
-      "textures": "textures/items/cl/hc/caju_torrado"
+      "textures": "textures/items/cl/arte/caju_torrado"
     },
     "clhc_castanha_assada": {
-      "textures": "textures/items/cl/hc/castanha_assada"
+      "textures": "textures/items/cl/arte/castanha_assada"
     },
     "clhc_avela_torrada": {
-      "textures": "textures/items/cl/hc/avela_torrada"
+      "textures": "textures/items/cl/arte/avela_torrada"
     },
     "clhc_peca_torrada": {
-      "textures": "textures/items/cl/hc/peca_torrada"
+      "textures": "textures/items/cl/arte/peca_torrada"
     },
     "clhc_pinoli_torrado": {
-      "textures": "textures/items/cl/hc/pinoli_torrado"
+      "textures": "textures/items/cl/arte/pinoli_torrado"
     },
     "clhc_pistache_torrado": {
-      "textures": "textures/items/cl/hc/pistache_torrado"
+      "textures": "textures/items/cl/arte/pistache_torrado"
     },
     "clhc_noz_torrada": {
-      "textures": "textures/items/cl/hc/noz_torrada"
+      "textures": "textures/items/cl/arte/noz_torrada"
     },
     "clc_cristal_ferro": {
       "textures": "textures/items/cl/arte/cristal_ferro"
@@ -7080,55 +7080,55 @@
       "textures": "textures/items/cl/arte/vareta_pead"
     },
     "clc_cilindro_dioxido_enxofre": {
-      "textures": "textures/items/cl/c/cilindro_dioxido_enxofre"
+      "textures": "textures/items/cl/arte/cilindro_dioxido_enxofre"
     },
     "clc_cilindro_trioxido_enxofre": {
-      "textures": "textures/items/cl/c/cilindro_trioxido_enxofre"
+      "textures": "textures/items/cl/arte/cilindro_trioxido_enxofre"
     },
     "clc_cilindro_acido_sulfurico": {
-      "textures": "textures/items/cl/c/cilindro_acido_sulfurico"
+      "textures": "textures/items/cl/arte/cilindro_acido_sulfurico"
     },
     "clc_cilindro_vapor_agua": {
-      "textures": "textures/items/cl/c/cilindro_vapor_agua"
+      "textures": "textures/items/cl/arte/cilindro_vapor_agua"
     },
     "clc_cilindro_eteno": {
-      "textures": "textures/items/cl/c/cilindro_eteno"
+      "textures": "textures/items/cl/arte/cilindro_eteno"
     },
     "clc_cilindro_litio": {
-      "textures": "textures/items/cl/c/cilindro_litio"
+      "textures": "textures/items/cl/arte/cilindro_litio"
     },
     "clc_cilindro_sodio": {
-      "textures": "textures/items/cl/c/cilindro_sodio"
+      "textures": "textures/items/cl/arte/cilindro_sodio"
     },
     "clc_cilindro_pasta_suja_ferro": {
-      "textures": "textures/items/cl/c/cilindro_pasta_suja_ferro"
+      "textures": "textures/items/cl/arte/cilindro_pasta_suja_ferro"
     },
     "clc_cilindro_pasta_suja_ouro": {
-      "textures": "textures/items/cl/c/cilindro_pasta_suja_ouro"
+      "textures": "textures/items/cl/arte/cilindro_pasta_suja_ouro"
     },
     "clc_cilindro_pasta_suja_cobre": {
-      "textures": "textures/items/cl/c/cilindro_pasta_suja_cobre"
+      "textures": "textures/items/cl/arte/cilindro_pasta_suja_cobre"
     },
     "clc_cilindro_pasta_suja_estanho": {
-      "textures": "textures/items/cl/c/cilindro_pasta_suja_estanho"
+      "textures": "textures/items/cl/arte/cilindro_pasta_suja_estanho"
     },
     "clc_cilindro_pasta_suja_osmio": {
-      "textures": "textures/items/cl/c/cilindro_pasta_suja_osmio"
+      "textures": "textures/items/cl/arte/cilindro_pasta_suja_osmio"
     },
     "clc_cilindro_pasta_limpa_ferro": {
-      "textures": "textures/items/cl/c/cilindro_pasta_limpa_ferro"
+      "textures": "textures/items/cl/arte/cilindro_pasta_limpa_ferro"
     },
     "clc_cilindro_pasta_limpa_ouro": {
-      "textures": "textures/items/cl/c/cilindro_pasta_limpa_ouro"
+      "textures": "textures/items/cl/arte/cilindro_pasta_limpa_ouro"
     },
     "clc_cilindro_pasta_limpa_cobre": {
-      "textures": "textures/items/cl/c/cilindro_pasta_limpa_cobre"
+      "textures": "textures/items/cl/arte/cilindro_pasta_limpa_cobre"
     },
     "clc_cilindro_pasta_limpa_estanho": {
-      "textures": "textures/items/cl/c/cilindro_pasta_limpa_estanho"
+      "textures": "textures/items/cl/arte/cilindro_pasta_limpa_estanho"
     },
     "clc_cilindro_pasta_limpa_osmio": {
-      "textures": "textures/items/cl/c/cilindro_pasta_limpa_osmio"
+      "textures": "textures/items/cl/arte/cilindro_pasta_limpa_osmio"
     },
     "clc_melhoria_velocidade": {
       "textures": "textures/items/cl/arte/melhoria_velocidade"
@@ -7176,10 +7176,10 @@
       "textures": "textures/items/cl/arte/cristal_chumbo"
     },
     "clc_cilindro_pasta_suja_chumbo": {
-      "textures": "textures/items/cl/c/cilindro_pasta_suja_chumbo"
+      "textures": "textures/items/cl/arte/cilindro_pasta_suja_chumbo"
     },
     "clc_cilindro_pasta_limpa_chumbo": {
-      "textures": "textures/items/cl/c/cilindro_pasta_limpa_chumbo"
+      "textures": "textures/items/cl/arte/cilindro_pasta_limpa_chumbo"
     },
     "clc_teletransportador_portatil": {
       "textures": "textures/items/cl/arte/teletransportador_portatil"
@@ -7218,49 +7218,49 @@
       "textures": "textures/items/cl/arte/cristal_uranio"
     },
     "clc_cilindro_oxido_uranio": {
-      "textures": "textures/items/cl/c/cilindro_oxido_uranio"
+      "textures": "textures/items/cl/arte/cilindro_oxido_uranio"
     },
     "clc_cilindro_acido_fluoridrico": {
-      "textures": "textures/items/cl/c/cilindro_acido_fluoridrico"
+      "textures": "textures/items/cl/arte/cilindro_acido_fluoridrico"
     },
     "clc_cilindro_hexafluoreto_uranio": {
-      "textures": "textures/items/cl/c/cilindro_hexafluoreto_uranio"
+      "textures": "textures/items/cl/arte/cilindro_hexafluoreto_uranio"
     },
     "clc_cilindro_combustivel_fissil": {
-      "textures": "textures/items/cl/c/cilindro_combustivel_fissil"
+      "textures": "textures/items/cl/arte/cilindro_combustivel_fissil"
     },
     "clc_cilindro_residuo_nuclear": {
-      "textures": "textures/items/cl/c/cilindro_residuo_nuclear"
+      "textures": "textures/items/cl/arte/cilindro_residuo_nuclear"
     },
     "clc_cilindro_residuo_nuclear_gasto": {
-      "textures": "textures/items/cl/c/cilindro_residuo_nuclear_gasto"
+      "textures": "textures/items/cl/arte/cilindro_residuo_nuclear_gasto"
     },
     "clc_cilindro_plutonio": {
-      "textures": "textures/items/cl/c/cilindro_plutonio"
+      "textures": "textures/items/cl/arte/cilindro_plutonio"
     },
     "clc_cilindro_polonio": {
-      "textures": "textures/items/cl/c/cilindro_polonio"
+      "textures": "textures/items/cl/arte/cilindro_polonio"
     },
     "clc_cilindro_antimateria": {
-      "textures": "textures/items/cl/c/cilindro_antimateria"
+      "textures": "textures/items/cl/arte/cilindro_antimateria"
     },
     "clc_cilindro_vapor": {
-      "textures": "textures/items/cl/c/cilindro_vapor"
+      "textures": "textures/items/cl/arte/cilindro_vapor"
     },
     "clc_cilindro_deuterio": {
-      "textures": "textures/items/cl/c/cilindro_deuterio"
+      "textures": "textures/items/cl/arte/cilindro_deuterio"
     },
     "clc_cilindro_tritio": {
-      "textures": "textures/items/cl/c/cilindro_tritio"
+      "textures": "textures/items/cl/arte/cilindro_tritio"
     },
     "clc_cilindro_combustivel_fusao": {
-      "textures": "textures/items/cl/c/cilindro_combustivel_fusao"
+      "textures": "textures/items/cl/arte/cilindro_combustivel_fusao"
     },
     "clc_cilindro_pasta_suja_uranio": {
-      "textures": "textures/items/cl/c/cilindro_pasta_suja_uranio"
+      "textures": "textures/items/cl/arte/cilindro_pasta_suja_uranio"
     },
     "clc_cilindro_pasta_limpa_uranio": {
-      "textures": "textures/items/cl/c/cilindro_pasta_limpa_uranio"
+      "textures": "textures/items/cl/arte/cilindro_pasta_limpa_uranio"
     },
     "clc_lingote_uranio": {
       "textures": "textures/items/cl/arte/lingote_uranio"
@@ -7350,10 +7350,10 @@
       "textures": "textures/items/cl/arte/pa_turbina_mk"
     },
     "clc_balde_agua_pesada": {
-      "textures": "textures/items/cl/c/balde_agua_pesada"
+      "textures": "textures/items/cl/arte/balde_agua_pesada"
     },
     "clc_balde_pasta_nutritiva": {
-      "textures": "textures/items/cl/c/balde_pasta_nutritiva"
+      "textures": "textures/items/cl/arte/balde_pasta_nutritiva"
     },
     "clc_base_modulo": {
       "textures": "textures/items/cl/arte/base_modulo"
@@ -7458,10 +7458,10 @@
       "textures": "textures/items/cl/arte/modulo_geotermico"
     },
     "clc_desmontador_atomico": {
-      "textures": "textures/items/cl/c/desmontador_atomico"
+      "textures": "textures/items/cl/arte/desmontador_atomico"
     },
     "clc_ferramenta_meka": {
-      "textures": "textures/items/cl/c/ferramenta_meka"
+      "textures": "textures/items/cl/arte/ferramenta_meka"
     },
     "clc_capacete_mekasuit": {
       "textures": "textures/items/cl/arte/capacete_mekasuit"
@@ -7479,22 +7479,22 @@
       "textures": "textures/items/cl/arte/arco_eletrico"
     },
     "clc_lanca_chamas": {
-      "textures": "textures/items/cl/c/lanca_chamas"
+      "textures": "textures/items/cl/arte/lanca_chamas"
     },
     "clc_corredores_livres": {
-      "textures": "textures/items/cl/c/corredores_livres"
+      "textures": "textures/items/cl/arte/corredores_livres"
     },
     "clc_corredores_livres_blindados": {
-      "textures": "textures/items/cl/c/corredores_livres_blindados"
+      "textures": "textures/items/cl/arte/corredores_livres_blindados"
     },
     "clc_jetpack_blindado": {
-      "textures": "textures/items/cl/c/jetpack_blindado"
+      "textures": "textures/items/cl/arte/jetpack_blindado"
     },
     "clc_mascara_mergulho": {
-      "textures": "textures/items/cl/c/mascara_mergulho"
+      "textures": "textures/items/cl/arte/mascara_mergulho"
     },
     "clc_tanque_mergulho": {
-      "textures": "textures/items/cl/c/tanque_mergulho"
+      "textures": "textures/items/cl/arte/tanque_mergulho"
     },
     "clc_configurador": {
       "textures": "textures/items/cl/arte/configurador"

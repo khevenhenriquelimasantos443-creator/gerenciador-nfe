@@ -155,6 +155,12 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.55.1 (555 ícones novos)
+
+- **555 ícones redesenhados** no AI Studio: todos os que ainda eram desenho por fórmula (pós, chapas, cilindros do Mekanism, moldes,
+  pedras de viagem, balões), as 423 comidas, plantas e sementes do HarvestCraft 2 e os 29 desenhados por script. Agora nenhum ícone de
+  item do pack está na lista de "refazer" (`docs/icones-refazer/LEIAME.md`). O script fica em `tools/artes/gerar-artes-555.mjs`.
+
 ## Novidades da 1.55.0 (Lua sem buracos, Vila Lunar, masmorras, cabos e telas das máquinas)
 
 - **Lua sem queda no vazio:** a superfície de cada chunk sai na hora (solo, terra e 6 camadas de rocha), primeiro embaixo do jogador e na
