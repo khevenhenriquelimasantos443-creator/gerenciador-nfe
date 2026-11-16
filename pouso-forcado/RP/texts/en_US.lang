@@ -6445,6 +6445,9 @@ cl.tela.por=Put items in the input
 cl.tela.pegar=Take the output
 cl.tela.catalogo=Open in the Catalog
 cl.tela.escolher=Choose what goes into the input (the whole stack).
+cl.yung.masmorra_aviso=§7Cold air rises from the ground: a §fSkeleton Dungeon§7 below X %s, Z %s (about %s blocks down).
+cl.missao.yung_masmorra.titulo=Bones in the Dark
+cl.missao.yung_masmorra.desc=Find a Skeleton Dungeon underground (between y -50 and -30).
 cl.missao.ad_tela.titulo=Machine Panel
 cl.missao.ad_tela.desc=Tap a machine with an empty hand to open its screen.
 ## fim Conteúdo

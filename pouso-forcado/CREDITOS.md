@@ -92,6 +92,14 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   para este projeto sobre os modelos do jogo (`referencias/vanilla/modelos`, dos mesmos exemplos da Mojang). Os
   planetas do céu da Lua também são arte própria (`tools/gerar-ceu-lua.mjs`).
 
+- **YUNG's Better Desert Temples** e **YUNG's Better Dungeons** (YUNGNICKYOUNG, LGPL-3.0,
+  github.com/YUNG-GANG): o Templo do Deserto (1.14.0) e a Masmorra dos Esqueletos (1.55.0) são as peças (.nbt) dos
+  mods montadas fora do jogo com as regras de jigsaw e os processadores deles (`tools/gerar-templo-yung.py` e
+  `tools/gerar-masmorra-yung.py`); licenças em `docs/licencas/yung_desert_temples.txt` e `yung_better_dungeons.txt`.
+- **Galacticraft 5** (Team Galacticraft, MIT, inclusive a arte): desde a 1.55.0 a Vila Lunar, as Ruínas Lunares, o
+  Aldeão Lunar e a Decoração de Estanho são as peças, o modelo e a arte do mod (`tools/gerar-vila-lunar.py`); as
+  trocas do Aldeão são as do Aldeão Alienígena do Galacticraft antigo, e as masmorras da Lua seguem o espaçamento do GC5.
+
 - **Powah!** (owmii, LGPL-3.0, github.com/owmii/Powah): geradores, células, cabos e o Orbe Energizador (1.18.0). A arte
   dos itens e das faces dos blocos é a do mod e os números e receitas foram lidos do código (`tools/importar-powah.py`;
   licença em `docs/licencas/powah.txt`). O código daqui é próprio.

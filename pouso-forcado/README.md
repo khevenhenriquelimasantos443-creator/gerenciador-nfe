@@ -155,6 +155,28 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.55.0 (Lua sem buracos, Vila Lunar, masmorras, cabos e telas das máquinas)
+
+- **Lua sem queda no vazio:** a superfície de cada chunk sai na hora (solo, terra e 6 camadas de rocha), primeiro embaixo do jogador e na
+  frente de quem voa (pela velocidade); o fundo (rocha, minérios e a rocha matriz) vem depois, um chunk por vez. Quem cai abaixo da rocha
+  matriz volta para o chão. Testado voando a 24 blocos/s (mais rápido que o voo correndo do criativo): nenhum tique sem chão.
+- **Vila Lunar** (Galacticraft 5, MIT, peças e arte do mod): casas de Decoração de Estanho, estufas, postes e ruas de terra lunar, com os
+  **Aldeões Lunares**, que trocam **safira lunar** por máscara, tanque leve, equipamento de oxigênio, combustível, wafer e placas de estanho e
+  cobre (e compram mudas de selva). Uma por região de 34×34 chunks.
+- **Ruínas Lunares** (GC5): o centro e mais 4 a 8 peças meio destruídas, com baús; uma por região de 32×32 chunks.
+- **Outras masmorras da Lua** (como no GC5, uma por região de 32×32 chunks): a mesma masmorra da Base de Pesquisa, girada, com o Esqueleto
+  Evoluído Gigante e o Baú do Tesouro (o Núcleo de Salto continua só na Base). O rádio avisa a vila, as ruínas e as masmorras perto.
+- **Masmorra dos Esqueletos** no mundo normal (YUNG's Better Dungeons, LGPL): a caverna de 31×31 com pontes, escadas, geradores de esqueletos
+  e baús, entre y -50 e -30; uma por região de 46×46 chunks. Um "ar frio" avisa quando se passa por cima dela.
+- **Cabos que ligam:** todos os cabos (o Cabo, os condutos do Ender IO, os do Powah! e os Universais do Mekanism) mostram o braço em qualquer
+  cabo, gerador, bateria, célula e máquina que usa energia (230 blocos). Os cabos de mundos antigos se acertam sozinhos quando a energia passa.
+  O Cabo não pisca mais e fica contínuo de um bloco para o outro.
+- **Tela da máquina:** toque numa máquina com a **mão vazia**: estado, energia da rede, entrada (baú em cima) e saída (baú embaixo), com botões
+  para pôr itens, pegar a saída e ver no Catálogo. As que já tinham tela própria continuam com a delas.
+- Blocos novos: Decoração de Estanho e Decoração de Estanho Detalhada. Missões novas: Vila Lunar, Vizinhos de Outro Mundo, Ruínas Lunares,
+  Decoração de Estanho, Caçador de Chefes, Ossos no Escuro e Painel da Máquina.
+- `docs/icones-refazer/`: os 555 ícones que ainda são desenho por fórmula, com o pedido para o AI Studio.
+
 ## Novidades da 1.54.1 (revisão das artes e das telas)
 
 - **Flipbooks sem "pulo" ao reiniciar:** `tela_terminal`, `agua`, `lava`, `petroleo`, `forja` e `brasa_on` tinham o deslocamento fechando fora do ciclo

@@ -203,6 +203,7 @@ export type Acao =
   | "base_lua"
   | "chefe_lua"
   | "vila_lua"
+  | "masmorra_esqueletos"
   | "tela_maquina"
   | "ruinas_lua"
   | "aldeao_lua"
@@ -1099,6 +1100,8 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "cidade", objetivo: { tipo: "acao", acao: "cidade", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 16 }] },
       { id: "spawner", objetivo: { tipo: "acao", acao: "spawner", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }] },
       { id: "masmorra", objetivo: { tipo: "acao", acao: "masmorra", qtd: 1 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
+      // 1.55.0: a Masmorra dos Esqueletos do YUNG's Better Dungeons.
+      { id: "yung_masmorra", requer: ["masmorra"], objetivo: { tipo: "acao", acao: "masmorra_esqueletos", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "destrocos", objetivo: { tipo: "acao", acao: "destrocos", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 4 }] },
       { id: "tempestade", objetivo: { tipo: "acao", acao: "tempestade", qtd: 1 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 4 }] },
       { id: "exterminador", objetivo: { tipo: "acao", acao: "spawner", qtd: 5 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },

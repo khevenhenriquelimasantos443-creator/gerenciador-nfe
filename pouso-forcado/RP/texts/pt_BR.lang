@@ -6446,6 +6446,9 @@ cl.tela.por=Pôr itens na entrada
 cl.tela.pegar=Pegar a saída
 cl.tela.catalogo=Ver no Catálogo
 cl.tela.escolher=Escolha o que vai para a entrada (a pilha inteira).
+cl.yung.masmorra_aviso=§7Um ar frio sobe do chão: uma §fMasmorra dos Esqueletos§7 embaixo de X %s, Z %s (uns %s blocos para baixo).
+cl.missao.yung_masmorra.titulo=Ossos no Escuro
+cl.missao.yung_masmorra.desc=Ache uma Masmorra dos Esqueletos no subsolo (ela fica entre y -50 e -30).
 cl.missao.ad_tela.titulo=Painel da Máquina
 cl.missao.ad_tela.desc=Toque numa máquina com a mão vazia para abrir a tela dela.
 ## fim Conteúdo

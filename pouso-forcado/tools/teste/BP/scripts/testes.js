@@ -3298,6 +3298,8 @@ teste("explosao", 300, (t) => {
     // Cada gaveta cheia vira UM item de gaveta com tudo dentro (como quebrar à mão): sem ferro solto, sem gaveta vazia de sobra.
     const itens = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3.5, y: 2.5, z: 2.5 }), maxDistance: 14 });
     const stacks = itens.map((e) => e.getComponent("minecraft:item").itemStack);
+    // O robô fica a uns 2 blocos da última gaveta e às vezes pega o item dela do chão: conta o que está com ele também.
+    for (let i = 0; i < inv.size; i++) { const it = inv.getItem(i); if (it?.typeId === "cl:gaveta") stacks.push(it); }
     const gavetas = stacks.filter((i) => i.typeId === "cl:gaveta");
     const solto = stacks.filter((i) => i.typeId === "minecraft:iron_ingot").reduce((n, i) => n + i.amount, 0);
     const cheias = gavetas.filter((i) => (i.getLore() ?? []).some((l) => l.includes("64"))).length;
@@ -3465,6 +3467,32 @@ teste("tela_maquina", 200, (t) => {
   t.runAfterDelay(150, () => {
     system.afterEvents.scriptEventReceive.unsubscribe(ouvir);
     log(`tela_maquina: ${linhas.join(" ")}`);
+    t.succeed();
+  });
+});
+
+// 1.55.0: a Masmorra dos Esqueletos do YUNG's Better Dungeons: posta 40 blocos ao lado e 20 abaixo, com os
+// geradores de esqueletos e os baús do mod.
+teste("masmorra_yung", 300, (t) => {
+  const j = robo(t, { x: 1, y: 2, z: 1 });
+  const dim = t.getDimension();
+  const p0 = { x: Math.floor(j.location.x), y: Math.floor(j.location.y), z: Math.floor(j.location.z) };
+  try { dim.runCommand(`tickingarea add ${p0.x + 18} ${p0.y - 40} ${p0.z - 22} ${p0.x + 62} ${p0.y} ${p0.z + 22} t_yung true`); } catch (e) { log(`masmorra_yung: ${e}`); }
+  t.runAfterDelay(20, () => j.runCommand("scriptevent cl:teste_masmorra_yung 0"));
+  t.runAfterDelay(260, () => {
+    let geradores = 0, baus = 0, tijolos = 0;
+    for (let x = p0.x + 22; x <= p0.x + 58; x++) for (let z = p0.z - 18; z <= p0.z + 18; z++) for (let y = p0.y - 36; y <= p0.y - 6; y++) {
+      let id;
+      try { id = dim.getBlock({ x, y, z })?.typeId; } catch { continue; }
+      if (id === "minecraft:mob_spawner") geradores++;
+      else if (id === "minecraft:chest" || id === "minecraft:barrel") baus++;
+      else if (id === "minecraft:stone_bricks" || id === "minecraft:mossy_stone_bricks" || id === "minecraft:cracked_stone_bricks") tijolos++;
+    }
+    try { dim.runCommand("tickingarea remove t_yung"); } catch {}
+    log(`masmorra_yung: ${geradores} geradores, ${baus} baús, ${tijolos} tijolos`);
+    t.assert(geradores >= 2, `só ${geradores} geradores de esqueletos`);
+    t.assert(baus >= 2, `só ${baus} baús`);
+    t.assert(tijolos >= 500, "sem as paredes de tijolo de pedra");
     t.succeed();
   });
 });

@@ -51,6 +51,10 @@ export default {
     "cl.tela.pegar": ["Pegar a saída", "Take the output"],
     "cl.tela.catalogo": ["Ver no Catálogo", "Open in the Catalog"],
     "cl.tela.escolher": ["Escolha o que vai para a entrada (a pilha inteira).", "Choose what goes into the input (the whole stack)."],
+    // A Masmorra dos Esqueletos do YUNG's (scripts/mundo/masmorra_yung.ts).
+    "cl.yung.masmorra_aviso": ["§7Um ar frio sobe do chão: uma §fMasmorra dos Esqueletos§7 embaixo de X %s, Z %s (uns %s blocos para baixo).", "§7Cold air rises from the ground: a §fSkeleton Dungeon§7 below X %s, Z %s (about %s blocks down)."],
+    "cl.missao.yung_masmorra.titulo": ["Ossos no Escuro", "Bones in the Dark"],
+    "cl.missao.yung_masmorra.desc": ["Ache uma Masmorra dos Esqueletos no subsolo (ela fica entre y -50 e -30).", "Find a Skeleton Dungeon underground (between y -50 and -30)."],
     "cl.missao.ad_tela.titulo": ["Painel da Máquina", "Machine Panel"],
     "cl.missao.ad_tela.desc": ["Toque numa máquina com a mão vazia para abrir a tela dela.", "Tap a machine with an empty hand to open its screen."],
   },

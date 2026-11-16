@@ -1,0 +1,2 @@
+// Gerado por tools/gerar-masmorra-yung.py: pedaços e números de cada variante da Masmorra dos Esqueletos do YUNG's.
+export const MASMORRA_YUNG = {"variantes": [{"tam": [31, 13, 31], "ancora": [15, 3, 15], "tiles": [[0, 0]], "baus": 25, "geradores": 5, "pecas": 46}, {"tam": [31, 13, 31], "ancora": [15, 3, 15], "tiles": [[0, 0]], "baus": 13, "geradores": 5, "pecas": 46}, {"tam": [31, 13, 31], "ancora": [15, 3, 15], "tiles": [[0, 0]], "baus": 15, "geradores": 4, "pecas": 47}]} as const;
