@@ -3307,3 +3307,89 @@ teste("explosao", 300, (t) => {
     t.succeed();
   });
 });
+
+// 1.55.0: voar rápido na Lua (como no criativo) não pode deixar chunk vazio debaixo do jogador; quem cai abaixo da rocha
+// matriz volta para o chão.
+teste("lua_voo", 760, (t) => {
+  const j = t.spawnSimulatedPlayer({ x: 1, y: 2, z: 1 }, "Voador", GameMode.Creative);
+  const lua = world.getDimension("cl:lua");
+  const X0 = 4000, Z = 4008.5, Y = 96, PASSOS = 300;
+  // O jogador simulado não carrega chunks sozinho (o celular carrega): a faixa do voo fica carregada, mas sem nada
+  // gerado. O que se mede é o gerador acompanhando o jogador.
+  try { lua.runCommand(`tickingarea add ${X0 - 16} 0 4000 ${X0 + 400} 0 4015 lua_voo true`); } catch (e) { log(`tickingarea: ${e}`); }
+  j.teleport({ x: X0, y: Y, z: Z }, { dimension: lua });
+  let tick = 0, vazios = 0, semChunk = 0, comChao = 0;
+  const passo = 1.2; // blocos por tick = 24 por segundo, mais rápido que voar correndo no criativo
+  t.runAfterDelay(120, () => {
+    const id = system.runInterval(() => {
+      tick++;
+      if (tick > PASSOS) return system.clearRun(id);
+      const x = X0 + tick * passo;
+      try { j.teleport({ x, y: Y, z: Z }, { dimension: lua }); } catch {}
+      if (tick < 4) return;
+      // olha a coluna de 1 tick atrás (o laço do terreno roda depois do teleporte)
+      const px = Math.floor(x - passo), pz = Math.floor(Z);
+      if (!lua.isChunkLoaded({ x: px, y: 0, z: pz })) { semChunk++; return; }
+      const topo = lua.getTopmostBlock({ x: px, z: pz });
+      if (!topo || topo.y < 30) vazios++; else comChao++;
+    }, 1);
+  });
+  t.runAfterDelay(450, () => {
+    // rede de segurança: abaixo da rocha matriz, volta para o chão
+    j.teleport({ x: X0 + 100.5, y: -6, z: Z }, { dimension: lua });
+  });
+  t.runAfterDelay(480, () => {
+    const y = j.location.y;
+    log(`lua_voo: ${tick} ticks, ${comChao} com chão, ${vazios} sem chão, ${semChunk} com o chunk ainda não carregado; depois da queda y=${y.toFixed(1)}`);
+    try { lua.runCommand("tickingarea remove lua_voo"); } catch {}
+    t.assert(comChao > 200, `poucos ticks com chão medidos (${comChao})`);
+    t.assert(vazios === 0, `${vazios} ticks sem chão debaixo do jogador`);
+    t.assert(y > 40, `não voltou para o chão (y=${y.toFixed(1)})`);
+    t.succeed();
+  });
+});
+
+// 1.55.0: os braços dos cabos. (A) Posto pelo jogador: liga na máquina do Thermal, no Cabo do Powah!, no baú e na fábrica
+// do Mekanism, e não liga na pedra nem no ar. (B) Cabo antigo (posto sem evento, como num mundo de antes): refaz os braços
+// quando a energia do gerador passa por ele.
+teste("cabos", 400, (t) => {
+  const j = t.spawnSimulatedPlayer({ x: 4, y: 2, z: 3 }, "Eletricista", GameMode.Creative);
+  t.setBlockType("cl:pulverizador", { x: 1, y: 2, z: 1 });
+  t.setBlockType("cl:cabo_powah_basico", { x: 3, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 2, y: 2, z: 2 });
+  t.setBlockType("minecraft:stone", { x: 2, y: 3, z: 1 });
+  t.setBlockType("cl:fabrica_compressao_elite", { x: 2, y: 1, z: 1 });
+  // (B)
+  t.setBlockType("cl:gerador", { x: 1, y: 2, z: 5 });
+  t.setBlockType("cl:cabo", { x: 2, y: 2, z: 5 });
+  t.setBlockType("cl:bateria", { x: 3, y: 2, z: 5 });
+  t.setBlockType("minecraft:stone", { x: 2, y: 3, z: 5 });
+  const g = t.getBlock({ x: 1, y: 2, z: 5 });
+  g.setPermutation(g.permutation.withState("cl:combustivel", 15));
+  const estados = (b) => ["cl:n", "cl:s", "cl:l", "cl:o", "cl:cima", "cl:baixo"].map((e) => `${e.slice(3)}=${b.permutation.getState(e)}`).join(" ");
+  t.runAfterDelay(10, () => {
+    j.getComponent("minecraft:inventory").container.setItem(0, new ItemStack("cl:cabo", 4));
+    j.selectedSlotIndex = 0;
+    const ok = j.useItemInSlotOnBlock(0, { x: 2, y: 3, z: 1 }, Direction.Down);
+    log(`cabos: pôs o cabo=${ok}`);
+  });
+  t.runAfterDelay(20, () => {
+    const c = t.getBlock({ x: 2, y: 2, z: 1 });
+    log(`cabos A: ${c.typeId} ${estados(c)}; powah o=${t.getBlock({ x: 3, y: 2, z: 1 }).permutation.getState("cl:o")}`);
+    t.assert(c.typeId === "cl:cabo", "o cabo não foi posto");
+    const s = (e) => c.permutation.getState(e);
+    t.assert(s("cl:o") === true, "não ligou no Pulverizador");
+    t.assert(s("cl:l") === true, "não ligou no Cabo do Powah!");
+    t.assert(s("cl:s") === true, "não ligou no baú");
+    t.assert(s("cl:baixo") === true, "não ligou na Fábrica do Mekanism");
+    t.assert(s("cl:cima") === false && s("cl:n") === false, "ligou na pedra ou no ar");
+    t.assert(t.getBlock({ x: 3, y: 2, z: 1 }).permutation.getState("cl:o") === true, "o Cabo do Powah! não ligou no Cabo");
+  });
+  t.runAfterDelay(260, () => {
+    const c = t.getBlock({ x: 2, y: 2, z: 5 });
+    log(`cabos B: ${estados(c)}; combustível ${t.getBlock({ x: 1, y: 2, z: 5 }).permutation.getState("cl:combustivel")}`);
+    t.assert(c.permutation.getState("cl:o") === true && c.permutation.getState("cl:l") === true, "o cabo antigo não refez os braços com a energia passando");
+    t.assert(c.permutation.getState("cl:cima") === false, "o cabo antigo ligou na pedra");
+    t.succeed();
+  });
+});

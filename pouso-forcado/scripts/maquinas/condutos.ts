@@ -1,10 +1,10 @@
 import { Block, BlockCustomComponent, Container, ItemStack, world } from "@minecraft/server";
-import { ARMAZENAMENTO, IDS } from "../config.js";
-import { DADOS_F39, DADOS_F68, MAQUINAS_CONTEUDO } from "../conteudo/gerado.js";
+import { IDS } from "../config.js";
+import { DADOS_F39, DADOS_F68 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { inv } from "../util/maquina.js";
-import { CELULAS } from "../util/rede.js";
+import { definirAoPassarNoCabo, ligaNoCabo } from "../util/rede.js";
 import { quebrado } from "../util/explosao.js";
 
 /*
@@ -13,7 +13,8 @@ import { quebrado } from "../util/explosao.js";
  *   blocos de energia.
  * - Conduto de Itens: tocar troca o modo. No modo "tira" (miolo laranja), a cada segundo tira até 4 itens dos
  *   inventários encostados nele e põe nos inventários encostados nos outros condutos da rede (o mais perto primeiro).
- * As ligações (braços do modelo) mudam quando um bloco é posto ou quebrado do lado.
+ * As ligações (braços do modelo) mudam quando um bloco é posto ou quebrado do lado e, para os cabos de energia, também
+ *   na primeira vez da sessão que a energia passa por eles (conserta os cabos de mundos antigos).
  * Custo: cada conduto que tira faz uma busca de até 64 condutos por segundo.
  */
 const ENERGIA = "cl:conduto_energia";
@@ -23,16 +24,9 @@ const MAX_REDE = 64;
 // Os cabos de energia: o Conduto do Ender IO e os Cabos do Powah! (1.18.0), que ligam do mesmo jeito.
 // 1.20.0: os Condutores de Energia Aprimorado e do Ender (Ender IO 9).
 // 1.51.0: os Cabos Universais do Mekanism (a rede do pack não limita a vazão; o nível muda a receita e o visual).
-const CABOS_ENERGIA = new Set<string>([ENERGIA, "cl:conduto_energia_aprimorado", "cl:conduto_energia_ender", ...DADOS_F39.niveis.map((n) => `cl:cabo_powah_${n}`),
+// 1.55.0: o Cabo da nave (Fase 9) também, e todos com a mesma regra (ligaNoCabo, em util/rede.ts).
+const CABOS_ENERGIA = new Set<string>([IDS.cabo, ENERGIA, "cl:conduto_energia_aprimorado", "cl:conduto_energia_ender", ...DADOS_F39.niveis.map((n) => `cl:cabo_powah_${n}`),
   ...DADOS_F68.cabos]);
-const POWAH = DADOS_F39.niveis.flatMap((n) => ["furnator", "magmator", "termogerador", "painel_solar", "celula_powah", "haste_energizadora"].map((t) => `cl:${t}_${n}`));
-const LIGA_ENERGIA = new Set<string>([
-  ...CABOS_ENERGIA, ...POWAH, IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, IDS.peneiraAutomatica, IDS.montadora, IDS.terminal,
-  IDS.estufa, IDS.condensadorAvancado, ...ARMAZENAMENTO.conteineres, ...Object.keys(CELULAS), ...MAQUINAS_CONTEUDO, "cl:dinamo_redstone", "cl:tesseract",
-  "cl:carregador_chao", "cl:teletransportador", "cl:entrelacador_quantico",
-  // 1.52.0: as portas de energia dos multiblocos.
-  "cl:porta_inducao", "cl:valvula_turbina_mk", "cl:porta_fusao", "cl:bobina_supercarregada",
-]);
 // Outros transmissores (1.51.0: canos, tubos e transportadores do Mekanism) dizem com o que ligam.
 const OUTRAS = new Map<string, (b: Block, v: Block) => boolean>();
 export function registrarLigacao(ids: readonly string[], liga: (b: Block, v: Block) => boolean): void {
@@ -55,13 +49,20 @@ function liga(b: Block, v: Block | undefined): boolean {
   if (!v) return false;
   const outra = OUTRAS.get(b.typeId);
   if (outra) return outra(b, v);
-  return CABOS_ENERGIA.has(b.typeId) ? LIGA_ENERGIA.has(v.typeId) : v.typeId === ITEM || !!inv(v);
+  return CABOS_ENERGIA.has(b.typeId) ? ligaNoCabo(v.typeId) : v.typeId === ITEM || !!inv(v);
 }
 function atualizar(b: Block | undefined): void {
   if (!b || (!CABOS_ENERGIA.has(b.typeId) && b.typeId !== ITEM && !OUTRAS.has(b.typeId))) return;
-  let p = b.permutation;
-  for (const [estado, passo] of LADOS) p = p.withState(estado as never, liga(b, ao(b, passo)) as never);
-  b.setPermutation(p);
+  const antes = b.permutation;
+  let p = antes;
+  let mudou = false;
+  for (const [estado, passo] of LADOS) {
+    const quer = liga(b, ao(b, passo));
+    if (antes.getState(estado as never) === quer) continue;
+    p = p.withState(estado as never, quer as never);
+    mudou = true;
+  }
+  if (mudou) b.setPermutation(p); // só troca quando muda (setPermutation manda o bloco de novo para o celular)
 }
 
 /** Os condutos ligados a este (busca em largura, o mais perto primeiro; `ehRede` diz quem é da mesma rede). */
@@ -160,6 +161,9 @@ export const condutoItem: BlockCustomComponent = {
 
 export { atualizar as atualizarConduto };
 export function registrarCondutos(): void {
+  definirAoPassarNoCabo((b) => {
+    if (CABOS_ENERGIA.has(b.typeId)) atualizar(b);
+  });
   world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {
     atualizar(block);
     for (const [, passo] of LADOS) atualizar(ao(block, passo));

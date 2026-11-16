@@ -1,6 +1,5 @@
 // Ponto de entrada do Behavior Pack. Cada fase registra seus módulos aqui.
 import { system, world } from "@minecraft/server";
-import { registrarCabos } from "./blocos/cabo.js";
 import { compostor } from "./blocos/compostor.js";
 import { condensadorAgua, condensadorAvancado } from "./blocos/condensador.js";
 import { bateria, gerador, moinho, painelSolar, peneiraAutomatica } from "./blocos/energia.js";
@@ -334,7 +333,6 @@ registrarGeradorMonstros();
 registrarPontos();
 registrarTempestade();
 registrarCapsulas();
-registrarCabos();
 registrarMonstros();
 registrarFarao();
 registrarCatalogo();

@@ -4,7 +4,7 @@ import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { darAoJogador, gastarDaMao } from "../util/inventario.js";
 import { toqueNovo } from "../util/toque.js";
-import { chunkPronto } from "./lua.js";
+import { superficiePronta } from "./lua.js";
 import { COMBUSTIVEL, combustivelDoFoguete, itemFoguete } from "./maquinas.js";
 import { LUA, prontoParaLua, semRespirar } from "./oxigenio.js";
 
@@ -128,7 +128,7 @@ function viajar(j: Player, paraLua: boolean, comb: number, x: number, z: number)
     j.camera.fade({ fadeTime: { fadeInTime: 0, holdTime: 1, fadeOutTime: 0.2 }, fadeColor: { red: 0, green: 0, blue: 0 } });
     let topo;
     try {
-      const pronto = paraLua ? chunkPronto(destino, bx, bz) : destino.isChunkLoaded({ x: bx, y: 0, z: bz });
+      const pronto = paraLua ? superficiePronta(destino, bx, bz) : destino.isChunkLoaded({ x: bx, y: 0, z: bz });
       topo = pronto ? destino.getTopmostBlock({ x: bx, z: bz }) : undefined;
     } catch {
       topo = undefined;

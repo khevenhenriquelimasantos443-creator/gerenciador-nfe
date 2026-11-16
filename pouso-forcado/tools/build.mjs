@@ -82,6 +82,8 @@ execFileSync(node, [join(RAIZ, "tools/gerar-harvestcraft.mjs")], { stdio: "inher
 execFileSync(node, [join(RAIZ, "tools/gerar-conteudo.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/aplicar-icones.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-catalogo.mjs")], { stdio: "inherit" });
+// 1.55.0: os blocos que gastam, geram ou guardam energia (os cabos ligam o braço neles).
+execFileSync(node, [join(RAIZ, "tools/gerar-energia.mjs")], { stdio: "inherit" });
 
 console.log("> compilando TypeScript");
 rmSync(join(RAIZ, "BP/scripts"), { recursive: true, force: true });

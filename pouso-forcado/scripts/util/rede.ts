@@ -1,5 +1,6 @@
 import { Block } from "@minecraft/server";
-import { ENERGIA, IDS } from "../config.js";
+import { ARMAZENAMENTO, ENERGIA, IDS } from "../config.js";
+import { BLOCOS_ENERGIA } from "../conteudo/energia.js";
 import { DADOS_F17, DADOS_F24, DADOS_F29, DADOS_F39, DADOS_F42, DADOS_F68 } from "../conteudo/gerado.js";
 import { definirEstado, lerEstado, vizinhos } from "./blocos.js";
 import { gravar, ler } from "./dados.js";
@@ -22,6 +23,34 @@ const POWAH = DADOS_F39.niveis.flatMap((n) => [`cl:cabo_powah_${n}`, `cl:furnato
 // 1.51.0: os Cabos Universais do Mekanism.
 const CONDUTORES = new Set<string>([IDS.cabo, "cl:conduto_energia", "cl:conduto_energia_aprimorado", "cl:conduto_energia_ender", ...POWAH, ...DADOS_F68.cabos, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
 
+/*
+ * 1.55.0: uma regra só para os braços de todos os cabos de energia (o Cabo, os Condutos do Ender IO, os Cabos do Powah!
+ * e os Cabos Universais do Mekanism): liga em outro cabo de qualquer família, em gerador, bateria, célula, em toda máquina
+ * que gasta energia (lista feita no build por tools/gerar-energia.mjs, lendo o código de cada máquina) e nos baús que o
+ * Terminal alcança pela rede. Antes cada família tinha a sua lista e muitas máquinas ficavam de fora: a energia passava,
+ * mas o braço não aparecia.
+ */
+const LIGA_NO_CABO = new Set<string>([...CONDUTORES, ...BLOCOS_ENERGIA, ...ARMAZENAMENTO.conteineres]);
+/** O braço de um cabo de energia aparece encostado neste bloco. */
+export const ligaNoCabo = (id: string): boolean => LIGA_NO_CABO.has(id) || especiais.has(id);
+// Os cabos feitos antes da 1.55.0 ficaram com os braços da regra velha: na primeira vez que a energia passa por um cabo
+// na sessão, ele refaz os braços (uma vez só por cabo, então o custo some depois do primeiro ciclo das máquinas).
+let aoPassar: (b: Block) => void = () => {};
+const refeitos = new Set<string>();
+export function definirAoPassarNoCabo(fn: (b: Block) => void): void {
+  aoPassar = fn;
+}
+function passou(b: Block): void {
+  const k = chave(b);
+  if (refeitos.has(k)) return;
+  refeitos.add(k);
+  try {
+    aoPassar(b);
+  } catch {
+    // vizinho num chunk descarregado: fica para a próxima sessão
+  }
+}
+
 // Tesseract (1.2.0): a busca também pula para os outros Tesseracts da mesma frequência (scripts/maquinas/energia_extra.ts).
 let paresDe: (b: Block) => Block[] = () => [];
 export function definirPares(fn: (b: Block) => Block[]): void {
@@ -42,6 +71,7 @@ export function procurarNaRede(origem: Block, quer: (b: Block) => boolean): Bloc
     vistos.add(chave(b));
     if (quer(b)) return b;
     if (!CONDUTORES.has(b.typeId)) continue;
+    passou(b);
     if (++condutores > ENERGIA.rede.maxBlocos) break;
     fila.push(...proximos(b));
   }
@@ -63,6 +93,7 @@ export function coletarNaRede(origem: Block, quer: (b: Block) => boolean, max: n
       continue;
     }
     if (!CONDUTORES.has(b.typeId)) continue;
+    passou(b);
     if (++condutores > maxBlocos) break;
     fila.push(...proximos(b));
   }

@@ -266,7 +266,8 @@ const ACESAS = new Set(["luz_ciano", "luz_laranja", "luz_azul", "luz_verde", "lu
 
 // ---------- modelos ----------
 // Cubos em pixels de 0 a 16 (como no editor); f = material de todas as faces ou { up, down, north, south, east, west, lados }.
-// Faces marcadas com "!" (ex.: "tela!") usam a textura inteira em vez da projeção do mundo.
+// Faces marcadas com "!" (ex.: "tela!") usam a textura inteira em vez da projeção do mundo; com "~", o meio da textura
+// (sem a borda nem os rebites), para peças finas que se emendam de um bloco no outro, como os braços do cabo.
 function cubo(x0, y0, z0, x1, y1, z1, f, extra = {}) {
   return { a: [x0, y0, z0], b: [x1, y1, z1], f, ...extra };
 }
@@ -292,8 +293,10 @@ function geometria(id, ossos) {
         let m = faceMat(c.f, face);
         if (!m) continue;
         const inteira = m.endsWith("!");
-        m = m.replace("!", "");
-        const [u, v, du, dv] = inteira ? [0, 0, 16, 16] : uvDe(face, c.a, c.b);
+        const centrada = m.endsWith("~");
+        m = m.replace(/[!~]$/, "");
+        let [u, v, du, dv] = inteira ? [0, 0, 16, 16] : uvDe(face, c.a, c.b);
+        if (centrada) [u, v] = [8 - du / 2, 8 - dv / 2];
         uv[face] = { uv: [u, v], uv_size: [du || 0.01, dv || 0.01], material_instance: m };
       }
       const cube = { origin: [c.a[0] - 8, c.a[1], c.a[2] - 8], size: [c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]], uv };
@@ -415,13 +418,15 @@ const MODELOS = {
     colisao: { origin: [-3, 5, -3], size: [6, 6, 6] },
     selecao: { origin: [-3, 5, -3], size: [6, 6, 6] },
     ossos: {
-      nucleo: [cubo(5.5, 5.5, 5.5, 10.5, 10.5, 10.5, "grafite"), cubo(6.5, 6.5, 5, 9.5, 9.5, 11, "luz_ciano"), cubo(5, 6.5, 6.5, 11, 9.5, 9.5, "luz_ciano"), cubo(6.5, 5, 6.5, 9.5, 11, 9.5, "luz_ciano")],
-      norte: [cubo(6.5, 6.5, 0, 9.5, 9.5, 5.5, "grafite")],
-      sul: [cubo(6.5, 6.5, 10.5, 9.5, 9.5, 16, "grafite")],
-      leste: [cubo(10.5, 6.5, 6.5, 16, 9.5, 9.5, "grafite")],
-      oeste: [cubo(0, 6.5, 6.5, 5.5, 9.5, 9.5, "grafite")],
-      cima: [cubo(6.5, 10.5, 6.5, 9.5, 16, 9.5, "grafite")],
-      baixo: [cubo(6.5, 0, 6.5, 9.5, 5.5, 9.5, "grafite")],
+      // 1.55.0: os braços começam onde termina o encaixe ciano (antes os dois ocupavam o mesmo meio pixel e piscavam) e
+      // usam o meio da textura, sem a borda: de um bloco para o outro o cabo fica contínuo, sem faixa clara na emenda.
+      nucleo: [cubo(5.5, 5.5, 5.5, 10.5, 10.5, 10.5, "grafite~"), cubo(6.5, 6.5, 5, 9.5, 9.5, 11, "luz_ciano"), cubo(5, 6.5, 6.5, 11, 9.5, 9.5, "luz_ciano"), cubo(6.5, 5, 6.5, 9.5, 11, 9.5, "luz_ciano")],
+      norte: [cubo(6.5, 6.5, 0, 9.5, 9.5, 5, "grafite~")],
+      sul: [cubo(6.5, 6.5, 11, 9.5, 9.5, 16, "grafite~")],
+      leste: [cubo(11, 6.5, 6.5, 16, 9.5, 9.5, "grafite~")],
+      oeste: [cubo(0, 6.5, 6.5, 5, 9.5, 9.5, "grafite~")],
+      cima: [cubo(6.5, 11, 6.5, 9.5, 16, 9.5, "grafite~")],
+      baixo: [cubo(6.5, 0, 6.5, 9.5, 5, 9.5, "grafite~")],
     },
     visibilidade: { norte: "q.block_state('cl:n')", sul: "q.block_state('cl:s')", leste: "q.block_state('cl:l')", oeste: "q.block_state('cl:o')", cima: "q.block_state('cl:cima')", baixo: "q.block_state('cl:baixo')" },
     texturas: { grafite: "grafite", luz_ciano: "luz_ciano" },
