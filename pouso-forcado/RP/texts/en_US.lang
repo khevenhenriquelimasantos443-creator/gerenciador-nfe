@@ -6431,6 +6431,22 @@ cl.missao.gc_chefes.titulo=Boss Hunter
 cl.missao.gc_chefes.desc=Defeat 3 Evolved Skeleton Bosses in the Moon dungeons.
 cl.missao.gc_estanho.titulo=Tin Decoration
 cl.missao.gc_estanho.desc=Build with 16 Tin Decoration blocks, like the village ones.
+cl.tela.trabalhando=§aWorking
+cl.tela.parada=§eIdle (nothing to do)
+cl.tela.sem_energia=§cNo energy
+cl.tela.energia=Network energy: §b%s§r of %s
+cl.tela.sem_rede=§7No battery connected (use cables)
+cl.tela.entrada=Input (chest on top)
+cl.tela.saida=Output (chest below)
+cl.tela.vazio=empty
+cl.tela.sem_entrada=put a chest on top
+cl.tela.sem_saida=put a chest below (without it, it drops beside)
+cl.tela.por=Put items in the input
+cl.tela.pegar=Take the output
+cl.tela.catalogo=Open in the Catalog
+cl.tela.escolher=Choose what goes into the input (the whole stack).
+cl.missao.ad_tela.titulo=Machine Panel
+cl.missao.ad_tela.desc=Tap a machine with an empty hand to open its screen.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.pouso_forcado=Pouso Forçado

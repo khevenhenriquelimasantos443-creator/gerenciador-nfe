@@ -203,6 +203,7 @@ export type Acao =
   | "base_lua"
   | "chefe_lua"
   | "vila_lua"
+  | "tela_maquina"
   | "ruinas_lua"
   | "aldeao_lua"
   | "nucleo_salto"
@@ -595,6 +596,8 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "ad_balao", objetivo: { tipo: "acao", acao: "balao", qtd: 1 }, recompensa: [{ item: "minecraft:string", quantidade: 8 }] },
       { id: "ad_tnt", objetivo: { tipo: "ter", item: "cl:tnt_obsidiana", qtd: 1 }, recompensa: [{ item: "minecraft:obsidian", quantidade: 6 }] },
       { id: "ad_conduto", objetivo: { tipo: "acao", acao: "conduto", qtd: 1 }, recompensa: [{ item: "cl:aglutinante_conduite", quantidade: 16 }] },
+      // 1.55.0: a tela da máquina.
+      { id: "ad_tela", objetivo: { tipo: "acao", acao: "tela_maquina", qtd: 1 }, recompensa: [{ item: "minecraft:chest", quantidade: 2 }] },
     ],
   },
   {

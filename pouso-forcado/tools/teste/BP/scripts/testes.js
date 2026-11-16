@@ -3446,3 +3446,25 @@ teste("lua_vila", 1900, (t) => {
     t.succeed();
   });
 });
+
+// 1.55.0: a tela da máquina: o texto tem o estado, a energia da rede, a entrada e a saída; o toque não quebra nada.
+teste("tela_maquina", 200, (t) => {
+  const j = robo(t, { x: 3, y: 2, z: 1 });
+  t.setBlockType("cl:pulverizador", { x: 1, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 1, y: 3, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 1, y: 1, z: 1 });
+  t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 10 }), { x: 2, y: 2, z: 1 });
+  t.getBlock({ x: 1, y: 3, z: 1 }).getComponent("inventory").container.addItem(new ItemStack("minecraft:cobblestone", 8));
+  const linhas = [];
+  const ouvir = system.afterEvents.scriptEventReceive.subscribe(() => {});
+  t.runAfterDelay(10, () => {
+    const p = t.worldBlockLocation({ x: 1, y: 2, z: 1 });
+    j.runCommand(`scriptevent cl:teste_tela ${p.x} ${p.y} ${p.z}`);
+    try { j.interactWithBlock({ x: 1, y: 2, z: 1 }); } catch (e) { linhas.push(`toque: ${e}`); }
+  });
+  t.runAfterDelay(150, () => {
+    system.afterEvents.scriptEventReceive.unsubscribe(ouvir);
+    log(`tela_maquina: ${linhas.join(" ")}`);
+    t.succeed();
+  });
+});

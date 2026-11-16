@@ -20,6 +20,8 @@ import { CELULAS, capacidadeDe, cargaDe, gerar } from "../util/rede.js";
 const nome = (b: Block): RawMessage => ({ translate: b.localizationKey });
 const ultimo = new Map<string, string>(); // estado mais recente de cada máquina (para o toque)
 const chave = (b: Block) => `${b.x},${b.y},${b.z}`;
+/** O estado do último ciclo da máquina (para a tela da máquina, scripts/maquinas/tela.ts). */
+export const estadoMaquina = (b: Block): string | undefined => ultimo.get(chave(b));
 
 export function feito(b: Block, som = "random.click"): void {
   ultimo.set(chave(b), "ok");

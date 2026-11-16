@@ -118,6 +118,17 @@ function mudarCarga(b: Block, delta: number): void {
 }
 const guarda = (b: Block) => especiais.has(b.typeId) || b.typeId === IDS.bateria || CELULAS[b.typeId] !== undefined;
 
+/** A carga e a capacidade somadas das baterias e células ligadas a este bloco (para a tela da máquina). */
+export function energiaDaRede(origem: Block): { carga: number; capacidade: number; armazens: number } {
+  const lista = coletarNaRede(origem, (b) => guarda(b), 64, ENERGIA.rede.maxBlocos);
+  let carga = 0, capacidade = 0;
+  for (const b of lista) {
+    carga += cargaDe(b);
+    capacidade += capacidadeDe(b);
+  }
+  return { carga, capacidade, armazens: lista.length };
+}
+
 /** Manda até `unidades` para baterias/células com espaço. Retorna quantas foram guardadas. */
 export function gerar(origem: Block, unidades: number): number {
   let guardadas = 0;
