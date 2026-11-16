@@ -9225,6 +9225,24 @@
     },
     "clc_mkm_side": {
       "textures": "textures/blocks/cl/arte/mkm_side"
+    },
+    "clc_decoracao_estanho": {
+      "textures": "textures/blocks/cl/arte/decoracao_estanho"
+    },
+    "clc_decoracao_estanho_detalhada": {
+      "textures": "textures/blocks/cl/c/decoracao_estanho_detalhada"
+    },
+    "clc_decoracao_estanho_detalhada_frente": {
+      "textures": "textures/blocks/cl/arte/decoracao_estanho_detalhada_frente"
+    },
+    "clc_decoracao_estanho_detalhada_lado": {
+      "textures": "textures/blocks/cl/arte/decoracao_estanho_detalhada_lado"
+    },
+    "clc_decoracao_estanho_detalhada_topo": {
+      "textures": "textures/blocks/cl/arte/decoracao_estanho_detalhada_topo"
+    },
+    "clc_decoracao_estanho_detalhada_baixo": {
+      "textures": "textures/blocks/cl/arte/decoracao_estanho_detalhada_baixo"
     }
   }
 }

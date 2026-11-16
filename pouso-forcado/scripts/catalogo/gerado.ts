@@ -4886,6 +4886,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Javelin",
   "icone": "textures/items/cl/arte/dardo_silex"
  },
+ "cl:decoracao_estanho": {
+  "pt": "Decoração de Estanho",
+  "en": "Tin Decoration",
+  "icone": "textures/blocks/cl/arte/decoracao_estanho"
+ },
+ "cl:decoracao_estanho_detalhada": {
+  "pt": "Decoração de Estanho Detalhada",
+  "en": "Detailed Tin Decoration",
+  "icone": "textures/blocks/cl/arte/decoracao_estanho_detalhada_topo"
+ },
  "cl:descarregador_ardente": {
   "pt": "Descarregador Ardente",
   "en": "Blazing Energy Discharger",
@@ -29216,6 +29226,41 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "D": "minecraft:dark_oak_trapdoor",
    "_": "minecraft:dark_oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_decoracao_estanho",
+  "resultado": "cl:decoracao_estanho",
+  "qtd": 4,
+  "grade": [
+   "## ",
+   "##X"
+  ],
+  "chaves": {
+   "#": "minecraft:stone",
+   "X": "cl:placa_estanho"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_decoracao_estanho_detalhada",
+  "resultado": "cl:decoracao_estanho_detalhada",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##",
+   " X"
+  ],
+  "chaves": {
+   "#": "minecraft:stone",
+   "X": "cl:placa_estanho"
   },
   "estacoes": [
    "crafting_table"

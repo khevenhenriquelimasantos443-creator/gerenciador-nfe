@@ -3301,9 +3301,12 @@ teste("explosao", 300, (t) => {
     const gavetas = stacks.filter((i) => i.typeId === "cl:gaveta");
     const solto = stacks.filter((i) => i.typeId === "minecraft:iron_ingot").reduce((n, i) => n + i.amount, 0);
     const cheias = gavetas.filter((i) => (i.getLore() ?? []).some((l) => l.includes("64"))).length;
-    log(`explosao: ${gavetas.length} item(ns) de gaveta soltos, ${cheias} com os 64 lingotes: ${JSON.stringify(gavetas.map((i) => i.getLore()))} ferro solto=${solto}`);
-    t.assert(cheias === POS.length, `só ${cheias} de ${POS.length} gavetas guardaram os 64 lingotes`);
-    t.assert(gavetas.length === POS.length, `a explosão soltou ${gavetas.length} gavetas (era para ser ${POS.length}, as que levam o conteúdo)`);
+    // A explosão do jogo é sorteada (raios): uma gaveta mais longe pode ficar de pé, com o conteúdo dentro.
+    const ficaram = POS.filter((p) => t.getBlock(p)?.typeId === "cl:gaveta").length;
+    log(`explosao: ${gavetas.length} item(ns) de gaveta soltos, ${cheias} com os 64 lingotes, ${ficaram} de pé: ${JSON.stringify(gavetas.map((i) => i.getLore()))} ferro solto=${solto}`);
+    t.assert(cheias + ficaram === POS.length, `só ${cheias} de ${POS.length - ficaram} gavetas quebradas guardaram os 64 lingotes`);
+    t.assert(gavetas.length === POS.length - ficaram, `a explosão soltou ${gavetas.length} gavetas (era para ser ${POS.length - ficaram}, as que levam o conteúdo)`);
+    t.assert(solto === 0, `${solto} lingotes soltos (deviam estar dentro das gavetas)`);
     t.succeed();
   });
 });
@@ -3390,6 +3393,56 @@ teste("cabos", 400, (t) => {
     log(`cabos B: ${estados(c)}; combustível ${t.getBlock({ x: 1, y: 2, z: 5 }).permutation.getState("cl:combustivel")}`);
     t.assert(c.permutation.getState("cl:o") === true && c.permutation.getState("cl:l") === true, "o cabo antigo não refez os braços com a energia passando");
     t.assert(c.permutation.getState("cl:cima") === false, "o cabo antigo ligou na pedra");
+    t.succeed();
+  });
+});
+
+// 1.55.0: a Vila Lunar (peças do Galacticraft 5 com os Aldeões Lunares), as Ruínas Lunares e outra masmorra (girada).
+teste("lua_vila", 1900, (t) => {
+  const j = t.spawnSimulatedPlayer({ x: 1, y: 2, z: 1 }, "Explorador", GameMode.Creative);
+  const lua = world.getDimension("cl:lua");
+  const X = 6000, Z = 6000;
+  // O robô não carrega chunks: áreas de carregamento para conferir a vila, as ruínas e o baú da masmorra depois.
+  for (const [n, a, c] of [["t_vila", [X + 20, Z - 70], [X + 160, Z + 70]], ["t_ruina", [X - 110, Z - 40], [X - 20, Z + 50]], ["t_masm", [X - 445, Z - 8], [X - 428, Z + 8]]])
+    try { lua.runCommand(`tickingarea add ${a[0]} 0 ${a[1]} ${c[0]} 0 ${c[1]} ${n} true`); } catch (e) { log(`lua_vila: ${n} ${e}`); }
+  j.teleport({ x: X, y: 110, z: Z }, { dimension: lua });
+  let aldeoes = 0, estanho = 0, baus = 0;
+  t.runAfterDelay(40, () => j.runCommand("scriptevent cl:teste_vila vila 0 90"));
+  t.runAfterDelay(640, () => {
+    aldeoes = lua.getEntities({ type: "cl:aldeao_lunar", location: { x: X + 90, y: 80, z: Z }, maxDistance: 120 }).length;
+    for (let x = X + 80; x <= X + 100; x++) for (let z = Z - 10; z <= Z + 10; z++) {
+      try {
+        const topo = lua.getTopmostBlock({ x, z });
+        if (topo?.typeId === "cl:decoracao_estanho" || topo?.typeId === "cl:decoracao_estanho_detalhada") estanho++;
+      } catch {}
+    }
+    log(`lua_vila: vila com ${aldeoes} aldeões e ${estanho} colunas de estanho no centro`);
+    j.runCommand("scriptevent cl:teste_vila ruina 1 -70");
+  });
+  t.runAfterDelay(1060, () => {
+    for (let x = X - 70 - 30; x <= X - 70 + 40; x++) for (let z = Z - 30; z <= Z + 40; z++) {
+      try {
+        const topo = lua.getTopmostBlock({ x, z });
+        if (!topo) continue;
+        for (let y = topo.y - 12; y <= topo.y; y++) if (lua.getBlock({ x, y, z })?.typeId === "minecraft:chest") baus++;
+      } catch {}
+    }
+    log(`lua_vila: ${baus} baús nas ruínas`);
+    // a masmorra fica longe da vila
+    j.teleport({ x: X - 400, y: 110, z: Z }, { dimension: lua });
+    j.runCommand("scriptevent cl:teste_masmorra 1");
+  });
+  t.runAfterDelay(1850, () => {
+    // girada 1/4 de volta: a sala do chefe fica a oeste e o baú do tesouro olha para leste
+    const bx = X - 400 + 6, bz = Z;
+    let bau;
+    try { bau = lua.getBlock({ x: bx - 41, y: 27, z: bz }); } catch {}
+    log(`lua_vila: baú do tesouro=${bau?.typeId} ${bau?.permutation.getState("minecraft:cardinal_direction")}`);
+    for (const n of ["t_vila", "t_ruina", "t_masm"]) try { lua.runCommand(`tickingarea remove ${n}`); } catch {}
+    t.assert(aldeoes >= 2, `só ${aldeoes} aldeões lunares na vila`);
+    t.assert(estanho >= 4, "sem a Decoração de Estanho no centro da vila");
+    t.assert(baus >= 1, "ruínas sem baú");
+    t.assert(bau?.typeId === "cl:bau_tesouro" && bau.permutation.getState("minecraft:cardinal_direction") === "east", "masmorra girada sem o baú do tesouro no lugar");
     t.succeed();
   });
 });

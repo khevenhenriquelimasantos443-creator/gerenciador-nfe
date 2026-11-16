@@ -3857,6 +3857,8 @@
               "cl:compressor",
               "cl:compressor_eletrico",
               "cl:compressor_oxigenio",
+              "cl:decoracao_estanho",
+              "cl:decoracao_estanho_detalhada",
               "cl:distribuidor_oxigenio",
               "cl:fabricador_circuitos",
               "cl:minerio_cobre_lunar",

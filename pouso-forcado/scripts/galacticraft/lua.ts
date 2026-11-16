@@ -139,6 +139,18 @@ function alturas(semente: number, cx: number, cz: number): Alturas {
   return { topo, menor };
 }
 const alturaNa = (a: Alturas, cx: number, cz: number, x: number, z: number) => a.topo[(Math.floor(z) - cz * 16) * 16 + (Math.floor(x) - cx * 16)];
+// 1.55.0: a altura do chão em qualquer ponto, sem precisar do chunk carregado (para pôr vilas, ruínas e masmorras).
+const cacheAlturas = new Map<string, Alturas>();
+export function alturaTerreno(x: number, z: number): number {
+  const cx = Math.floor(x / 16), cz = Math.floor(z / 16), k = `${cx},${cz}`;
+  let a = cacheAlturas.get(k);
+  if (!a) {
+    if (cacheAlturas.size > 256) cacheAlturas.clear();
+    a = alturas(sementeDoMundo(), cx, cz);
+    cacheAlturas.set(k, a);
+  }
+  return alturaNa(a, cx, cz, x, z);
+}
 
 const carregado = (dim: Dimension, x0: number, z0: number) => dim.isChunkLoaded({ x: x0, y: 0, z: z0 }) && dim.isChunkLoaded({ x: x0 + 15, y: 0, z: z0 + 15 });
 // Marcas já vistas (não voltam atrás): poupa ler os blocos de novo a cada tick.
@@ -233,6 +245,18 @@ let prioridade: { dim: Dimension; x1: number; z1: number; x2: number; z2: number
 /** A base lunar pede o terreno da área dela primeiro (em blocos). undefined tira o pedido. */
 export function pedirArea(a: typeof prioridade): void {
   prioridade = a;
+}
+// 1.55.0: a vila e as ruínas só precisam da superfície da área delas (sai bem mais rápido que o chunk inteiro).
+let superficiePedida: { x1: number; z1: number; x2: number; z2: number } | undefined;
+/** Pede a superfície de uma área (em blocos), depois da que fica em volta dos jogadores. undefined tira o pedido. */
+export function pedirSuperficie(a: typeof superficiePedida): void {
+  superficiePedida = a;
+}
+/** A superfície de todos os chunks da área já existe. */
+export function areaComSuperficie(dim: Dimension, a: { x1: number; z1: number; x2: number; z2: number }): boolean {
+  for (let cx = Math.floor(a.x1 / 16); cx <= Math.floor(a.x2 / 16); cx++)
+    for (let cz = Math.floor(a.z1 / 16); cz <= Math.floor(a.z2 / 16); cz++) if ((estado(dim, cx, cz) ?? 0) < 1) return false;
+  return true;
 }
 function comecarFundo(dim: Dimension, cx: number, cz: number, semente: number): void {
   const chave = `${cx},${cz}`;
@@ -400,6 +424,16 @@ export function registrarLua(): void {
           fazerSuperficie(dim, pcx + dx, pcz + dz, semente);
           if (Date.now() - t0 > ORCAMENTO_MS) return;
         }
+      }
+      // 2b) A superfície que uma vila ou ruína pediu (chunks carregados pela área de carregamento dela).
+      const sp = superficiePedida;
+      if (sp) {
+        for (let cx = Math.floor(sp.x1 / 16); cx <= Math.floor(sp.x2 / 16); cx++)
+          for (let cz = Math.floor(sp.z1 / 16); cz <= Math.floor(sp.z2 / 16); cz++) {
+            if (estado(dim, cx, cz) !== 0) continue;
+            fazerSuperficie(dim, cx, cz, semente);
+            if (Date.now() - t0 > ORCAMENTO_MS) return;
+          }
       }
       // 3) Sem superfície pendente: o fundo, um chunk de cada vez (primeiro a área que a base lunar pediu).
       if (emCurso || system.currentTick % 5 !== 0) return;

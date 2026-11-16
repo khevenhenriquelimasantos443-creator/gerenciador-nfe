@@ -6412,6 +6412,26 @@ cl.missao.mk_qio.titulo=QIO
 cl.missao.mk_qio.desc=Guarde itens na QIO pelo Painel.
 cl.missao.mk_robit.titulo=Robit
 cl.missao.mk_robit.desc=Ponha um Robit para andar com você.
+tile.cl:decoracao_estanho.name=Decoração de Estanho
+tile.cl:decoracao_estanho_detalhada.name=Decoração de Estanho Detalhada
+entity.cl:aldeao_lunar.name=Aldeão Lunar
+item.spawn_egg.entity.cl:aldeao_lunar.name=Gerar Aldeão Lunar
+cl.gc.bau_extra=O Baú do Tesouro abriu:
+cl.gc.bau_extra_2=o saque da masmorra!
+cl.gc.vila_sinal=§b[Rádio]§r Luzes de uma Vila Lunar: X %s, Z %s (a %s m).
+cl.gc.vila_chegou=Vila Lunar: os aldeões trocam safira lunar por coisas do Galacticraft.
+cl.gc.ruina_sinal=§7[Rádio]§r Ruínas Lunares: X %s, Z %s (a %s m).
+cl.gc.masmorra_sinal=§c[Rádio]§r Outra masmorra lunar: X %s, Z %s (a %s m). Um chefe guarda o tesouro.
+cl.missao.gc_vila.titulo=Vila Lunar
+cl.missao.gc_vila.desc=Ache uma Vila Lunar na Lua.
+cl.missao.gc_aldeao.titulo=Vizinhos de Outro Mundo
+cl.missao.gc_aldeao.desc=Fale com um Aldeão Lunar (ele troca safira lunar por máscara, tanque, wafer...).
+cl.missao.gc_ruinas.titulo=Ruínas Lunares
+cl.missao.gc_ruinas.desc=Ache Ruínas Lunares (os baús delas têm saque do Galacticraft).
+cl.missao.gc_chefes.titulo=Caçador de Chefes
+cl.missao.gc_chefes.desc=Derrote 3 Esqueletos Evoluídos Gigantes nas masmorras da Lua.
+cl.missao.gc_estanho.titulo=Decoração de Estanho
+cl.missao.gc_estanho.desc=Construa com 16 blocos de Decoração de Estanho, como os da vila.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.pouso_forcado=Pouso Forçado

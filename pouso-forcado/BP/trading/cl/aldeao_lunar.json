@@ -1,0 +1,163 @@
+{
+  "tiers": [
+    {
+      "total_exp_required": 0,
+      "trades": [
+        {
+          "wants": [
+            {
+              "item": "cl:safira_lunar",
+              "quantity": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:mascara_oxigenio",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        },
+        {
+          "wants": [
+            {
+              "item": "cl:safira_lunar",
+              "quantity": {
+                "min": 3,
+                "max": 4
+              }
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:tanque_oxigenio_leve",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        },
+        {
+          "wants": [
+            {
+              "item": "cl:safira_lunar",
+              "quantity": {
+                "min": 3,
+                "max": 4
+              }
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:equipamento_oxigenio",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        },
+        {
+          "wants": [
+            {
+              "item": "cl:safira_lunar",
+              "quantity": {
+                "min": 3,
+                "max": 4
+              }
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:balde_combustivel",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        },
+        {
+          "wants": [
+            {
+              "item": "cl:safira_lunar",
+              "quantity": {
+                "min": 3,
+                "max": 4
+              }
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:wafer_basico",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        },
+        {
+          "wants": [
+            {
+              "item": "cl:lingote_estanho",
+              "quantity": 2
+            },
+            {
+              "item": "cl:safira_lunar",
+              "quantity": 1
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:placa_estanho",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        },
+        {
+          "wants": [
+            {
+              "item": "minecraft:copper_ingot",
+              "quantity": 2
+            },
+            {
+              "item": "cl:safira_lunar",
+              "quantity": 1
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:placa_cobre",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        },
+        {
+          "wants": [
+            {
+              "item": "minecraft:jungle_sapling",
+              "quantity": {
+                "min": 11,
+                "max": 39
+              }
+            }
+          ],
+          "gives": [
+            {
+              "item": "cl:safira_lunar",
+              "quantity": 1
+            }
+          ],
+          "max_uses": 7,
+          "reward_exp": false
+        }
+      ]
+    }
+  ]
+}

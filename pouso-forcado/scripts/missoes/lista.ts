@@ -202,6 +202,9 @@ export type Acao =
   | "voltar_lua"
   | "base_lua"
   | "chefe_lua"
+  | "vila_lua"
+  | "ruinas_lua"
+  | "aldeao_lua"
   | "nucleo_salto"
   | "ancora"
   | "manivela"
@@ -887,6 +890,12 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "gc_base", requer: ["gc_lancar"], objetivo: { tipo: "acao", acao: "base_lua", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 16 }] },
       { id: "gc_chefe", requer: ["gc_base"], objetivo: { tipo: "acao", acao: "chefe_lua", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       { id: "gc_nucleo", requer: ["gc_chefe"], objetivo: { tipo: "ter", item: "cl:nucleo_salto", qtd: 1 }, recompensa: [{ item: "cl:balde_combustivel", quantidade: 1 }] },
+      // 1.55.0: Vila Lunar, Ruínas Lunares e as outras masmorras da Lua (Galacticraft 5).
+      { id: "gc_vila", requer: ["gc_lancar"], objetivo: { tipo: "acao", acao: "vila_lua", qtd: 1 }, recompensa: [{ item: "cl:safira_lunar", quantidade: 4 }] },
+      { id: "gc_aldeao", requer: ["gc_vila"], objetivo: { tipo: "acao", acao: "aldeao_lua", qtd: 1 }, recompensa: [{ item: "cl:safira_lunar", quantidade: 3 }] },
+      { id: "gc_ruinas", requer: ["gc_lancar"], objetivo: { tipo: "acao", acao: "ruinas_lua", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "gc_estanho", requer: ["gc_vila"], objetivo: { tipo: "colocar", bloco: "cl:decoracao_estanho", qtd: 16 }, recompensa: [{ item: "cl:placa_estanho", quantidade: 4 }] },
+      { id: "gc_chefes", requer: ["gc_chefe"], objetivo: { tipo: "acao", acao: "chefe_lua", qtd: 3 }, recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }] },
       {
         id: "gc_instalar",
         requer: ["gc_nucleo"],

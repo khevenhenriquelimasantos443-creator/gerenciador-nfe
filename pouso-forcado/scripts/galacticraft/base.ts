@@ -5,8 +5,10 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { sortearSaque } from "../util/aleatorio.js";
 import { criarBauCom, darAoJogador } from "../util/inventario.js";
 import { intervalo } from "../util/perfil.js";
+import { rng, sementeDe, sementeDoMundo } from "../util/aleatorio.js";
 import { chunkPronto, dimensaoLua, pedirArea } from "./lua.js";
 import { LUA } from "./oxigenio.js";
+import { vilaPerto } from "./vila.js";
 
 /*
  * A Base de Pesquisa Lunar (1.6.1): o sinal que o rádio da nave pega. Ela é sorteada a 160–240 blocos de onde o
@@ -22,7 +24,8 @@ import { LUA } from "./oxigenio.js";
 const PROP = "cl:base_lua";
 const Y0 = 26; // chão da masmorra
 const TIJOLO = "cl:tijolo_lunar", LUZ = "minecraft:glowstone";
-type Base = { x: number; z: number; sy?: number; feita?: boolean; chefe?: boolean; salas?: string[] };
+// chave: undefined na Base de Pesquisa (a da história); "rx,rz" nas outras masmorras (1.55.0). rot: 0 a 3 (quartos de volta).
+type Base = { x: number; z: number; sy?: number; feita?: boolean; chefe?: boolean; salas?: string[]; chave?: string; rot?: number; cancelada?: boolean; avisada?: boolean };
 type Sala = { id: string; dx: number; dz: number; r: number; altura: number; tipo: "monstros" | "baus" | "chefe" | "salao" };
 const SALAS: ReadonlyArray<Sala> = [
   { id: "salao", dx: 0, dz: 0, r: 4, altura: 5, tipo: "salao" },
@@ -68,7 +71,78 @@ export function lerBase(): Base | undefined {
     return undefined;
   }
 }
-const gravarBase = (b: Base) => world.setDynamicProperty(PROP, JSON.stringify(b));
+function gravarBase(b: Base): void {
+  world.setDynamicProperty(b.chave ? `${PROP_EXTRA}${b.chave}` : PROP, JSON.stringify(b));
+  if (b.chave) cacheExtras.set(b.chave, b.cancelada ? null : b);
+}
+
+/*
+ * 1.55.0: as outras masmorras da Lua, como no Galacticraft 5 (structure_set moon_boss: random_spread de 32×32 chunks,
+ * separação 8): uma por região, num chunk sorteado pela semente do mundo, com o mesmo salão, corredores, salas e o
+ * Esqueleto Evoluído Gigante, virada para um lado sorteado. O Baú do Tesouro delas dá o saque, mas o Núcleo de Salto
+ * só sai da Base de Pesquisa (a da história). Nenhuma cai perto da Base nem em cima de uma Vila Lunar, e não é feita
+ * se alguém já andou por cima dela antes (para não apagar o que o jogador fez lá).
+ */
+const PROP_EXTRA = "cl:masmorra_lua:";
+const REGIAO = 32 * 16;
+function lerExtra(chave: string): Base | undefined {
+  const v = world.getDynamicProperty(PROP_EXTRA + chave);
+  if (typeof v !== "string") return undefined;
+  try {
+    return JSON.parse(v) as Base;
+  } catch {
+    return undefined;
+  }
+}
+// As masmorras já calculadas nesta sessão (null = nenhuma na região): a conta roda a cada segundo por jogador.
+const cacheExtras = new Map<string, Base | null>();
+let cacheComHistoria = false;
+function extraDaRegiao(rx: number, rz: number): Base | undefined {
+  const chave = `${rx},${rz}`;
+  // A Base de Pesquisa é sorteada depois do pouso: quando ela aparece, refaz as contas (a distância muda).
+  const comHistoria = world.getDynamicProperty(PROP) !== undefined;
+  if (comHistoria !== cacheComHistoria) {
+    cacheExtras.clear();
+    cacheComHistoria = comHistoria;
+  }
+  const c = cacheExtras.get(chave);
+  if (c !== undefined) return c ?? undefined;
+  const b = calcularExtra(rx, rz, chave);
+  cacheExtras.set(chave, b ?? null);
+  return b;
+}
+function calcularExtra(rx: number, rz: number, chave: string): Base | undefined {
+  const salvo = lerExtra(chave);
+  if (salvo) return salvo.cancelada ? undefined : salvo;
+  const r = rng(sementeDe(sementeDoMundo(), rx, rz, 52532672));
+  const x = (rx * 32 + Math.floor(r() * 24)) * 16 + 8, z = (rz * 32 + Math.floor(r() * 24)) * 16 + 8;
+  const rot = Math.floor(r() * 4);
+  const historia = lerBase();
+  if (historia && Math.hypot(historia.x - x, historia.z - z) < 250) return undefined;
+  if (vilaPerto(x, z, 40)) return undefined;
+  return { x, z, chave, rot };
+}
+/** As masmorras (fora a da história) das regiões em volta de (x, z). */
+function extrasPerto(x: number, z: number): Base[] {
+  const rx = Math.floor(x / REGIAO), rz = Math.floor(z / REGIAO);
+  const l: Base[] = [];
+  for (let dx = -1; dx <= 1; dx++)
+    for (let dz = -1; dz <= 1; dz++) {
+      const b = extraDaRegiao(rx + dx, rz + dz);
+      if (b) l.push(b);
+    }
+  return l;
+}
+// Posição de uma sala e de um canto dela, girados com a masmorra.
+function girar(dx: number, dz: number, rot = 0): [number, number] {
+  for (let i = 0; i < rot; i++) [dx, dz] = [-dz, dx];
+  return [dx, dz];
+}
+const centroSala = (b: Base, s: Sala): [number, number] => {
+  const [dx, dz] = girar(s.dx, s.dz, b.rot);
+  return [b.x + dx, b.z + dz];
+};
+const FRENTE_BAU = ["north", "east", "south", "west"];
 /** Para a Bússola do Avião, na Lua. */
 export const alvoBaseLua = (): { x: number; z: number } | undefined => {
   const b = lerBase();
@@ -89,8 +163,8 @@ function escolherBase(j: Player): Base {
 
 // ---------- Construção ----------
 const caixa = (dim: Dimension, a: Vector3, c: Vector3, bloco: string) => dim.fillBlocks(new BlockVolume(a, c), bloco);
-function sala(dim: Dimension, cx: number, cz: number, s: Sala): void {
-  const x = cx + s.dx, z = cz + s.dz, r = s.r;
+function sala(dim: Dimension, b: Base, s: Sala): void {
+  const [x, z] = centroSala(b, s), r = s.r;
   caixa(dim, { x: x - r - 1, y: Y0, z: z - r - 1 }, { x: x + r + 1, y: Y0 + s.altura + 1, z: z + r + 1 }, TIJOLO);
   caixa(dim, { x: x - r, y: Y0 + 1, z: z - r }, { x: x + r, y: Y0 + s.altura, z: z + r }, "minecraft:air");
   // Luz no teto: nos cantos (o salão e a sala do chefe bem acesos; as outras, penumbra).
@@ -101,14 +175,21 @@ function sala(dim: Dimension, cx: number, cz: number, s: Sala): void {
 function construir(dim: Dimension, b: Base): void {
   const cx = b.x, cz = b.z;
   const sy = dim.getTopmostBlock({ x: cx, z: cz })?.y ?? 64;
-  // Masmorra: salas e corredores.
-  for (const s of SALAS) sala(dim, cx, cz, s);
-  for (const [x1, z1, x2, z2] of CORREDORES) {
+  // Masmorra: salas e corredores (girados com a masmorra; a da história tem rot 0).
+  const corredores = CORREDORES.map(([x1, z1, x2, z2]) => {
+    const [a1, b1] = girar(x1, z1, b.rot), [a2, b2] = girar(x2, z2, b.rot);
+    return [Math.min(a1, a2), Math.min(b1, b2), Math.max(a1, a2), Math.max(b1, b2)] as const;
+  });
+  for (const s of SALAS) sala(dim, b, s);
+  for (const [x1, z1, x2, z2] of corredores) {
     caixa(dim, { x: cx + x1 - 1, y: Y0, z: cz + z1 - 1 }, { x: cx + x2 + 1, y: Y0 + 5, z: cz + z2 + 1 }, TIJOLO);
   }
   // Abre os corredores e reabre as salas (as paredes dos corredores entram um bloco nelas).
-  for (const [x1, z1, x2, z2] of CORREDORES) caixa(dim, { x: cx + x1, y: Y0 + 1, z: cz + z1 }, { x: cx + x2, y: Y0 + 4, z: cz + z2 }, "minecraft:air");
-  for (const s of SALAS) caixa(dim, { x: cx + s.dx - s.r, y: Y0 + 1, z: cz + s.dz - s.r }, { x: cx + s.dx + s.r, y: Y0 + s.altura, z: cz + s.dz + s.r }, "minecraft:air");
+  for (const [x1, z1, x2, z2] of corredores) caixa(dim, { x: cx + x1, y: Y0 + 1, z: cz + z1 }, { x: cx + x2, y: Y0 + 4, z: cz + z2 }, "minecraft:air");
+  for (const s of SALAS) {
+    const [x, z] = centroSala(b, s);
+    caixa(dim, { x: x - s.r, y: Y0 + 1, z: z - s.r }, { x: x + s.r, y: Y0 + s.altura, z: z + s.r }, "minecraft:air");
+  }
   // Poço do salão até a superfície, com escada encostada na parede norte (de cima até o chão do salão).
   caixa(dim, { x: cx - 1, y: Y0 + 6, z: cz - 1 }, { x: cx + 1, y: sy, z: cz + 1 }, TIJOLO);
   caixa(dim, { x: cx, y: Y0 + 1, z: cz - 1 }, { x: cx, y: Y0 + 5, z: cz - 1 }, TIJOLO);
@@ -125,11 +206,14 @@ function construir(dim: Dimension, b: Base): void {
   dim.getBlock({ x: cx, y: sy, z: cz })?.setPermutation(escada);
   // Baús da sala oeste e o Baú do Tesouro no fundo da sala do chefe, virado para a entrada.
   const oeste = SALAS.find((s) => s.id === "oeste")!;
-  criarBauCom(dim, { x: cx + oeste.dx - 3, y: Y0 + 1, z: cz - 3 }, sortearSaque(SAQUE_BAU));
-  criarBauCom(dim, { x: cx + oeste.dx - 3, y: Y0 + 1, z: cz + 3 }, sortearSaque(SAQUE_BAU));
+  for (const lado of [-3, 3]) {
+    const [dx, dz] = girar(oeste.dx - 3, lado, b.rot);
+    criarBauCom(dim, { x: cx + dx, y: Y0 + 1, z: cz + dz }, sortearSaque(SAQUE_BAU));
+  }
   const chefe = SALAS.find((s) => s.id === "chefe")!;
-  dim.getBlock({ x: cx, y: Y0 + 1, z: cz + chefe.dz + chefe.r - 1 })?.setPermutation(
-    BlockPermutation.resolve("cl:bau_tesouro", { "minecraft:cardinal_direction": "north", "cl:aberto": false }),
+  const [tx, tz] = girar(0, chefe.dz + chefe.r - 1, b.rot);
+  dim.getBlock({ x: cx + tx, y: Y0 + 1, z: cz + tz })?.setPermutation(
+    BlockPermutation.resolve("cl:bau_tesouro", { "minecraft:cardinal_direction": FRENTE_BAU[b.rot ?? 0], "cl:aberto": false }),
   );
   b.sy = sy;
   b.feita = true;
@@ -141,8 +225,16 @@ function construir(dim: Dimension, b: Base): void {
 const PREPARAR = 160;
 const AREA = "cl_base_lua";
 let areaAberta = false;
+/** A área da masmorra em blocos (as salas vão até 40 blocos para os lados e 48 para o lado da sala do chefe, girado). */
+function areaDa(b: Base): { x1: number; z1: number; x2: number; z2: number } {
+  const cantos = [girar(-40, -40, b.rot), girar(40, 48, b.rot)];
+  return {
+    x1: b.x + Math.min(cantos[0][0], cantos[1][0]), z1: b.z + Math.min(cantos[0][1], cantos[1][1]),
+    x2: b.x + Math.max(cantos[0][0], cantos[1][0]), z2: b.z + Math.max(cantos[0][1], cantos[1][1]),
+  };
+}
 function prepararArea(dim: Dimension, b: Base): void {
-  const caixa = { x1: b.x - 40, z1: b.z - 40, x2: b.x + 40, z2: b.z + 48 };
+  const caixa = areaDa(b);
   pedirArea({ dim, ...caixa });
   if (areaAberta) return;
   const opcoes = { dimension: dim, from: { x: caixa.x1, y: 0, z: caixa.z1 }, to: { x: caixa.x2, y: 120, z: caixa.z2 } };
@@ -166,21 +258,30 @@ function soltarArea(): void {
 }
 
 function podeConstruir(dim: Dimension, b: Base): boolean {
-  for (let x = b.x - 40; x <= b.x + 40; x += 16) for (let z = b.z - 40; z <= b.z + 48; z += 16) if (!chunkPronto(dim, x, z)) return false;
-  return chunkPronto(dim, b.x + 40, b.z + 48);
+  const a = areaDa(b);
+  for (let x = a.x1; x <= a.x2 + 15; x += 16) for (let z = a.z1; z <= a.z2 + 15; z += 16) if (!chunkPronto(dim, Math.min(x, a.x2), Math.min(z, a.z2))) return false;
+  return true;
 }
 
 // ---------- Salas, chefe e baú ----------
-const dentro = (p: Vector3, b: Base, s: Sala) =>
-  Math.abs(p.x - (b.x + s.dx + 0.5)) <= s.r + 0.5 && Math.abs(p.z - (b.z + s.dz + 0.5)) <= s.r + 0.5 && p.y >= Y0 && p.y <= Y0 + s.altura + 1;
+const dentro = (p: Vector3, b: Base, s: Sala) => {
+  const [x, z] = centroSala(b, s);
+  return Math.abs(p.x - (x + 0.5)) <= s.r + 0.5 && Math.abs(p.z - (z + 0.5)) <= s.r + 0.5 && p.y >= Y0 && p.y <= Y0 + s.altura + 1;
+};
+// De que masmorra é cada chefe vivo (para a chave cair na sala certa quando ele morre).
+const chefes = new Map<string, Base>();
 
 function acordarSala(dim: Dimension, b: Base, s: Sala): void {
-  const centro = { x: b.x + s.dx + 0.5, y: Y0 + 1, z: b.z + s.dz + 0.5 };
+  const [sx, sz] = centroSala(b, s);
+  const centro = { x: sx + 0.5, y: Y0 + 1, z: sz + 0.5 };
   if (s.tipo === "chefe") {
     if (b.chefe) return;
-    const vivo = dim.getEntities({ type: "cl:esqueleto_chefe", location: centro, maxDistance: s.r * 2 + 4 }).length > 0;
-    if (vivo) return;
-    dim.spawnEntity("cl:esqueleto_chefe", centro);
+    const vivo = dim.getEntities({ type: "cl:esqueleto_chefe", location: centro, maxDistance: s.r * 2 + 4 });
+    if (vivo.length) {
+      for (const e of vivo) chefes.set(e.id, b);
+      return;
+    }
+    chefes.set(dim.spawnEntity("cl:esqueleto_chefe", centro).id, b);
     for (const p of dim.getPlayers({ location: centro, maxDistance: 30 })) p.onScreenDisplay.setTitle({ translate: "cl.gc.chefe_acordou" }, { subtitle: duasLinhas("cl.gc.chefe_acordou_sub"), fadeInDuration: 10, stayDuration: 50, fadeOutDuration: 10 });
     dim.playSound("mob.wither.spawn", centro, { volume: 0.8, pitch: 1.4 });
     return;
@@ -224,11 +325,15 @@ export const bauTesouro: BlockCustomComponent = {
       if (!inv || slot < 0) return aviso(j, "cl.gc.bau_trancado", 5);
       inv.setItem(slot, undefined);
       b.setPermutation(b.permutation.withState("cl:aberto" as never, true as never));
-      darAoJogador(j, "cl:nucleo_salto", 1);
+      // 1.55.0: o Núcleo de Salto só sai do baú da Base de Pesquisa (as outras masmorras dão só o saque).
+      const h = lerBase();
+      const chefe = SALAS.find((s) => s.tipo === "chefe")!;
+      const daHistoria = !!h && b.x === h.x && b.z === h.z + chefe.dz + chefe.r - 1;
+      if (daHistoria) darAoJogador(j, "cl:nucleo_salto", 1);
       for (const p of sortearSaque(SAQUE_TESOURO)) darAoJogador(j, p.item, p.quantidade);
       j.playSound("random.chestopen");
       j.playSound("random.levelup");
-      j.onScreenDisplay.setTitle({ text: "§d✦" }, { subtitle: duasLinhas("cl.gc.bau_aberto"), fadeInDuration: 10, stayDuration: 60, fadeOutDuration: 10 });
+      j.onScreenDisplay.setTitle({ text: "§d✦" }, { subtitle: duasLinhas(daHistoria ? "cl.gc.bau_aberto" : "cl.gc.bau_extra"), fadeInDuration: 10, stayDuration: 60, fadeOutDuration: 10 });
     });
   },
 };
@@ -245,50 +350,87 @@ export function registrarBase(): void {
   intervalo("base lunar", () => {
     const naLua = world.getPlayers().filter((j) => j.dimension.id === LUA);
     if (!naLua.length) return;
-    const b = lerBase();
-    if (!b) return;
     const dim = dimensaoLua();
-    if (!b.feita) {
+    // A Base de Pesquisa e as outras masmorras perto de alguém (cada uma uma vez).
+    const bases = new Map<string, Base>();
+    const h = lerBase();
+    if (h) bases.set("historia", h);
+    for (const j of naLua) for (const b of extrasPerto(j.location.x, j.location.z)) bases.set(b.chave!, b);
+    const t = lerExtra("teste");
+    if (t) bases.set("teste", t);
+    // Uma construção de cada vez: a mais perto de alguém que ainda não foi feita.
+    let alvo: Base | undefined, dAlvo = Infinity;
+    for (const b of bases.values()) {
+      for (const j of naLua) {
+        const d = Math.hypot(j.location.x - b.x, j.location.z - b.z);
+        if (b.chave && !b.feita) {
+          // Andou por cima antes de ela existir: fica sem (não apaga o que o jogador fez).
+          if (d <= 40 && b.chave !== "teste") {
+            b.cancelada = true;
+            gravarBase(b);
+            break;
+          }
+          if (!b.avisada && d <= 250) {
+            j.sendMessage({ translate: "cl.gc.masmorra_sinal", with: [String(b.x), String(b.z), String(Math.round(d))] });
+            b.avisada = true;
+            gravarBase(b);
+          }
+        }
+        if (!b.feita && d <= PREPARAR && d < dAlvo) {
+          alvo = b;
+          dAlvo = d;
+        }
+      }
+    }
+    if (alvo && !alvo.cancelada) {
       // 1.17.0: a base fica pronta antes de o jogador chegar. A até PREPARAR blocos dela, uma área de carregamento
       // segura os chunks da base, o terreno deles é gerado primeiro (lua.ts) e a base é construída assim que tudo
       // estiver pronto. Antes só começava a 28 blocos e esperava o jogador passar perto de todos os chunks.
-      const perto = naLua.some((j) => Math.hypot(j.location.x - b.x, j.location.z - b.z) <= PREPARAR);
-      if (!perto) return;
-      prepararArea(dim, b);
-      if (!podeConstruir(dim, b)) return;
-      try {
-        construir(dim, b);
-      } catch (erro) {
-        console.warn(`[Pouso Forçado] base lunar: ${erro}`);
-        return;
+      prepararArea(dim, alvo);
+      if (podeConstruir(dim, alvo)) {
+        try {
+          construir(dim, alvo);
+          soltarArea();
+        } catch (erro) {
+          console.warn(`[Pouso Forçado] base lunar: ${erro}`);
+        }
       }
-      soltarArea();
     }
-    for (const j of naLua) {
-      const perto = Math.hypot(j.location.x - b.x, j.location.z - b.z);
-      if (perto <= 12 && j.getDynamicProperty("cl:viu_base") !== true) {
-        j.setDynamicProperty("cl:viu_base", true);
-        registrarAcao(j, "base_lua");
-        aviso(j, "cl.gc.base_entrada", 6);
+    for (const b of bases.values()) {
+      if (!b.feita) continue;
+      for (const j of naLua) {
+        const perto = Math.hypot(j.location.x - b.x, j.location.z - b.z);
+        if (perto > 80) continue;
+        if (!b.chave && perto <= 12 && j.getDynamicProperty("cl:viu_base") !== true) {
+          j.setDynamicProperty("cl:viu_base", true);
+          registrarAcao(j, "base_lua");
+          aviso(j, "cl.gc.base_entrada", 6);
+        }
+        for (const s of SALAS) if (dentro(j.location, b, s)) acordarSala(dim, b, s);
       }
-      for (const s of SALAS) if (dentro(j.location, b, s)) acordarSala(dim, b, s);
     }
     arremessar(dim);
   }, 20);
-  // Para os testes no servidor (só com cheats): /scriptevent cl:teste_base põe a base 6 blocos ao lado.
-  system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: j }) => {
-    if (id !== "cl:teste_base" || !(j instanceof Player)) return;
-    gravarBase({ x: Math.floor(j.location.x) + 6, z: Math.floor(j.location.z) });
+  // Para os testes no servidor (só com cheats): /scriptevent cl:teste_base põe a base 6 blocos ao lado;
+  // /scriptevent cl:teste_masmorra <rot> põe outra masmorra (girada) 6 blocos ao lado.
+  system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: j }) => {
+    if (!(j instanceof Player)) return;
+    if (id === "cl:teste_base") gravarBase({ x: Math.floor(j.location.x) + 6, z: Math.floor(j.location.z) });
+    if (id === "cl:teste_masmorra") gravarBase({ x: Math.floor(j.location.x) + 6, z: Math.floor(j.location.z), chave: "teste", rot: Number(message) || 0, avisada: true });
   });
   world.afterEvents.entityDie.subscribe(({ deadEntity }) => {
     if (deadEntity.typeId !== "cl:esqueleto_chefe") return;
     // A chave sai pelo script, no meio da sala do chefe (depois da morte o jogo não deixa ler a posição dele, e
-    // assim também não depende da regra de saque de monstros do mundo).
-    const b = lerBase();
+    // assim também não depende da regra de saque de monstros do mundo). A masmorra é a que acordou o chefe.
+    const daMasmorra = chefes.get(deadEntity.id);
+    chefes.delete(deadEntity.id);
+    const b = daMasmorra ? (daMasmorra.chave ? lerExtra(daMasmorra.chave) ?? daMasmorra : lerBase()) : lerBase();
+    const s = SALAS.find((x) => x.tipo === "chefe")!;
+    let sala: [number, number] | undefined;
     if (b) {
-      const s = SALAS.find((x) => x.tipo === "chefe")!;
+      sala = centroSala(b, s);
       try {
-        dimensaoLua().spawnItem(new ItemStack("cl:chave_masmorra", 1), { x: b.x + s.dx + 0.5, y: Y0 + 1.5, z: b.z + s.dz + 0.5 });
+        dimensaoLua().spawnItem(new ItemStack("cl:chave_masmorra", 1), { x: sala[0] + 0.5, y: Y0 + 1.5, z: sala[1] + 0.5 });
       } catch {
         // sala fora do mundo carregado
       }
@@ -298,7 +440,7 @@ export function registrarBase(): void {
     for (const j of world.getPlayers()) {
       if (j.dimension.id !== LUA) continue;
       j.sendMessage({ translate: "cl.gc.chefe_morto" });
-      if (!b || Math.hypot(j.location.x - b.x, j.location.z - (b.z + 34)) <= 40) registrarAcao(j, "chefe_lua");
+      if (!sala || Math.hypot(j.location.x - sala[0], j.location.z - sala[1]) <= 40) registrarAcao(j, "chefe_lua");
     }
   });
 }
