@@ -233,10 +233,18 @@ function areaDa(b: Base): { x1: number; z1: number; x2: number; z2: number } {
     x2: b.x + Math.max(cantos[0][0], cantos[1][0]), z2: b.z + Math.max(cantos[0][1], cantos[1][1]),
   };
 }
+let areaDe: string | undefined; // de que masmorra é a área aberta
 function prepararArea(dim: Dimension, b: Base): void {
   const caixa = areaDa(b);
   pedirArea({ dim, ...caixa });
+  const dono = b.chave ?? "historia";
+  // 1.55.0: o alvo mudou (há várias masmorras): solta a área da outra e abre a desta.
+  if (areaAberta && areaDe !== dono) {
+    soltarArea(); // a nova abre no próximo segundo (o mesmo nome não pode ser reaberto no mesmo instante)
+    return;
+  }
   if (areaAberta) return;
+  areaDe = dono;
   const opcoes = { dimension: dim, from: { x: caixa.x1, y: 0, z: caixa.z1 }, to: { x: caixa.x2, y: 120, z: caixa.z2 } };
   try {
     if (!world.tickingAreaManager.hasCapacity(opcoes)) return;
@@ -393,6 +401,8 @@ export function registrarBase(): void {
         }
       }
     }
+    // Nenhuma para construir perto: solta a área (não fica segurando chunk à toa no celular).
+    if (!alvo || alvo.cancelada) soltarArea();
     if (alvo && !alvo.cancelada) {
       // 1.17.0: a base fica pronta antes de o jogador chegar. A até PREPARAR blocos dela, uma área de carregamento
       // segura os chunks da base, o terreno deles é gerado primeiro (lua.ts) e a base é construída assim que tudo
