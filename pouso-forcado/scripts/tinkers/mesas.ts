@@ -12,54 +12,22 @@ import { slimeMax, tracosDe } from "./tracos.js";
 /*
  * As três mesas do Tinkers' Construct (Fase 15). Tudo pelo toque com o item na mão + menus:
  * - Mesa de Moldes: Padrão em Branco na mão -> escolhe o padrão de peça.
- * - Construtor de Peças: padrão de peça na mão -> escolhe o material que está na mochila
- *   (madeira, pedra, sílex, cacto, osso, obsidiana; metal só na fundição) e paga o custo da peça.
- * - Estação de Ferramentas: mão vazia ou qualquer item -> montar ferramenta com as peças da mochila;
- *   com uma ferramenta na mão -> consertar (com o material da cabeça) e modificar (Fase 16).
+ * - Construtor de Peças, Estação de Ferramentas e Bigorna: desde a 1.56.0 têm tela de espaços (telas_tc.ts); os menus
+ *   daqui (montar com as peças da mochila, consertar, modificar, traços) abrem com agachado + tocar na Estação/Bigorna.
  */
-const PECAS = DADOS_F15.pecas as Readonly<Record<string, { custo: number; stat: string }>>;
-const FERR = DADOS_F15.ferramentas as unknown as Readonly<Record<string, { pecas: readonly string[] }>>;
+export const PECAS = DADOS_F15.pecas as Readonly<Record<string, { custo: number; stat: string }>>;
+export const FERR = DADOS_F15.ferramentas as unknown as Readonly<Record<string, { pecas: readonly string[] }>>;
 // 1.26.0: que materiais fazem cada peça (Tinkers 3), quem é metal e os traços (para a tela de traços).
-const PECA_MATS = DADOS_F15.pecaMats as unknown as Readonly<Record<string, readonly string[]>>;
-const METAL = (m: string) => !!(DADOS_F15.materiais as unknown as Readonly<Record<string, { metal?: boolean }>>)[m]?.metal;
-// Itens que valem menos de uma unidade de material (TC3: 4 linhas = 1, 2 peles de coelho = 1).
-const UNIDADE: Readonly<Record<string, number>> = { "minecraft:string": 0.25, "minecraft:rabbit_hide": 0.5 };
+export const PECA_MATS = DADOS_F15.pecaMats as unknown as Readonly<Record<string, readonly string[]>>;
 const MATS = Object.keys(DADOS_F15.materiais) as Mat[];
+export const METAL = (m: string) => !!(DADOS_F15.materiais as unknown as Readonly<Record<string, { metal?: boolean }>>)[m]?.metal;
+// Itens que valem menos de uma unidade de material (TC3: 4 linhas = 1, 2 peles de coelho = 1).
+export const UNIDADE: Readonly<Record<string, number>> = { "minecraft:string": 0.25, "minecraft:rabbit_hide": 0.5 };
 const nome = (id: string): RawMessage => ({ translate: `item.${id}.name` });
-
-/** Os itens da mochila que servem de material, por material. */
-function materiaisNaMochila(j: Player): Map<Mat, { id: string; qtd: number }[]> {
-  const inv = j.getComponent("minecraft:inventory")?.container;
-  const achados = new Map<Mat, { id: string; qtd: number }[]>();
-  if (!inv) return achados;
-  const somas = new Map<string, number>();
-  for (let s = 0; s < inv.size; s++) {
-    const p = inv.getItem(s);
-    if (p) somas.set(p.typeId, (somas.get(p.typeId) ?? 0) + p.amount);
-  }
-  for (const [id, qtd] of somas) {
-    const mat = materialDoItem(id);
-    if (!mat) continue;
-    const lista = achados.get(mat) ?? [];
-    lista.push({ id, qtd: Math.floor(qtd * (UNIDADE[id] ?? 1)) });
-    achados.set(mat, lista);
-  }
-  return achados;
-}
 
 export function materialDoItem(id: string): Mat | undefined {
   if (id.endsWith("_planks")) return "madeira";
   return TINKERS.materialDeItem[id] as Mat | undefined;
-}
-
-function tirar(j: Player, fontes: { id: string; qtd: number }[], qtd: number): void {
-  let falta = qtd;
-  for (const f of fontes) {
-    const n = Math.min(falta, f.qtd);
-    if (n > 0) tirarDoInventario(j, f.id, Math.round(n / (UNIDADE[f.id] ?? 1)));
-    falta -= n;
-    if (falta <= 0) return;
-  }
 }
 
 // ---------- Mesa de Moldes ----------
@@ -81,43 +49,6 @@ export const mesaMoldesComp: BlockCustomComponent = {
     if (!j) return;
     if (itemNaMao(j)?.typeId !== "cl:padrao_branco") return aviso(j, "cl.tc.moldes_como");
     abrirUmMenu(j, () => mesaMoldes(j));
-  },
-};
-
-// ---------- Construtor de Peças ----------
-async function construtor(j: Player, peca: string): Promise<void> {
-  const custo = PECAS[peca].custo;
-  const tem = materiaisNaMochila(j);
-  const validos = PECA_MATS[peca] ?? MATS;
-  const opcoes = MATS.filter((m) => validos.includes(m) && !METAL(m) && (tem.get(m) ?? []).reduce((s, f) => s + f.qtd, 0) >= custo);
-  if (opcoes.length === 0) {
-    const temMetal = MATS.some((m) => METAL(m) && tem.has(m));
-    return aviso(j, temMetal ? "cl.tc.pecas_metal" : { translate: "cl.tc.pecas_falta", with: [String(custo)] }, 5);
-  }
-  const form = new ActionFormData()
-    .title({ translate: "cl.tc.pecas_titulo" })
-    .body({ translate: "cl.tc.pecas_corpo", with: { rawtext: [{ translate: `cl.tc.peca.${peca}` }, { text: String(custo) }] } });
-  for (const m of opcoes) form.button(nome(`cl:peca_${peca}_${m}`));
-  const r = await form.show(j);
-  if (r.canceled || r.selection === undefined) return;
-  const mat = opcoes[r.selection];
-  const fontes = materiaisNaMochila(j).get(mat) ?? [];
-  if (fontes.reduce((s, f) => s + f.qtd, 0) < custo) return;
-  tirar(j, fontes, custo);
-  darAoJogador(j, new ItemStack(`cl:peca_${peca}_${mat}`, 1));
-  j.playSound("dig.stone", { pitch: 1.4 });
-  aviso(j, { translate: "cl.tc.pecas_feita", with: { rawtext: [nome(`cl:peca_${peca}_${mat}`)] } });
-  registrarAcao(j, "peca");
-}
-
-export const construtorPecasComp: BlockCustomComponent = {
-  onPlayerInteract(e) {
-    const j = e.player;
-    if (!j) return;
-    const id = itemNaMao(j)?.typeId ?? "";
-    const peca = id.startsWith("cl:padrao_") ? id.slice("cl:padrao_".length) : "";
-    if (!PECAS[peca]) return aviso(j, "cl.tc.pecas_como");
-    abrirUmMenu(j, () => construtor(j, peca));
   },
 };
 
@@ -168,11 +99,11 @@ async function montar(j: Player, naBigorna = false): Promise<void> {
 }
 
 /** Item que conserta a ferramenta: o mesmo material da cabeça. */
-function itemDeConserto(mat: Mat): string {
+export function itemDeConserto(mat: Mat): string {
   return mat === "madeira" ? "minecraft:oak_planks" : TINKERS.consertoCom[mat];
 }
 
-async function estacao(j: Player): Promise<void> {
+export async function estacao(j: Player): Promise<void> {
   const mao = itemNaMao(j);
   const f = ferramentaDe(mao?.typeId);
   if (!mao || !f) return montar(j);
@@ -193,9 +124,7 @@ async function estacao(j: Player): Promise<void> {
   if (!atual || atual.typeId !== mao.typeId) return;
   const { dur, max } = durabilidade(atual);
   if (dur >= max) return aviso(j, "cl.tc.cheia");
-  // Cultivado (madeira) e Preservado (madeira tratada) consertam 50% a mais.
-  const bonus = ["cultivated", "preserved"].some((t) => tracosDe(atual, f.tipo, f.mat).has(t)) ? 1.5 : 1;
-  const porItem = Math.max(1, Math.round(max * TINKERS.consertoPorItem * bonus));
+  const porItem = porItemConserto(atual, f.tipo, f.mat);
   const precisa = Math.ceil((max - dur) / porItem);
   const tem = f.mat === "madeira" ? planksNaMochila(j) : contarNoInventario(j, reparo);
   const usa = Math.min(precisa, tem);
@@ -207,6 +136,12 @@ async function estacao(j: Player): Promise<void> {
   j.playSound("random.anvil_use", { volume: 0.6 });
   aviso(j, { translate: "cl.tc.consertou", with: [String(ganho)] });
   registrarAcao(j, "consertar");
+}
+
+/** Quanto cada item do material da cabeça conserta. Cultivado (madeira) e Preservado (madeira tratada): 50% a mais. */
+export function porItemConserto(i: ItemStack, tipo: Tipo, mat: Mat): number {
+  const bonus = ["cultivated", "preserved"].some((t) => tracosDe(i, tipo, mat).has(t)) ? 1.5 : 1;
+  return Math.max(1, Math.round(durabilidade(i).max * TINKERS.consertoPorItem * bonus));
 }
 
 /** 1.26.0: os traços da ferramenta com a descrição do Tinkers' Construct 3. */
@@ -248,13 +183,13 @@ function trocarMao(j: Player, i: ItemStack): void {
 }
 
 // ---------- Modificadores (Fase 16; 1.30.0 com os do TC3) ----------
-type Modificador = {
+export type Modificador = {
   item: string; qtd: number; max: number; tipo?: "habilidade" | "livre";
   itens?: readonly (readonly [string, number])[]; niveis?: readonly (readonly (readonly [string, number])[])[];
 };
-const MODS = TINKERS.modificadores as unknown as Readonly<Record<string, Modificador>>;
+export const MODS = TINKERS.modificadores as unknown as Readonly<Record<string, Modificador>>;
 /** O que o próximo nível pede. */
-function receitaDe(d: Modificador, nivel: number): readonly (readonly [string, number])[] {
+export function receitaDe(d: Modificador, nivel: number): readonly (readonly [string, number])[] {
   if (d.niveis) return d.niveis[Math.min(nivel, d.niveis.length - 1)];
   return d.itens ?? [[d.item, d.qtd]];
 }
@@ -290,11 +225,15 @@ async function modificar(j: Player, naBigorna = false): Promise<void> {
   aplicarModificador(j, atual, lista[res.selection][0], naBigorna);
 }
 
-/** Aplica o modificador `m` na ferramenta `atual` (a da mão), pagando com a mochila. Devolve se aplicou. */
-export function aplicarModificador(j: Player, atual: ItemStack, m: string, naBigorna: boolean): boolean {
+export type Gasto = (readonly [string, number])[];
+/**
+ * Aplica o modificador `m` em `atual` (mexe no item), se `tem(id)` cobre a receita. Devolve o que gastar ou o erro.
+ * Usado pela tela da Estação/Bigorna (1.56.0) e pelo menu antigo.
+ */
+export function modificarItem(atual: ItemStack, m: string, naBigorna: boolean, tem: (id: string) => number): { gasto: Gasto } | { erro: RawMessage | string } {
   const f = ferramentaDe(atual.typeId);
   const d = MODS[m];
-  if (!f || !d) return false;
+  if (!f || !d) return { erro: "cl.tc.mod_max" };
   durabilidade(atual); // completa a ferramenta feita na bancada
   const espacos = (atual.getDynamicProperty("tc:esp") as number | undefined) ?? 0;
   const hab = habDe(atual, f.tipo);
@@ -302,35 +241,43 @@ export function aplicarModificador(j: Player, atual: ItemStack, m: string, naBig
   const nivel = mods[m] ?? 0;
   const r = receitaDe(d, nivel);
   // TC3: a Estação tem 3 espaços de item; receita maior só na Bigorna.
-  const nao = (msg: RawMessage | string) => (aviso(j, msg), false);
-  if (!naBigorna && r.length > 3) return nao("cl.tc.precisa_bigorna");
+  if (!naBigorna && r.length > 3) return { erro: "cl.tc.precisa_bigorna" };
   // Slime extra (livre): cada bola dá 25 de slime, sem gastar espaço.
   if (m === "slime") {
-    if (contarNoInventario(j, d.item) < 1) return nao({ translate: "cl.tc.sem_material", with: { rawtext: [nome(d.item)] } });
+    if (tem(d.item) < 1) return { erro: { translate: "cl.tc.sem_material", with: { rawtext: [nome(d.item)] } } };
     mods.slime = 1;
     atual.setDynamicProperty("tc:mods", JSON.stringify(mods));
-    const t = tracosDe(atual, f.tipo, f.mat);
-    const max = slimeMax(atual, t);
+    const max = slimeMax(atual, tracosDe(atual, f.tipo, f.mat));
     const agora = (atual.getDynamicProperty("tc:slime") as number | undefined) ?? 0;
-    if (agora >= max) return nao("cl.tc.mod_max");
-    const bolas = Math.min(contarNoInventario(j, d.item), Math.ceil((max - agora) / 25));
-    tirarDoInventario(j, d.item, bolas);
+    if (agora >= max) return { erro: "cl.tc.mod_max" };
+    const bolas = Math.min(tem(d.item), Math.ceil((max - agora) / 25));
     atual.setDynamicProperty("tc:slime", Math.min(max, agora + 25 * bolas));
-    concluir(j, atual, m, d);
-    return true;
+    recalcular(atual);
+    return { gasto: [[d.item, bolas]] };
   }
-  if (nivel >= d.max) return nao("cl.tc.mod_max");
-  if (d.tipo === "habilidade" && hab <= 0) return nao("cl.tc.mod_sem_habilidade");
-  if (d.tipo !== "habilidade" && espacos <= 0) return nao("cl.tc.mod_sem_espaco");
-  const falta = r.find(([id, n]) => contarNoInventario(j, id) < n);
-  if (falta) return nao({ translate: "cl.tc.sem_material", with: { rawtext: [nome(falta[0])] } });
-  for (const [id, n] of r) tirarDoInventario(j, id, n);
+  if (nivel >= d.max) return { erro: "cl.tc.mod_max" };
+  if (d.tipo === "habilidade" && hab <= 0) return { erro: "cl.tc.mod_sem_habilidade" };
+  if (d.tipo !== "habilidade" && espacos <= 0) return { erro: "cl.tc.mod_sem_espaco" };
+  const falta = r.find(([id, n]) => tem(id) < n);
+  if (falta) return { erro: { translate: "cl.tc.sem_material", with: { rawtext: [nome(falta[0])] } } };
   mods[m] = nivel + 1;
   atual.setDynamicProperty("tc:mods", JSON.stringify(mods));
   if (d.tipo === "habilidade") atual.setDynamicProperty("tc:hab", hab - 1);
   else atual.setDynamicProperty("tc:esp", espacos - 1);
-  if (d.tipo === "habilidade") registrarAcao(j, "tc3_habilidade");
-  concluir(j, atual, m, d);
+  recalcular(atual);
+  return { gasto: r.map(([id, n]) => [id, n] as const) };
+}
+
+/** Aplica o modificador `m` na ferramenta `atual` (a da mão), pagando com a mochila. Devolve se aplicou. */
+export function aplicarModificador(j: Player, atual: ItemStack, m: string, naBigorna: boolean): boolean {
+  const res = modificarItem(atual, m, naBigorna, (id) => contarNoInventario(j, id));
+  if ("erro" in res) {
+    aviso(j, res.erro);
+    return false;
+  }
+  for (const [id, n] of res.gasto) tirarDoInventario(j, id, n);
+  if (MODS[m]?.tipo === "habilidade") registrarAcao(j, "tc3_habilidade");
+  concluir(j, atual, m, MODS[m]);
   return true;
 }
 function concluir(j: Player, atual: ItemStack, m: string, _d: Modificador): void {
@@ -342,7 +289,7 @@ function concluir(j: Player, atual: ItemStack, m: string, _d: Modificador): void
 }
 
 /** 1.30.0: Bigorna do Tinker: tudo da Estação, mais as ferramentas de 4 peças e os modificadores grandes. */
-async function bigorna(j: Player): Promise<void> {
+export async function bigorna(j: Player): Promise<void> {
   const mao = itemNaMao(j);
   const f = ferramentaDe(mao?.typeId);
   if (!mao || !f) return montar(j, true);
@@ -359,13 +306,6 @@ async function bigorna(j: Player): Promise<void> {
   if (r.selection === 2) return verTracos(j, mao, f.tipo, f.mat);
   return estacao(j);
 }
-export const bigornaComp: BlockCustomComponent = {
-  onPlayerInteract(e) {
-    const j = e.player;
-    if (j) abrirUmMenu(j, () => bigorna(j));
-  },
-};
-
 /** 1.30.0: Mesa de Modificadores (TC3 Modifier Worktable): tira um modificador com uma esponja molhada; o espaço volta. */
 async function mesaModificadores(j: Player): Promise<void> {
   const mao = itemNaMao(j);
@@ -412,12 +352,5 @@ export const mesaModificadoresComp: BlockCustomComponent = {
   onPlayerInteract(e) {
     const j = e.player;
     if (j) abrirUmMenu(j, () => mesaModificadores(j));
-  },
-};
-
-export const estacaoFerramentasComp: BlockCustomComponent = {
-  onPlayerInteract(e) {
-    const j = e.player;
-    if (j) abrirUmMenu(j, () => estacao(j));
   },
 };

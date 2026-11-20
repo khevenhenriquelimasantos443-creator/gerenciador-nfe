@@ -3496,3 +3496,45 @@ teste("masmorra_yung", 300, (t) => {
     t.succeed();
   });
 });
+
+// 1.56.0: as mesas do Tinkers com tela de espaços (como no Java). O teste mexe direto no inventário da entidade da
+// mesa, como o jogador faria na tela: põe as entradas, vê a prévia e "pega" a prévia (tira do espaço).
+teste("tinkers_telas", 200, (t) => {
+  const j = robo(t, { x: 4, y: 2, z: 1 });
+  t.setBlockType("cl:construtor_pecas", { x: 1, y: 2, z: 1 });
+  t.setBlockType("cl:estacao_ferramentas", { x: 1, y: 2, z: 3 });
+  const dim = t.getDimension();
+  const mesa = (rel, tipo) => {
+    const p = t.worldBlockLocation(rel);
+    j.runCommand(`scriptevent cl:teste_tct ${p.x} ${p.y} ${p.z}`);
+    return dim.getEntities({ type: tipo, location: { x: p.x + 0.5, y: p.y, z: p.z + 0.5 }, maxDistance: 1 })[0];
+  };
+  let cp, ce, linha = [];
+  t.runAfterDelay(5, () => {
+    cp = mesa({ x: 1, y: 2, z: 1 }, "cl:mesa_tc_pecas")?.getComponent("inventory").container;
+    ce = mesa({ x: 1, y: 2, z: 3 }, "cl:mesa_tc_estacao")?.getComponent("inventory").container;
+    t.assert(cp && ce, "as mesas não ganharam a tela");
+    cp.setItem(9, new ItemStack("cl:padrao_branco", 2));
+    cp.setItem(10, new ItemStack("minecraft:cobblestone", 8));
+    ce.setItem(11, new ItemStack("cl:peca_cabeca_picareta_pedra", 1));
+    ce.setItem(12, new ItemStack("cl:peca_cabo_pedra", 1));
+    ce.setItem(13, new ItemStack("cl:peca_ligacao_pedra", 1));
+  });
+  t.runAfterDelay(15, () => {
+    const prev = cp.getItem(3)?.typeId, out = ce.getItem(16)?.typeId;
+    linha.push(`peça=${prev} ferramenta=${out} enfeite=${cp.getItem(0)?.typeId}`);
+    t.assert(prev === "cl:peca_cabeca_picareta_pedra", `prévia de peça: ${prev}`);
+    t.assert(out === "cl:picareta_pedra", `prévia de ferramenta: ${out}`);
+    cp.setItem(3, undefined); // pegou a cabeça de picareta (custa 2)
+    ce.setItem(16, undefined); // pegou a picareta
+  });
+  t.runAfterDelay(25, () => {
+    const pad = cp.getItem(9)?.amount ?? 0, ped = cp.getItem(10)?.amount ?? 0;
+    const sobra = [11, 12, 13].filter((s) => ce.getItem(s)).length;
+    linha.push(`padrões=${pad} pedregulho=${ped} peças_na_estação=${sobra}`);
+    log(`tinkers_telas: ${linha.join(" ")}`);
+    t.assert(pad === 1 && ped === 6, "o Construtor não cobrou o padrão e o material");
+    t.assert(sobra === 0, "a Estação não gastou as peças");
+    t.succeed();
+  });
+});

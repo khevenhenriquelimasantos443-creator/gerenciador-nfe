@@ -155,6 +155,18 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.56.0 (Tinkers com tela, como no Java)
+
+- **Construtor de Peças, Estação de Ferramentas e Bigorna do Tinker têm tela de espaços**, como no Tinkers' Construct do Java:
+  toque na mesa e a tela abre. Nada de segurar item na mão nem escolher em menu.
+  - **Construtor de Peças:** Padrão em Branco e o material (tábuas, pedregulho, sílex, osso, linha...) nos espaços da esquerda;
+    à direita aparecem as peças que dá para fazer. Pegue a que quiser: gasta 1 padrão e o custo em material (como no TC3).
+  - **Estação de Ferramentas** (3 peças) e **Bigorna** (4 peças): ponha as peças no meio e pegue a ferramenta pronta à direita.
+    Com a ferramenta no espaço da esquerda, o material da cabeça conserta e os itens de um modificador modificam.
+  - Agachado + tocar na Estação ou na Bigorna abre o menu de antes (traços da ferramenta). Bater na mesa a recolhe.
+- A Mesa de Moldes ficou opcional (o TC3 não tem): o Construtor aceita o Padrão em Branco direto. Os padrões de peça
+  que você já fez continuam valendo (e não se gastam).
+
 ## Novidades da 1.55.1 (555 ícones novos)
 
 - **555 ícones redesenhados** no AI Studio: todos os que ainda eram desenho por fórmula (pós, chapas, cilindros do Mekanism, moldes,

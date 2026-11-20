@@ -108,6 +108,6 @@ export default {
     "cl.missao.fu_picareta.titulo": ["Picareta de Bronze", "Bronze Pickaxe"],
     "cl.missao.fu_picareta.desc": ["Funda uma cabeça de picareta de bronze e monte a picareta.", "Cast a bronze pickaxe head and build the pickaxe."],
     "cl.missao.fu_modificar.titulo": ["Modificador", "Modifier"],
-    "cl.missao.fu_modificar.desc": ["Ponha um modificador numa ferramenta na Estação de Ferramentas (redstone, diamante, esmeralda ou musgo).", "Add a modifier to a tool at the Tool Station (redstone, diamond, emerald or moss)."],
+    "cl.missao.fu_modificar.desc": ["Na Estação de Ferramentas: a ferramenta no espaço da esquerda + o item do modificador no meio (redstone, diamante, esmeralda ou musgo); pegue a ferramenta modificada.", "At the Tool Station: the tool in the left slot + the modifier item in the middle (redstone, diamond, emerald or moss); take the modified tool."],
   },
 };

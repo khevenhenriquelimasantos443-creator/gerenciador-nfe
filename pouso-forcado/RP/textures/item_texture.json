@@ -7534,6 +7534,30 @@
     },
     "clc_painel_qio_portatil": {
       "textures": "textures/items/cl/arte/painel_qio_portatil"
+    },
+    "clc_gui_vazio": {
+      "textures": "textures/items/cl/arte/gui_vazio"
+    },
+    "clc_gui_seta": {
+      "textures": "textures/items/cl/arte/gui_seta"
+    },
+    "clc_gui_padrao": {
+      "textures": "textures/items/cl/arte/gui_padrao"
+    },
+    "clc_gui_material": {
+      "textures": "textures/items/cl/arte/gui_material"
+    },
+    "clc_gui_ferramenta": {
+      "textures": "textures/items/cl/arte/gui_ferramenta"
+    },
+    "clc_gui_pecas": {
+      "textures": "textures/items/cl/arte/gui_pecas"
+    },
+    "clc_gui_ajuda_pecas": {
+      "textures": "textures/items/cl/arte/gui_ajuda_pecas"
+    },
+    "clc_gui_ajuda_estacao": {
+      "textures": "textures/items/cl/arte/gui_ajuda_estacao"
     }
   }
 }

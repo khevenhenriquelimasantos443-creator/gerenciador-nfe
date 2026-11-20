@@ -68,6 +68,7 @@ const itens = {};
 for (const rel of arquivos("BP/items")) {
   const d = lerJson(rel)["minecraft:item"];
   const id = d.description.identifier;
+  if (id.startsWith("cl:gui_")) continue; // enfeites das telas do Tinkers (1.56.0)
   const ic = d.components["minecraft:icon"];
   const chave = typeof ic === "string" ? ic : ic?.texture ?? ic?.textures?.default;
   itens[id] = { pt: ptCl[`item.${id}.name`] ?? id, en: enCl[`item.${id}.name`] ?? id, icone: caminho(iconesItens[chave]?.textures) };
