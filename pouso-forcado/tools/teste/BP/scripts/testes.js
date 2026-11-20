@@ -3538,3 +3538,31 @@ teste("tinkers_telas", 200, (t) => {
     t.succeed();
   });
 });
+
+// 1.57.0: as máquinas com espaços. O toque de mão vazia põe a entidade com a tela; o minério posto na entrada é
+// processado e o pó vai para a saída (com bateria carregada ao lado).
+teste("maquina_espacos", 400, (t) => {
+  const j = robo(t, { x: 3, y: 2, z: 1 });
+  t.setBlockType("cl:pulverizador", { x: 1, y: 2, z: 1 });
+  t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 10 }), { x: 2, y: 2, z: 1 });
+  const dim = t.getDimension();
+  let c;
+  t.runAfterDelay(10, () => {
+    try { j.interactWithBlock({ x: 1, y: 2, z: 1 }); } catch (e) { log(`maquina_espacos: toque ${e}`); }
+  });
+  t.runAfterDelay(30, () => {
+    const p = t.worldBlockLocation({ x: 1, y: 2, z: 1 });
+    const m = dim.getEntities({ type: "cl:maquina_tela", location: { x: p.x + 0.5, y: p.y, z: p.z + 0.5 }, maxDistance: 1 })[0];
+    t.assert(m, "a máquina não ganhou os espaços");
+    c = m.getComponent("inventory").container;
+    c.setItem(0, new ItemStack("minecraft:raw_iron", 4));
+  });
+  t.runAfterDelay(380, () => {
+    const saida = [5, 6, 7, 14, 15, 16, 23, 24, 25].map((s) => c.getItem(s)).filter(Boolean);
+    const sobra = c.getItem(0)?.amount ?? 0;
+    log(`maquina_espacos: entrada=${sobra} saída=${saida.map((i) => `${i.typeId}x${i.amount}`).join(",")} enfeite=${c.getItem(3)?.typeId}`);
+    t.assert(sobra < 4, "a máquina não usou a entrada");
+    t.assert(saida.length > 0, "nada na saída");
+    t.succeed();
+  });
+});

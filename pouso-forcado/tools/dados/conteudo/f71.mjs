@@ -56,6 +56,6 @@ export default {
     "cl.missao.yung_masmorra.titulo": ["Ossos no Escuro", "Bones in the Dark"],
     "cl.missao.yung_masmorra.desc": ["Ache uma Masmorra dos Esqueletos no subsolo (ela fica entre y -50 e -30).", "Find a Skeleton Dungeon underground (between y -50 and -30)."],
     "cl.missao.ad_tela.titulo": ["Painel da Máquina", "Machine Panel"],
-    "cl.missao.ad_tela.desc": ["Toque numa máquina com a mão vazia para abrir a tela dela.", "Tap a machine with an empty hand to open its screen."],
+    "cl.missao.ad_tela.desc": ["Agachado e de mão vazia, toque numa máquina para ver os detalhes dela (estado, energia, Catálogo).", "Sneaking with an empty hand, tap a machine to see its details (status, energy, Catalog)."],
   },
 };

@@ -155,6 +155,21 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.57.0 (máquinas com espaços, como no Java)
+
+- **As máquinas têm tela de espaços**, como nos mods do Java (Thermal, Mekanism, Ender IO, Immersive Engineering,
+  MineFactory, Powah!, Galacticraft, BuildCraft, AE2...): toque na máquina **com a mão vazia** e abre a tela.
+  - **Entrada** nos 9 espaços da esquerda, **saída** nos 9 da direita; no meio, o estado da máquina e a energia da rede.
+  - Com a saída cheia a máquina para, como no Java (antes, sem baú embaixo, ela soltava no chão).
+  - **Com item na mão** o toque vai para a máquina como antes (balde, melhoria, chave, frasco de alma...).
+  - **Agachado + tocar** abre a tela de detalhes de antes (com o Catálogo).
+  - O baú em cima (entrada) e embaixo (saída) continua valendo, para quem automatiza com funis.
+  - Quebrar a máquina solta o que estava nos espaços. Máquina posta antes desta versão ganha os espaços no primeiro
+    toque de mão vazia.
+- Ficam como estavam as máquinas que já têm menu próprio (teletransportador, minerador digital, laser...) e as de toque
+  próprio (manivela, roda d'água, tanques, barris...).
+- Missão nova no Diário: **Como no Java** (usar os espaços de uma máquina).
+
 ## Novidades da 1.56.0 (Tinkers com tela, como no Java)
 
 - **Construtor de Peças, Estação de Ferramentas e Bigorna do Tinker têm tela de espaços**, como no Tinkers' Construct do Java:

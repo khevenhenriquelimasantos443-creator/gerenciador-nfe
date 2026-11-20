@@ -53,7 +53,8 @@ function trecho(arq, nome) {
 
 // Tira comentários e textos entre aspas: um "magmator" dentro de um texto não é o componente magmator.
 const semTexto = (t) => t?.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/\/\/[^\n]*/g, " ").replace(/"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'/g, '""');
-const memo = new Map();
+let memo = new Map();
+let ALVO = ENERGIA;
 function usaEnergia(arq, nome, fundo = 0) {
   const k = `${arq}#${nome}`;
   if (memo.has(k)) return memo.get(k);
@@ -64,7 +65,7 @@ function usaEnergia(arq, nome, fundo = 0) {
     // reexportado de outro arquivo?
     const imp = imports(arq).get(nome);
     r = imp ? usaEnergia(imp.arq, imp.nome, fundo + 1) : false;
-  } else if (ENERGIA.test(t)) r = true;
+  } else if (ALVO.test(t)) r = true;
   else if (fundo < 4) {
     // Segue os nomes usados no trecho (funções e tabelas que guardam funções), menos chaves de objeto, campos de tipo
     // e propriedades (x.nome), que só coincidem no nome.
@@ -84,7 +85,9 @@ function usaEnergia(arq, nome, fundo = 0) {
   return r;
 }
 
-export function blocosEnergia() {
+export function blocosEnergia(alvo = ENERGIA) {
+  ALVO = alvo;
+  memo = new Map();
   const main = join(RAIZ, "scripts/main.ts");
   const s = fonte(main);
   const imp = imports(main);
@@ -129,20 +132,32 @@ export function blocosEnergia() {
     ver(b.components);
     for (const p of b.permutations ?? []) ver(p.components);
     const id = b.description.identifier;
+    if (alvo !== ENERGIA) {
+      if ([...nomes].some((n) => comEnergia.has(n))) blocos.add(id);
+      continue;
+    }
     if ([...nomes].some((n) => comEnergia.has(n) || LIGA_TAMBEM_COMP.has(n)) && !NAO_LIGA.has(id)) blocos.add(id);
   }
-  for (const id of LIGA_TAMBEM) if (existsSync(join(dir, `${id.slice(3)}.json`))) blocos.add(id);
+  if (alvo === ENERGIA) for (const id of LIGA_TAMBEM) if (existsSync(join(dir, `${id.slice(3)}.json`))) blocos.add(id);
   return { componentes: [...comEnergia].sort(), todos: [...new Set(pares.map((p) => p[0]))].sort(), blocos: [...blocos].sort() };
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const r = blocosEnergia();
+  // 1.57.0: e os que põem ou tiram itens (entrada/saída), que ganham a tela de espaços (scripts/maquinas/espacos.ts).
+  const ri = blocosEnergia(/\b(entrada|saida|entregar)\s*\(/);
+  // e os que têm menu próprio (esses continuam sem os espaços: o toque é deles).
+  const rm = blocosEnergia(/\b(abrirUmMenu|ActionFormData|ModalFormData|MessageFormData)\b|\.show\(/);
   const saida = join(RAIZ, "scripts/conteudo/energia.ts");
   writeFileSync(
     saida,
-    `// Gerado por tools/gerar-energia.mjs: os blocos com componente que gasta, gera ou guarda energia.\n` +
-      `export const BLOCOS_ENERGIA: ReadonlyArray<string> = ${JSON.stringify(r.blocos)};\n`,
+    `// Gerado por tools/gerar-energia.mjs: os blocos com componente que gasta, gera ou guarda energia,\n` +
+      `// e os que usam entrada ou saída de itens (o baú em cima e embaixo, ou os espaços da tela).\n` +
+      `export const BLOCOS_ENERGIA: ReadonlyArray<string> = ${JSON.stringify(r.blocos)};\n` +
+      `export const BLOCOS_ITENS: ReadonlyArray<string> = ${JSON.stringify(ri.blocos)};\n` +
+      `export const BLOCOS_MENU: ReadonlyArray<string> = ${JSON.stringify(rm.blocos)};\n`,
   );
+  console.log(`itens: ${ri.componentes.length} componentes, ${ri.blocos.length} blocos`);
   console.log(`energia: ${r.componentes.length} de ${r.todos.length} componentes, ${r.blocos.length} blocos`);
   if (process.argv.includes("-v")) {
     console.log("COM:", r.componentes.join(" "));

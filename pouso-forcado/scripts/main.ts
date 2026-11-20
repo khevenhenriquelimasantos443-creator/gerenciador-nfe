@@ -13,6 +13,7 @@ import { planta, registrarPlantacao } from "./blocos/plantacao.js";
 import { registrarFerramentas } from "./tinkers/ferramenta.js";
 import { mesaModificadoresComp, mesaMoldesComp, registrarTesteModificadores } from "./tinkers/mesas.js";
 import { mesaTelaComp, registrarTelasTinkers } from "./tinkers/telas_tc.js";
+import { registrarEspacos } from "./maquinas/espacos.js";
 import { registrarVaral, varal } from "./tinkers/varal.js";
 import { celulaEnergia, dinamo, extrusora, fornalhaRedstone, fundidoraInducao, precipitador, pulverizador, registrarThermal, serraria } from "./maquinas/thermal.js";
 import { barrilArmazenamento, registrarJabba } from "./armazenamento/jabba.js";
@@ -393,6 +394,7 @@ registrarEnderIO9();
 registrarArmas(); // 1.28.0: armaduras, escudos, arcos e arremessáveis do Tinkers 3
 registrarTesteModificadores();
 registrarTelasTinkers();
+registrarEspacos();
 registrarArtefatos(); // 1.31.0: Artifacts (Tela de Artefatos)
 registrarBausGrandes(); // 1.32.0: Iron Chests
 registrarGavetas(); // 1.32.0: Storage Drawers

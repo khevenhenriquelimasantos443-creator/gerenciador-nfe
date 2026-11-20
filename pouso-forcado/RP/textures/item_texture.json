@@ -7558,6 +7558,18 @@
     },
     "clc_gui_ajuda_estacao": {
       "textures": "textures/items/cl/arte/gui_ajuda_estacao"
+    },
+    "clc_gui_entrada": {
+      "textures": "textures/items/cl/arte/gui_entrada"
+    },
+    "clc_gui_saida": {
+      "textures": "textures/items/cl/arte/gui_saida"
+    },
+    "clc_gui_status": {
+      "textures": "textures/items/cl/arte/gui_status"
+    },
+    "clc_gui_ajuda_maquina": {
+      "textures": "textures/items/cl/arte/gui_ajuda_maquina"
     }
   }
 }

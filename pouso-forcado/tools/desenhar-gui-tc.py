@@ -35,6 +35,15 @@ def seta_direita():
     return pts
 
 
+def seta_esquerda():
+    return [(15 - x, y) for (x, y) in seta_direita()]
+
+
+def raio():
+    linhas = ["....XXX.", "...XXX..", "..XXX...", ".XXXXXX.", "...XXX..", "..XXX...", ".XXX....", ".XX....."]
+    return [(4 + c, 4 + r) for r, l in enumerate(linhas) for c, ch in enumerate(l) if ch == "X"]
+
+
 def seta_baixo():
     return [(y, x) for (x, y) in seta_direita()]
 
@@ -58,4 +67,9 @@ for n in ("padrao", "material", "ferramenta", "pecas"):
     salvar(n, seta_baixo())
 salvar("ajuda_pecas", interrogacao())
 salvar("ajuda_estacao", interrogacao())
+# 1.57.0: a tela das máquinas.
+salvar("entrada", seta_esquerda())
+salvar("saida", seta_esquerda(), BRANCO)
+salvar("status", raio())
+salvar("ajuda_maquina", interrogacao())
 print("gui do Tinkers desenhada")

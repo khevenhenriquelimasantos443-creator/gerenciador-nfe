@@ -10,6 +10,9 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { energiaDaRede } from "../util/rede.js";
 import { estadoMaquina } from "./thermal.js";
+import { FORA } from "./fora_tela.js";
+import { garantirEspacos } from "./espacos.js";
+import { aviso } from "../jogador/hud.js";
 
 /*
  * 1.55.0: a tela da máquina, para toda máquina que tem tela no mod de origem (as que gastam, geram ou guardam
@@ -20,15 +23,6 @@ import { estadoMaquina } from "./thermal.js";
  * 2 ticks e não abre se outra já abriu.
  * Custo: só no toque.
  */
-// Blocos do conteúdo em que o toque com a mão vazia já é uma ação (girar a manivela, depositar experiência, ligar o
-// carregador de chunks, o baú do tesouro trancado...) ou que são baú, barril, tanque ou enfeite: ficam sem a tela.
-const FORA = new Set<string>([
-  "cl:caixa_entrega", "cl:estrutura_maquina", "cl:chassi_maquina", "cl:bloco_maquina", "cl:chassi_almas", "cl:barril_armazenamento", "cl:bau_me",
-  "cl:drive_me", "cl:bau_tesouro", "cl:bau_vacuo", "cl:obelisco_xp", "cl:vacuo_xp", "cl:carregador_chunks", "cl:carregador_pontual",
-  "cl:ancora_viagem", "cl:esteira", "cl:esteira_animal", "cl:tanque_fluido", "cl:tanque_fluido_pressurizado", "cl:alarme_industrial",
-  "cl:manivela", "cl:roda_dagua", "cl:rolamento_moinho", "cl:controlador_velocidade", "cl:mo", "cl:rodas_trituradoras", "cl:prensa_mecanica",
-  "cl:misturador_mecanico", "cl:ventilador", "cl:furadeira", "cl:barril_residuos_radioativos",
-]);
 const COM_TELA = new Set<string>([...BLOCOS_ENERGIA, ...MAQUINAS_CONTEUDO].filter((id) => !FORA.has(id)));
 export const temTela = (id: string): boolean => COM_TELA.has(id);
 const ENERGIA_SET = new Set(BLOCOS_ENERGIA);
@@ -138,6 +132,12 @@ export function abrirTelaMaquina(j: Player, b: Block): void {
 export function registrarTelas(): void {
   world.afterEvents.playerInteractWithBlock.subscribe(({ player: j, block: b, itemStack, isFirstEvent }) => {
     if (!isFirstEvent || itemStack || j.isSneaking || !COM_TELA.has(b.typeId)) return;
+    // 1.57.0: máquina com espaços: o toque de mão vazia mostra a entidade (o próximo toque abre os espaços).
+    const esp = garantirEspacos(b);
+    if (esp) {
+      if (esp[1]) aviso(j, "cl.esp.pronta", 5);
+      return;
+    }
     // Espera a tela própria do bloco (se ele tiver) abrir primeiro; se abriu, esta não abre (abrirUmMenu).
     system.runTimeout(() => {
       if (j.isValid && b.isValid && COM_TELA.has(b.typeId)) abrirTelaMaquina(j, b);

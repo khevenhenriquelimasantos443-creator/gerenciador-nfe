@@ -1,4 +1,5 @@
 import { Block, Container, ItemStack } from "@minecraft/server";
+import { espacosDe } from "../maquinas/espacos.js";
 import { vizinhos } from "./blocos.js";
 import { gravar, ler } from "./dados.js";
 import { consumir } from "./rede.js";
@@ -9,8 +10,9 @@ import { consumir } from "./rede.js";
  * energia em "centésimos de E" (cE): a máquina guarda o troco de 1 E tirado da rede, para
  * operações que custam menos de 1 E (ex.: 25 cE = 1.000 RF).
  */
-export const entrada = (b: Block): Container | undefined => inv(b.above());
-export const saida = (b: Block): Container | undefined => inv(b.below());
+// 1.57.0: sem baú em cima (ou embaixo), os espaços da tela da máquina (maquinas/espacos.ts), como no Java.
+export const entrada = (b: Block): Container | undefined => inv(b.above()) ?? (espacosDe(b)?.entrada as unknown as Container | undefined);
+export const saida = (b: Block): Container | undefined => inv(b.below()) ?? (espacosDe(b)?.saida as unknown as Container | undefined);
 export function inv(b: Block | undefined): Container | undefined {
   try {
     return b?.getComponent("minecraft:inventory")?.container;

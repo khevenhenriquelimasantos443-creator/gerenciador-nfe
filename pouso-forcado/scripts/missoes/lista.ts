@@ -205,6 +205,7 @@ export type Acao =
   | "vila_lua"
   | "masmorra_esqueletos"
   | "tela_maquina"
+  | "esp_maquina"
   | "ruinas_lua"
   | "aldeao_lua"
   | "nucleo_salto"
@@ -599,6 +600,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "ad_conduto", objetivo: { tipo: "acao", acao: "conduto", qtd: 1 }, recompensa: [{ item: "cl:aglutinante_conduite", quantidade: 16 }] },
       // 1.55.0: a tela da máquina.
       { id: "ad_tela", objetivo: { tipo: "acao", acao: "tela_maquina", qtd: 1 }, recompensa: [{ item: "minecraft:chest", quantidade: 2 }] },
+      { id: "esp_maquina", objetivo: { tipo: "acao", acao: "esp_maquina", qtd: 1 }, recompensa: [{ item: "minecraft:hopper", quantidade: 1 }] },
     ],
   },
   {
