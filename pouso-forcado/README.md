@@ -155,6 +155,12 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.57.1
+
+- **Bicho-da-seda:** o cajado agora acha bicho também nas folhas de mangue, carvalho pálido, azaleia florida e nas
+  folhas de slime do Tinkers (antes só nas folhas de carvalho, pinheiro, bétula, selva, acácia, carvalho escuro,
+  cerejeira e azaleia). A chance continua a do Ex Nihilo: 1 em 100 por folha (1 em 50 com o Cajado de Ouro).
+
 ## Novidades da 1.57.0 (máquinas com espaços, como no Java)
 
 - **As máquinas têm tela de espaços**, como nos mods do Java (Thermal, Mekanism, Ender IO, Immersive Engineering,

@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.57.0";
+export const VERSAO = "1.57.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1468,7 +1468,12 @@ export const CADINHO = {
 export const SEDA = { chanceFolha: 1 / 100, chanceInfestada: 1 / 15, linha1: 0.4, linha2: 0.1, espalhaAPartir: 6, durabilidadeCajado: 64 } as const;
 // Cajados (1.2.0): multiplicador da chance do bicho-da-seda. Osso dura 256 usos; ouro dura 32 e acha o dobro.
 export const CAJADOS: Readonly<Record<string, number>> = { [`${NS}:cajado`]: 1, [`${NS}:cajado_osso`]: 1, [`${NS}:cajado_ouro`]: 2 };
-export const FOLHAS: ReadonlyArray<string> = ["oak_leaves", "spruce_leaves", "birch_leaves", "jungle_leaves", "acacia_leaves", "dark_oak_leaves", "cherry_leaves", "azalea_leaves"].map((n) => `minecraft:${n}`);
+// 1.57.1: também as folhas novas do jogo (mangue, carvalho pálido, azaleia florida) e as de slime do Tinkers.
+export const FOLHAS: ReadonlyArray<string> = [
+  ...["oak_leaves", "spruce_leaves", "birch_leaves", "jungle_leaves", "acacia_leaves", "dark_oak_leaves", "cherry_leaves", "azalea_leaves",
+    "azalea_leaves_flowered", "mangrove_leaves", "pale_oak_leaves"].map((n) => `minecraft:${n}`),
+  ...["ceu", "ender", "icor", "sangue", "terra"].map((n) => `${NS}:folhas_slime_${n}`),
+];
 
 for (const id of [
   IDS.poeira, IDS.pedrinha, IDS.barrilMadeira, IDS.barrilPedra, IDS.cadinho, IDS.cadinhoCru, IDS.porcelana, IDS.cajado, IDS.bichoSeda,
