@@ -11,8 +11,8 @@ import { montadora } from "./blocos/montadora.js";
 import { folhaInfestada, registrarNihilo } from "./blocos/nihilo.js";
 import { planta, registrarPlantacao } from "./blocos/plantacao.js";
 import { registrarFerramentas } from "./tinkers/ferramenta.js";
-import { mesaModificadoresComp, mesaMoldesComp, registrarTesteModificadores } from "./tinkers/mesas.js";
-import { mesaTelaComp, registrarTelasTinkers } from "./tinkers/telas_tc.js";
+import { bigornaComp, construtorPecasComp, estacaoFerramentasComp, mesaModificadoresComp, mesaMoldesComp, registrarTesteModificadores } from "./tinkers/mesas.js";
+import { registrarLimpezaTelasTinkers } from "./tinkers/telas_tc.js";
 import { registrarEspacos } from "./maquinas/espacos.js";
 import { registrarVaral, varal } from "./tinkers/varal.js";
 import { celulaEnergia, dinamo, extrusora, fornalhaRedstone, fundidoraInducao, precipitador, pulverizador, registrarThermal, serraria } from "./maquinas/thermal.js";
@@ -152,7 +152,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:cristal_brotando", cristalBrotandoComp);
   blockComponentRegistry.registerCustomComponent("cl:slime_congelado", slimeCongeladoComp);
   // 1.30.0: Tinkers 3 parte 5.
-  blockComponentRegistry.registerCustomComponent("cl:bigorna", mesaTelaComp);
+  blockComponentRegistry.registerCustomComponent("cl:bigorna", bigornaComp);
   blockComponentRegistry.registerCustomComponent("cl:mesa_modificadores", mesaModificadoresComp);
   blockComponentRegistry.registerCustomComponent("cl:bau_tc", bauTcComp);
   blockComponentRegistry.registerCustomComponent("cl:punji", punjiComp);
@@ -217,8 +217,8 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent(IDS.folhaInfestada, comPerfil(IDS.folhaInfestada, folhaInfestada));
   blockComponentRegistry.registerCustomComponent("cl:planta", comPerfil("plantação", planta));
   blockComponentRegistry.registerCustomComponent("cl:mesa_moldes", mesaMoldesComp);
-  blockComponentRegistry.registerCustomComponent("cl:construtor_pecas", mesaTelaComp);
-  blockComponentRegistry.registerCustomComponent("cl:estacao_ferramentas", mesaTelaComp);
+  blockComponentRegistry.registerCustomComponent("cl:construtor_pecas", construtorPecasComp);
+  blockComponentRegistry.registerCustomComponent("cl:estacao_ferramentas", estacaoFerramentasComp);
   blockComponentRegistry.registerCustomComponent("cl:varal", varal);
   blockComponentRegistry.registerCustomComponent("cl:tesseract", tesseract);
   blockComponentRegistry.registerCustomComponent("cl:montador_molecular", montadorMolecular);
@@ -393,7 +393,7 @@ registrarEnderIO();
 registrarEnderIO9();
 registrarArmas(); // 1.28.0: armaduras, escudos, arcos e arremessáveis do Tinkers 3
 registrarTesteModificadores();
-registrarTelasTinkers();
+registrarLimpezaTelasTinkers();
 registrarEspacos();
 registrarArtefatos(); // 1.31.0: Artifacts (Tela de Artefatos)
 registrarBausGrandes(); // 1.32.0: Iron Chests

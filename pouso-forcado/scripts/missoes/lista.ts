@@ -386,7 +386,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     icone: "cl:picareta_silex",
     requer: ["peneira"],
     missoes: [
-      { id: "tc_padrao", objetivo: { tipo: "ter", item: "cl:padrao_branco", qtd: 1 }, recompensa: [{ item: "minecraft:flint", quantidade: 4 }] },
+      { id: "tc_padrao", objetivo: { tipo: "acao", acao: "padrao", qtd: 1 }, recompensa: [{ item: "minecraft:flint", quantidade: 4 }] },
       { id: "tc_peca", requer: ["tc_padrao"], objetivo: { tipo: "acao", acao: "peca", qtd: 3 }, recompensa: [{ item: "minecraft:bone", quantidade: 4 }] },
       { id: "tc_picareta", requer: ["tc_peca"], objetivo: { tipo: "ter", item: "cl:picareta_silex", qtd: 1 }, recompensa: [{ item: IDS.sacolaComum, quantidade: 1 }] },
       { id: "tc_montar", requer: ["tc_picareta"], objetivo: { tipo: "acao", acao: "montar_ferramenta", qtd: 3 }, recompensa: [{ item: "minecraft:flint", quantidade: 8 }] },
