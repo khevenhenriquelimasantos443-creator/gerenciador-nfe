@@ -7,8 +7,9 @@ import { nascerDoAddon } from "../util/nascer.js";
 
 /*
  * Cápsulas de carga: pedaços da nave que ainda estavam em órbita.
- * - Uma vez por dia (de CAPSULA.primeiroDia em diante), de manhã, uma cápsula cai perto de um
- *   jogador: aviso na tela, rastro de fogo descendo e impacto (explosão que não quebra blocos).
+ * - 1.59.0: uma a cada CAPSULA.intervaloDias dias (de CAPSULA.primeiroDia em diante), numa hora sorteada do dia
+ *   (pode ser de noite), cai perto de um jogador: aviso na tela, rastro de fogo descendo e impacto (explosão que não
+ *   quebra blocos). A hora marcada fica em PROPS.capsulaProxima (dia × 24000 + hora); dormir ou /time não a perde.
  * - A cápsula é uma gaiola pequena de ardósia e barras de ferro com um barril de saque
  *   (CAPSULA.saque) e um casal de animais (vaca, ovelha, galinha ou porco) do lado.
  *   Os animais não nascem sozinhos neste planeta: a cápsula é o jeito de começar um rebanho.
@@ -140,15 +141,24 @@ function procurarEncontradas(): void {
 export function registrarCapsulas(): void {
   intervalo("cápsulas", () => {
     procurarEncontradas();
-    const t = world.getTimeOfDay();
     const dia = world.getDay();
-    if (dia < CAPSULA.primeiroDia || t < CAPSULA.horaMin || t > CAPSULA.horaMax) return;
-    if (world.getDynamicProperty(PROPS.capsulaDia) === dia) return;
+    const agora = dia * 24000 + world.getTimeOfDay();
+    let prox = world.getDynamicProperty(PROPS.capsulaProxima);
+    if (typeof prox !== "number") {
+      // Mundo novo ou de antes da 1.59.0: 10 dias depois da última (ou no primeiro dia), numa hora sorteada.
+      const ultima = world.getDynamicProperty(PROPS.capsulaDia);
+      const alvo = typeof ultima === "number" ? ultima + CAPSULA.intervaloDias : CAPSULA.primeiroDia;
+      prox = Math.max(agora, alvo * 24000 + Math.floor(Math.random() * 24000));
+      world.setDynamicProperty(PROPS.capsulaProxima, prox);
+    }
+    if (agora < prox) return;
     const jogadores = world
       .getPlayers({ excludeGameModes: [GameMode.Spectator] })
       .filter((j) => j.dimension.id === "minecraft:overworld");
     if (jogadores.length === 0) return;
-    if (derrubarCapsula(sortear(jogadores))) world.setDynamicProperty(PROPS.capsulaDia, dia);
+    if (!derrubarCapsula(sortear(jogadores))) return;
+    world.setDynamicProperty(PROPS.capsulaDia, dia);
+    world.setDynamicProperty(PROPS.capsulaProxima, (dia + CAPSULA.intervaloDias) * 24000 + Math.floor(Math.random() * 24000));
   }, 200);
 
   system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity }) => {

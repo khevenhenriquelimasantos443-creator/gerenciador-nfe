@@ -1,0 +1,179 @@
+<title>Ícones do Pouso Forçado</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;600&display=swap">
+<style>
+/* Layout: barra de filtros fixa no topo, grade de cartões de ícone, barra da seleção fixa embaixo. */
+:root {
+  --bg: #eef0ec; --painel: #ffffff; --fg: #1f2622; --suave: #5d6a62; --linha: #d3d9d3;
+  --acento: #c4661f; --acento-fg: #ffffff; --sel: #fff1e0; --gpt: #3b6fd1; --ai: #7a4fc9; --mod: #4f7a5c; --troc: #c4661f;
+  --display: "Pixelify Sans", "Courier New", monospace; --texto: "Inter", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #171b19; --painel: #222825; --fg: #e8ece9; --suave: #9aa79f; --linha: #343c38;
+  --acento: #e98a3c; --acento-fg: #1a1208; --sel: #3a2a1a; --gpt: #79a2ef; --ai: #b28cf0; --mod: #86b896; --troc: #e98a3c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #171b19; --painel: #222825; --fg: #e8ece9; --suave: #9aa79f; --linha: #343c38;
+  --acento: #e98a3c; --acento-fg: #1a1208; --sel: #3a2a1a; --gpt: #79a2ef; --ai: #b28cf0; --mod: #86b896; --troc: #e98a3c; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--texto); line-height: 1.45 }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--painel) }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+header { padding-block: 20px 8px }
+h1 { font-family: var(--display); font-size: 1.9rem; margin: 0; text-wrap: balance; letter-spacing: .5px }
+.intro { color: var(--suave); max-width: 65ch; margin: 6px 0 0 }
+.filtros { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--painel); border-bottom: 1px solid var(--linha); padding-block: 10px }
+.linha { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+.chip { font: 600 .85rem var(--texto); border: 1px solid var(--linha); background: var(--bg); color: var(--fg); border-radius: 999px; padding: 6px 12px; cursor: pointer }
+.chip[aria-pressed="true"] { background: var(--acento); color: var(--acento-fg); border-color: var(--acento) }
+.chip:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px }
+input[type=search], select { font: .95rem var(--texto); padding: 7px 10px; border: 1px solid var(--linha); border-radius: 8px; background: var(--bg); color: var(--fg); min-width: 0 }
+input[type=search] { flex: 1 1 180px }
+select { flex: 0 1 220px }
+.conta { color: var(--suave); font-size: .85rem; font-variant-numeric: tabular-nums }
+main { padding-block: 14px 120px }
+.grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px }
+.cartao { background: var(--painel); border: 1px solid var(--linha); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 6px; cursor: pointer; content-visibility: auto; contain-intrinsic-size: 150px 170px; text-align: left; font: inherit; color: inherit }
+.cartao[aria-pressed="true"] { background: var(--sel); border-color: var(--acento) }
+.icones { display: flex; gap: 8px; align-items: end }
+.icones figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 2px }
+.icones img { width: 48px; height: 48px; image-rendering: pixelated; background: color-mix(in srgb, var(--fg) 6%, transparent); border-radius: 6px }
+.icones figcaption { font-size: .68rem; color: var(--suave); letter-spacing: .3px; text-transform: uppercase }
+.nome { font-weight: 600; font-size: .88rem; overflow-wrap: anywhere }
+.id { font: .72rem ui-monospace, Menlo, monospace; color: var(--suave); overflow-wrap: anywhere }
+.tag { align-self: flex-start; font-size: .7rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; color: var(--painel) }
+.t-chatgpt { background: var(--gpt) } .t-aistudio { background: var(--ai) } .t-mod { background: var(--mod) } .t-trocado { background: var(--troc) }
+.marca { font-size: .75rem; font-weight: 700; color: var(--acento) }
+.mais { margin: 16px auto 0; display: block }
+.barra { position: fixed; inset: auto 0 0; z-index: 6; background: var(--painel); border-top: 1px solid var(--linha); padding-block: 10px calc(10px + env(safe-area-inset-bottom, 0px)) }
+.barra .linha { justify-content: space-between }
+.botao { font: 700 .95rem var(--texto); background: var(--acento); color: var(--acento-fg); border: 0; border-radius: 8px; padding: 9px 16px; cursor: pointer }
+.botao.claro { background: transparent; color: var(--fg); border: 1px solid var(--linha) }
+textarea { width: 100%; min-height: 90px; font: .8rem ui-monospace, Menlo, monospace; background: var(--bg); color: var(--fg); border: 1px solid var(--linha); border-radius: 8px; padding: 8px; margin-top: 8px }
+.vazio { color: var(--suave); padding: 30px 0 }
+@media (prefers-reduced-motion: no-preference) { .cartao { transition: background .12s, border-color .12s } }
+</style>
+
+<header class="wrap">
+  <h1>Ícones do Pouso Forçado</h1>
+  <p class="intro">Todos os ícones de item e de bloco do jogo hoje (versão 1.59.0). Em <b>Trocados</b> estão os que você pediu ao ChatGPT e que depois foram trocados (quase todos pela arte original dos mods): à esquerda o do ChatGPT, à direita o de hoje. Toque nos que quer mudar e copie a lista para mandar no chat.</p>
+</header>
+
+<div class="filtros wrap">
+  <div class="linha" role="group" aria-label="De onde veio o desenho">
+    <button class="chip" data-o="trocado" aria-pressed="true">Trocados do ChatGPT</button>
+    <button class="chip" data-o="chatgpt" aria-pressed="false">ChatGPT</button>
+    <button class="chip" data-o="aistudio" aria-pressed="false">AI Studio</button>
+    <button class="chip" data-o="mod" aria-pressed="false">Mod original e outros</button>
+    <button class="chip" data-o="todos" aria-pressed="false">Todos</button>
+  </div>
+  <div class="linha" style="margin-top:8px">
+    <input id="busca" type="search" placeholder="Buscar pelo nome ou ID" aria-label="Buscar">
+    <select id="mod" aria-label="Mod"><option value="">Todos os mods</option></select>
+    <select id="tipo" aria-label="Tipo"><option value="">Itens e blocos</option><option value="item">Só itens</option><option value="bloco">Só blocos</option></select>
+    <span class="conta" id="conta">Carregando…</span>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grade" id="grade"></div>
+  <p class="vazio" id="vazio" hidden>Nenhum ícone com esses filtros.</p>
+  <button class="botao claro mais" id="mais" hidden>Mostrar mais</button>
+</main>
+
+<div class="barra wrap">
+  <div class="linha">
+    <span class="conta" id="selConta">Nada marcado</span>
+    <span class="linha">
+      <button class="botao claro" id="limpar">Limpar</button>
+      <button class="botao" id="copiar">Copiar lista</button>
+    </span>
+  </div>
+  <textarea id="saida" hidden readonly aria-label="Lista para copiar"></textarea>
+</div>
+
+<script>
+const ROTULO = { chatgpt: "ChatGPT", aistudio: "AI Studio", mod: "Mod original", trocado: "Trocado" };
+const PAGINA = 240;
+let dados = [], filtro = "trocado", limite = PAGINA, marcados = new Map();
+const $ = (id) => document.getElementById(id);
+try { marcados = new Map(JSON.parse(localStorage.getItem("icones_marcados") || "[]")); } catch { marcados = new Map(); }
+const guardar = () => { try { localStorage.setItem("icones_marcados", JSON.stringify([...marcados])); } catch {} };
+const chave = (r) => `${r.tipo}:${r.id}`;
+
+function visiveis() {
+  const q = $("busca").value.trim().toLowerCase(), mod = $("mod").value, tipo = $("tipo").value;
+  return dados.filter((r) => (filtro === "todos" || r.o === filtro) && (!mod || r.mod === mod) && (!tipo || r.tipo === tipo)
+    && (!q || r.id.includes(q) || r.pt.toLowerCase().includes(q)));
+}
+
+function cartao(r) {
+  const b = document.createElement("button");
+  b.className = "cartao";
+  b.setAttribute("aria-pressed", marcados.has(chave(r)) ? "true" : "false");
+  const figs = r.gpt
+    ? `<figure><img alt="" src="${r.gpt}"><figcaption>ChatGPT</figcaption></figure><figure><img alt="" src="${r.png}"><figcaption>Hoje</figcaption></figure>`
+    : `<figure><img alt="" src="${r.png}"></figure>`;
+  b.innerHTML = `<div class="icones">${figs}</div><span class="nome"></span><span class="id"></span>
+    <span class="tag t-${r.o}">${ROTULO[r.o]}</span><span class="marca" hidden></span>`;
+  b.querySelector(".nome").textContent = r.pt;
+  b.querySelector(".id").textContent = `${r.id}.png · ${r.mod}${r.tipo === "bloco" ? " · bloco" : ""}`;
+  const marca = b.querySelector(".marca");
+  const pinta = () => {
+    const m = marcados.get(chave(r));
+    b.setAttribute("aria-pressed", m ? "true" : "false");
+    marca.hidden = !m;
+    marca.textContent = m === "voltar" ? "✓ Voltar o do ChatGPT" : "✓ Refazer";
+  };
+  pinta();
+  b.addEventListener("click", () => {
+    const k = chave(r);
+    if (marcados.has(k)) marcados.delete(k);
+    else marcados.set(k, r.gpt ? "voltar" : "refazer");
+    pinta(); guardar(); resumo();
+  });
+  return b;
+}
+
+function desenhar() {
+  const lista = visiveis();
+  const g = $("grade");
+  g.replaceChildren(...lista.slice(0, limite).map(cartao));
+  $("conta").textContent = `${lista.length.toLocaleString("pt-BR")} ícones`;
+  $("vazio").hidden = lista.length > 0;
+  $("mais").hidden = lista.length <= limite;
+}
+
+function resumo() {
+  const voltar = [], refazer = [];
+  for (const [k, v] of marcados) (v === "voltar" ? voltar : refazer).push(k.replace(/^item:/, "").replace(/^bloco:/, "bloco "));
+  $("selConta").textContent = marcados.size ? `${voltar.length} para voltar ao ChatGPT · ${refazer.length} para refazer` : "Nada marcado";
+  return (voltar.length ? `Voltar o ícone do ChatGPT (${voltar.length}): ${voltar.join(", ")}\n` : "") + (refazer.length ? `Refazer (${refazer.length}): ${refazer.join(", ")}` : "");
+}
+
+document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => {
+  filtro = c.dataset.o; limite = PAGINA;
+  document.querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", x === c ? "true" : "false"));
+  desenhar();
+}));
+["busca", "mod", "tipo"].forEach((id) => $(id).addEventListener("input", () => { limite = PAGINA; desenhar(); }));
+$("mais").addEventListener("click", () => { limite += PAGINA; desenhar(); });
+$("limpar").addEventListener("click", () => { marcados.clear(); guardar(); resumo(); desenhar(); $("saida").hidden = true; });
+$("copiar").addEventListener("click", () => {
+  const t = resumo();
+  const s = $("saida");
+  s.value = t || "Nenhum ícone marcado.";
+  s.hidden = false;
+  if (!t) return;
+  navigator.clipboard?.writeText(t).then(() => { $("copiar").textContent = "Copiado"; setTimeout(() => ($("copiar").textContent = "Copiar lista"), 1500); })
+    .catch(() => { s.focus(); s.select(); });
+});
+
+fetch("icones.json").then((r) => r.json()).then((l) => {
+  dados = l;
+  const mods = [...new Set(l.map((r) => r.mod))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+  for (const m of mods) { const o = document.createElement("option"); o.value = m; o.textContent = m; $("mod").append(o); }
+  const n = (o) => l.filter((r) => r.o === o).length;
+  document.querySelectorAll(".chip").forEach((c) => { if (c.dataset.o !== "todos") c.textContent += ` (${n(c.dataset.o)})`; else c.textContent += ` (${l.length})`; });
+  resumo(); desenhar();
+}).catch(() => { $("conta").textContent = "Não deu para carregar a lista de ícones."; });
+</script>

@@ -231,3 +231,16 @@ Mecânicas e números do Immersive Engineering (BluSunrize e equipe, código GPL
 branch 1.20.1): Forno de Coque, Alto-Forno, creosoto e madeira tratada, cânhamo, Moinho de Vento, Roda d'Água e Dínamo
 Cinético. A arte do IE pede permissão antes de ser copiada, então os blocos, itens e as pás têm arte própria.
 Os modelos das aeronaves (Immersive Aircraft) foram convertidos do Blockbench para o Bedrock por `tools/gerar-aeronaves.py`.
+
+## Música (1.59.0)
+
+Faixas de domínio público (CC0) do OpenGameArt.org, convertidas para Ogg Vorbis (`RP/sounds/music/cl/`) e tocadas por
+`scripts/jogador/musica.ts`:
+
+| Arquivo | Faixa | Autor | Licença | Fonte |
+|---|---|---|---|---|
+| exploracao.ogg | Exploration Theme | CleytonKauffman | CC0 | opengameart.org/content/exploration-theme |
+| noite.ogg | I swear I saw it | yd | CC0 | opengameart.org/content/i-swear-i-saw-it-background-track |
+| masmorra.ogg | Space Graveyard | TinyWorlds | CC0 | opengameart.org/content/space-graveyard-ambient-track |
+| lua.ogg | Observing the Star (Another space background track) | yd | CC0 | opengameart.org/content/another-space-background-track |
+| espaco.ogg | Deep Space Array | Tozan | CC0 | opengameart.org/content/deep-space-array |

@@ -105,7 +105,7 @@ cl.capsula.encontrada=You found a cargo pod. Open the barrel and look after the 
 
 ## Missions (Phase 4)
 cl.missao.capsula.titulo=Lost cargo
-cl.missao.capsula.desc=A pod from the ship falls every morning. Go to the impact site.
+cl.missao.capsula.desc=A pod from the ship falls every 10 days, at any hour (watch for the warning on screen). Go to the impact site.
 cl.missao.garrafa.titulo=Canteen
 cl.missao.garrafa.desc=Craft bowls (3 planks), tap a full condenser holding them and have 3 Good Water. Drinking quenches thirst.
 cl.missao.fruta.titulo=Desert fruit

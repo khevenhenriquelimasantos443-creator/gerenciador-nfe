@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.58.0";
+export const VERSAO = "1.59.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -109,6 +109,7 @@ export const PROPS = {
   bemAlimentado: `${NS}:bem_alimentado`, // jogador: tick absoluto até quando dura o Bem Alimentado
   regraRegen: `${NS}:regra_regen`, // mundo: regeneração natural já desligada (Hunger Overhaul)
   capsulaDia: `${NS}:capsula_dia`, // mundo: dia da última cápsula de carga
+  capsulaProxima: `${NS}:capsula_proxima`, // mundo: quando cai a próxima (dia × 24000 + hora), 1.59.0
   capsulas: `${NS}:capsulas`, // mundo: JSON com as cápsulas ainda não encontradas
   olharDesligado: `${NS}:olhar_desligado`, // jogador: esconde o "o que estou olhando" da barra de ação
   reabastecerDesligado: `${NS}:reabastecer_desligado`, // jogador: não repõe o item da mão sozinho
@@ -931,11 +932,10 @@ export const SEDE = {
 // Fruta do cacto: chance de cair ao quebrar um cacto.
 export const FRUTA_CACTO_CHANCE = 0.3;
 
-// Cápsulas de carga (scripts/mundo/capsulas.ts): uma por dia, de manhã, a partir do dia 1,
-// perto de um jogador. Trazem um casal de animais e um barril com o que está abaixo.
+// Cápsulas de carga (scripts/mundo/capsulas.ts): 1.59.0: uma a cada 10 dias, numa hora sorteada (de dia ou de
+// noite), a partir do dia 1, perto de um jogador. Trazem um casal de animais e um barril com o que está abaixo.
 export const CAPSULA = {
-  horaMin: 1000, // entre estas horas do dia
-  horaMax: 9000,
+  intervaloDias: 10,
   primeiroDia: 1,
   distanciaMin: 20,
   distanciaMax: 48,

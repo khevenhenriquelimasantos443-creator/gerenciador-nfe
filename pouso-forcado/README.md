@@ -155,6 +155,15 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.59.0 (música, cápsulas a cada 10 dias e a lista de todos os ícones)
+
+- **Música de fundo**, uma para cada momento: dia, noite, mina e Nether, e a Lua (5 faixas de domínio público do
+  OpenGameArt, ver CREDITOS.md). Toca uma faixa, faz uma pausa e toca outra; anoitecer, descer à mina ou ir à Lua troca
+  na hora. O volume é o de "Música" nas configurações; `/scriptevent cl:musica` desliga ou liga.
+- **Cápsulas de carga:** agora uma a cada 10 dias, numa hora sorteada (de dia ou de noite), e não mais todo dia de manhã.
+- **Lista de todos os ícones** (`docs/icones-todos/`, gerada por `tools/listar-icones-todos.py`): 3.790 ícones de item
+  e bloco, com o comparativo dos que você pediu ao ChatGPT e foram trocados depois.
+
 ## Novidades da 1.58.0 (Tinkers de volta aos menus, com ícones)
 
 - **O Tinkers voltou ao jeito de antes da 1.56.0** (Mesa de Moldes, Construtor de Peças e Estação de Ferramentas por

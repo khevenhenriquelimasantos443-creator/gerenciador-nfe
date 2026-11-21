@@ -105,7 +105,7 @@ cl.capsula.encontrada=Você achou uma cápsula de carga. Abra o barril e cuide d
 
 ## Missões (Fase 4)
 cl.missao.capsula.titulo=Carga perdida
-cl.missao.capsula.desc=Uma cápsula da nave cai todo dia de manhã. Vá até o lugar do impacto.
+cl.missao.capsula.desc=Uma cápsula da nave cai a cada 10 dias, a qualquer hora (fique de olho no aviso na tela). Vá até o lugar do impacto.
 cl.missao.garrafa.titulo=Cantil
 cl.missao.garrafa.desc=Faça tigelas (3 tábuas), toque no condensador cheio com elas na mão e tenha 3 Águas Boas. Beber mata a sede.
 cl.missao.fruta.titulo=Fruta do deserto

@@ -1,6 +1,65 @@
 {
   "format_version": "1.20.20",
   "sound_definitions": {
-    "cl.mk.alarme": { "category": "block", "max_distance": 32, "sounds": [{ "name": "sounds/cl/mk_alarme", "volume": 1.0 }] }
+    "cl.mk.alarme": {
+      "category": "block",
+      "max_distance": 32,
+      "sounds": [
+        {
+          "name": "sounds/cl/mk_alarme",
+          "volume": 1.0
+        }
+      ]
+    },
+    "cl.musica.exploracao": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/cl/exploracao",
+          "stream": true,
+          "volume": 0.6
+        }
+      ]
+    },
+    "cl.musica.noite": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/cl/noite",
+          "stream": true,
+          "volume": 0.6
+        }
+      ]
+    },
+    "cl.musica.lua": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/cl/lua",
+          "stream": true,
+          "volume": 0.6
+        }
+      ]
+    },
+    "cl.musica.espaco": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/cl/espaco",
+          "stream": true,
+          "volume": 0.6
+        }
+      ]
+    },
+    "cl.musica.masmorra": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/cl/masmorra",
+          "stream": true,
+          "volume": 0.6
+        }
+      ]
+    }
   }
 }
